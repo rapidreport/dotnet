@@ -1,0 +1,35 @@
+# /
+/*.suo
+
+# /bin/
+/bin/*
+
+# /example/
+/example/bin
+/example/obj
+/example/*.user
+
+# /json/
+/json/bin
+/json/obj
+/json/*.user
+
+# /renderer.gdi/
+/renderer.gdi/bin
+/renderer.gdi/obj
+/renderer.gdi/*.user
+
+# /renderer.pdf/
+/renderer.pdf/bin
+/renderer.pdf/obj
+/renderer.pdf/*.user
+
+# /renderer.xls/
+/renderer.xls/bin
+/renderer.xls/obj
+/renderer.xls/*.user
+
+# /report/
+/report/bin
+/report/obj
+/report/*.user

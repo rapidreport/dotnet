@@ -1,0 +1,25 @@
+同梱されている NPOI.dll は、
+
+NPOI 1.2.5 (http://npoi.codeplex.com/)
+
+に、株式会社システムベース (http://www.systembase.co.jp/) が、
+以下の変更を加え、ビルドしたものです。
+
+*** org/src/HSSF/UserModel/HSSFWorkbook.cs	Fri May  4 19:37:26 2012
+--- mod/src/HSSF/UserModel/HSSFWorkbook.cs	Wed Apr 10 13:01:43 2013
+***************
+*** 1482,1488 ****
+                  sb.Append("!");
+                  sb.Append(parts[i]);
+              }
+!             name.NameDefinition=(HSSFFormulaParser.Parse(sb.ToString(), this, FormulaType.CELL, sheetIndex));
+  
+          }
+  
+--- 1482,1488 ----
+                  sb.Append("!");
+                  sb.Append(parts[i]);
+              }
+!             name.NameDefinition=(HSSFFormulaParser.Parse(sb.ToString(), this, FormulaType.NAMEDRANGE, sheetIndex));
+  
+          }

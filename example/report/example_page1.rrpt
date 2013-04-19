@@ -1,0 +1,52 @@
+{
+  paper: {
+    margin: {bottom:10,left:10,right:10,top:10},
+    scale_unit: "mm",
+    type: "a4"
+  },
+  font: {size:30},
+  group: {
+    contents: [
+      {
+        group: {
+          id: "group_example",
+          keys: ["GROUP_CD"],
+          page_break: true,
+          
+            contents: [
+              {
+                size: {
+                  initial: 20
+                },
+                every_page: true,
+                elements: [
+                  {type:"line",layout:{y1:20}},
+                  {type:"field",layout:{},exp:".GROUP_CD",valign:"center",halign:"left"}
+                ]
+              },
+              {
+                group: {
+                  detail: true,
+                  
+                    contents: [
+                      {
+                        size: {
+                          initial: 20
+                        },
+                        elements: [
+                          {type:"line",layout:{x1:45,y1:20},line_style:"dot"},
+                          {type:"field",layout:{x1:45},exp:".DATA",valign:"center",halign:"left"}
+                        ]
+                      }
+                    ]
+                  
+                }
+              }
+            ]
+          
+          
+        }
+      }
+    ]
+  }
+}

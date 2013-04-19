@@ -1,0 +1,20 @@
+﻿{
+  paper: {
+    margin: {bottom:10,left:10,right:10,top:10},
+    scale_unit: "mm",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 0,
+          rev_initial: true
+        },
+        elements: [
+          {type:"text",layout:{y2:277},halign:"center",text:"最後の\r\nページ",valign:"center",font:{size:100}}
+        ]
+      }
+    ]
+  }
+}

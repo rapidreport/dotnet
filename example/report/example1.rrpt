@@ -1,0 +1,106 @@
+﻿{
+  version: 0,
+  paper: {
+    margin: {bottom:20,left:20,right:20,top:20},
+    type: "a4"
+  },
+  custom_fields: [
+    {key:"tax",exp:"(rounddown (* .PRICE 0.05))"}
+  ],
+  group: {
+    contents: [
+      {
+        id: "report header",
+        size: {
+          initial: 80
+        },
+        every_page: true,
+        elements: [
+          {type:"text",layout:{x1:130,y1:15,x2:150,y2:35,rev_x2:true},text:"サンプル帳票",font:{name:"mincho",size:20,underline:true},distribute:true},
+          {type:"image",layout:{x1:150,y1:50,y2:80,rev_x1:true},exp:"'logo'",fit:true,key:"image",valign:"top",halign:"left"},
+          {type:"text",layout:{x1:405,x2:555,y2:10},text:"印刷日付: #{global.today}",halign:"right"}
+        ]
+      },
+      {
+        id: "report body",
+        size: {
+          initial: 40,
+          not_extendable: true,
+          rev_initial: true
+        },
+        aggregate_src: true,
+        group: {
+          id: "place group",
+          keys: ["PLACE"],
+          page_break: true,
+          contents: [
+            {
+              name: "place header",
+              size: {
+                initial: 30
+              },
+              every_page: true,
+              elements: [
+                {type:"line",layout:{y1:30}},
+                {type:"text",layout:{x1:0,y1:0,x2:40},text:"Ｎｏ",valign:"center",halign:"center"},
+                {type:"text",layout:{x1:40,y1:0,x2:140},text:"置き場所",valign:"center",halign:"center"},
+                {type:"text",layout:{x1:140,y1:0,x2:355},text:"タイトル",valign:"center",halign:"left"},
+                {type:"text",layout:{x1:355,x2:455},text:"価格",valign:"center",halign:"right"},
+                {type:"text",layout:{x1:455},text:"税",valign:"center",halign:"right"}
+              ]
+            },
+            {
+              id: "place body",
+              aggregate_src: true,
+              group: {
+                name: "detail group",
+                detail: true,
+                contents: [
+                  {
+                    name: "detail",
+                    size: {
+                      initial: 30
+                    },
+                    aggregate_src: true,
+                    elements: [
+                      {type:"rect",background:true,visibility_cond:"toggle",line_width:0,fill_color:"lightgray"},
+                      {type:"line",layout:{y1:30},line_style:"dot"},
+                      {type:"field",layout:{x1:0,y1:0,x2:40},exp:"(+ state.index 1)",visibility_cond:"(not state.blank)",valign:"center",halign:"center"},
+                      {type:"field",layout:{x1:40,y1:0,x2:140},exp:"(nvl (if (= .PLACE 1) '本棚A') (if (= .PLACE 2) '本棚B') (if (= .PLACE 3) 'ラック') (if (= .PLACE 4) '貸出中'))",visibility_cond:"state.first",valign:"center",halign:"center"},
+                      {type:"field",layout:{x1:140,y1:0,x2:355},exp:".TITLE",valign:"center",halign:"left"},
+                      {type:"field",layout:{x1:355,x2:455},exp:".PRICE",formatter:{format:"#,###",type:"default"},xls_format:"#,###",valign:"center",halign:"right"},
+                      {type:"field",layout:{x1:455},exp:".tax",formatter:{format:"#,###",type:"default"},xls_format:"#,###",valign:"center",halign:"right"}
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              id: "place footer",
+              size: {
+                initial: 30
+              },
+              visibility_cond: "(> count# 1)",
+              every_page: true,
+              elements: [
+                {type:"text",formatter:{format:"#,###",type:"default"},valign:"center",halign:"right",text:"グループ 計:#{sum_at.PRICE} ページ計:#{sum_page.PRICE} 総計:#{sum.PRICE} 平均:#{avr_at.PRICE} 税計:#{sum_at.tax}"}
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "report footer",
+        size: {
+          initial: 40
+        },
+        visibility_cond: "true",
+        every_page: true,
+        elements: [
+          {type:"text",layout:{y1:0,y2:20},formatter:{format:"#,###",type:"default"},text:"計:#{sum_at.PRICE} ページ計:#{sum_page.PRICE} 総計:#{sum.PRICE}  平均:#{avr_at.PRICE} 税計:#{sum_at.tax}",valign:"center",halign:"right"},
+          {type:"text",layout:{y1:20,y2:40},text:"#{page_count}/#{page_count.total}",valign:"center",halign:"center"}
+        ]
+      }
+    ]
+  }
+}

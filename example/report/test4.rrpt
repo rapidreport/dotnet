@@ -1,0 +1,60 @@
+﻿{
+  paper: {
+    margin: {bottom:20,left:20,right:20,top:20},
+    scale_unit: "point",
+    type: "a4"
+  },
+  font: {size:20,underline:true,italic:true},
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 0,
+          rev_initial: true
+        },
+        elements: [
+          {type:"rect",layout:{x1:210,y1:15,x2:540,y2:525}},
+          {type:"field",layout:{x1:40,y1:25,x2:180,y2:50},exp:"123456.78",formatter:{format:"#.##％",type:"default"},valign:"center",halign:"right"},
+          {type:"line",layout:{x1:40,x2:40},line_pattern:"10,10,10"},
+          {type:"line",layout:{x1:180,x2:180}},
+          {type:"field",layout:{x1:40,y1:60,x2:180,y2:85},exp:"123456",formatter:{format:"#.##％",type:"default"},fix_decimal_point:2,valign:"center",halign:"right"},
+          {type:"field",layout:{x1:40,y1:90,x2:180,y2:115},exp:"123456.7",formatter:{format:"#.##％",type:"default"},fix_decimal_point:2,valign:"center",halign:"center"},
+          {type:"field",layout:{x1:40,y1:120,x2:180,y2:145},exp:"123456.78",formatter:{format:"#.##％",type:"default"},fix_decimal_point:2,valign:"center",halign:"left"},
+          {type:"field",layout:{x1:85,y1:260,x2:180,y2:285},formatter:{format:"#.##％",type:"default"},valign:"center",halign:"right",shrink_to_fit:true,exp:"123456.78",fix_decimal_point:2},
+          {type:"field",layout:{x1:85,y1:230,x2:180,y2:255},formatter:{format:"#.##％",type:"default"},valign:"center",halign:"right",shrink_to_fit:true,exp:"123456.7",fix_decimal_point:2},
+          {type:"field",layout:{x1:85,y1:200,x2:180,y2:225},formatter:{format:"#.##％",type:"default"},valign:"center",halign:"right",shrink_to_fit:true,exp:"123456",fix_decimal_point:2},
+          {type:"text",layout:{x1:40,y1:310,x2:180,y2:335},text:"ほげhoge",valign:"center",halign:"left"},
+          {type:"text",layout:{x1:40,y1:340,x2:180,y2:365},text:"ほげhoge",valign:"center",halign:"center"},
+          {type:"text",layout:{x1:40,y1:370,x2:180,y2:395},text:"ほげhoge",valign:"center",halign:"right"},
+          {type:"text",layout:{x1:40,y1:405,x2:180,y2:430},text:"ほげhoge",valign:"center",halign:"right",distribute:true},
+          {type:"text",layout:{x1:40,y1:450,x2:180,y2:480},text:"改行しない改行しない改行しない改行しない改行しない\r\n(かいぎょーしない)(かいぎょーしない)(かいぎょーしない)\r\naaa\r\nbbb\r\nccc\r\nddd",valign:"top",halign:"left",font:{italic:true}},
+          {type:"text",layout:{x1:40,y1:490,x2:180,y2:540},text:"改行する改行する改行する改行する改行する\r\n(かいぎょーする)(かいぎょーする)(かいぎょーする)",wrap:true,valign:"top",halign:"left",font:{italic:true}},
+          {type:"field",layout:{x1:95,y1:155,x2:180,y2:180},exp:"123456.78",formatter:{format:"#.##％",type:"default"},fix_decimal_point:2,valign:"center",halign:"right"},
+          {type:"line",layout:{y1:605,y2:605}},
+          {type:"line",layout:{y1:700,y2:700}},
+          {type:"text",layout:{x1:40,y1:605,x2:180,y2:700},text:"あいうえお",valign:"top",halign:"center"},
+          {type:"text",layout:{x1:180,y1:605,x2:320,y2:700},text:"あいうえお",valign:"center",halign:"center"},
+          {type:"text",layout:{x1:320,y1:605,x2:460,y2:700},text:"あいうえお",valign:"bottom",halign:"center"},
+          {type:"text",layout:{x1:360,y1:120,x2:430,y2:255},vertical:true,font:{name:"mincho",size:20},valign:"top",halign:"left",shrink_to_fit:true,text:"自動縮小自動縮小自動縮小\r\nじどうしゅくしょう"},
+          {type:"text",layout:{x1:210,y1:15,x2:320,y2:120},text:"改行しない改行しない改行しない改行しない\r\n(かいぎょーしない)(かいぎょーしない)",vertical:true,shrink_to_fit:false,halign:"left",valign:"bottom"},
+          {type:"text",layout:{x1:320,y1:15,x2:430,y2:120},text:"改行しない改行しない改行しない改行しない\r\n(かいぎょーしない)(かいぎょーしない)",vertical:true,shrink_to_fit:false,halign:"center",valign:"center"},
+          {type:"text",layout:{x1:430,y1:15,x2:540,y2:120},text:"改行しない改行しない改行しない改行しない\r\n(かいぎょーしない)(かいぎょーしない)\r\naaa\r\nbbb\r\nccc\r\nddd",vertical:true,shrink_to_fit:false,halign:"right",valign:"top"},
+          {type:"line",layout:{x1:210,y1:120,x2:540,y2:120}},
+          {type:"line",layout:{x1:430,y1:15,x2:430,y2:525}},
+          {type:"line",layout:{x1:320,y1:15,x2:320,y2:120}},
+          {type:"line",layout:{x1:360,y1:120,x2:360,y2:525}},
+          {type:"text",layout:{x1:210,y1:120,x2:360,y2:255},vertical:true,wrap:true,font:{name:"mincho",size:10},valign:"top",halign:"left",shrink_to_fit:false,text:"{wｰｗ}|(wｰｗ)|[wｰｗ]"},
+          {type:"text",layout:{x1:210,y1:255,x2:360,y2:390},vertical:true,wrap:true,font:{name:"mincho",size:10},valign:"top",halign:"left",shrink_to_fit:false,text:"｛w～ｗ｝|（w‥ｗ）|「w…ｗ」"},
+          {type:"text",layout:{x1:210,y1:390,x2:360,y2:525},vertical:true,wrap:true,font:{name:"mincho",size:10},valign:"top",halign:"center",shrink_to_fit:false,text:"{wｗ}|(wｗ)|[wｗ]"},
+          {type:"text",layout:{x1:360,y1:255,x2:430,y2:390},vertical:true,font:{name:"mincho",size:20},valign:"center",halign:"center",shrink_to_fit:true,text:"自動縮小自動縮小自動縮小\r\nじどうしゅくしょう"},
+          {type:"text",layout:{x1:360,y1:390,x2:430,y2:525},vertical:true,font:{name:"mincho",size:20},valign:"bottom",halign:"right",shrink_to_fit:true,text:"自動縮小自動縮小自動縮小\r\nじどうしゅくしょう"},
+          {type:"text",layout:{x1:430,y1:120,x2:540,y2:255},distribute:true,vertical:true,wrap:false,text:"均等ー割付。",valign:"top",halign:"left",shrink_to_fit:false,font:{name:"mincho",size:20,underline:true}},
+          {type:"text",layout:{x1:430,y1:255,x2:540,y2:390},distribute:true,vertical:true,wrap:false,text:"均等ー割付、",valign:"center",halign:"center",shrink_to_fit:false,font:{name:"mincho",size:20,underline:true}},
+          {type:"text",layout:{x1:430,y1:390,x2:540,y2:525},distribute:true,vertical:true,wrap:false,text:"ー",valign:"bottom",halign:"right",shrink_to_fit:false,font:{name:"mincho",size:20,underline:true}},
+          {type:"line",layout:{x1:210,y1:255,x2:540,y2:255}},
+          {type:"line",layout:{x1:210,y1:390,x2:540,y2:390}}
+        ]
+      }
+    ]
+  }
+}

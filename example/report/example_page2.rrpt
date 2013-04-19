@@ -1,0 +1,23 @@
+﻿{
+  paper: {
+    landscape: true,
+    margin: {bottom:10,left:10,right:10,top:10},
+    scale_unit: "mm",
+    type: "a4"
+  },
+  font: {size:30},
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 0,
+          rev_initial: true
+        },
+        elements: [
+          {type:"rect",round:10},
+          {type:"text",valign:"center",halign:"center",text:"グループ #{.GROUP_CD} には #{count} 件のレコードがあります"}
+        ]
+      }
+    ]
+  }
+}

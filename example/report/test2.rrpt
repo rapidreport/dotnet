@@ -1,0 +1,61 @@
+{
+  paper: {
+    landscape: true,
+    margin: {bottom:10,left:10,right:10,top:10},
+    scale_unit: "mm",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 0,
+          rev_initial: true
+        },
+        elements: [
+          {type:"barcode",layout:{y1:124,x2:35,y2:136},exp:".CODABAR",generate_checksum:true,barcode_type:"codabar"},
+          {type:"barcode",layout:{x1:0,y1:100,x2:25,y2:112},exp:".CODABAR",generate_checksum:true,barcode_type:"codabar"},
+          {type:"barcode",layout:{x1:0,y1:112,x2:30,y2:124},exp:".CODABAR",generate_checksum:true,barcode_type:"codabar"},
+          {type:"barcode",layout:{y1:136,x2:45,y2:148},exp:".CODABAR",generate_checksum:true,barcode_type:"codabar"},
+          {type:"barcode",layout:{y1:148,x2:55,y2:160},exp:".CODABAR",generate_checksum:true,barcode_type:"codabar"},
+          {type:"barcode",layout:{y1:160,x2:65,y2:172},exp:".CODABAR",generate_checksum:true,barcode_type:"codabar"},
+          {type:"barcode",layout:{x1:0,y1:88,x2:20,y2:100},exp:".CODABAR",generate_checksum:true,barcode_type:"codabar"},
+          {type:"barcode",layout:{x1:75,y1:0,x2:95,y2:10},exp:".CODE128",barcode_type:"code128"},
+          {type:"barcode",layout:{x1:75,y1:72,x2:140,y2:82},exp:".CODE128",barcode_type:"code128"},
+          {type:"barcode",layout:{x1:75,y1:60,x2:130,y2:70},exp:".CODE128",barcode_type:"code128"},
+          {type:"barcode",layout:{x1:75,y1:48,x2:120,y2:58},exp:".CODE128",barcode_type:"code128"},
+          {type:"barcode",layout:{x1:75,y1:24,x2:105,y2:34},exp:".CODE128",barcode_type:"code128"},
+          {type:"barcode",layout:{x1:75,y1:12,x2:100,y2:22},exp:".CODE128",barcode_type:"code128"},
+          {type:"barcode",layout:{x1:75,y1:36,x2:110,y2:46},exp:".CODE128",barcode_type:"code128"},
+          {type:"barcode",layout:{x1:150,y1:36,x2:185,y2:46},exp:".EAN8",barcode_type:"ean8"},
+          {type:"barcode",layout:{x1:150,y1:12,x2:175,y2:22},exp:".EAN8",barcode_type:"ean8"},
+          {type:"barcode",layout:{x1:150,y1:24,x2:180,y2:34},exp:".EAN8",barcode_type:"ean8"},
+          {type:"barcode",layout:{x1:150,y1:48,x2:195,y2:58},exp:".EAN8",barcode_type:"ean8"},
+          {type:"barcode",layout:{x1:150,y1:60,x2:205,y2:70},exp:".EAN8",barcode_type:"ean8"},
+          {type:"barcode",layout:{x1:150,y1:72,x2:215,y2:82},exp:".EAN8",barcode_type:"ean8"},
+          {type:"barcode",layout:{x1:150,y1:0,x2:170,y2:10},exp:".EAN8",barcode_type:"ean8"},
+          {type:"barcode",layout:{x1:75,y1:90,x2:95,y2:100},exp:".EAN13",barcode_type:"ean13"},
+          {type:"barcode",layout:{x1:75,y1:162,x2:140,y2:172},exp:".EAN13",barcode_type:"ean13"},
+          {type:"barcode",layout:{x1:75,y1:150,x2:130,y2:160},exp:".EAN13",barcode_type:"ean13"},
+          {type:"barcode",layout:{x1:75,y1:138,x2:120,y2:148},exp:".EAN13",barcode_type:"ean13"},
+          {type:"barcode",layout:{x1:75,y1:114,x2:105,y2:124},exp:".EAN13",barcode_type:"ean13"},
+          {type:"barcode",layout:{x1:75,y1:102,x2:100,y2:112},exp:".EAN13",barcode_type:"ean13"},
+          {type:"barcode",layout:{x1:75,y1:126,x2:110,y2:136},exp:".EAN13",barcode_type:"ean13"},
+          {type:"barcode",layout:{x1:0,y1:0,x2:20,y2:10},exp:".CODE39",generate_checksum:true,barcode_type:"code39"},
+          {type:"barcode",layout:{y1:72,x2:65,y2:82},exp:".CODE39",generate_checksum:true,barcode_type:"code39"},
+          {type:"barcode",layout:{y1:60,x2:55,y2:70},exp:".CODE39",generate_checksum:true,barcode_type:"code39"},
+          {type:"barcode",layout:{y1:48,x2:45,y2:58},exp:".CODE39",generate_checksum:true,barcode_type:"code39"},
+          {type:"barcode",layout:{x1:0,y1:24,x2:30,y2:34},exp:".CODE39",generate_checksum:true,barcode_type:"code39"},
+          {type:"barcode",layout:{x1:0,y1:12,x2:25,y2:22},exp:".CODE39",generate_checksum:true,barcode_type:"code39"},
+          {type:"barcode",layout:{y1:36,x2:35,y2:46},exp:".CODE39",generate_checksum:true,barcode_type:"code39"},
+          {type:"barcode",layout:{x1:150,y1:105,x2:185,y2:115},exp:".CODE39",barcode_type:"code39",without_text:true},
+          {type:"barcode",layout:{x1:150,y1:90,x2:185,y2:100},exp:".CODE128",barcode_type:"code128",without_text:true},
+          {type:"barcode",layout:{x1:150,y1:120,x2:185,y2:130},exp:".EAN8",barcode_type:"ean8",without_text:true},
+          {type:"barcode",layout:{x1:150,y1:135,x2:185,y2:145},exp:".EAN13",barcode_type:"ean13",without_text:true},
+          {type:"barcode",layout:{x1:150,y1:150,x2:185,y2:162},exp:".CODABAR",barcode_type:"codabar",without_text:true},
+          {type:"barcode",layout:{x1:200,y1:100,x2:250,y2:150},exp:".QRCODE",barcode_type:"qrcode"}
+        ]
+      }
+    ]
+  }
+}

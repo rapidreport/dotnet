@@ -1,0 +1,81 @@
+{
+  paper: {
+    margin: {bottom:20,left:20,right:20,top:20},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 0,
+          rev_initial: true
+        },
+        elements: [
+          {type:"line",layout:{x1:10,y1:35,x2:60,y2:35},start_cap:"arrow"},
+          {type:"line",layout:{x1:80,y1:10,x2:130,y2:60},start_cap:"arrow"},
+          {type:"line",layout:{x1:300,y1:35,x2:250,y2:35},start_cap:"arrow"},
+          {type:"line",layout:{x1:360,y1:60,x2:310,y2:10},start_cap:"arrow"},
+          {type:"line",layout:{x1:235,y1:10,x2:185,y2:60},start_cap:"arrow"},
+          {type:"line",layout:{x1:155,y1:10,x2:155,y2:60},start_cap:"arrow"},
+          {type:"line",layout:{x1:385,y1:60,x2:385,y2:10},start_cap:"arrow"},
+          {type:"line",layout:{x1:415,y1:60,x2:465,y2:10},start_cap:"arrow"},
+          {type:"line",layout:{x1:415,y1:120,x2:465,y2:70},end_cap:"arrow"},
+          {type:"line",layout:{x1:385,y1:120,x2:385,y2:70},end_cap:"arrow"},
+          {type:"line",layout:{x1:155,y1:70,x2:155,y2:120},end_cap:"arrow"},
+          {type:"line",layout:{x1:235,y1:70,x2:185,y2:120},end_cap:"arrow"},
+          {type:"line",layout:{x1:360,y1:120,x2:310,y2:70},end_cap:"arrow"},
+          {type:"line",layout:{x1:300,y1:95,x2:250,y2:95},end_cap:"arrow"},
+          {type:"line",layout:{x1:80,y1:70,x2:130,y2:120},end_cap:"arrow"},
+          {type:"line",layout:{x1:10,y1:95,x2:60,y2:95},end_cap:"arrow"},
+          {type:"line",layout:{x1:10,y1:155,x2:60,y2:155},end_cap:"arrow",start_cap:"arrow"},
+          {type:"line",layout:{x1:80,y1:130,x2:130,y2:180},end_cap:"arrow",start_cap:"arrow"},
+          {type:"line",layout:{x1:300,y1:155,x2:250,y2:155},end_cap:"arrow",start_cap:"arrow"},
+          {type:"line",layout:{x1:360,y1:180,x2:310,y2:130},end_cap:"arrow",start_cap:"arrow"},
+          {type:"line",layout:{x1:235,y1:130,x2:185,y2:180},end_cap:"arrow",start_cap:"arrow"},
+          {type:"line",layout:{x1:155,y1:130,x2:155,y2:180},end_cap:"arrow",start_cap:"arrow"},
+          {type:"line",layout:{x1:385,y1:180,x2:385,y2:130},end_cap:"arrow",start_cap:"arrow"},
+          {type:"line",layout:{x1:415,y1:180,x2:465,y2:130},end_cap:"arrow",start_cap:"arrow"},
+          {type:"line",layout:{x1:415,y1:240,x2:465,y2:190},end_cap:"arrow",line_width:5,start_cap:"arrow"},
+          {type:"line",layout:{x1:385,y1:240,x2:385,y2:190},end_cap:"arrow",line_width:5,start_cap:"arrow"},
+          {type:"line",layout:{x1:155,y1:190,x2:155,y2:240},end_cap:"arrow",line_width:5,start_cap:"arrow"},
+          {type:"line",layout:{x1:235,y1:190,x2:185,y2:240},end_cap:"arrow",line_width:5,start_cap:"arrow"},
+          {type:"line",layout:{x1:360,y1:240,x2:310,y2:190},end_cap:"arrow",line_width:5,start_cap:"arrow"},
+          {type:"line",layout:{x1:300,y1:215,x2:250,y2:215},end_cap:"arrow",line_width:5,start_cap:"arrow"},
+          {type:"line",layout:{x1:80,y1:190,x2:130,y2:240},end_cap:"arrow",line_width:5,start_cap:"arrow"},
+          {type:"line",layout:{x1:10,y1:215,x2:60,y2:215},end_cap:"arrow",line_width:5,start_cap:"arrow"},
+          {type:"rect",layout:{x1:10,y1:265,x2:100,y2:330},round:20,fill_color:"tomato"},
+          {type:"rect",layout:{x1:105,y1:265,x2:195,y2:330},hide_top:true,round:20,fill_color:"tan"},
+          {type:"rect",layout:{x1:200,y1:265,x2:290,y2:330},round:20,hide_bottom:true,fill_color:"gold"},
+          {type:"rect",layout:{x1:295,y1:265,x2:385,y2:330},round:20,hide_left:true,fill_color:"skyblue"},
+          {type:"rect",layout:{x1:390,y1:265,x2:480,y2:330},hide_right:true,round:20,fill_color:"gray"},
+          {type:"rect",layout:{x1:390,y1:335,x2:480,y2:400},hide_top:true,hide_right:true,round:20,fill_color:"salmon"},
+          {type:"rect",layout:{x1:295,y1:335,x2:385,y2:400},hide_right:true,round:20,hide_bottom:true,fill_color:"bisque"},
+          {type:"rect",layout:{x1:200,y1:335,x2:290,y2:400},hide_top:true,round:20,hide_left:true,fill_color:"aqua"},
+          {type:"rect",layout:{x1:105,y1:335,x2:195,y2:400},hide_right:true,round:20,hide_left:true,fill_color:"olive"},
+          {type:"rect",layout:{x1:10,y1:335,x2:100,y2:400},hide_top:true,round:20,hide_bottom:true,fill_color:"magenta"},
+          {type:"rect",layout:{x1:10,y1:405,x2:100,y2:470},round:20,hide_bottom:true,hide_left:true,fill_color:"lightgreen"},
+          {type:"rect",layout:{x1:105,y1:405,x2:195,y2:470},hide_right:true,round:20,hide_left:true,hide_bottom:true,fill_color:"lightgreen"},
+          {type:"rect",layout:{x1:200,y1:405,x2:290,y2:470},hide_top:true,hide_right:true,round:20,hide_left:true,fill_color:"lightgreen"},
+          {type:"rect",layout:{x1:295,y1:405,x2:385,y2:470},hide_top:true,hide_right:true,round:20,hide_bottom:true,fill_color:"lightgreen"},
+          {type:"rect",layout:{x1:390,y1:405,x2:480,y2:470},hide_top:true,round:20,hide_left:true,hide_bottom:true,fill_color:"lightgreen"},
+          {type:"rect",layout:{x1:10,y1:475,x2:100,y2:540},hide_right:true,round:20,hide_bottom:true,fill_color:"lightgreen",hide_top:true,hide_left:true},
+          {type:"rect",layout:{x1:105,y1:475,x2:195,y2:540},round:20,line_width:2,line_style:"dot"},
+          {type:"rect",layout:{x1:200,y1:475,x2:290,y2:540},round:20,line_width:2,line_style:"dash"},
+          {type:"rect",layout:{x1:295,y1:475,x2:385,y2:540},round:20,line_width:2,line_style:"dashdot"},
+          {type:"rect",layout:{x1:390,y1:475,x2:480,y2:540},round:20,line_width:2,line_style:"solid",line_pattern:"2,2,4,4"},
+          {type:"circle",layout:{x1:10,y1:550,x2:110,y2:650}},
+          {type:"circle",layout:{x1:120,y1:550,x2:290,y2:650},line_width:3,line_style:"dot",fill_color:"yellow",color:"red"},
+          {type:"line",layout:{x1:305,y1:600,x2:375,y2:600},doublet:true},
+          {type:"line",layout:{x1:385,y1:545,x2:385,y2:645},doublet:true},
+          {type:"line",layout:{x1:395,y1:565,x2:475,y2:630},doublet:true},
+          {type:"field",layout:{x1:85,y1:700,x2:175,y2:710},exp:"(abs (- 10))"},
+          {type:"field",layout:{x1:85,y1:715,x2:175,y2:725},exp:"(abs 10)"},
+          {type:"field",layout:{x1:85,y1:730,x2:175,y2:740},exp:"(abs null)"},
+          {type:"field",layout:{x1:195,y1:700,x2:285,y2:710},exp:"(max 3 2 0)"},
+          {type:"field",layout:{x1:195,y1:715,x2:285,y2:725},exp:"(min 3 2 0)"}
+        ]
+      }
+    ]
+  }
+}

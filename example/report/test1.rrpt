@@ -1,0 +1,141 @@
+﻿{
+  version: 0,
+  id: "report",
+  paper: {
+    landscape: true,
+    margin: {bottom:20,left:20,right:20,top:20},
+    type: "a4"
+  },
+  custom_fields: [
+    {key:"NUM2",exp:"(- (* .NUM .NUM) .NUM)"}
+  ],
+  group: {
+    layout: {
+      y: 50
+    },
+    contents: [
+      {
+        size: {
+          initial: 20
+        },
+        every_page: true,
+        elements: [
+          {type:"field",layout:{x1:25,x2:125},exp:"sum_at.NUM"},
+          {type:"field",layout:{x1:125,x2:225},exp:"sum_page.NUM"},
+          {type:"text",layout:{x1:0,x2:25},text:"H0"},
+          {type:"field",layout:{x1:225,x2:325},exp:"sum.NUM"}
+        ]
+      },
+      {
+        aggregate_src: true,
+        group: {
+          id: "group1",
+          keys: ["ID1"],
+          contents: [
+            {
+              size: {
+                initial: 20
+              },
+              every_page: true,
+              elements: [
+                {type:"field",layout:{x1:120,x2:220},exp:"sum_at.NUM"},
+                {type:"text",layout:{x1:95,x2:120},text:"H1"},
+                {type:"field",layout:{x1:220,x2:320},exp:"sum_page.NUM"},
+                {type:"field",layout:{x1:320,x2:420},exp:"sum.NUM"}
+              ]
+            },
+            {
+              aggregate_src: true,
+              group: {
+                id: "group2",
+                keys: ["ID2"],
+                contents: [
+                  {
+                    size: {
+                      initial: 20
+                    },
+                    every_page: true,
+                    elements: [
+                      {type:"field",layout:{x1:205,x2:305},exp:"sum_at.NUM"},
+                      {type:"text",layout:{x1:180,x2:205},text:"H2"},
+                      {type:"field",layout:{x1:305,x2:405},exp:"sum_page.NUM"},
+                      {type:"field",layout:{x1:405,x2:505},exp:"sum.NUM"}
+                    ]
+                  },
+                  {
+                    aggregate_src: true,
+                    group: {
+                      detail: true,
+                      contents: [
+                        {
+                          size: {
+                            initial: 20
+                          },
+                          aggregate_src: true,
+                          elements: [
+                            {type:"text",layout:{x1:205,x2:240},text:"明細",valign:"center",halign:"center"},
+                            {type:"field",layout:{x1:240,x2:320},exp:".NUM"},
+                            {type:"field",layout:{x1:320,x2:400},exp:"sum.NUM@group2"},
+                            {type:"field",layout:{x1:400,x2:480},exp:"sum.NUM@group1"},
+                            {type:"field",layout:{x1:480,x2:560},exp:".NUM2"},
+                            {type:"field",layout:{x1:560,x2:640},exp:".NUM2@group2"},
+                            {type:"field",layout:{x1:640,x2:720},exp:"sum.NUM2@group1"},
+                            {type:"rect",layout:{x1:205,x2:740},round:3},
+                            {type:"line",layout:{x1:240,x2:240}},
+                            {type:"line",layout:{x1:320,x2:320,y2:10}},
+                            {type:"line",layout:{x1:400,x2:400,y2:10}},
+                            {type:"line",layout:{x1:480,x2:480}},
+                            {type:"line",layout:{x1:560,x2:560,y2:10}},
+                            {type:"line",layout:{x1:640,x2:640,y2:10}},
+                            {type:"rect",layout:{x1:205,y1:0,x2:740,y2:20},background:true,line_width:0,fill_color:"lightgray"},
+                            {type:"line",layout:{x1:240,y1:10,x2:740,y2:10}},
+                            {type:"field",layout:{x1:480,y1:10,x2:740},exp:".TXT2"},
+                            {type:"field",layout:{x1:240,y1:10,x2:480},exp:".TXT1"}
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    size: {
+                      initial: 20
+                    },
+                    elements: [
+                      {type:"field",layout:{x1:205,x2:305},exp:"sum_at.NUM"},
+                      {type:"text",layout:{x1:180,x2:205},text:"F2"},
+                      {type:"field",layout:{x1:305,x2:405},exp:"sum_page.NUM"},
+                      {type:"field",layout:{x1:405,x2:505},exp:"sum.NUM"}
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              size: {
+                initial: 20
+              },
+              elements: [
+                {type:"field",layout:{x1:120,x2:220},exp:"sum_at.NUM"},
+                {type:"text",layout:{x1:95,x2:120},text:"F1"},
+                {type:"field",layout:{x1:220,x2:320},exp:"sum_page.NUM"},
+                {type:"field",layout:{x1:320,x2:420},exp:"sum.NUM"}
+              ]
+            }
+          ]
+        }
+      },
+      {
+        size: {
+          initial: 20,
+          max: 20
+        },
+        elements: [
+          {type:"field",layout:{x1:25,x2:125},exp:"sum_at.NUM"},
+          {type:"field",layout:{x1:125,x2:225},exp:"sum_page.NUM"},
+          {type:"text",layout:{x1:0,x2:25},text:"F0"},
+          {type:"field",layout:{x1:225,x2:325},exp:"sum.NUM"}
+        ]
+      }
+    ]
+  }
+}

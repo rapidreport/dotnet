@@ -1,0 +1,36 @@
+{
+  paper: {
+    landscape: true,
+    margin: {bottom:20,left:20,right:20,top:20},
+    scale_unit: "point",
+    type: "a4"
+  },
+  font: {size:20},
+  group: {
+    contents: [
+      {
+        group: {
+          detail: true,
+          page_break: true,
+          
+            contents: [
+              {
+                size: {
+                  initial: 0,
+                  rev_initial: true
+                },
+                elements: [
+                  {type:"text",layout:{x1:5,y1:10,x2:295,y2:60},text:"GROUP: #{.g1}",valign:"center",halign:"left"},
+                  {type:"rect",layout:{x1:55,y1:70,x2:325,y2:470}},
+                  {type:"rect",layout:{x1:475,y1:70,x2:745,y2:470}},
+                  {type:"subpage",layout:{x1:55,y1:70,x2:325,y2:470},exp:".page1",key:"subpage"},
+                  {type:"subpage",layout:{x1:475,y1:70,x2:745,y2:470},exp:".page2",key:"subpage"}
+                ]
+              }
+            ]
+          
+        }
+      }
+    ]
+  }
+}
