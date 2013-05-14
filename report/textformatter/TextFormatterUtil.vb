@@ -191,6 +191,7 @@ Public Module TextFormatterUtil
         Dim decZeroLength As Integer = 0
         Dim decLength As Integer = 0
         Dim camma As Integer = 0
+        Dim negative As Boolean = False
         Dim intValue As String = Nothing
         Dim decValue As String = Nothing
         With Nothing
@@ -234,7 +235,8 @@ Public Module TextFormatterUtil
         With Nothing
             Dim _intValue As String = Nothing
             With Nothing
-                Dim _v As String = ReportUtil.Round5(v, -decLength).ToString
+                negative = (v < 0)
+                Dim _v As String = ReportUtil.Round5(Math.Abs(v), -decLength).ToString
                 Dim i As Integer = _v.IndexOf(".")
                 If i >= 0 Then
                     _intValue = _v.Substring(0, i)
@@ -271,8 +273,11 @@ Public Module TextFormatterUtil
             End With
         End With
         Dim ret As String = ""
+        If negative Then
+            ret = "-"
+        End If
         If Not String.IsNullOrEmpty(intValue) Then
-            ret = intValue
+            ret &= intValue
         End If
         If Not String.IsNullOrEmpty(decValue) Then
             ret &= "." & decValue
