@@ -119,6 +119,18 @@ Namespace elementrenderer
                     Const dpi As Integer = 72 * scale
                     bc.Render(g, 0, 0, _image.Width, _image.Height, pt, dpi, code)
                     image = image.GetInstance(_image, Color.WHITE)
+                ElseIf type IsNot Nothing AndAlso type.Equals("itf") Then
+                    Dim bc As New CITF
+                    If design.Get("without_text") Then
+                        bc.WithText = False
+                    End If
+                    Const scale As Integer = 5
+                    Dim _image As New Drawing.Bitmap(CInt(_region.GetWidth * scale), CInt(_region.GetHeight * scale))
+                    Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(_image)
+                    g.FillRectangle(Drawing.Brushes.White, 0, 0, _image.Width, _image.Height)
+                    Const dpi As Integer = 72 * scale
+                    bc.Render(g, 0, 0, _region.GetWidth, _region.GetHeight, dpi, code)
+                    image = image.GetInstance(_image, Color.WHITE)
                 Else
                     Dim bc As New BarcodeEAN
                     bc.CodeType = iTextSharp.text.pdf.Barcode.EAN13

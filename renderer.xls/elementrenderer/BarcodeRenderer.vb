@@ -122,6 +122,13 @@ Namespace elementrenderer
                         End If
                         Const dpi As Integer = 72 * scale
                         barcode.Render(g, 0, 0, image.Width, image.Height, pt, dpi, Me.Code)
+                    ElseIf type IsNot Nothing AndAlso type = "itf" Then
+                        Dim barcode As New CITF
+                        If ElementDesc.Get("without_text") Then
+                            barcode.WithText = False
+                        End If
+                        Const dpi As Integer = 72 * scale
+                        barcode.Render(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
                     Else
                         Dim barcode As New CEan13
                         If ElementDesc.Get("without_text") Then

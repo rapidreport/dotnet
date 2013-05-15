@@ -33,6 +33,8 @@ Namespace elementrenderer
                         code = "QRCODEQRCODEQRCODEQRCODEQRCODE"
                     Case "yubincustomer"
                         code = "99999999999999999999"
+                    Case "itf"
+                        code = "99999999999999"
                     Case Else
                         code = "9999999999999"
                 End Select
@@ -121,6 +123,12 @@ Namespace elementrenderer
                             pt = design.Get("point")
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, pt, code)
+                    Case "itf"
+                        Dim barcode As New CITF
+                        If design.Get("without_text") Then
+                            barcode.WithText = False
+                        End If
+                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case Else
                         Dim barcode As New CEan13
                         If design.Get("without_text") Then
