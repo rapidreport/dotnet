@@ -235,8 +235,9 @@ Public Module TextFormatterUtil
         With Nothing
             Dim _intValue As String = Nothing
             With Nothing
-                negative = (v < 0)
-                Dim _v As String = ReportUtil.Round5(Math.Abs(v), -decLength).ToString
+                Dim __v As Decimal = ReportUtil.Round5(v, -decLength)
+                negative = (__v < 0)
+                Dim _v As String = Math.Abs(__v).ToString
                 Dim i As Integer = _v.IndexOf(".")
                 If i >= 0 Then
                     _intValue = _v.Substring(0, i)
