@@ -52,6 +52,8 @@ Namespace elementrenderer
                     If Not c.Equals(Color.Empty) Then
                         sp.SetFillColor(c.R, c.G, c.B)
                     End If
+                Else
+                    sp.IsNoFill = True
                 End If
                 If Not Me.Design.IsNull("line_width") Then
                     sp.LineWidth = HSSFSimpleShape.LINEWIDTH_ONE_PT * lineWidth
