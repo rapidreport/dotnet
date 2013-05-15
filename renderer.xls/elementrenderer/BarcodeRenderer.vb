@@ -41,8 +41,9 @@ Namespace elementrenderer
                 If Me.Code Is Nothing Then
                     Exit Sub
                 End If
-                Dim image As New Bitmap(CType(Shape.Region.GetWidth * 5, Integer), _
-                                        CType(Shape.Region.GetHeight * 5, Integer))
+                Const scale As Integer = 5
+                Dim image As New Bitmap(CType(Shape.Region.GetWidth * scale, Integer), _
+                                        CType(Shape.Region.GetHeight * scale, Integer))
                 Dim g As Graphics = Graphics.FromImage(image)
                 g.FillRectangle(Brushes.White, 0, 0, image.Width, image.Height)
                 Dim type As String = ElementDesc.Get("barcode_type")
@@ -113,6 +114,14 @@ Namespace elementrenderer
                                 End If
                             Next
                         Next
+                    ElseIf type IsNot Nothing AndAlso type = "yubincustomer" Then
+                        Dim barcode As New CYubinCustomer
+                        Dim pt As Single = 10.0F
+                        If Not ElementDesc.IsNull("point") Then
+                            pt = ElementDesc.Get("point")
+                        End If
+                        Const dpi As Integer = 72 * scale
+                        barcode.Render(g, 0, 0, image.Width, image.Height, pt, dpi, Me.Code)
                     Else
                         Dim barcode As New CEan13
                         If ElementDesc.Get("without_text") Then

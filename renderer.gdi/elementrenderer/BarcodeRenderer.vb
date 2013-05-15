@@ -31,6 +31,8 @@ Namespace elementrenderer
                         code = "99999999"
                     Case "qrcode"
                         code = "QRCODEQRCODEQRCODEQRCODEQRCODE"
+                    Case "yubincustomer"
+                        code = "99999999999999999999"
                     Case Else
                         code = "9999999999999"
                 End Select
@@ -112,6 +114,13 @@ Namespace elementrenderer
                                 End If
                             Next
                         Next
+                    Case "yubincustomer"
+                        Dim barcode As New CYubinCustomer
+                        Dim pt As Single = 10.0F
+                        If Not design.IsNull("point") Then
+                            pt = design.Get("point")
+                        End If
+                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, pt, code)
                     Case Else
                         Dim barcode As New CEan13
                         If design.Get("without_text") Then

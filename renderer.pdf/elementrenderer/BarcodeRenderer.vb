@@ -5,6 +5,7 @@ Imports com.google.zxing
 Imports com.google.zxing.common
 Imports com.google.zxing.qrcode
 
+Imports jp.co.systembase.barcode
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
 
@@ -40,7 +41,7 @@ Namespace elementrenderer
                     image = bc.CreateImageWithBarcode(cb, Nothing, Nothing)
                 ElseIf type IsNot Nothing AndAlso type.Equals("ean8") Then
                     Dim bc As New BarcodeEAN
-                    bc.CodeType = Barcode.EAN8
+                    bc.CodeType = iTextSharp.text.pdf.Barcode.EAN8
                     If design.Get("without_text") Then
                         bc.Font = Nothing
                     End If
@@ -105,9 +106,22 @@ Namespace elementrenderer
                     Next
                     tmp.Fill()
                     image = image.GetInstance(tmp)
+                ElseIf type IsNot Nothing AndAlso type.Equals("yubincustomer") Then
+                    Dim bc As New CYubinCustomer
+                    Dim pt As Single = 10.0F
+                    If Not design.IsNull("point") Then
+                        pt = design.Get("point")
+                    End If
+                    Const scale As Integer = 5
+                    Dim _image As New Drawing.Bitmap(CInt(_region.GetWidth * scale), CInt(_region.GetHeight * scale))
+                    Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(_image)
+                    g.FillRectangle(Drawing.Brushes.White, 0, 0, _image.Width, _image.Height)
+                    Const dpi As Integer = 72 * scale
+                    bc.Render(g, 0, 0, _image.Width, _image.Height, pt, dpi, code)
+                    image = image.GetInstance(_image, Color.WHITE)
                 Else
                     Dim bc As New BarcodeEAN
-                    bc.CodeType = Barcode.EAN13
+                    bc.CodeType = iTextSharp.text.pdf.Barcode.EAN13
                     If design.Get("without_text") Then
                         bc.Font = Nothing
                     End If
