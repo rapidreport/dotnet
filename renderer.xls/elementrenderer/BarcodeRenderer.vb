@@ -10,6 +10,7 @@ Imports jp.co.systembase.barcode
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer.xls.component
 Imports jp.co.systembase.report.renderer
+Imports jp.co.systembase.barcode.CBarcode
 
 Namespace elementrenderer
     Public Class BarcodeRenderer
@@ -121,14 +122,25 @@ Namespace elementrenderer
                             pt = ElementDesc.Get("point")
                         End If
                         Const dpi As Integer = 72 * scale
-                        barcode.Render(g, 0, 0, image.Width, image.Height, pt, dpi, Me.Code)
+                        barcode.Render(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, pt, dpi, Me.Code)
                     ElseIf type IsNot Nothing AndAlso type = "itf" Then
                         Dim barcode As New CITF
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If
                         Const dpi As Integer = 72 * scale
-                        barcode.Render(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
+                        Dim c As BarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
+                        If c Is Nothing Then
+                            Exit Sub
+                        End If
+                        For Each b As BarContent.Bar In c.GetBars
+                            g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
+                        Next
+                        Dim t As BarContent.Text = c.GetText
+                        If Not t Is Nothing Then
+                            Dim f As New Font(t.GetFont.Name, t.GetFont.Size * 0.75F)
+                            g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)
+                        End If
                     Else
                         Dim barcode As New CEan13
                         If ElementDesc.Get("without_text") Then

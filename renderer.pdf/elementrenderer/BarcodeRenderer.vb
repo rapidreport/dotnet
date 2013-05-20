@@ -8,6 +8,8 @@ Imports com.google.zxing.qrcode
 Imports jp.co.systembase.barcode
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
+Imports jp.co.systembase.barcode.CBarcode
+Imports jp.co.systembase.barcode.CBarcode.BarContent
 
 Namespace elementrenderer
 
@@ -28,6 +30,7 @@ Namespace elementrenderer
             Dim image As Image = Nothing
             Dim cb As PdfContentByte = renderer.Writer.DirectContent
             Dim type As String = design.Get("barcode_type")
+            Dim scaleMargin As Single = 2.0F
             Try
                 If type IsNot Nothing AndAlso type.Equals("code39") Then
                     Dim bc As New Barcode39
@@ -112,25 +115,59 @@ Namespace elementrenderer
                     If Not design.IsNull("point") Then
                         pt = design.Get("point")
                     End If
-                    Const scale As Integer = 5
-                    Dim _image As New Drawing.Bitmap(CInt(_region.GetWidth * scale), CInt(_region.GetHeight * scale))
-                    Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(_image)
-                    g.FillRectangle(Drawing.Brushes.White, 0, 0, _image.Width, _image.Height)
-                    Const dpi As Integer = 72 * scale
-                    bc.Render(g, 0, 0, _image.Width, _image.Height, pt, dpi, code)
-                    image = image.GetInstance(_image, Color.WHITE)
+                    Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
+                    Dim c As BarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, pt, code)
+                    tmp.SetColorFill(Color.WHITE)
+                    tmp.Rectangle(0, 0, tmp.Width, tmp.Height)
+                    tmp.Fill()
+                    tmp.SetColorFill(Color.BLACK)
+                    Dim codes As New List(Of String)
+                    For Each _code As String In bc.Encode(code)
+                        For Each _c As Char In _code
+                            codes.Add(_c)
+                        Next
+                    Next
+                    For i As Integer = 0 To c.GetBars.Count - 1
+                        Dim b As Bar = c.GetBars(i)
+                        Dim y As Single = tmp.Height - b.GetHeight
+                        Dim _type As String = codes(i)
+                        If _type = "3" Then
+                            y = tmp.Height - c.GetBars(0).GetHeight
+                        ElseIf _type = "4" Then
+                            y -= b.GetHeight
+                        End If
+                        tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
+                    Next
+                    tmp.Fill()
+                    image = image.GetInstance(tmp)
+                    scaleMargin = 0.0F
                 ElseIf type IsNot Nothing AndAlso type.Equals("itf") Then
                     Dim bc As New CITF
                     If design.Get("without_text") Then
                         bc.WithText = False
                     End If
-                    Const scale As Integer = 5
-                    Dim _image As New Drawing.Bitmap(CInt(_region.GetWidth * scale), CInt(_region.GetHeight * scale))
-                    Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(_image)
-                    g.FillRectangle(Drawing.Brushes.White, 0, 0, _image.Width, _image.Height)
-                    Const dpi As Integer = 72 * scale
-                    bc.Render(g, 0, 0, _region.GetWidth, _region.GetHeight, dpi, code)
-                    image = image.GetInstance(_image, Color.WHITE)
+                    Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
+                    Dim c As BarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
+                    tmp.SetColorFill(Color.WHITE)
+                    tmp.Rectangle(0, 0, tmp.Width, tmp.Height)
+                    tmp.Fill()
+                    tmp.SetColorFill(Color.BLACK)
+                    For Each b As Bar In c.GetBars
+                        Dim y As Single = tmp.Height - b.GetY - b.GetHeight
+                        tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
+                    Next
+                    tmp.Fill()
+                    Dim t As Text = c.GetText
+                    If Not t Is Nothing Then
+                        tmp.BeginText()
+                        Dim f As Font = FontFactory.GetFont(t.GetFont.Name, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED)
+                        tmp.SetFontAndSize(f.GetCalculatedBaseFont(True), t.GetFont.Size)
+                        Dim y As Single = tmp.Height - (t.GetY + t.GetFont.Size) + (t.GetFont.Size / 10)
+                        tmp.ShowTextAligned(PdfContentByte.ALIGN_CENTER, t.GetCode, t.GetX, y, 0)
+                        tmp.EndText()
+                    End If
+                    image = image.GetInstance(tmp)
+                    scaleMargin = 0.0F
                 Else
                     Dim bc As New BarcodeEAN
                     bc.CodeType = iTextSharp.text.pdf.Barcode.EAN13
@@ -148,7 +185,7 @@ Namespace elementrenderer
             Catch ex As Exception
             End Try
             If image IsNot Nothing Then
-                image.ScaleAbsolute(_region.GetWidth - 2, _region.GetHeight - 2)
+                image.ScaleAbsolute(_region.GetWidth - scaleMargin, _region.GetHeight - scaleMargin)
                 image.SetAbsolutePosition(renderer.Trans.X(_region.Left + 1), renderer.Trans.Y(_region.Bottom + 1))
                 cb.AddImage(image)
             End If
