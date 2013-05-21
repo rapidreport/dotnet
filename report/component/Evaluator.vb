@@ -109,8 +109,9 @@ Namespace component
                 Else
                     _ex = New EvalException("an error occurred while evaluating exp : " & exp, ex)
                 End If
-                If Me.BasicContext.Report.Design.Setting.Logger IsNot Nothing Then
-                    Me.BasicContext.Report.Design.Setting.Logger.EvaluateError(exp, _ex)
+                Dim logger As IReportLogger = Me.BasicContext.Report.Design.Setting.Logger
+                If logger IsNot Nothing Then
+                    logger.EvaluateError(exp, _ex)
                 End If
                 Throw _ex
             End Try
@@ -135,10 +136,11 @@ Namespace component
                 Dim dataSource As IReportDataSource = scopeData.GetWrapperDataSource(unitGroupDesign)
                 Dim indexRange As IndexRange = scopeData.GetDataIndexRange(unitGroupDesign)
                 Dim dataCache As DataCache = Me.BasicContext.Report.DataCache
+                Dim logger As IReportLogger = Me.BasicContext.Report.Design.Setting.Logger
                 If indexRange IsNot Nothing Then
-                    Return New ReportData(dataSource, indexRange.BeginIndex, indexRange.EndIndex, dataCache)
+                    Return New ReportData(dataSource, indexRange.BeginIndex, indexRange.EndIndex, dataCache, logger)
                 Else
-                    Return New ReportData(dataSource, dataCache)
+                    Return New ReportData(dataSource, dataCache, logger)
                 End If
             End If
         End Function

@@ -69,6 +69,7 @@ Public Class Report
     Public DataCache As New DataCache
     Public Filled As Boolean = False
     Public InDesigner As Boolean = False
+    Public CustomFieldStack As New CustomField.Stack
 
     Public WrapperDataSourceMap As New Dictionary(Of GroupDesign, WrapperDataSource)
 

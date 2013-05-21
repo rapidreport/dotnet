@@ -12,33 +12,34 @@ Namespace data
         Public BeginIndex As Integer = -1
         Public EndIndex As Integer = -1
         Public DataCache As DataCache
+        Public Logger As IReportLogger
 
-        Public Sub New(ByVal dataSource As IReportDataSource, ByVal dataCache As DataCache)
-            Me.initialize(dataSource, 0, dataSource.Size, Nothing, Nothing, dataCache)
+        Public Sub New(ByVal dataSource As IReportDataSource, ByVal dataCache As DataCache, ByVal logger As IReportLogger)
+            Me.initialize(dataSource, 0, dataSource.Size, Nothing, Nothing, dataCache, logger)
         End Sub
 
-        Public Sub New(ByVal dataSource As IReportDataSource, ByVal beginIndex As Integer, ByVal endIndex As Integer, ByVal dataCache As DataCache)
-            Me.initialize(dataSource, beginIndex, endIndex, Nothing, Nothing, dataCache)
+        Public Sub New(ByVal dataSource As IReportDataSource, ByVal beginIndex As Integer, ByVal endIndex As Integer, ByVal dataCache As DataCache, ByVal logger As IReportLogger)
+            Me.initialize(dataSource, beginIndex, endIndex, Nothing, Nothing, dataCache, logger)
         End Sub
 
         Public Sub New(ByVal dataSource As IReportDataSource, ByVal group As Group)
-            Me.initialize(dataSource, 0, dataSource.Size, group.GetReport, group, group.GetReport.DataCache)
+            Me.initialize(dataSource, 0, dataSource.Size, group.GetReport, group, group.GetReport.DataCache, group.GetReport.Design.Setting.Logger)
         End Sub
 
         Public Sub New(ByVal dataSource As IReportDataSource, ByVal report As Report, ByVal group As Group)
-            Me.initialize(dataSource, 0, dataSource.Size, report, group, report.DataCache)
+            Me.initialize(dataSource, 0, dataSource.Size, report, group, report.DataCache, report.Design.Setting.Logger)
         End Sub
 
         Public Sub New(ByVal dataSource As IReportDataSource, ByVal beginIndex As Integer, ByVal endIndex As Integer, ByVal report As Report, ByVal group As Group)
-            Me.initialize(dataSource, beginIndex, endIndex, report, group, report.DataCache)
+            Me.initialize(dataSource, beginIndex, endIndex, report, group, report.DataCache, report.Design.Setting.Logger)
         End Sub
 
         Public Sub New(ByVal data As ReportData)
-            Me.initialize(data.DataSource, data.BeginIndex, data.EndIndex, data.Report, data.Group, data.dataCache)
+            Me.initialize(data.DataSource, data.BeginIndex, data.EndIndex, data.Report, data.Group, data.DataCache, data.Logger)
         End Sub
 
         Public Sub New(ByVal data As ReportData, ByVal beginIndex As Integer, ByVal endIndex As Integer)
-            Me.initialize(data.DataSource, beginIndex, endIndex, data.Report, data.Group, data.DataCache)
+            Me.initialize(data.DataSource, beginIndex, endIndex, data.Report, data.Group, data.DataCache, data.Logger)
         End Sub
 
         Public Shared Function GetPartialData(ByVal data As ReportData, ByVal beginIndex As Integer, ByVal endIndex As Integer)
@@ -59,11 +60,13 @@ Namespace data
           ByVal endIndex As Integer, _
           ByVal report As Report, _
           ByVal group As Group, _
-          ByVal dataCache As DataCache)
+          ByVal dataCache As DataCache, _
+          ByVal logger As IReportLogger)
             Me.DataSource = dataSource
             Me.Report = report
             Me.Group = group
             Me.DataCache = dataCache
+            Me.Logger = logger
             If beginIndex >= 0 And beginIndex < endIndex Then
                 Me.BeginIndex = beginIndex
                 Me.EndIndex = endIndex
@@ -133,12 +136,28 @@ Namespace data
             If Me.BeginIndex < 0 OrElse i < 0 OrElse i >= Me.Size Then
                 Throw New ArgumentOutOfRangeException
             End If
-            Dim customField As _CustomField = Me.findCustomField(key)
-            If customField IsNot Nothing Then
-                Return customField.Get(customField.Data.TransIndex(Me, i))
-            Else
-                Return Me.DataSource.Get(i + Me.BeginIndex, key)
-            End If
+            Dim customField As CustomField = Me.findCustomField(key)
+            Try
+                If customField IsNot Nothing Then
+                    If Me.Report IsNot Nothing Then
+                        Me.Report.CustomFieldStack.Push(customField)
+                    End If
+                    Try
+                        Return customField.Get(customField.Data.TransIndex(Me, i))
+                    Finally
+                        If Me.Report IsNot Nothing Then
+                            Me.Report.CustomFieldStack.Pop()
+                        End If
+                    End Try
+                Else
+                    Return Me.DataSource.Get(i + Me.BeginIndex, key)
+                End If
+            Catch ex As EvalException
+                If Me.Logger IsNot Nothing Then
+                    Me.Logger.EvaluateError(key, ex)
+                End If
+                Return Nothing
+            End Try
         End Function
 
         Public Function Size() As Integer Implements IReportDataSource.Size
@@ -149,48 +168,12 @@ Namespace data
             End If
         End Function
 
-        Private Class _CustomField
-            Public Key As String
-            Public Exp As String
-            Public Report As Report
-            Public Data As ReportData
-            Public Sub New( _
-              ByVal key As String, _
-              ByVal exp As String, _
-              ByVal report As Report, _
-              ByVal data As ReportData)
-                Me.Key = key
-                Me.Exp = exp
-                Me.Report = report
-                Me.Data = data
-            End Sub
-            Public Function [Get](ByVal i As Integer) As Object
-                If Not TypeOf Me.Data.DataSource Is INoCache Then
-                    With Me.Report.DataCache.CustomField(Me.Data, Key)
-                        If .ContainsKey(i) Then
-                            Return .Item(i)
-                        Else
-                            Dim ret As Object = Me.eval(i)
-                            .Add(i, ret)
-                            Return ret
-                        End If
-                    End With
-                Else
-                    Return Me.eval(i)
-                End If
-            End Function
-            Private Function eval(ByVal i As Integer) As Object
-                Dim r As New ReportDataRecord(Me.Data, i)
-                Return New Evaluator(Me.Report, Me.Data, r).EvalTry(Me.Exp)
-            End Function
-        End Class
-
-        Private Function findCustomField(ByVal key As String) As _CustomField
+        Private Function findCustomField(ByVal key As String) As CustomField
             Dim g As Group = Me.Group
             Do While g IsNot Nothing AndAlso Me.HasSameSource(g.Data)
                 Dim gd As GroupDesign = g.GetDesign
                 If gd.CustomFields IsNot Nothing AndAlso gd.CustomFields.ContainsKey(key) Then
-                    Return New _CustomField( _
+                    Return New CustomField( _
                       key, _
                       gd.CustomFields(key), _
                       Me.Report, _
@@ -207,7 +190,7 @@ Namespace data
             If Me.Report IsNot Nothing AndAlso Me.HasSameSource(Me.Report.Data) Then
                 Dim rd As ReportDesign = Me.Report.Design
                 If rd.CustomFields IsNot Nothing AndAlso rd.CustomFields.ContainsKey(key) Then
-                    Return New _CustomField( _
+                    Return New CustomField( _
                       key, _
                       rd.CustomFields(key), _
                       Me.Report, _
@@ -323,74 +306,106 @@ Namespace data
             Dim countCache As Dictionary(Of Integer, Integer)
             Dim _beginIndex As Integer
             Dim _endIndex As Integer
-            Dim customField As _CustomField = Me.findCustomField(key)
-            With Nothing
-                Dim dc As DataCache = Me.DataCache
-                If customField IsNot Nothing Then
-                    summaryCache = dc.CustomFieldSummary(customField.Data, key)
-                    countCache = dc.CustomFieldCount(customField.Data, key)
-                    _beginIndex = customField.Data.TransIndex(Me, 0)
-                    _endIndex = customField.Data.TransIndex(Me, Me.Size)
-                Else
-                    summaryCache = dc.Summary(Me.DataSource, key)
-                    countCache = dc.Count(Me.DataSource, key)
-                    _beginIndex = Me.BeginIndex
-                    _endIndex = Me.EndIndex
+            Dim customField As CustomField = Me.findCustomField(key)
+            Try
+                If Me.Report IsNot Nothing And customField IsNot Nothing Then
+                    Me.Report.CustomFieldStack.Push(customField)
                 End If
-            End With
-            Dim segf As Integer = _beginIndex >> 8
-            Dim segt As Integer = _endIndex >> 8
-            For i As Integer = segf To segt
-                Dim offf As Integer = IIf(i = segf, _beginIndex And &HFF, 0)
-                Dim offt As Integer = IIf(i = segt, _endIndex And &HFF, &H100) - 1
-                Dim entire As Boolean = (offf = 0 And offt = &HFF)
-                If entire AndAlso summaryCache.ContainsKey(i) Then
-                    summary += summaryCache(i)
-                    count += countCache(i)
-                Else
-                    Dim _summary As Decimal = 0
-                    Dim _count As Integer = 0
-                    For j As Integer = offf To offt
-                        Dim o As Object = Nothing
-                        Dim _i As Integer = (i << 8) Or j
-                        If customField IsNot Nothing Then
-                            o = customField.Get(_i)
+                With Nothing
+                    Dim dc As DataCache = Me.DataCache
+                    If customField IsNot Nothing Then
+                        summaryCache = dc.CustomFieldSummary(customField.Data, key)
+                        countCache = dc.CustomFieldCount(customField.Data, key)
+                        _beginIndex = customField.Data.TransIndex(Me, 0)
+                        _endIndex = customField.Data.TransIndex(Me, Me.Size)
+                    Else
+                        summaryCache = dc.Summary(Me.DataSource, key)
+                        countCache = dc.Count(Me.DataSource, key)
+                        _beginIndex = Me.BeginIndex
+                        _endIndex = Me.EndIndex
+                    End If
+                End With
+                Try
+                    Dim segf As Integer = _beginIndex >> 8
+                    Dim segt As Integer = _endIndex >> 8
+                    For i As Integer = segf To segt
+                        Dim offf As Integer = IIf(i = segf, _beginIndex And &HFF, 0)
+                        Dim offt As Integer = IIf(i = segt, _endIndex And &HFF, &H100) - 1
+                        Dim entire As Boolean = (offf = 0 And offt = &HFF)
+                        If entire AndAlso summaryCache.ContainsKey(i) Then
+                            summary += summaryCache(i)
+                            count += countCache(i)
                         Else
-                            o = Me.DataSource.Get(_i, key)
-                        End If
-                        If o IsNot Nothing Then
-                            _summary += o
-                            _count += 1
+                            Dim _summary As Decimal = 0
+                            Dim _count As Integer = 0
+                            For j As Integer = offf To offt
+                                Dim o As Object = Nothing
+                                Dim _i As Integer = (i << 8) Or j
+                                If customField IsNot Nothing Then
+                                    o = customField.Get(_i)
+                                Else
+                                    o = Me.DataSource.Get(_i, key)
+                                End If
+                                If o IsNot Nothing Then
+                                    _summary += o
+                                    _count += 1
+                                End If
+                            Next
+                            summary += _summary
+                            count += _count
+                            If entire Then
+                                summaryCache.Add(i, _summary)
+                                countCache.Add(i, _count)
+                            End If
                         End If
                     Next
-                    summary += _summary
-                    count += _count
-                    If entire Then
-                        summaryCache.Add(i, _summary)
-                        countCache.Add(i, _count)
+                Finally
+                    If Me.Report IsNot Nothing And customField IsNot Nothing Then
+                        Me.Report.CustomFieldStack.Pop()
                     End If
+                End Try
+                Return New _SummaryResult(summary, count)
+            Catch ex As EvalException
+                If Me.Logger IsNot Nothing Then
+                    Me.Logger.EvaluateError(key, ex)
                 End If
-            Next
-            Return New _SummaryResult(summary, count)
+                Return New _SummaryResult(0, 0)
+            End Try
         End Function
 
         Private Function getSummary_NoCache(ByVal key As String) As _SummaryResult
             Dim summary As Decimal = 0
             Dim count As Integer = 0
-            Dim customField As _CustomField = Me.findCustomField(key)
-            For i As Integer = 0 To Me.Size - 1
-                Dim o As Object
-                If customField IsNot Nothing Then
-                    o = customField.Get(customField.Data.TransIndex(Me, i))
-                Else
-                    o = Me.DataSource.Get(i + Me.BeginIndex, key)
+            Dim customField As CustomField = Me.findCustomField(key)
+            Try
+                If Me.Report IsNot Nothing And customField IsNot Nothing Then
+                    Me.Report.CustomFieldStack.Push(customField)
                 End If
-                If o IsNot Nothing Then
-                    summary += o
-                    count += 1
+                Try
+                    For i As Integer = 0 To Me.Size - 1
+                        Dim o As Object
+                        If customField IsNot Nothing Then
+                            o = customField.Get(customField.Data.TransIndex(Me, i))
+                        Else
+                            o = Me.DataSource.Get(i + Me.BeginIndex, key)
+                        End If
+                        If o IsNot Nothing Then
+                            summary += o
+                            count += 1
+                        End If
+                    Next
+                Finally
+                    If Me.Report IsNot Nothing And customField IsNot Nothing Then
+                        Me.Report.CustomFieldStack.Pop()
+                    End If
+                End Try
+                Return New _SummaryResult(summary, count)
+            Catch ex As EvalException
+                If Me.Logger IsNot Nothing Then
+                    Me.Logger.EvaluateError(key, ex)
                 End If
-            Next
-            Return New _SummaryResult(summary, count)
+                Return New _SummaryResult(0, 0)
+            End Try
         End Function
 
         Public Function GetId() As String
