@@ -124,7 +124,7 @@ Namespace elementrenderer
                         Const dpi As Integer = 72 * scale
                         barcode.Render(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, pt, dpi, Me.Code)
                     ElseIf type IsNot Nothing AndAlso type = "itf" Then
-                        Dim barcode As New CITF
+                        Dim barcode As New CItf
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If

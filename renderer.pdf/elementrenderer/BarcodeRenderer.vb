@@ -142,7 +142,7 @@ Namespace elementrenderer
                     image = image.GetInstance(tmp)
                     scaleMargin = 0.0F
                 ElseIf type IsNot Nothing AndAlso type.Equals("itf") Then
-                    Dim bc As New CITF
+                    Dim bc As New CItf
                     If design.Get("without_text") Then
                         bc.WithText = False
                     End If

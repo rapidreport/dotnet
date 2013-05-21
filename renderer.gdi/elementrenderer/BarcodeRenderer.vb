@@ -124,7 +124,7 @@ Namespace elementrenderer
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, pt, code)
                     Case "itf"
-                        Dim barcode As New CITF
+                        Dim barcode As New CItf
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
