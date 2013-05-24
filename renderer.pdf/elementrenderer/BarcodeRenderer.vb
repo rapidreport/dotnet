@@ -168,6 +168,33 @@ Namespace elementrenderer
                     End If
                     image = image.GetInstance(tmp)
                     scaleMargin = 0.0F
+                ElseIf type IsNot Nothing AndAlso type.Equals("gs1128") Then
+                    Dim bc As New CGs1128
+                    If design.Get("without_text") Then
+                        bc.WithText = False
+                    End If
+                    Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
+                    Dim c As BarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
+                    tmp.SetColorFill(Color.WHITE)
+                    tmp.Rectangle(0, 0, tmp.Width, tmp.Height)
+                    tmp.Fill()
+                    tmp.SetColorFill(Color.BLACK)
+                    For Each b As Bar In c.GetBars
+                        Dim y As Single = tmp.Height - b.GetY - b.GetHeight
+                        tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
+                    Next
+                    tmp.Fill()
+                    Dim t As Text = c.GetText
+                    If Not t Is Nothing Then
+                        tmp.BeginText()
+                        Dim f As Font = FontFactory.GetFont(t.GetFont.Name, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED)
+                        tmp.SetFontAndSize(f.GetCalculatedBaseFont(True), t.GetFont.Size)
+                        Dim y As Single = tmp.Height - (t.GetY + t.GetFont.Size) + (t.GetFont.Size / 10)
+                        tmp.ShowTextAligned(PdfContentByte.ALIGN_CENTER, t.GetCode, t.GetX, y, 0)
+                        tmp.EndText()
+                    End If
+                    image = image.GetInstance(tmp)
+                    scaleMargin = 0.0F
                 Else
                     Dim bc As New BarcodeEAN
                     bc.CodeType = iTextSharp.text.pdf.Barcode.EAN13

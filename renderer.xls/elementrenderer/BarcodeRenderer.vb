@@ -141,6 +141,24 @@ Namespace elementrenderer
                             Dim f As New Font(t.GetFont.Name, t.GetFont.Size * 0.75F)
                             g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)
                         End If
+                    ElseIf type IsNot Nothing AndAlso type = "gs1128" Then
+                        Dim barcode As New CGs1128
+                        If ElementDesc.Get("without_text") Then
+                            barcode.WithText = False
+                        End If
+                        Const dpi As Integer = 72 * scale
+                        Dim c As BarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
+                        If c Is Nothing Then
+                            Exit Sub
+                        End If
+                        For Each b As BarContent.Bar In c.GetBars
+                            g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
+                        Next
+                        Dim t As BarContent.Text = c.GetText
+                        If Not t Is Nothing Then
+                            Dim f As New Font(t.GetFont.Name, t.GetFont.Size * 0.75F)
+                            g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)
+                        End If
                     Else
                         Dim barcode As New CEan13
                         If ElementDesc.Get("without_text") Then

@@ -35,6 +35,8 @@ Namespace elementrenderer
                         code = "99999999999999999999"
                     Case "itf"
                         code = "99999999999999"
+                    Case "gs1128"
+                        code = "#{99}99999999"
                     Case Else
                         code = "9999999999999"
                 End Select
@@ -125,6 +127,12 @@ Namespace elementrenderer
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, pt, code)
                     Case "itf"
                         Dim barcode As New CItf
+                        If design.Get("without_text") Then
+                            barcode.WithText = False
+                        End If
+                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
+                    Case "gs1128"
+                        Dim barcode As New CGs1128
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
