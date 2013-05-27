@@ -129,6 +129,9 @@ Namespace elementrenderer
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If
+                        If ElementDesc.Get("generate_checksum") Then
+                            barcode.GenerateCheckSum = True
+                        End If
                         Const dpi As Integer = 72 * scale
                         Dim c As CBarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
                         If c Is Nothing Then

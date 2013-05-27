@@ -130,6 +130,9 @@ Namespace elementrenderer
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
+                        If design.Get("generate_checksum") Then
+                            barcode.GenerateCheckSum = True
+                        End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case "gs1128"
                         Dim barcode As New CGs1128

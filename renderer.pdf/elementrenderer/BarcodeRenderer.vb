@@ -147,6 +147,9 @@ Namespace elementrenderer
                     If design.Get("without_text") Then
                         bc.WithText = False
                     End If
+                    If design.Get("generate_checksum") Then
+                        bc.GenerateCheckSum = True
+                    End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
                     Dim c As CBarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
                     tmp.SetColorFill(Color.WHITE)
