@@ -10,6 +10,7 @@ Imports jp.co.systembase.barcode
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer.xls.component
 Imports jp.co.systembase.report.renderer
+Imports jp.co.systembase.barcode.content
 Imports jp.co.systembase.barcode.CBarcode
 
 Namespace elementrenderer
@@ -129,14 +130,14 @@ Namespace elementrenderer
                             barcode.WithText = False
                         End If
                         Const dpi As Integer = 72 * scale
-                        Dim c As BarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
+                        Dim c As CBarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
                         If c Is Nothing Then
                             Exit Sub
                         End If
-                        For Each b As BarContent.Bar In c.GetBars
+                        For Each b As CBarContent.CBar In c.GetBars
                             g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
                         Next
-                        Dim t As BarContent.Text = c.GetText
+                        Dim t As CBarContent.CText = c.GetText
                         If Not t Is Nothing Then
                             Dim f As New Font(t.GetFont.Name, t.GetFont.Size * 0.75F)
                             g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)
@@ -147,14 +148,14 @@ Namespace elementrenderer
                             barcode.WithText = False
                         End If
                         Const dpi As Integer = 72 * scale
-                        Dim c As BarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
+                        Dim c As CBarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
                         If c Is Nothing Then
                             Exit Sub
                         End If
-                        For Each b As BarContent.Bar In c.GetBars
+                        For Each b As CBarContent.CBar In c.GetBars
                             g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
                         Next
-                        Dim t As BarContent.Text = c.GetText
+                        Dim t As CBarContent.CText = c.GetText
                         If Not t Is Nothing Then
                             Dim f As New Font(t.GetFont.Name, t.GetFont.Size * 0.75F)
                             g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)

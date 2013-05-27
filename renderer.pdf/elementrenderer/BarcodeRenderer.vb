@@ -8,8 +8,9 @@ Imports com.google.zxing.qrcode
 Imports jp.co.systembase.barcode
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
+Imports jp.co.systembase.barcode.content
+Imports jp.co.systembase.barcode.content.CBarContent
 Imports jp.co.systembase.barcode.CBarcode
-Imports jp.co.systembase.barcode.CBarcode.BarContent
 
 Namespace elementrenderer
 
@@ -116,7 +117,7 @@ Namespace elementrenderer
                         pt = design.Get("point")
                     End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
-                    Dim c As BarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, pt, code)
+                    Dim c As CBarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, pt, code)
                     tmp.SetColorFill(Color.WHITE)
                     tmp.Rectangle(0, 0, tmp.Width, tmp.Height)
                     tmp.Fill()
@@ -128,7 +129,7 @@ Namespace elementrenderer
                         Next
                     Next
                     For i As Integer = 0 To c.GetBars.Count - 1
-                        Dim b As Bar = c.GetBars(i)
+                        Dim b As CBar = c.GetBars(i)
                         Dim y As Single = tmp.Height - b.GetHeight
                         Dim _type As String = codes(i)
                         If _type = "3" Then
@@ -147,17 +148,17 @@ Namespace elementrenderer
                         bc.WithText = False
                     End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
-                    Dim c As BarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
+                    Dim c As CBarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
                     tmp.SetColorFill(Color.WHITE)
                     tmp.Rectangle(0, 0, tmp.Width, tmp.Height)
                     tmp.Fill()
                     tmp.SetColorFill(Color.BLACK)
-                    For Each b As Bar In c.GetBars
+                    For Each b As CBar In c.GetBars
                         Dim y As Single = tmp.Height - b.GetY - b.GetHeight
                         tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
                     Next
                     tmp.Fill()
-                    Dim t As Text = c.GetText
+                    Dim t As CText = c.GetText
                     If Not t Is Nothing Then
                         tmp.BeginText()
                         Dim f As Font = FontFactory.GetFont(t.GetFont.Name, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED)
@@ -174,17 +175,17 @@ Namespace elementrenderer
                         bc.WithText = False
                     End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
-                    Dim c As BarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
+                    Dim c As CBarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
                     tmp.SetColorFill(Color.WHITE)
                     tmp.Rectangle(0, 0, tmp.Width, tmp.Height)
                     tmp.Fill()
                     tmp.SetColorFill(Color.BLACK)
-                    For Each b As Bar In c.GetBars
+                    For Each b As CBar In c.GetBars
                         Dim y As Single = tmp.Height - b.GetY - b.GetHeight
                         tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
                     Next
                     tmp.Fill()
-                    Dim t As Text = c.GetText
+                    Dim t As CText = c.GetText
                     If Not t Is Nothing Then
                         tmp.BeginText()
                         Dim f As Font = FontFactory.GetFont(t.GetFont.Name, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED)
