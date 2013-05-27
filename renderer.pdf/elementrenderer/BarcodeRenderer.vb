@@ -130,18 +130,24 @@ Namespace elementrenderer
                     Next
                     For i As Integer = 0 To c.GetBars.Count - 1
                         Dim b As CBar = c.GetBars(i)
-                        Dim y As Single = tmp.Height - b.GetHeight
+                        Dim y As Single = 0
+                        Dim startBar As CBar = c.GetBars(0)
                         Dim _type As String = codes(i)
-                        If _type = "3" Then
-                            y = tmp.Height - c.GetBars(0).GetHeight
-                        ElseIf _type = "4" Then
-                            y -= b.GetHeight
-                        End If
+                        Select Case _type
+                            Case "1", "2"
+                                y = tmp.Height - b.GetHeight
+                            Case "3"
+                                y = tmp.Height - startBar.GetHeight
+                            Case "4"
+                                y = tmp.Height - b.GetHeight - b.GetHeight
+                            Case Else
+                                Throw New ArgumentException("illegal switch case: " & _type)
+                        End Select
                         tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
                     Next
                     tmp.Fill()
                     image = image.GetInstance(tmp)
-                    scaleMargin = 0.0F
+                    scaleMargin = 0
                 ElseIf type IsNot Nothing AndAlso type.Equals("itf") Then
                     Dim bc As New CItf
                     If design.Get("without_text") Then
@@ -171,7 +177,7 @@ Namespace elementrenderer
                         tmp.EndText()
                     End If
                     image = image.GetInstance(tmp)
-                    scaleMargin = 0.0F
+                    scaleMargin = 0
                 ElseIf type IsNot Nothing AndAlso type.Equals("gs1128") Then
                     Dim bc As New CGs1128
                     If design.Get("without_text") Then
@@ -198,7 +204,7 @@ Namespace elementrenderer
                         tmp.EndText()
                     End If
                     image = image.GetInstance(tmp)
-                    scaleMargin = 0.0F
+                    scaleMargin = 0
                 Else
                     Dim bc As New BarcodeEAN
                     bc.CodeType = iTextSharp.text.pdf.Barcode.EAN13
