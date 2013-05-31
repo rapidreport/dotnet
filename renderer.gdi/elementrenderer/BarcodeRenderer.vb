@@ -2,9 +2,8 @@
 Imports com.google.zxing.common
 Imports com.google.zxing.qrcode
 
-Imports jp.co.systembase.report.component
 Imports jp.co.systembase.barcode
-
+Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
 
 Namespace elementrenderer
@@ -37,6 +36,9 @@ Namespace elementrenderer
                         code = "99999999999999"
                     Case "gs1128"
                         code = "#{99}99999999"
+                        If design.Get("convenience_format") Then
+                            code = "#{91}999999999999999999999999999999999999999999"
+                        End If
                     Case Else
                         code = "9999999999999"
                 End Select
@@ -138,6 +140,9 @@ Namespace elementrenderer
                         Dim barcode As New CGs1128
                         If design.Get("without_text") Then
                             barcode.WithText = False
+                        End If
+                        If design.Get("convenience_format") Then
+                            barcode.ConvenienceFormat = True
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case Else

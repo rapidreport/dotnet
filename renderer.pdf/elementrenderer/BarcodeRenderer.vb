@@ -6,11 +6,11 @@ Imports com.google.zxing.common
 Imports com.google.zxing.qrcode
 
 Imports jp.co.systembase.barcode
-Imports jp.co.systembase.report.component
-Imports jp.co.systembase.report.renderer
+Imports jp.co.systembase.barcode.CBarcode
 Imports jp.co.systembase.barcode.content
 Imports jp.co.systembase.barcode.content.CBarContent
-Imports jp.co.systembase.barcode.CBarcode
+Imports jp.co.systembase.report.component
+Imports jp.co.systembase.report.renderer
 
 Namespace elementrenderer
 
@@ -118,9 +118,6 @@ Namespace elementrenderer
                     End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
                     Dim c As CBarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, pt, code)
-                    tmp.SetColorFill(Color.WHITE)
-                    tmp.Rectangle(0, 0, tmp.Width, tmp.Height)
-                    tmp.Fill()
                     tmp.SetColorFill(Color.BLACK)
                     Dim codes As New List(Of String)
                     For Each _code As String In bc.Encode(code)
@@ -134,15 +131,14 @@ Namespace elementrenderer
                         Dim startBar As CBar = c.GetBars(0)
                         Dim _type As String = codes(i)
                         Select Case _type
-                            Case "1", "2"
-                                y = tmp.Height - b.GetHeight
                             Case "3"
                                 y = tmp.Height - startBar.GetHeight
                             Case "4"
                                 y = tmp.Height - b.GetHeight - b.GetHeight
                             Case Else
-                                Throw New ArgumentException("illegal switch case: " & _type)
+                                y = tmp.Height - b.GetHeight
                         End Select
+                        y -= startBar.GetY
                         tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
                     Next
                     tmp.Fill()
@@ -158,24 +154,20 @@ Namespace elementrenderer
                     End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
                     Dim c As CBarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
-                    tmp.SetColorFill(Color.WHITE)
-                    tmp.Rectangle(0, 0, tmp.Width, tmp.Height)
-                    tmp.Fill()
                     tmp.SetColorFill(Color.BLACK)
                     For Each b As CBar In c.GetBars
                         Dim y As Single = tmp.Height - b.GetY - b.GetHeight
                         tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
                     Next
                     tmp.Fill()
-                    Dim t As CText = c.GetText
-                    If Not t Is Nothing Then
+                    For Each t In c.GetText
                         tmp.BeginText()
                         Dim f As Font = FontFactory.GetFont(t.GetFont.Name, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED)
                         tmp.SetFontAndSize(f.GetCalculatedBaseFont(True), t.GetFont.Size)
                         Dim y As Single = tmp.Height - (t.GetY + t.GetFont.Size) + (t.GetFont.Size / 10)
-                        tmp.ShowTextAligned(PdfContentByte.ALIGN_CENTER, t.GetCode, t.GetX, y, 0)
+                        tmp.ShowTextAligned(t.GetFormat.Alignment, t.GetCode, t.GetX, y, 0)
                         tmp.EndText()
-                    End If
+                    Next
                     image = image.GetInstance(tmp)
                     scaleMargin = 0
                 ElseIf type IsNot Nothing AndAlso type.Equals("gs1128") Then
@@ -183,26 +175,28 @@ Namespace elementrenderer
                     If design.Get("without_text") Then
                         bc.WithText = False
                     End If
+                    If design.Get("convenience_format") Then
+                        bc.ConvenienceFormat = True
+                    End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
-                    Dim c As CBarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
-                    tmp.SetColorFill(Color.WHITE)
-                    tmp.Rectangle(0, 0, tmp.Width, tmp.Height)
-                    tmp.Fill()
+                    Dim _image As New Drawing.Bitmap(CInt(_region.GetWidth), CInt(_region.GetHeight))
+                    Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(_image)
+                    Dim c As CBarContent = bc.CreateContent(g, 0, 0, tmp.Width, tmp.Height, code)
                     tmp.SetColorFill(Color.BLACK)
                     For Each b As CBar In c.GetBars
                         Dim y As Single = tmp.Height - b.GetY - b.GetHeight
                         tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
                     Next
                     tmp.Fill()
-                    Dim t As CText = c.GetText
-                    If Not t Is Nothing Then
+                    For Each t In c.GetText
                         tmp.BeginText()
                         Dim f As Font = FontFactory.GetFont(t.GetFont.Name, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED)
                         tmp.SetFontAndSize(f.GetCalculatedBaseFont(True), t.GetFont.Size)
                         Dim y As Single = tmp.Height - (t.GetY + t.GetFont.Size) + (t.GetFont.Size / 10)
-                        tmp.ShowTextAligned(PdfContentByte.ALIGN_CENTER, t.GetCode, t.GetX, y, 0)
+                        Const margin As Single = 2.5F
+                        tmp.ShowTextAligned(t.GetFormat.Alignment, t.GetCode, t.GetX + margin, y, 0)
                         tmp.EndText()
-                    End If
+                    Next
                     image = image.GetInstance(tmp)
                     scaleMargin = 0
                 Else

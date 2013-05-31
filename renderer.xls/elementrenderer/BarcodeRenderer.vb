@@ -6,12 +6,12 @@ Imports com.google.zxing.qrcode
 Imports com.google.zxing.qrcode.decoder
 
 Imports jp.co.systembase.barcode
-
-Imports jp.co.systembase.report.component
-Imports jp.co.systembase.report.renderer.xls.component
-Imports jp.co.systembase.report.renderer
-Imports jp.co.systembase.barcode.content
 Imports jp.co.systembase.barcode.CBarcode
+Imports jp.co.systembase.barcode.content
+Imports jp.co.systembase.barcode.content.CScale
+Imports jp.co.systembase.report.component
+Imports jp.co.systembase.report.renderer
+Imports jp.co.systembase.report.renderer.xls.component
 
 Namespace elementrenderer
     Public Class BarcodeRenderer
@@ -44,8 +44,12 @@ Namespace elementrenderer
                     Exit Sub
                 End If
                 Const scale As Integer = 5
-                Dim image As New Bitmap(CType(Shape.Region.GetWidth * scale, Integer), _
-                                        CType(Shape.Region.GetHeight * scale, Integer))
+                Dim width As Integer = CType(Shape.Region.GetWidth * scale, Integer)
+                Dim height As Integer = CType(Shape.Region.GetHeight * scale, Integer)
+                If width = 0 OrElse height = 0 Then
+                    Exit Sub
+                End If
+                Dim image As New Bitmap(width, height)
                 Dim g As Graphics = Graphics.FromImage(image)
                 g.FillRectangle(Brushes.White, 0, 0, image.Width, image.Height)
                 Dim type As String = ElementDesc.Get("barcode_type")
@@ -123,7 +127,7 @@ Namespace elementrenderer
                             pt = ElementDesc.Get("point")
                         End If
                         Const dpi As Integer = 72 * scale
-                        barcode.Render(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, pt, dpi, Me.Code)
+                        barcode.Render(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, pt, dpi, Code)
                     ElseIf type IsNot Nothing AndAlso type = "itf" Then
                         Dim barcode As New CItf
                         If ElementDesc.Get("without_text") Then
@@ -133,36 +137,34 @@ Namespace elementrenderer
                             barcode.GenerateCheckSum = True
                         End If
                         Const dpi As Integer = 72 * scale
-                        Dim c As CBarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
-                        If c Is Nothing Then
+                        Dim c As CBarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Code)
+                        If c.GetBars.Count = 0 Then
                             Exit Sub
                         End If
                         For Each b As CBarContent.CBar In c.GetBars
                             g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
                         Next
-                        Dim t As CBarContent.CText = c.GetText
-                        If Not t Is Nothing Then
+                        For Each t In c.GetText
                             Dim f As New Font(t.GetFont.Name, t.GetFont.Size * 0.75F)
                             g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)
-                        End If
+                        Next
                     ElseIf type IsNot Nothing AndAlso type = "gs1128" Then
                         Dim barcode As New CGs1128
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If
-                        Const dpi As Integer = 72 * scale
-                        Dim c As CBarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Me.Code)
-                        If c Is Nothing Then
-                            Exit Sub
+                        If ElementDesc.Get("convenience_format") Then
+                            barcode.ConvenienceFormat = True
                         End If
+                        Const dpi As Integer = 72 * scale
+                        Dim c As CBarContent = barcode.CreateContent(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Code)
                         For Each b As CBarContent.CBar In c.GetBars
                             g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
                         Next
-                        Dim t As CBarContent.CText = c.GetText
-                        If Not t Is Nothing Then
+                        For Each t In c.GetText
                             Dim f As New Font(t.GetFont.Name, t.GetFont.Size * 0.75F)
                             g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)
-                        End If
+                        Next
                     Else
                         Dim barcode As New CEan13
                         If ElementDesc.Get("without_text") Then
