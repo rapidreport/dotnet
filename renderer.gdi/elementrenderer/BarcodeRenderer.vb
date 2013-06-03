@@ -35,9 +35,9 @@ Namespace elementrenderer
                     Case "itf"
                         code = "99999999999999"
                     Case "gs1128"
-                        code = "#{99}99999999"
+                        code = "{99}99999999"
                         If design.Get("convenience_format") Then
-                            code = "#{91}999999999999999999999999999999999999999999"
+                            code = "{91}999999999999999999999999999999999999999999"
                         End If
                     Case Else
                         code = "9999999999999"
@@ -54,13 +54,13 @@ Namespace elementrenderer
             Try
                 Select Case design.Get("barcode_type")
                     Case "ean8"
-                        Dim barcode As New CEan8
+                        Dim barcode As New Ean8
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case "code39"
-                        Dim barcode As New CCode39
+                        Dim barcode As New Code39
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
@@ -69,13 +69,13 @@ Namespace elementrenderer
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case "code128"
-                        Dim barcode As New CCode128
+                        Dim barcode As New Code128
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case "codabar"
-                        Dim barcode As New CCodabar
+                        Dim barcode As New Codabar
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
@@ -121,14 +121,14 @@ Namespace elementrenderer
                             Next
                         Next
                     Case "yubin"
-                        Dim barcode As New CYubinCustomer
+                        Dim barcode As New YubinCustomer
                         Dim pt As Single = 10.0F
                         If Not design.IsNull("point") Then
                             pt = design.Get("point")
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, pt, code)
                     Case "itf"
-                        Dim barcode As New CItf
+                        Dim barcode As New Itf
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
@@ -137,7 +137,7 @@ Namespace elementrenderer
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case "gs1128"
-                        Dim barcode As New CGs1128
+                        Dim barcode As New Gs1128
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
@@ -146,7 +146,7 @@ Namespace elementrenderer
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case Else
-                        Dim barcode As New CEan13
+                        Dim barcode As New Ean13
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If

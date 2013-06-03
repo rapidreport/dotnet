@@ -6,9 +6,9 @@ Imports com.google.zxing.qrcode
 Imports com.google.zxing.qrcode.decoder
 
 Imports jp.co.systembase.barcode
-Imports jp.co.systembase.barcode.CBarcode
+Imports jp.co.systembase.barcode.Barcode
 Imports jp.co.systembase.barcode.content
-Imports jp.co.systembase.barcode.content.CScale
+Imports jp.co.systembase.barcode.content.Scale
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
 Imports jp.co.systembase.report.renderer.xls.component
@@ -55,7 +55,7 @@ Namespace elementrenderer
                 Dim type As String = ElementDesc.Get("barcode_type")
                 Try
                     If type IsNot Nothing AndAlso type = "code39" Then
-                        Dim barcode As New CCode39
+                        Dim barcode As New Code39
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If
@@ -64,19 +64,19 @@ Namespace elementrenderer
                         End If
                         barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
                     ElseIf type IsNot Nothing AndAlso type = "ean8" Then
-                        Dim barcode As New CEan8
+                        Dim barcode As New Ean8
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If
                         barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
                     ElseIf type IsNot Nothing AndAlso type = "code128" Then
-                        Dim barcode As New CCode128
+                        Dim barcode As New Code128
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If
                         barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
                     ElseIf type IsNot Nothing AndAlso type = "codabar" Then
-                        Dim barcode As New CCodabar
+                        Dim barcode As New Codabar
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If
@@ -121,7 +121,7 @@ Namespace elementrenderer
                             Next
                         Next
                     ElseIf type IsNot Nothing AndAlso type = "yubin" Then
-                        Dim barcode As New CYubinCustomer
+                        Dim barcode As New YubinCustomer
                         Dim pt As Single = 10.0F
                         If Not ElementDesc.IsNull("point") Then
                             pt = ElementDesc.Get("point")
@@ -129,7 +129,7 @@ Namespace elementrenderer
                         Const dpi As Integer = 72 * scale
                         barcode.Render(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, pt, dpi, Code)
                     ElseIf type IsNot Nothing AndAlso type = "itf" Then
-                        Dim barcode As New CItf
+                        Dim barcode As New Itf
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If
@@ -137,11 +137,11 @@ Namespace elementrenderer
                             barcode.GenerateCheckSum = True
                         End If
                         Const dpi As Integer = 72 * scale
-                        Dim c As CBarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Code)
+                        Dim c As BarContent = barcode.CreateContent(0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Code)
                         If c.GetBars.Count = 0 Then
                             Exit Sub
                         End If
-                        For Each b As CBarContent.CBar In c.GetBars
+                        For Each b As BarContent.CBar In c.GetBars
                             g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
                         Next
                         For Each t In c.GetText
@@ -149,7 +149,7 @@ Namespace elementrenderer
                             g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)
                         Next
                     ElseIf type IsNot Nothing AndAlso type = "gs1128" Then
-                        Dim barcode As New CGs1128
+                        Dim barcode As New Gs1128
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If
@@ -157,8 +157,8 @@ Namespace elementrenderer
                             barcode.ConvenienceFormat = True
                         End If
                         Const dpi As Integer = 72 * scale
-                        Dim c As CBarContent = barcode.CreateContent(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Code)
-                        For Each b As CBarContent.CBar In c.GetBars
+                        Dim c As BarContent = barcode.CreateContent(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Code)
+                        For Each b As BarContent.CBar In c.GetBars
                             g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
                         Next
                         For Each t In c.GetText
@@ -166,7 +166,7 @@ Namespace elementrenderer
                             g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)
                         Next
                     Else
-                        Dim barcode As New CEan13
+                        Dim barcode As New Ean13
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If

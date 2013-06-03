@@ -6,9 +6,9 @@ Imports com.google.zxing.common
 Imports com.google.zxing.qrcode
 
 Imports jp.co.systembase.barcode
-Imports jp.co.systembase.barcode.CBarcode
+Imports jp.co.systembase.barcode.Barcode
 Imports jp.co.systembase.barcode.content
-Imports jp.co.systembase.barcode.content.CBarContent
+Imports jp.co.systembase.barcode.content.BarContent
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
 
@@ -111,13 +111,13 @@ Namespace elementrenderer
                     tmp.Fill()
                     image = image.GetInstance(tmp)
                 ElseIf type IsNot Nothing AndAlso type.Equals("yubin") Then
-                    Dim bc As New CYubinCustomer
+                    Dim bc As New YubinCustomer
                     Dim pt As Single = 10.0F
                     If Not design.IsNull("point") Then
                         pt = design.Get("point")
                     End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
-                    Dim c As CBarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, pt, code)
+                    Dim c As BarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, pt, code)
                     tmp.SetColorFill(Color.BLACK)
                     Dim codes As New List(Of String)
                     For Each _code As String In bc.Encode(code)
@@ -145,7 +145,7 @@ Namespace elementrenderer
                     image = image.GetInstance(tmp)
                     scaleMargin = 0
                 ElseIf type IsNot Nothing AndAlso type.Equals("itf") Then
-                    Dim bc As New CItf
+                    Dim bc As New Itf
                     If design.Get("without_text") Then
                         bc.WithText = False
                     End If
@@ -153,7 +153,7 @@ Namespace elementrenderer
                         bc.GenerateCheckSum = True
                     End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
-                    Dim c As CBarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
+                    Dim c As BarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
                     tmp.SetColorFill(Color.BLACK)
                     For Each b As CBar In c.GetBars
                         Dim y As Single = tmp.Height - b.GetY - b.GetHeight
@@ -171,7 +171,7 @@ Namespace elementrenderer
                     image = image.GetInstance(tmp)
                     scaleMargin = 0
                 ElseIf type IsNot Nothing AndAlso type.Equals("gs1128") Then
-                    Dim bc As New CGs1128
+                    Dim bc As New Gs1128
                     If design.Get("without_text") Then
                         bc.WithText = False
                     End If
@@ -181,7 +181,7 @@ Namespace elementrenderer
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
                     Dim _image As New Drawing.Bitmap(CInt(_region.GetWidth), CInt(_region.GetHeight))
                     Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(_image)
-                    Dim c As CBarContent = bc.CreateContent(g, 0, 0, tmp.Width, tmp.Height, code)
+                    Dim c As BarContent = bc.CreateContent(g, 0, 0, tmp.Width, tmp.Height, code)
                     tmp.SetColorFill(Color.BLACK)
                     For Each b As CBar In c.GetBars
                         Dim y As Single = tmp.Height - b.GetY - b.GetHeight
