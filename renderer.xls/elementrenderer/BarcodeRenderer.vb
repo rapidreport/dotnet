@@ -120,7 +120,7 @@ Namespace elementrenderer
                                 End If
                             Next
                         Next
-                    ElseIf type IsNot Nothing AndAlso type = "yubincustomer" Then
+                    ElseIf type IsNot Nothing AndAlso type = "yubin" Then
                         Dim barcode As New CYubinCustomer
                         Dim pt As Single = 10.0F
                         If Not ElementDesc.IsNull("point") Then

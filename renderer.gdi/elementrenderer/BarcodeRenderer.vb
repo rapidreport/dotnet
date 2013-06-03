@@ -30,7 +30,7 @@ Namespace elementrenderer
                         code = "99999999"
                     Case "qrcode"
                         code = "QRCODEQRCODEQRCODEQRCODEQRCODE"
-                    Case "yubincustomer"
+                    Case "yubin"
                         code = "99999999999999999999"
                     Case "itf"
                         code = "99999999999999"
@@ -120,7 +120,7 @@ Namespace elementrenderer
                                 End If
                             Next
                         Next
-                    Case "yubincustomer"
+                    Case "yubin"
                         Dim barcode As New CYubinCustomer
                         Dim pt As Single = 10.0F
                         If Not design.IsNull("point") Then

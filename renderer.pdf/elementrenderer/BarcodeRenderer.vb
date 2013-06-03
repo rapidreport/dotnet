@@ -110,7 +110,7 @@ Namespace elementrenderer
                     Next
                     tmp.Fill()
                     image = image.GetInstance(tmp)
-                ElseIf type IsNot Nothing AndAlso type.Equals("yubincustomer") Then
+                ElseIf type IsNot Nothing AndAlso type.Equals("yubin") Then
                     Dim bc As New CYubinCustomer
                     Dim pt As Single = 10.0F
                     If Not design.IsNull("point") Then
