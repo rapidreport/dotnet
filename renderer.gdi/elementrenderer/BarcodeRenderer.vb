@@ -34,9 +34,9 @@ Namespace elementrenderer
                         code = "99999999999999999999"
                     Case "itf"
                         code = "99999999999999"
-                    Case "gs1128"
+                    Case "gs1_128"
                         code = "{99}99999999"
-                        If design.Get("convenience_format") Then
+                        If design.Get("conveni_format") Then
                             code = "{91}999999999999999999999999999999999999999999"
                         End If
                     Case Else
@@ -123,8 +123,8 @@ Namespace elementrenderer
                     Case "yubin"
                         Dim barcode As New YubinCustomer
                         Dim pt As Single = 10.0F
-                        If Not design.IsNull("point") Then
-                            pt = design.Get("point")
+                        If Not design.IsNull("yubin_point") Then
+                            pt = design.Get("yubin_point")
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, pt, code)
                     Case "itf"
@@ -136,13 +136,13 @@ Namespace elementrenderer
                             barcode.GenerateCheckSum = True
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
-                    Case "gs1128"
-                        Dim barcode As New Gs1128
+                    Case "gs1_128"
+                        Dim barcode As New Gs1_128
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
-                        If design.Get("convenience_format") Then
-                            barcode.ConvenienceFormat = True
+                        If design.Get("conveni_format") Then
+                            barcode.ConveniFormat = True
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case Else

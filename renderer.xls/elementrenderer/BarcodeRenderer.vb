@@ -123,8 +123,8 @@ Namespace elementrenderer
                     ElseIf type IsNot Nothing AndAlso type = "yubin" Then
                         Dim barcode As New YubinCustomer
                         Dim pt As Single = 10.0F
-                        If Not ElementDesc.IsNull("point") Then
-                            pt = ElementDesc.Get("point")
+                        If Not ElementDesc.IsNull("yubin_point") Then
+                            pt = ElementDesc.Get("yubin_point")
                         End If
                         Const dpi As Integer = 72 * scale
                         barcode.Render(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, pt, dpi, Code)
@@ -141,24 +141,24 @@ Namespace elementrenderer
                         If c.GetBars.Count = 0 Then
                             Exit Sub
                         End If
-                        For Each b As BarContent.CBar In c.GetBars
+                        For Each b As BarContent.Bar In c.GetBars
                             g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
                         Next
                         For Each t In c.GetText
                             Dim f As New Font(t.GetFont.Name, t.GetFont.Size * 0.75F)
                             g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)
                         Next
-                    ElseIf type IsNot Nothing AndAlso type = "gs1128" Then
-                        Dim barcode As New Gs1128
+                    ElseIf type IsNot Nothing AndAlso type = "gs1_128" Then
+                        Dim barcode As New Gs1_128
                         If ElementDesc.Get("without_text") Then
                             barcode.WithText = False
                         End If
-                        If ElementDesc.Get("convenience_format") Then
-                            barcode.ConvenienceFormat = True
+                        If ElementDesc.Get("conveni_format") Then
+                            barcode.ConveniFormat = True
                         End If
                         Const dpi As Integer = 72 * scale
                         Dim c As BarContent = barcode.CreateContent(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Code)
-                        For Each b As BarContent.CBar In c.GetBars
+                        For Each b As BarContent.Bar In c.GetBars
                             g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
                         Next
                         For Each t In c.GetText

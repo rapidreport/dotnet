@@ -77,6 +77,16 @@ Namespace elementrenderer
                     End If
                     bc.Code = ss & code & ss
                     image = bc.CreateImageWithBarcode(cb, Nothing, Nothing)
+                ElseIf type IsNot Nothing AndAlso type.Equals("itf") Then
+                    Dim bc As New BarcodeInter25
+                    If design.Get("without_text") Then
+                        bc.Font = Nothing
+                    End If
+                    If design.Get("generate_checksum") Then
+                        bc.GenerateChecksum = True
+                    End If
+                    bc.Code = code
+                    image = bc.CreateImageWithBarcode(cb, Nothing, Nothing)
                 ElseIf type IsNot Nothing AndAlso type.Equals("qrcode") Then
                     Dim w As New QRCodeWriter
                     Dim h As New Hashtable
@@ -113,8 +123,8 @@ Namespace elementrenderer
                 ElseIf type IsNot Nothing AndAlso type.Equals("yubin") Then
                     Dim bc As New YubinCustomer
                     Dim pt As Single = 10.0F
-                    If Not design.IsNull("point") Then
-                        pt = design.Get("point")
+                    If Not design.IsNull("yubin_point") Then
+                        pt = design.Get("yubin_point")
                     End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
                     Dim c As BarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, pt, code)
@@ -126,9 +136,9 @@ Namespace elementrenderer
                         Next
                     Next
                     For i As Integer = 0 To c.GetBars.Count - 1
-                        Dim b As CBar = c.GetBars(i)
+                        Dim b As Bar = c.GetBars(i)
                         Dim y As Single = 0
-                        Dim startBar As CBar = c.GetBars(0)
+                        Dim startBar As Bar = c.GetBars(0)
                         Dim _type As String = codes(i)
                         Select Case _type
                             Case "3"
@@ -144,46 +154,20 @@ Namespace elementrenderer
                     tmp.Fill()
                     image = image.GetInstance(tmp)
                     scaleMargin = 0
-                ElseIf type IsNot Nothing AndAlso type.Equals("itf") Then
-                    Dim bc As New Itf
+                ElseIf type IsNot Nothing AndAlso type.Equals("gs1_128") Then
+                    Dim bc As New Gs1_128
                     If design.Get("without_text") Then
                         bc.WithText = False
                     End If
-                    If design.Get("generate_checksum") Then
-                        bc.GenerateCheckSum = True
-                    End If
-                    Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
-                    Dim c As BarContent = bc.CreateContent(0, 0, tmp.Width, tmp.Height, code)
-                    tmp.SetColorFill(Color.BLACK)
-                    For Each b As CBar In c.GetBars
-                        Dim y As Single = tmp.Height - b.GetY - b.GetHeight
-                        tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
-                    Next
-                    tmp.Fill()
-                    For Each t In c.GetText
-                        tmp.BeginText()
-                        Dim f As Font = FontFactory.GetFont(t.GetFont.Name, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED)
-                        tmp.SetFontAndSize(f.GetCalculatedBaseFont(True), t.GetFont.Size)
-                        Dim y As Single = tmp.Height - (t.GetY + t.GetFont.Size) + (t.GetFont.Size / 10)
-                        tmp.ShowTextAligned(t.GetFormat.Alignment, t.GetCode, t.GetX, y, 0)
-                        tmp.EndText()
-                    Next
-                    image = image.GetInstance(tmp)
-                    scaleMargin = 0
-                ElseIf type IsNot Nothing AndAlso type.Equals("gs1128") Then
-                    Dim bc As New Gs1128
-                    If design.Get("without_text") Then
-                        bc.WithText = False
-                    End If
-                    If design.Get("convenience_format") Then
-                        bc.ConvenienceFormat = True
+                    If design.Get("conveni_format") Then
+                        bc.ConveniFormat = True
                     End If
                     Dim tmp As PdfTemplate = cb.CreateTemplate(_region.GetWidth, _region.GetHeight)
                     Dim _image As New Drawing.Bitmap(CInt(_region.GetWidth), CInt(_region.GetHeight))
                     Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(_image)
                     Dim c As BarContent = bc.CreateContent(g, 0, 0, tmp.Width, tmp.Height, code)
                     tmp.SetColorFill(Color.BLACK)
-                    For Each b As CBar In c.GetBars
+                    For Each b As Bar In c.GetBars
                         Dim y As Single = tmp.Height - b.GetY - b.GetHeight
                         tmp.Rectangle(b.GetX, y, b.GetWidth, b.GetHeight)
                     Next
