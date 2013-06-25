@@ -68,12 +68,6 @@ Namespace elementrenderer
                             barcode.GenerateCheckSum = True
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
-                    Case "code128"
-                        Dim barcode As New Code128
-                        If design.Get("without_text") Then
-                            barcode.WithText = False
-                        End If
-                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case "codabar"
                         Dim barcode As New Codabar
                         If design.Get("without_text") Then
@@ -87,6 +81,33 @@ Namespace elementrenderer
                             ss = design.Get("codabar_startstop_code")
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, ss & code & ss)
+                    Case "itf"
+                        Dim barcode As New Itf
+                        If design.Get("without_text") Then
+                            barcode.WithText = False
+                        End If
+                        If design.Get("generate_checksum") Then
+                            barcode.GenerateCheckSum = True
+                        End If
+                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
+                    Case "code128"
+                        Dim barcode As New Code128
+                        If design.Get("without_text") Then
+                            barcode.WithText = False
+                        End If
+                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
+                    Case "gs1_128"
+                        Dim barcode As New Gs1_128
+                        If design.Get("without_text") Then
+                            barcode.WithText = False
+                        End If
+                        If design.Get("conveni_format") Then
+                            barcode.ConveniFormat = True
+                        End If
+                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
+                    Case "yubin"
+                        Dim barcode As New Yubin
+                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case "qrcode"
                         Dim w As New QRCodeWriter
                         Dim h As New Hashtable
@@ -120,31 +141,6 @@ Namespace elementrenderer
                                 End If
                             Next
                         Next
-                    Case "yubin"
-                        Dim barcode As New YubinCustomer
-                        Dim pt As Single = 10.0F
-                        If Not design.IsNull("yubin_point") Then
-                            pt = design.Get("yubin_point")
-                        End If
-                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, pt, code)
-                    Case "itf"
-                        Dim barcode As New Itf
-                        If design.Get("without_text") Then
-                            barcode.WithText = False
-                        End If
-                        If design.Get("generate_checksum") Then
-                            barcode.GenerateCheckSum = True
-                        End If
-                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
-                    Case "gs1_128"
-                        Dim barcode As New Gs1_128
-                        If design.Get("without_text") Then
-                            barcode.WithText = False
-                        End If
-                        If design.Get("conveni_format") Then
-                            barcode.ConveniFormat = True
-                        End If
-                        barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case Else
                         Dim barcode As New Ean13
                         If design.Get("without_text") Then
