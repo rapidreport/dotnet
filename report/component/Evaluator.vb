@@ -107,7 +107,7 @@ Namespace component
                 If TypeOf ex Is EvalException Then
                     _ex = ex
                 Else
-                    _ex = New EvalException("an error occurred while evaluating exp : " & exp, ex)
+                    _ex = New EvalException("式の評価中にエラーが発生しました : " & exp, ex)
                 End If
                 Dim logger As IReportLogger = Me.BasicContext.Report.Design.Setting.Logger
                 If logger IsNot Nothing Then
@@ -124,14 +124,14 @@ Namespace component
         Public Function GetData(ByVal scope As String, ByVal unit As String) As ReportData
             Dim scopeData As ReportData = Me.BasicContext.Data.FindScope(scope)
             If scopeData Is Nothing Then
-                Throw New ArgumentException("invalid scope" & IIf(Not scope.Equals(""), ": " & scope, ""))
+                Throw New ArgumentException("集計範囲が不正です" & IIf(Not scope.Equals(""), ": " & scope, ""))
             End If
             If unit Is Nothing Then
                 Return scopeData
             Else
                 Dim unitGroupDesign As GroupDesign = scopeData.FindUnit(unit)
                 If unitGroupDesign Is Nothing Then
-                    Throw New ArgumentException("invalid unit" & IIf(Not unit.Equals(""), ": " & unit, ""))
+                    Throw New ArgumentException("集計単位が不正です" & IIf(Not unit.Equals(""), ": " & unit, ""))
                 End If
                 Dim dataSource As IReportDataSource = scopeData.GetWrapperDataSource(unitGroupDesign)
                 Dim indexRange As IndexRange = scopeData.GetDataIndexRange(unitGroupDesign)

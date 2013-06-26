@@ -21,7 +21,7 @@ Namespace expression
         Public Function Eval(ByVal evaluator As Evaluator) As Object Implements IExpression.Eval
             If Not evaluator.TraverseMode Then
                 If Me.Unit IsNot Nothing AndAlso Not evaluator.BasicContext.Data.IsFilled Then
-                    Throw New EvalException("a method with '#' is not available in yet unfilled report")
+                    Throw New EvalException("'#'付きのメソッドは report.fill() の実行後にのみ呼び出すことができます")
                 End If
                 Dim avail As Boolean = True
                 Select Case Method.GetAvaliableContext
@@ -31,7 +31,7 @@ Namespace expression
                         avail = evaluator.PageContext IsNot Nothing
                 End Select
                 If Not avail Then
-                    Throw New EvalException("'" & Me.Method.GetType.FullName & "' is not available in this context")
+                    Throw New EvalException("メソッド '" & Me.Method.GetType.FullName & "' は、このコンテキストでは呼び出すことができません")
                 End If
             End If
             Return Method.Exec(evaluator, Me.Param, Me.Scope, Me.Unit)

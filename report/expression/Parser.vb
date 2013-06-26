@@ -37,7 +37,7 @@ Namespace expression
             Me.index = 0
             Dim ret As IExpression = Me._Parse_aux(_source)
             If Me.index < _source.Length Then
-                Throw New EvalException("'" & _source.Substring(Me.index) & "' is unexpected : " & source)
+                Throw New EvalException("'" & _source.Substring(Me.index) & "' は予期せぬ文字です : " & source)
             End If
             Return ret
         End Function
@@ -96,7 +96,7 @@ Namespace expression
                         End If
                         method = Me.setting.GetMethod(methodKey)
                         If method Is Nothing Then
-                            Throw New EvalException("method '" & methodKey & "' is not found : " & source)
+                            Throw New EvalException("メソッド '" & methodKey & "' は見つかりません : " & source)
                         End If
                         If String.IsNullOrEmpty(param) Then
                             param = Nothing
@@ -120,20 +120,20 @@ Namespace expression
             Me.skipSpace(source)
             Dim operatorKey As String = nextToken(source)
             If operatorKey.Length = 0 Then
-                Throw New EvalException("operator is missing : " & source)
+                Throw New EvalException("オペレータがありません : " & source)
             End If
             If operatorKey.StartsWith("(") Then
-                Throw New EvalException("'(' is unexpected : " & source)
+                Throw New EvalException("'(' は予期せぬ文字です : " & source)
             End If
             Dim [operator] As IOperator = Me.setting.GetOperator(operatorKey)
             If [operator] Is Nothing Then
-                Throw New EvalException("operator '" & operatorKey & "' is not found : " & source)
+                Throw New EvalException("オペレータ '" & operatorKey & "' は見つかりません : " & source)
             End If
             Dim params As New List(Of IExpression)
             Do
                 Me.skipSpace(source)
                 If Me.index = source.Length Then
-                    Throw New EvalException(") is missing : " & source)
+                    Throw New EvalException("')' がありません : " & source)
                 End If
                 If source(Me.index) = ")"c Then
                     Me.index += 1
@@ -150,7 +150,7 @@ Namespace expression
             Dim escaped As Boolean = False
             Do
                 If i >= source.Length Then
-                    Throw New EvalException("text not terminated : " & source)
+                    Throw New EvalException("文字列が閉じられていません : " & source)
                 End If
                 Dim c As Char = source(i)
                 If c = "'"c And Not escaped Then
@@ -169,7 +169,7 @@ Namespace expression
                         Case "n"
                             sb.Append(vbCrLf)
                         Case Else
-                            Throw New EvalException("invlid escape sequence: \" & c & " (valid ones are \' \\ \n) : " & source)
+                            Throw New EvalException("不正なエスケープ文字です: \" & c & " (有効なもの \' \\ \n) : " & source)
                     End Select
                     escaped = False
                     Me.index = i + 1

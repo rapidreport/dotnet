@@ -86,7 +86,7 @@ Namespace expression
             Dim escaped As Boolean = False
             Do
                 If i = source.Length Then
-                    Throw New EvalException("embedded expression isnot terminated : " & source)
+                    Throw New EvalException("埋め込まれた式が閉じられていません : " & source)
                 End If
                 If quoted Then
                     If escaped Then
