@@ -35,9 +35,9 @@ Namespace elementrenderer
                     Case "itf"
                         code = "99999999999999"
                     Case "gs1_128"
-                        code = "{99}99999999"
-                        If design.Get("conveni_format") Then
-                            code = "{91}999999999999999999999999999999999999999999"
+                        code = "(99)99999999"
+                        If design.Get("gs1_conveni") Then
+                            code = "(91)999999999999999999999999999999999999999999"
                         End If
                     Case Else
                         code = "9999999999999"
@@ -101,7 +101,7 @@ Namespace elementrenderer
                         If design.Get("without_text") Then
                             barcode.WithText = False
                         End If
-                        If design.Get("conveni_format") Then
+                        If design.Get("gs1_conveni") Then
                             barcode.ConveniFormat = True
                         End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)

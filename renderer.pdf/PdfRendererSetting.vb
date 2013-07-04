@@ -15,6 +15,7 @@ Public Class PdfRendererSetting
 
     Public Sub New()
         If Not _loaded Then
+            BaseFont.AddToResourceSearch("iTextAsian.dll")
             BaseFont.AddToResourceSearch(My.Application.Info.DirectoryPath & "\iTextAsian.dll")
             _loaded = True
         End If

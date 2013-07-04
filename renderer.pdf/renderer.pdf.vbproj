@@ -86,6 +86,10 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="elementrenderer\barcode\BarcodeUtil.vb" />
+    <Compile Include="elementrenderer\barcode\Gs1_128.vb" />
+    <Compile Include="elementrenderer\barcode\QRCode.vb" />
+    <Compile Include="elementrenderer\barcode\Yubin.vb" />
     <Compile Include="PdfRenderer.vb" />
     <Compile Include="elementrenderer\BarcodeRenderer.vb" />
     <Compile Include="elementrenderer\CircleRenderer.vb" />

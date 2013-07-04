@@ -7,8 +7,6 @@ Imports com.google.zxing.qrcode.decoder
 
 Imports jp.co.systembase.barcode
 Imports jp.co.systembase.barcode.Barcode
-Imports jp.co.systembase.barcode.content
-Imports jp.co.systembase.barcode.content.Scale
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
 Imports jp.co.systembase.report.renderer.xls.component
@@ -103,21 +101,13 @@ Namespace elementrenderer
                             If ElementDesc.Get("without_text") Then
                                 barcode.WithText = False
                             End If
-                            If ElementDesc.Get("conveni_format") Then
+                            If ElementDesc.Get("gs1_conveni") Then
                                 barcode.ConveniFormat = True
                             End If
-                            Const dpi As Integer = 72 * scale
-                            Dim c As BarContent = barcode.CreateContent(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, dpi, Code)
-                            For Each b As BarContent.Bar In c.GetBars
-                                g.FillRectangle(Brushes.Black, b.GetX, b.GetY, b.GetWidth, b.GetHeight)
-                            Next
-                            For Each t In c.GetText
-                                Dim f As New Font(t.GetFont.Name, t.GetFont.Size * 0.75F)
-                                g.DrawString(t.GetCode, f, Brushes.Black, t.GetX, t.GetY, t.GetFormat)
-                            Next
+                            barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
                         Case "yubin"
                             Dim barcode As New Yubin
-                            barcode.Render(g, 0, 0, Shape.Region.GetWidth, Shape.Region.GetHeight, Me.Code)
+                            barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
                         Case "qrcode"
                             Dim w As New QRCodeWriter
                             Dim h As New Hashtable
