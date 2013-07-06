@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 
+Imports iTextSharp.text.pdf
 Imports NPOI.HSSF.UserModel
 
 Imports jp.co.systembase.json
@@ -17,7 +18,9 @@ Module Test3
         Dim pages As ReportPages = report.GetPages()
 
         Using fs As New FileStream("output\test3.pdf", IO.FileMode.Create)
-            pages.Render(New PdfRenderer(fs))
+            Dim renderer As New PdfRenderer(fs)
+            renderer.Setting.GaijiFont = BaseFont.CreateFont("C:\home\EUDC.TTF", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
+            pages.Render(renderer)
         End Using
 
         Using fs As New FileStream("output\test3.xls", IO.FileMode.Create)

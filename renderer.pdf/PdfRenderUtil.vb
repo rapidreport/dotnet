@@ -609,9 +609,9 @@ Public Module PdfRenderUtil
             For Each t As String In _texts
                 If t.Length > 0 Then
                     If Not g Then
-                        ret += font.GetWidthPoint(text, fontSize)
+                        ret += font.GetWidthPoint(t, fontSize)
                     Else
-                        ret += gaijiFont.GetWidthPoint(text, fontSize)
+                        ret += gaijiFont.GetWidthPoint(t, fontSize)
                     End If
                 End If
                 g = Not g
@@ -657,25 +657,43 @@ Public Module PdfRenderUtil
         End If
     End Sub
 
-    Private Sub drawUnderline( _
+    Private Sub showText( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
       ByVal trans As PdfRenderer.CTrans, _
+      ByVal textDesign As TextDesign, _
+      ByVal font As BaseFont, _
+      ByVal gaijiFont As BaseFont, _
       ByVal fontSize As Single, _
+      ByVal text As String, _
       ByVal x As Single, _
-      ByVal y As Single, _
-      ByVal width As Single)
-        Dim lw As Single = fontSize / 13.4
-        Dim _x1 As Single = region.Left + x
-        Dim _x2 As Single = _x1 + width
-        Dim _y As Single = region.Top + y + fontSize - OFFSET_Y
-        _x1 = Math.Max(_x1, region.Left + MARGIN_X)
-        _x2 = Math.Min(_x2, region.Right - MARGIN_X)
-        If _x1 < _x2 Then
-            cb.SetLineWidth(lw)
-            cb.MoveTo(trans.X(_x1), trans.Y(_y))
-            cb.LineTo(trans.X(_x2), trans.Y(_y))
-            cb.Stroke()
+      ByVal y As Single)
+        Dim _texts As List(Of String) = Nothing
+        If gaijiFont IsNot Nothing Then
+            _texts = detectGaiji(text)
+        End If
+        If _texts Is Nothing Then
+            setTextMatrix(cb, region, trans, textDesign, fontSize, x, y)
+            cb.ShowText(text)
+        Else
+            Dim gaiji As Boolean = False
+            Dim _x As Single = x
+            For Each t As String In _texts
+                If t.Length > 0 Then
+                    If Not gaiji Then
+                        setTextMatrix(cb, region, trans, textDesign, fontSize, _x, y)
+                        cb.ShowText(t)
+                        _x += font.GetWidthPoint(t, fontSize)
+                    Else
+                        cb.SetFontAndSize(gaijiFont, fontSize)
+                        setTextMatrix(cb, region, trans, textDesign, fontSize, _x, y)
+                        cb.ShowText(t)
+                        cb.SetFontAndSize(font, fontSize)
+                        _x += gaijiFont.GetWidthPoint(t, fontSize)
+                    End If
+                End If
+                gaiji = Not gaiji
+            Next
         End If
     End Sub
 
@@ -712,43 +730,25 @@ Public Module PdfRenderUtil
         End If
     End Sub
 
-    Private Sub showText( _
+    Private Sub drawUnderline( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
       ByVal trans As PdfRenderer.CTrans, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal gaijiFont As BaseFont, _
       ByVal fontSize As Single, _
-      ByVal text As String, _
       ByVal x As Single, _
-      ByVal y As Single)
-        Dim _texts As List(Of String) = Nothing
-        If gaijiFont IsNot Nothing Then
-            _texts = detectGaiji(text)
-        End If
-        If _texts Is Nothing Then
-            setTextMatrix(cb, region, trans, textDesign, fontSize, x, y)
-            cb.ShowText(text)
-        Else
-            Dim g As Boolean = False
-            Dim _x As Single = x
-            For Each t As String In _texts
-                If t.Length > 0 Then
-                    If Not g Then
-                        setTextMatrix(cb, region, trans, textDesign, fontSize, _x, y)
-                        cb.ShowText(t)
-                        _x += font.GetWidthPoint(t, fontSize)
-                    Else
-                        cb.SetFontAndSize(gaijiFont, fontSize)
-                        setTextMatrix(cb, region, trans, textDesign, fontSize, _x, y)
-                        cb.ShowText(t)
-                        cb.SetFontAndSize(font, fontSize)
-                        _x += gaijiFont.GetWidthPoint(t, fontSize)
-                    End If
-                End If
-                g = Not g
-            Next
+      ByVal y As Single, _
+      ByVal width As Single)
+        Dim lw As Single = fontSize / 13.4
+        Dim _x1 As Single = region.Left + x
+        Dim _x2 As Single = _x1 + width
+        Dim _y As Single = region.Top + y + fontSize - OFFSET_Y
+        _x1 = Math.Max(_x1, region.Left + MARGIN_X)
+        _x2 = Math.Min(_x2, region.Right - MARGIN_X)
+        If _x1 < _x2 Then
+            cb.SetLineWidth(lw)
+            cb.MoveTo(trans.X(_x1), trans.Y(_y))
+            cb.LineTo(trans.X(_x2), trans.Y(_y))
+            cb.Stroke()
         End If
     End Sub
 
@@ -778,9 +778,9 @@ Public Module PdfRenderUtil
                 If Not g Then
                     If ret Is Nothing Then
                         ret = New List(Of String)
-                        ret.Add(text.Substring(last, i - last))
-                        last = i
                     End If
+                    ret.Add(text.Substring(last, i - last))
+                    last = i
                     g = True
                 End If
             Else
