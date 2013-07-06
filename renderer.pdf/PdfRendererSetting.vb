@@ -8,6 +8,7 @@ Public Class PdfRendererSetting
 
     Public DummyElementRenderer As IElementRenderer
     Public DefaultFont As BaseFont
+    Public GaijiFont As BaseFont
     Public ElementRendererMap As New Dictionary(Of String, IElementRenderer)
     Public FontMap As New Dictionary(Of String, BaseFont)
     Public ReplaceBackslashToYen As Boolean
@@ -29,6 +30,7 @@ Public Class PdfRendererSetting
         Me.ElementRendererMap.Add("image", New ImageRenderer)
         Me.ElementRendererMap.Add("subpage", New SubPageRenderer)
         Me.DefaultFont = BaseFont.CreateFont("HeiseiKakuGo-W5", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED)
+        Me.GaijiFont = Nothing
         Me.FontMap.Add("gothic", Me.DefaultFont)
         Me.FontMap.Add("mincho", BaseFont.CreateFont("HeiseiMin-W3", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED))
         Me.ReplaceBackslashToYen = False
