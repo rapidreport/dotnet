@@ -19,7 +19,7 @@ Module Test3
 
         Using fs As New FileStream("output\test3.pdf", IO.FileMode.Create)
             Dim renderer As New PdfRenderer(fs)
-            renderer.Setting.GaijiFont = BaseFont.CreateFont("C:\home\EUDC.TTF", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
+            'renderer.Setting.GaijiFont = BaseFont.CreateFont("EUDC.TTF", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
             pages.Render(renderer)
         End Using
 
