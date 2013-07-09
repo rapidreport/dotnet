@@ -611,7 +611,7 @@ Public Module PdfRenderUtil
                     If Not g Then
                         ret += font.GetWidthPoint(t, fontSize)
                     Else
-                        ret += gaijiFont.GetWidthPoint(t, fontSize)
+                        ret += t.Length * fontSize
                     End If
                 End If
                 g = Not g
@@ -686,10 +686,12 @@ Public Module PdfRenderUtil
                         _x += font.GetWidthPoint(t, fontSize)
                     Else
                         cb.SetFontAndSize(gaijiFont, fontSize)
-                        setTextMatrix(cb, region, trans, textDesign, fontSize, _x, y)
-                        cb.ShowText(t)
+                        For Each c As Char In t
+                            setTextMatrix(cb, region, trans, textDesign, fontSize, _x, y)
+                            cb.ShowText(c)
+                            _x += fontSize
+                        Next
                         cb.SetFontAndSize(font, fontSize)
-                        _x += gaijiFont.GetWidthPoint(t, fontSize)
                     End If
                 End If
                 gaiji = Not gaiji
