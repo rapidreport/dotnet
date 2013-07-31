@@ -418,7 +418,7 @@ Public Module GdiRenderUtil
                 Case Report.EVAlign.TOP
                     y = 0
                 Case Report.EVAlign.CENTER
-                    y = (region.GetHeight - font.Size) / 2
+                    y = (region.GetHeight - font.Size - font.Size / 8) / 2
                 Case Report.EVAlign.BOTTOM
                     y = region.GetHeight - font.Size - font.Size / 8
             End Select
