@@ -680,22 +680,19 @@ Public Module GdiRenderUtil
             End If
         End With
         pageSettings.Landscape = reportDesign.PaperDesign.Landscape
-        pageSettings.Margins.Top = 0
-        pageSettings.Margins.Left = 0
-        pageSettings.Margins.Bottom = 0
-        pageSettings.Margins.Right = 0
     End Sub
 
     Public Sub SetUpGraphics( _
       ByVal g As Graphics, _
       ByVal reportDesign As ReportDesign, _
-      ByVal pageIndex As Integer)
+      ByVal pageIndex As Integer, _
+      ByVal hardMargin As PointF)
         g.PageUnit = GraphicsUnit.Point
         Dim m As PaperMarginDesign = reportDesign.PaperDesign.Margin.ToPoint(reportDesign.PaperDesign)
         If (pageIndex Mod 2) And m.OddReverse Then
-            g.TranslateTransform(m.Right, m.Top)
+            g.TranslateTransform(m.Right - hardMargin.X, m.Top - hardMargin.Y)
         Else
-            g.TranslateTransform(m.Left, m.Top)
+            g.TranslateTransform(m.Left - hardMargin.X, m.Top - hardMargin.Y)
         End If
     End Sub
 

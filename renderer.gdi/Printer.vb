@@ -20,6 +20,7 @@ Public Class Printer
     Public PrintedPages As New List(Of Integer)
 
     Private _Pages As ReportPages
+    Private _HardMarginMap As Dictionary(Of ReportDesign, PointF)
 
     Public Sub New(ByVal pages As ReportPages)
         Me.New(pages, New GdiRendererSetting)
@@ -34,7 +35,6 @@ Public Class Printer
         If Not ShowStatusDialog Then
             Me.PrintDocument.PrintController = New StandardPrintController
         End If
-        Me.PrintDocument.OriginAtMargins = True
         Me.Pages = pages
         Me.Setting = Setting
     End Sub
@@ -64,6 +64,7 @@ Public Class Printer
 
     Private Sub PrintDocument_BeginPrint(ByVal sender As Object, ByVal e As PrintEventArgs) Handles PrintDocument.BeginPrint
         Me.PageIndex = 0
+        Me._HardMarginMap = New Dictionary(Of ReportDesign, PointF)
     End Sub
 
     Private Sub PrintDocument_QueryPageSettings(ByVal sender As Object, ByVal e As QueryPageSettingsEventArgs) Handles PrintDocument.QueryPageSettings
@@ -72,14 +73,21 @@ Public Class Printer
                 Me.PageIndex += 1
             Loop
         End If
+        Dim page As ReportPage = Me.Pages(Me.PageIndex)
         If Me.DynamicPageSetting Then
-            GdiRenderUtil.SetUpPageSettings(e.PageSettings, Me.Pages(Me.PageIndex).Report.Design)
+            GdiRenderUtil.SetUpPageSettings(e.PageSettings, page.Report.Design)
         End If
     End Sub
 
     Private Sub PrintDocument_PrintPage(ByVal sender As Object, ByVal e As PrintPageEventArgs) Handles PrintDocument.PrintPage
         Dim page As ReportPage = Me.Pages(PageIndex)
-        GdiRenderUtil.SetUpGraphics(e.Graphics, page.Report.Design, Me.PageIndex)
+        If Not Me._HardMarginMap.ContainsKey(page.Report.Design) Then
+            Me._HardMarginMap.Add( _
+                page.Report.Design, _
+                New PointF(e.PageSettings.HardMarginX * 72 / 100, _
+                           e.PageSettings.HardMarginY * 72 / 100))
+        End If
+        GdiRenderUtil.SetUpGraphics(e.Graphics, page.Report.Design, Me.PageIndex, Me._HardMarginMap(page.Report.Design))
         Me.Render(e.Graphics, page)
         If Not Me.PrintedPages.Contains(Me.PageIndex) Then
             Me.PrintedPages.Add(Me.PageIndex)
@@ -113,7 +121,7 @@ Public Class Printer
         With Nothing
             Dim g As Graphics = Graphics.FromImage(ret)
             g.FillRectangle(Brushes.White, 0, 0, w, h)
-            GdiRenderUtil.SetUpGraphics(g, page.Report.Design, Me.PageIndex)
+            GdiRenderUtil.SetUpGraphics(g, page.Report.Design, Me.PageIndex, New PointF(0, 0))
             Me.Render(g, page)
         End With
         Return ret
