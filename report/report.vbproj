@@ -112,6 +112,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="operator\Round5EOperator.vb" />
     <Compile Include="Report.vb" />
     <Compile Include="ReportDesign.vb" />
     <Compile Include="ReportPage.vb" />

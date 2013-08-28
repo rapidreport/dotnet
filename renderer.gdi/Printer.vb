@@ -34,6 +34,7 @@ Public Class Printer
         If Not ShowStatusDialog Then
             Me.PrintDocument.PrintController = New StandardPrintController
         End If
+        Me.PrintDocument.OriginAtMargins = True
         Me.Pages = pages
         Me.Setting = Setting
     End Sub
@@ -78,7 +79,7 @@ Public Class Printer
 
     Private Sub PrintDocument_PrintPage(ByVal sender As Object, ByVal e As PrintPageEventArgs) Handles PrintDocument.PrintPage
         Dim page As ReportPage = Me.Pages(PageIndex)
-        GdiRenderUtil.SetUpGraphics(e.Graphics, e.PageSettings, page.Report.Design, Me.PageIndex)
+        GdiRenderUtil.SetUpGraphics(e.Graphics, page.Report.Design, Me.PageIndex)
         Me.Render(e.Graphics, page)
         If Not Me.PrintedPages.Contains(Me.PageIndex) Then
             Me.PrintedPages.Add(Me.PageIndex)
@@ -112,7 +113,7 @@ Public Class Printer
         With Nothing
             Dim g As Graphics = Graphics.FromImage(ret)
             g.FillRectangle(Brushes.White, 0, 0, w, h)
-            GdiRenderUtil.SetUpGraphics(g, Nothing, page.Report.Design, Me.PageIndex)
+            GdiRenderUtil.SetUpGraphics(g, page.Report.Design, Me.PageIndex)
             Me.Render(g, page)
         End With
         Return ret

@@ -680,28 +680,23 @@ Public Module GdiRenderUtil
             End If
         End With
         pageSettings.Landscape = reportDesign.PaperDesign.Landscape
+        pageSettings.Margins.Top = 0
+        pageSettings.Margins.Left = 0
+        pageSettings.Margins.Bottom = 0
+        pageSettings.Margins.Right = 0
     End Sub
 
     Public Sub SetUpGraphics( _
       ByVal g As Graphics, _
-      ByVal pageSettings As PageSettings, _
       ByVal reportDesign As ReportDesign, _
       ByVal pageIndex As Integer)
         g.PageUnit = GraphicsUnit.Point
-        Dim dx As Single = 0
-        Dim dy As Single = 0
-        If pageSettings IsNot Nothing Then
-            dx = -(pageSettings.HardMarginX * 72 / 100)
-            dy = -(pageSettings.HardMarginY * 72 / 100)
-        End If
         Dim m As PaperMarginDesign = reportDesign.PaperDesign.Margin.ToPoint(reportDesign.PaperDesign)
         If (pageIndex Mod 2) And m.OddReverse Then
-            dx += m.Right
+            g.TranslateTransform(m.Right, m.Top)
         Else
-            dx += m.Left
+            g.TranslateTransform(m.Left, m.Top)
         End If
-        dy += m.Top
-        g.TranslateTransform(dx, dy)
     End Sub
 
     Public Function ToPixelX(ByVal g As Graphics, ByVal v As Decimal) As Integer

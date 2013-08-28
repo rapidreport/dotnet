@@ -62,6 +62,7 @@ Public Class ReportSetting
         Me.OperatorMap.Add("if", New IfOperator)
         Me.OperatorMap.Add("nvl", New NvlOperator)
         Me.OperatorMap.Add("round5", New Round5Operator)
+        Me.OperatorMap.Add("round5e", New Round5EOperator)
         Me.OperatorMap.Add("round6", New Round6Operator)
         Me.OperatorMap.Add("roundup", New RoundUpOperator)
         Me.OperatorMap.Add("roundup2", New RoundUp2Operator)

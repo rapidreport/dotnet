@@ -9,42 +9,52 @@
 
     Public Function RoundDown(ByVal v As Decimal, ByVal digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
-        Dim tmp As Decimal = roundFix(Math.Abs(v) * d)
+        Dim tmp As Decimal = Decimal.Truncate(Math.Abs(v) * d)
         Return Math.Sign(v) * tmp / d
     End Function
 
     Public Function RoundUp(ByVal v As Decimal, ByVal digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
-        Dim tmp As Decimal = roundFix(Math.Abs(v) * d + 0.9D)
+        Dim tmp As Decimal = Decimal.Truncate(Math.Abs(v) * d + 0.9D)
         Return Math.Sign(v) * tmp / d
     End Function
 
     Public Function RoundUp2(ByVal v As Decimal, ByVal digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
-        Dim tmp As Decimal = roundFix(Math.Abs(v) * d + 0.9999999999D)
+        Dim _v As Decimal = Math.Abs(v) * d
+        Dim tmp As Decimal = Decimal.Truncate(_v)
+        If _v > tmp Then
+            tmp += 1
+        End If
         Return Math.Sign(v) * tmp / d
     End Function
 
     Public Function Round5(ByVal v As Decimal, ByVal digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
-        Dim tmp As Decimal = roundFix(Math.Abs(v) * d + 0.5D)
+        Dim tmp As Decimal = Decimal.Truncate(Math.Abs(v) * d + 0.5D)
+        Return Math.Sign(v) * tmp / d
+    End Function
+
+    Public Function Round5E(ByVal v As Decimal, ByVal digit As Integer) As Decimal
+        Dim d As Decimal = (10 ^ (-digit))
+        Dim _v As Decimal = Math.Abs(v) * d
+        Dim _tv As Decimal = Decimal.Truncate(_v)
+        Dim tmp As Decimal
+        If _v - _tv = 0.5D Then
+            tmp = _tv
+            If _tv Mod 2 Then
+                tmp += 1
+            End If
+        Else
+            tmp = Decimal.Truncate(_v + 0.5D)
+        End If
         Return Math.Sign(v) * tmp / d
     End Function
 
     Public Function Round6(ByVal v As Decimal, ByVal digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
-        Dim tmp As Decimal = roundFix(Math.Abs(v) * d + 0.4D)
+        Dim tmp As Decimal = Decimal.Truncate(Math.Abs(v) * d + 0.4D)
         Return Math.Sign(v) * tmp / d
-    End Function
-
-    Private Function roundFix(ByVal v As Decimal) As Decimal
-        Dim s As String = v.ToString
-        Dim i As Integer = s.IndexOf(".")
-        If i >= 0 Then
-            Return s.Substring(0, i)
-        Else
-            Return v
-        End If
     End Function
 
     Public Function Eq(ByVal v1 As Object, ByVal v2 As Object) As Boolean
