@@ -11,36 +11,38 @@ Namespace elementrenderer
           ByVal region As Region, _
           ByVal design As ElementDesign, _
           ByVal data As Object) Implements IElementRenderer.Render
-            Dim _region As Region = region.ToPointScale(reportDesign)
-            Dim g As Graphics = env.Graphics
-            Using p As New Pen(Color.Red)
-                p.DashStyle = Drawing2D.DashStyle.Dot
-                g.DrawRectangle( _
-                  p, _
-                  New Rectangle( _
-                    _region.Left, _
-                    _region.Top, _
-                    _region.GetWidth, _
-                    _region.GetHeight))
-                g.DrawLine( _
-                  p, _
+            If env.InDesigner Then
+                Dim _region As Region = region.ToPointScale(reportDesign)
+                Dim g As Graphics = env.Graphics
+                Using p As New Pen(Color.Red)
+                    p.DashStyle = Drawing2D.DashStyle.Dot
+                    g.DrawRectangle( _
+                      p, _
+                      New Rectangle( _
+                        _region.Left, _
+                        _region.Top, _
+                        _region.GetWidth, _
+                        _region.GetHeight))
+                    g.DrawLine( _
+                      p, _
+                      _region.Left, _
+                      _region.Top, _
+                      _region.Right, _
+                      _region.Bottom)
+                    g.DrawLine( _
+                      p, _
+                      _region.Left, _
+                      _region.Bottom, _
+                      _region.Right, _
+                      _region.Top)
+                End Using
+                g.DrawString( _
+                  design.Get("type"), _
+                  SystemFonts.DefaultFont, _
+                  Brushes.Red, _
                   _region.Left, _
-                  _region.Top, _
-                  _region.Right, _
-                  _region.Bottom)
-                g.DrawLine( _
-                  p, _
-                  _region.Left, _
-                  _region.Bottom, _
-                  _region.Right, _
                   _region.Top)
-            End Using
-            g.DrawString( _
-              design.Get("type"), _
-              SystemFonts.DefaultFont, _
-              Brushes.Red, _
-              _region.Left, _
-              _region.Top)
+            End If
         End Sub
 
     End Class
