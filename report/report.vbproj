@@ -78,6 +78,7 @@
     <Compile Include="component\IndexRange.vb" />
     <Compile Include="customizer\DefaultCustomizer.vb" />
     <Compile Include="customizer\IReportCustomizer.vb" />
+    <Compile Include="data\GroupDataMap.vb" />
     <Compile Include="data\GroupDataProvider.vb" />
     <Compile Include="data\SubPageDataSource.vb" />
     <Compile Include="data\INoCache.vb" />

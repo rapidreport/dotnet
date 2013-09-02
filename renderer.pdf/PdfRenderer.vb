@@ -13,11 +13,11 @@ Public Class PdfRenderer
     Public ImageLoaderMap As New Dictionary(Of String, IPdfImageLoader)
     Public Document As Document
     Public Writer As PdfWriter
-    Public Trans As CTrans
+    Public Trans As TransClass
 
     Private imageCache As Dictionary(Of Hashtable, Dictionary(Of String, Image))
 
-    Public Class CTrans
+    Public Class TransClass
         Public PaperHeight As Single
         Public MarginLeft As Single
         Public MarginTop As Single
@@ -59,9 +59,9 @@ Public Class PdfRenderer
         Dim s As PaperSizeDesign = pd.GetActualSize.ToPoint(pd)
         Dim m As PaperMarginDesign = pd.Margin.ToPoint(pd)
         If m.OddReverse AndAlso (pageIndex Mod 2) Then
-            Me.Trans = New CTrans(s.Height, m.Right, m.Top)
+            Me.Trans = New TransClass(s.Height, m.Right, m.Top)
         Else
-            Me.Trans = New CTrans(s.Height, m.Left, m.Top)
+            Me.Trans = New TransClass(s.Height, m.Left, m.Top)
         End If
         Me.Document.SetPageSize(New RectangleReadOnly(s.Width, s.Height))
         Me.Document.SetMargins(0, 0, 0, 0)

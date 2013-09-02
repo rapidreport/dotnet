@@ -76,7 +76,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_distribute( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -111,7 +111,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_distribute_vertical( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -144,7 +144,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_vertical( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -156,7 +156,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_vertical_shrink( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -181,7 +181,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_vertical_wrap( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -193,7 +193,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_fixdec( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -205,7 +205,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_fixdec_shrink( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -220,7 +220,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_shrink( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -233,7 +233,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_wrap( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -245,7 +245,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -257,7 +257,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_aux( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -323,7 +323,7 @@ Public Module PdfRenderUtil
     Private Sub _drawText_vertical_aux( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -404,7 +404,7 @@ Public Module PdfRenderUtil
         Public Sub DrawText( _
           ByVal cb As PdfContentByte, _
           ByVal region As Region, _
-          ByVal trans As PdfRenderer.CTrans, _
+          ByVal trans As PdfRenderer.TransClass, _
           ByVal textDesign As TextDesign, _
           ByVal font As BaseFont, _
           ByVal gaijiFont As BaseFont, _
@@ -451,7 +451,7 @@ Public Module PdfRenderUtil
         Private Sub drawText_aux( _
           ByVal cb As PdfContentByte, _
           ByVal region As Region, _
-          ByVal trans As PdfRenderer.CTrans, _
+          ByVal trans As PdfRenderer.TransClass, _
           ByVal textDesign As TextDesign, _
           ByVal font As BaseFont, _
           ByVal gaijiFont As BaseFont, _
@@ -626,7 +626,7 @@ Public Module PdfRenderUtil
     Private Sub setTextMatrix( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal fontSize As Single, _
       ByVal x As Single, _
@@ -643,7 +643,7 @@ Public Module PdfRenderUtil
     Private Sub setRotateTextMatrix( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal fontSize As Single, _
       ByVal x As Single, _
@@ -660,7 +660,7 @@ Public Module PdfRenderUtil
     Private Sub showText( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -702,7 +702,7 @@ Public Module PdfRenderUtil
     Private Sub showVerticalChar( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal gaijiFont As BaseFont, _
@@ -735,7 +735,7 @@ Public Module PdfRenderUtil
     Private Sub drawUnderline( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal fontSize As Single, _
       ByVal x As Single, _
       ByVal y As Single, _
@@ -757,7 +757,7 @@ Public Module PdfRenderUtil
     Private Sub drawVerticalUnderLine( _
       ByVal cb As PdfContentByte, _
       ByVal region As Region, _
-      ByVal trans As PdfRenderer.CTrans, _
+      ByVal trans As PdfRenderer.TransClass, _
       ByVal fontSize As Single, _
       ByVal x As Single, _
       ByVal y As Single, _
