@@ -22,7 +22,7 @@ Public Class ReportSetting
         Me.MethodMap.Add("sum", New FieldSumMethod)
         Me.MethodMap.Add("sum_at", New FieldSumAtMethod)
         Me.MethodMap.Add("sum_page", New FieldSumPageMethod)
-        Me.MethodMap.Add("avr_all", New AverageMethod)
+        Me.MethodMap.Add("avr", New AverageMethod)
         Me.MethodMap.Add("avr_at", New AverageAtMethod)
         Me.MethodMap.Add("avr_page", New AveragePageMethod)
         Me.MethodMap.Add("count", New RowCountMethod)
