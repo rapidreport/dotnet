@@ -80,6 +80,7 @@
     Public Function Regularize(ByVal v As Object) As Object
         If TypeOf v Is Integer OrElse _
            TypeOf v Is Long OrElse _
+           TypeOf v Is Short OrElse _
            TypeOf v Is Single OrElse _
            TypeOf v Is Double OrElse _
            TypeOf v Is Byte Then
