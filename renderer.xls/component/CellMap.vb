@@ -75,7 +75,13 @@
                         _cell.MergedCell = cell
                     Next
                 Next
-                cell.Data = field.Data
+                If TypeOf field.Data Is String Then
+                    Dim t As String = field.Data
+                    t = t.Replace(vbCrLf, vbLf)
+                    cell.Data = t
+                Else
+                    cell.Data = field.Data
+                End If
                 cell.Range.Row2 = field.CellRange.Row2
                 cell.Range.Col2 = field.CellRange.Col2
             Next
