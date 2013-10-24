@@ -20,7 +20,7 @@ Namespace component
                 Dim n As Node = Me.Top
                 Do While n IsNot Nothing
                     If n.Field.Key.Equals(field.Key) And n.Field.Data Is field.Data Then
-                        Throw New EvalException("circular reference : " & n.Field.Key)
+                        Throw New EvalException("循環参照が含まれています : " & n.Field.Key)
                     End If
                     n = n.Caller
                 Loop
