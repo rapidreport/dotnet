@@ -7,6 +7,7 @@ Namespace [operator]
         Public Function Exec( _
           ByVal evaluator As Evaluator, _
           ByVal params As List(Of IExpression)) As Object Implements IOperator.Exec
+            evaluator.ValidateParamCount(params, 2)
             Dim ret As Decimal
             With Nothing
                 Dim o As Object = evaluator.Eval(params(0))

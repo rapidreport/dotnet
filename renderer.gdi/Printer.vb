@@ -45,7 +45,7 @@ Public Class Printer
         End Get
         Set(ByVal value As ReportPages)
             If value.Count = 0 Then
-                Throw New RenderException("there is no page")
+                Throw New RenderException("ページがありません")
             End If
             Me._Pages = value
             Me.Pages.SetUpCountingPages()

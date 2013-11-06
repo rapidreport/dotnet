@@ -153,6 +153,12 @@ Namespace component
             Return Me.PageContext.DataContainer.GetPresentData(Me.ContentContext.Content, scope)
         End Function
 
+        Public Sub ValidateParamCount(params As List(Of IExpression), count As Integer)
+            If params.Count < count Then
+                Throw New ArgumentException("引数が足りません")
+            End If
+        End Sub
+
     End Class
 
 End Namespace

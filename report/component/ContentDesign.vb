@@ -12,6 +12,7 @@
         Public Unbreakable As Boolean = False
         Public Weight As Integer = 0
         Public Variables As Dictionary(Of String, String) = Nothing
+        Public VariablesKeyList As List(Of String) = Nothing
         Public GroupDesign As GroupDesign = Nothing
         Public SubContentDesigns As List(Of ContentDesign) = Nothing
 
@@ -50,15 +51,18 @@
             Me.Weight = Me.Desc("weight")
             If Me.Desc.ContainsKey("variables") Then
                 Me.Variables = New Dictionary(Of String, String)
+                Me.VariablesKeyList = New List(Of String)
                 For Each d As Hashtable In Me.Desc("variables")
                     If d.ContainsKey("key") AndAlso d.ContainsKey("exp") Then
                         If Not Me.Variables.ContainsKey(d("key")) Then
                             Me.Variables.Add(d("key"), d("exp"))
+                            Me.VariablesKeyList.Add(d("key"))
                         End If
                     End If
                 Next
             Else
                 Me.Variables = Nothing
+                Me.VariablesKeyList = Nothing
             End If
         End Sub
 

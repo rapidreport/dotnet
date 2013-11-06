@@ -16,6 +16,7 @@ Namespace component
         Public SortKeys As List(Of String) = Nothing
         Public Layout As GroupLayoutDesign = Nothing
         Public CustomFields As Dictionary(Of String, String) = Nothing
+        Public CustomFieldsKeyList As List(Of String) = Nothing
         Public ContentDesigns As List(Of ContentDesign) = Nothing
 
         Public ReportDesign As ReportDesign
@@ -72,15 +73,18 @@ Namespace component
             End If
             If Me.Desc.ContainsKey("custom_fields") Then
                 Me.CustomFields = New Dictionary(Of String, String)
+                Me.CustomFieldsKeyList = New List(Of String)
                 For Each d As Hashtable In Me.Desc("custom_fields")
                     If d.ContainsKey("key") AndAlso d.ContainsKey("exp") Then
                         If Not Me.CustomFields.ContainsKey(d("key")) Then
                             Me.CustomFields.Add(d("key"), d("exp"))
+                            Me.CustomFieldsKeyList.Add(d("key"))
                         End If
                     End If
                 Next
             Else
                 Me.CustomFields = Nothing
+                Me.CustomFieldsKeyList = Nothing
             End If
         End Sub
 

@@ -12,7 +12,7 @@ Public Class ReportPages
 
     Public Sub Render(ByVal renderer As IRenderer)
         If Me.Count = 0 Then
-            Throw New EvalException("there is no page")
+            Throw New EvalException("ページがありません")
         End If
         Try
             Me.SetUpCountingPages()
@@ -25,7 +25,7 @@ Public Class ReportPages
             If TypeOf ex Is RenderException Then
                 Throw ex
             Else
-                Dim message As String = "an error occurred while rendering report"
+                Dim message As String = "帳票のレンダリング中にエラーが発生しました"
                 Throw New RenderException(message, ex)
             End If
         End Try

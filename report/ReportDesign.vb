@@ -16,6 +16,7 @@ Public Class ReportDesign
     Public PageCapacity As Integer = 0
     Public ResetPageCount As Boolean = False
     Public CustomFields As Dictionary(Of String, String) = Nothing
+    Public CustomFieldsKeyList As List(Of String) = Nothing
     Public PaperName As String = Nothing
     Public PrinterName As String = Nothing
     Public GroupDesign As GroupDesign = Nothing
@@ -51,15 +52,18 @@ Public Class ReportDesign
         Me.ResetPageCount = Me.Desc("reset_page_count")
         If Me.Desc.ContainsKey("custom_fields") Then
             Me.CustomFields = New Dictionary(Of String, String)
+            Me.CustomFieldsKeyList = New List(Of String)
             For Each d As Hashtable In Me.Desc("custom_fields")
                 If d.ContainsKey("key") AndAlso d.ContainsKey("exp") Then
                     If Not Me.CustomFields.ContainsKey(d("key")) Then
                         Me.CustomFields.Add(d("key"), d("exp"))
+                        Me.CustomFieldsKeyList.Add(d("key"))
                     End If
                 End If
             Next
         Else
             Me.CustomFields = Nothing
+            Me.CustomFieldsKeyList = Nothing
         End If
         Me.PrinterName = Desc("printer_name")
         Me.PaperName = Desc("paper_name")
