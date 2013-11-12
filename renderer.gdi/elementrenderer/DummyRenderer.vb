@@ -40,8 +40,8 @@ Namespace elementrenderer
                   design.Get("type"), _
                   SystemFonts.DefaultFont, _
                   Brushes.Red, _
-                  _region.Left, _
-                  _region.Top)
+                  Math.Min(_region.Left, _region.Right), _
+                  Math.Min(_region.Top, _region.Bottom))
             End If
         End Sub
 
