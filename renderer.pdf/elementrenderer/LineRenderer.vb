@@ -26,10 +26,11 @@ Namespace elementrenderer
             cb.SaveState()
             Try
                 cb.SetLineWidth(lw)
+                Dim color As Color = Nothing
                 If Not design.IsNull("color") Then
-                    Dim c As Color = PdfRenderUtil.GetColor(design.Get("color"))
-                    If c IsNot Nothing Then
-                        cb.SetColorStroke(c)
+                    color = PdfRenderUtil.GetColor(design.Get("color"))
+                    If color IsNot Nothing Then
+                        cb.SetColorStroke(color)
                     End If
                 End If
                 If Not design.IsNull("line_pattern") Then
@@ -91,6 +92,9 @@ Namespace elementrenderer
                     End If
                     cb.Stroke()
                     If startArrow Then
+                        If color IsNot Nothing Then
+                            cb.SetColorFill(color)
+                        End If
                         cb.MoveTo(renderer.Trans.X(_region.Left + tx(r, w * 2, -w)), _
                                   renderer.Trans.Y(_region.Top + ty(r, w * 2, -w)))
                         cb.LineTo(renderer.Trans.X(_region.Left), _
@@ -100,6 +104,9 @@ Namespace elementrenderer
                         cb.Fill()
                     End If
                     If endArrow Then
+                        If color IsNot Nothing Then
+                            cb.SetColorFill(color)
+                        End If
                         cb.MoveTo(renderer.Trans.X(_region.Right + tx(r, -w * 2, -w)), _
                                   renderer.Trans.Y(_region.Bottom + ty(r, -w * 2, -w)))
                         cb.LineTo(renderer.Trans.X(_region.Right), _
