@@ -7,18 +7,21 @@ Public Class PdfRendererSetting
     Implements ICloneable
 
     Public DummyElementRenderer As IElementRenderer
-    Public DefaultFont As BaseFont
-    Public GaijiFont As BaseFont
+    Public DefaultFont As BaseFont = Nothing
+    Public GaijiFont As BaseFont = Nothing
     Public ElementRendererMap As New Dictionary(Of String, IElementRenderer)
     Public FontMap As New Dictionary(Of String, BaseFont)
-    Public ReplaceBackslashToYen As Boolean
+    Public ReplaceBackslashToYen As Boolean = False
+    Public Shared SkipInitialFontCreate As Boolean = False
     Private Shared _loaded As Boolean = False
 
     Public Sub New()
-        If Not _loaded Then
-            BaseFont.AddToResourceSearch("iTextAsian.dll")
-            BaseFont.AddToResourceSearch(My.Application.Info.DirectoryPath & "\iTextAsian.dll")
-            _loaded = True
+        If Not SkipInitialFontCreate Then
+            If Not _loaded Then
+                BaseFont.AddToResourceSearch("iTextAsian.dll")
+                BaseFont.AddToResourceSearch(My.Application.Info.DirectoryPath & "\iTextAsian.dll")
+                _loaded = True
+            End If
         End If
         Me.DummyElementRenderer = New DummyRenderer
         Me.ElementRendererMap.Add("rect", New RectRenderer)
@@ -29,11 +32,13 @@ Public Class PdfRendererSetting
         Me.ElementRendererMap.Add("barcode", New BarcodeRenderer)
         Me.ElementRendererMap.Add("image", New ImageRenderer)
         Me.ElementRendererMap.Add("subpage", New SubPageRenderer)
-        Me.DefaultFont = BaseFont.CreateFont("HeiseiKakuGo-W5", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED)
-        Me.GaijiFont = Nothing
-        Me.FontMap.Add("gothic", Me.DefaultFont)
-        Me.FontMap.Add("mincho", BaseFont.CreateFont("HeiseiMin-W3", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED))
-        Me.ReplaceBackslashToYen = False
+        If Not SkipInitialFontCreate Then
+            Me.DefaultFont = BaseFont.CreateFont("HeiseiKakuGo-W5", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED)
+            Me.FontMap.Add("gothic", Me.DefaultFont)
+            Me.FontMap.Add("mincho", BaseFont.CreateFont("HeiseiMin-W3", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED))
+        Else
+            Me.DefaultFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.EMBEDDED)
+        End If
     End Sub
 
     Private Sub New(ByVal setting As PdfRendererSetting)
