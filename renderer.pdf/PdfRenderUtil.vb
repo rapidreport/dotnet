@@ -38,6 +38,9 @@ Public Module PdfRenderUtil
             Dim font As BaseFont = renderer.Setting.GetFont(textDesign.Font.Name)
             If textDesign.Font.Bold Then
                 cb.SetTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_STROKE)
+                If Not Report.Compatibility._4_6_PdfFontBold Then
+                    cb.SetLineWidth(textDesign.Font.Size * 0.01)
+                End If
             Else
                 cb.SetTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL)
             End If

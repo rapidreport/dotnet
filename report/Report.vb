@@ -60,6 +60,10 @@ Public Class Report
         NO_SPLIT
     End Enum
 
+    Public Class Compatibility
+        Public Shared _4_6_PdfFontBold As Boolean = False
+    End Class
+
     Public Design As ReportDesign
     Public Customizer As IReportCustomizer
     Public Data As ReportData = Nothing
