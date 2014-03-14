@@ -20,6 +20,7 @@ Public Class ReportDesign
     Public PaperName As String = Nothing
     Public PrinterName As String = Nothing
     Public GroupDesign As GroupDesign = Nothing
+    Public Memo As String = Nothing
 
     Private imageCache As New Dictionary(Of Hashtable, Dictionary(Of String, Image))
 
@@ -67,6 +68,7 @@ Public Class ReportDesign
         End If
         Me.PrinterName = Desc("printer_name")
         Me.PaperName = Desc("paper_name")
+        Me.Memo = Desc("memo")
     End Sub
 
     Public Sub LoadSubDesc()
