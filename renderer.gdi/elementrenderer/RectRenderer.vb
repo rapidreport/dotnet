@@ -92,7 +92,7 @@ Namespace elementrenderer
                         If Not design.IsNull("line_pattern") Then
                             Dim pt As String() = CType(design.Get("line_pattern"), String).Split(",")
                             Dim ptl As New List(Of Single)
-                            For Each v As String In ptl
+                            For Each v As String In pt
                                 If Char.IsDigit(v) AndAlso v > 0 Then
                                     ptl.Add(v)
                                 End If
