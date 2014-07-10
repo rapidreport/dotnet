@@ -1,5 +1,5 @@
 ﻿Imports NPOI.SS.UserModel
-Imports NPOI.HSSF.UserModel
+Imports NPOI.XSSF.UserModel
 
 Namespace component
     Public Class GridStyle
@@ -11,14 +11,14 @@ Namespace component
 
         Public FillColor As String = Nothing
 
-        Public Sub Fill(ByVal cellStyle As HSSFCellStyle, ByVal renderer As XlsRenderer)
+        Public Sub Fill(ByVal cellStyle As XSSFCellStyle, ByVal renderer As XlsxRenderer)
             If Me.LeftBorder IsNot Nothing Then
                 Dim bs As BorderStyle = Me.LeftBorder
-                cellStyle.BorderLeft = toHSSFBorderStyle(bs.lineStyle)
+                cellStyle.BorderLeft = toHSSFBorderStyle(bs.LineStyle)
                 If bs.LineColor IsNot Nothing Then
-                    Dim i As Short = renderer.ColorPool.GetIndex(bs.LineColor)
-                    If i >= 0 Then
-                        cellStyle.LeftBorderColor = i
+                    Dim c As XSSFColor = ColorUtil.GetColor(bs.LineColor)
+                    If c IsNot Nothing Then
+                        cellStyle.SetLeftBorderColor(c)
                     End If
                 End If
             End If
@@ -26,9 +26,9 @@ Namespace component
                 Dim bs As BorderStyle = Me.RightBorder
                 cellStyle.BorderRight = toHSSFBorderStyle(bs.LineStyle)
                 If bs.LineColor IsNot Nothing Then
-                    Dim i As Short = renderer.ColorPool.GetIndex(bs.LineColor)
-                    If i >= 0 Then
-                        cellStyle.RightBorderColor = i
+                    Dim c As XSSFColor = ColorUtil.GetColor(bs.LineColor)
+                    If c IsNot Nothing Then
+                        cellStyle.SetRightBorderColor(c)
                     End If
                 End If
             End If
@@ -36,9 +36,9 @@ Namespace component
                 Dim bs As BorderStyle = Me.TopBorder
                 cellStyle.BorderTop = toHSSFBorderStyle(bs.LineStyle)
                 If bs.LineColor IsNot Nothing Then
-                    Dim i As Short = renderer.ColorPool.GetIndex(bs.LineColor)
-                    If i >= 0 Then
-                        cellStyle.TopBorderColor = i
+                    Dim c As XSSFColor = ColorUtil.GetColor(bs.LineColor)
+                    If c IsNot Nothing Then
+                        cellStyle.SetTopBorderColor(c)
                     End If
                 End If
             End If
@@ -46,17 +46,17 @@ Namespace component
                 Dim bs As BorderStyle = Me.BottomBorder
                 cellStyle.BorderBottom = toHSSFBorderStyle(bs.LineStyle)
                 If bs.LineColor IsNot Nothing Then
-                    Dim i As Short = renderer.ColorPool.GetIndex(bs.LineColor)
-                    If i >= 0 Then
-                        cellStyle.BottomBorderColor = i
+                    Dim c As XSSFColor = ColorUtil.GetColor(bs.LineColor)
+                    If c IsNot Nothing Then
+                        cellStyle.SetBottomBorderColor(c)
                     End If
                 End If
             End If
             If Me.FillColor IsNot Nothing Then
-                Dim i As Short = renderer.ColorPool.GetIndex(Me.FillColor)
-                If i >= 0 Then
+                Dim c As XSSFColor = ColorUtil.GetColor(Me.FillColor)
+                If c IsNot Nothing Then
                     cellStyle.FillPattern = FillPattern.SolidForeground
-                    cellStyle.FillForegroundColor = i
+                    cellStyle.SetFillForegroundColor(c)
                 End If
             End If
         End Sub

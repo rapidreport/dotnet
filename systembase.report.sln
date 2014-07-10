@@ -13,6 +13,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "renderer.xls", "renderer.xl
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "json", "json\json.vbproj", "{530954AE-BF94-4ACD-8E9C-A9AC08394AA2}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "renderer.xlsx", "renderer.xlsx\renderer.xlsx.vbproj", "{04F0248E-3337-45AB-B69D-2082880D0964}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{530954AE-BF94-4ACD-8E9C-A9AC08394AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{530954AE-BF94-4ACD-8E9C-A9AC08394AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{530954AE-BF94-4ACD-8E9C-A9AC08394AA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04F0248E-3337-45AB-B69D-2082880D0964}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04F0248E-3337-45AB-B69D-2082880D0964}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04F0248E-3337-45AB-B69D-2082880D0964}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04F0248E-3337-45AB-B69D-2082880D0964}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

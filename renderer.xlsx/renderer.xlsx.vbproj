@@ -5,13 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{31C204FA-4E78-4655-95C1-B6D5EB145C2B}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <StartupObject>Sub Main</StartupObject>
-    <RootNamespace>sample</RootNamespace>
-    <AssemblyName>sample</AssemblyName>
+    <ProjectGuid>{04F0248E-3337-45AB-B69D-2082880D0964}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>jp.co.systembase.report.renderer.xlsx</RootNamespace>
+    <AssemblyName>systembase.report.renderer.xlsx</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <MyType>Windows</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
@@ -44,7 +43,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>sample.xml</DocumentationFile>
+    <DocumentationFile>systembase.report.renderer.xlsx.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -52,8 +51,8 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>sample.xml</DocumentationFile>
+    <OutputPath>..\bin\</OutputPath>
+    <DocumentationFile>systembase.report.renderer.xlsx.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -61,36 +60,33 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="iTextAsian, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+    <Reference Include="NPOI, Version=2.1.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\iTextAsian.dll</HintPath>
-    </Reference>
-    <Reference Include="itextsharp, Version=4.1.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\itextsharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NPOI">
       <HintPath>..\dll\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OOXML">
       <HintPath>..\dll\NPOI.OOXML.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OpenXml4Net">
+    <Reference Include="NPOI.OpenXml4Net, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\NPOI.OpenXml4Net.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OpenXmlFormats">
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="systembase.barcode, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\systembase.barcode.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing, Version=1.0.4294.26991, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\zxing.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -98,30 +94,40 @@
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Data" />
-    <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
-    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FmMenu.Designer.vb">
-      <DependentUpon>FmMenu.vb</DependentUpon>
-    </Compile>
-    <Compile Include="FmMenu.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Example1.vb" />
-    <Compile Include="Example2.vb" />
-    <Compile Include="ExampleCross.vb" />
-    <Compile Include="ExampleLocate.vb" />
-    <Compile Include="ExamplePage.vb" />
-    <Compile Include="ExampleRegion.vb" />
-    <Compile Include="ExampleRender.vb" />
-    <Compile Include="ExampleSubPage.vb" />
-    <Compile Include="Main.vb" />
-    <Compile Include="Test1.vb" />
-    <Compile Include="Test2.vb" />
-    <Compile Include="Test3.vb" />
-    <Compile Include="Test4.vb" />
+    <Compile Include="component\BorderStyle.vb" />
+    <Compile Include="component\Cell.vb" />
+    <Compile Include="component\CellMap.vb" />
+    <Compile Include="component\CellRange.vb" />
+    <Compile Include="component\CellStyle.vb" />
+    <Compile Include="component\CellStylePool.vb" />
+    <Compile Include="component\Field.vb" />
+    <Compile Include="component\FieldStyle.vb" />
+    <Compile Include="component\FontPool.vb" />
+    <Compile Include="component\FontStyle.vb" />
+    <Compile Include="component\Grid.vb" />
+    <Compile Include="component\GridStyle.vb" />
+    <Compile Include="component\Page.vb" />
+    <Compile Include="component\Shape.vb" />
+    <Compile Include="component\ColorUtil.vb" />
+    <Compile Include="component\RowColUtil.vb" />
+    <Compile Include="XlsxRenderer.vb" />
+    <Compile Include="elementrenderer\BarcodeRenderer.vb" />
+    <Compile Include="elementrenderer\CircleRenderer.vb" />
+    <Compile Include="elementrenderer\DummyRenderer.vb" />
+    <Compile Include="elementrenderer\FieldRenderer.vb" />
+    <Compile Include="elementrenderer\ImageRenderer.vb" />
+    <Compile Include="elementrenderer\LineRenderer.vb" />
+    <Compile Include="elementrenderer\RectRenderer.vb" />
+    <Compile Include="elementrenderer\SubPageRenderer.vb" />
+    <Compile Include="elementrenderer\TextRenderer.vb" />
+    <Compile Include="elementrenderer\IElementRenderer.vb" />
+    <Compile Include="elementrenderer\IShapeRenderer.vb" />
+    <Compile Include="imageloader\XlsxImageLoader.vb" />
+    <Compile Include="imageloader\IXlsxImageLoader.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -137,11 +143,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="XlsxRendererSetting.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FmMenu.resx">
-      <DependentUpon>FmMenu.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -159,85 +163,12 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="report\example1.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\example2.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\example_cross.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\example_locate.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\example_page1.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\example_page2.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\example_page3.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\example_region.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\example_render.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\example_subpage1.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\example_subpage2.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\test1.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\test2.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\test3.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="report\test4.rrpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\json\json.vbproj">
-      <Project>{530954AE-BF94-4ACD-8E9C-A9AC08394AA2}</Project>
-      <Name>json</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\renderer.gdi\renderer.gdi.vbproj">
-      <Project>{92101B3F-9C10-4B3B-825E-76C1225B1352}</Project>
-      <Name>report.gdi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\renderer.pdf\renderer.pdf.vbproj">
-      <Project>{D54DF813-F876-4A9C-B75B-25062117D141}</Project>
-      <Name>report.pdf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\renderer.xlsx\renderer.xlsx.vbproj">
-      <Project>{04F0248E-3337-45AB-B69D-2082880D0964}</Project>
-      <Name>renderer.xlsx</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\renderer.xls\renderer.xls.vbproj">
-      <Project>{F4510848-4D59-41CD-8D89-B1AE0974FCEA}</Project>
-      <Name>renderer.xls</Name>
-    </ProjectReference>
     <ProjectReference Include="..\report\report.vbproj">
       <Project>{B97A6DF0-7AA6-48E0-BC55-591370D69A92}</Project>
       <Name>report</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="image\logo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="output\output.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

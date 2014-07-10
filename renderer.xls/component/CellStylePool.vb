@@ -5,7 +5,6 @@ Namespace component
 
         Public Renderer As XlsRenderer
         Public Map As New Dictionary(Of CellStyle, HSSFCellStyle)
-        Public RevMap As New Dictionary(Of HSSFCellStyle, CellStyle)
 
         Public Sub New(ByVal renderer As XlsRenderer)
             Me.Renderer = renderer
@@ -14,7 +13,6 @@ Namespace component
         Public Function [Get](ByVal cellStyle As CellStyle) As HSSFCellStyle
             If Not Me.Map.ContainsKey(cellStyle) Then
                 Me.Map.Add(cellStyle, Me.createStyle(cellStyle))
-                Me.RevMap.Add(Me.Map(cellStyle), cellStyle)
             End If
             Return Me.Map(cellStyle)
         End Function

@@ -1,49 +1,47 @@
-﻿Imports NPOI.HSSF.UserModel
+﻿Imports NPOI.XSSF.UserModel
 Imports NPOI.SS.UserModel
 
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
-Imports jp.co.systembase.report.renderer.xls.component
-Imports jp.co.systembase.report.renderer.xls.imageloader
+Imports jp.co.systembase.report.renderer.xlsx.component
+Imports jp.co.systembase.report.renderer.xlsx.imageloader
 
-Public Class XlsRenderer
+Public Class XlsxRenderer
     Implements IRenderer
 
-    Public Setting As XlsRendererSetting
-    Public ImageLoaderMap As Dictionary(Of Object, IXlsImageLoader) = Nothing
-    Public Workbook As HSSFWorkbook
-    Public Sheet As HSSFSheet = Nothing
+    Public Setting As XlsxRendererSetting
+    Public ImageLoaderMap As Dictionary(Of Object, IXlsxImageLoader) = Nothing
+    Public Workbook As XSSFWorkbook
+    Public Sheet As XSSFSheet = Nothing
     Public Pages As List(Of Page) = Nothing
     Public CurrentPage As Page = Nothing
 
     Public ImagePool As Dictionary(Of Image, Integer)
     Public CellStylePool As CellStylePool
     Public FontPool As FontPool
-    Public ColorPool As ColorPool
 
-    Public Sub New(ByVal workbook As HSSFWorkbook)
-        Me.New(workbook, New XlsRendererSetting)
+    Public Sub New(ByVal workbook As XSSFWorkbook)
+        Me.New(workbook, New XlsxRendererSetting)
     End Sub
 
-    Public Sub New(ByVal workbook As HSSFWorkbook, ByVal setting As XlsRendererSetting)
+    Public Sub New(ByVal workbook As XSSFWorkbook, ByVal setting As XlsxRendererSetting)
         Me.Workbook = workbook
         Me.Setting = setting
         Me.CellStylePool = New CellStylePool(Me)
         Me.FontPool = New FontPool(Me)
-        Me.ColorPool = New ColorPool(Me)
     End Sub
 
     Public Sub NewSheet(ByVal sheetName As String)
         Me.Sheet = Me.Workbook.CreateSheet(sheetName)
         Me.Pages = New List(Of Page)
         Me.CurrentPage = Nothing
-        Me.ImageLoaderMap = New Dictionary(Of Object, IXlsImageLoader)
+        Me.ImageLoaderMap = New Dictionary(Of Object, IXlsxImageLoader)
         Me.Sheet.CreateDrawingPatriarch()
         Me.ImagePool = New Dictionary(Of Image, Integer)
     End Sub
 
     Public Sub BeginReport(ByVal reportDesign As ReportDesign) Implements IRenderer.BeginReport
-        Dim ps As HSSFPrintSetup = Me.Sheet.PrintSetup
+        Dim ps As XSSFPrintSetup = Me.Sheet.PrintSetup
         Select Case reportDesign.PaperDesign.PaperType
             Case Report.EPaperType.A3
                 ps.PaperSize = PaperSize.A3 + 1
@@ -81,7 +79,7 @@ Public Class XlsRenderer
             For Each page As Page In Me.Pages
                 page.TopRow = topRow
                 Dim rows As List(Of Single) = RowColUtil.CreateRows(reportDesign, page)
-                Dim rowHeights As List(Of Integer) = RowColUtil.CreateRowHeights(rows, 1.36F * Me.Setting.RowHeightCoefficent)
+                Dim rowHeights As List(Of Integer) = RowColUtil.CreateRowHeights(rows, 1.46F * Me.Setting.RowHeightCoefficent)
                 For i As Integer = 0 To rowHeights.Count - 1
                     Me.Sheet.CreateRow(topRow + i).Height = rowHeights(i)
                 Next
@@ -124,7 +122,7 @@ Public Class XlsRenderer
 
     Public Function GetImageIndex(ByVal image As Image) As Integer
         If image Is Nothing Then
-            Return 0
+            Return -1
         End If
         If Not Me.ImagePool.ContainsKey(image) Then
             Dim index As Integer = Me.Workbook.AddPicture( _

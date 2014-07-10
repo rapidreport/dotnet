@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 
 Imports NPOI.HSSF.UserModel
+Imports NPOI.XSSF.UserModel
 
 Imports jp.co.systembase.json
 Imports jp.co.systembase.report
@@ -8,6 +9,7 @@ Imports jp.co.systembase.report.data
 Imports jp.co.systembase.report.renderer.pdf
 Imports jp.co.systembase.report.renderer.gdi
 Imports jp.co.systembase.report.renderer.xls
+Imports jp.co.systembase.report.renderer.xlsx
 
 Module Test1
 
@@ -18,19 +20,23 @@ Module Test1
         report.Fill(New ReportDataSource(getDataTable))
         Debug.Print("fill: " & sw.ElapsedMilliseconds)
         Dim pages As ReportPages = report.GetPages()
-        'Debug.Print("paging: " & sw.ElapsedMilliseconds)
+        Debug.Print("paging: " & sw.ElapsedMilliseconds)
         'Using fs As New FileStream("output\test1.pdf", IO.FileMode.Create)
-        '    pages.Render(New CPdfRenderer(fs))
+        '    pages.Render(New PdfRenderer(fs))
         'End Using
-        'Debug.Print("render: " & sw.ElapsedMilliseconds)
         'Using fs As New FileStream("output\test1.xls", IO.FileMode.Create)
         '    Dim workbook As New HSSFWorkbook
-        '    Dim renderer As New CXlsRenderer(workbook, "test1")
+        '    Dim renderer As New XlsRenderer(workbook, "test1")
         '    pages.Render(renderer)
         '    workbook.Write(fs)
         'End Using
-        Dim preview As New FmPrintPreview(New Printer(pages))
-        preview.ShowDialog()
+        'Using fs As New FileStream("output\test1.xlsx", IO.FileMode.Create)
+        '    Dim workbook As New XSSFWorkbook
+        '    Dim renderer As New XlsxRenderer(workbook, "test1")
+        '    pages.Render(renderer)
+        '    workbook.Write(fs)
+        'End Using
+        Debug.Print("render: " & sw.ElapsedMilliseconds)
     End Sub
 
     Private Function getDataTable() As DataTable

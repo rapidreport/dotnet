@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 
 Imports NPOI.HSSF.UserModel
+Imports NPOI.XSSF.UserModel
 
 Imports jp.co.systembase.json
 Imports jp.co.systembase.report
@@ -10,6 +11,7 @@ Imports jp.co.systembase.report.data
 Imports jp.co.systembase.report.renderer.gdi
 Imports jp.co.systembase.report.renderer.pdf
 Imports jp.co.systembase.report.renderer.xls
+Imports jp.co.systembase.report.renderer.xlsx
 Imports jp.co.systembase.report.customizer
 
 Module ExampleRender
@@ -26,6 +28,14 @@ Module ExampleRender
         Using fs As New FileStream("output\example_render.xls", IO.FileMode.Create)
             Dim workbook As New HSSFWorkbook
             Dim renderer As New XlsRenderer(workbook)
+            renderer.NewSheet("example_render")
+            pages.Render(renderer)
+            workbook.Write(fs)
+        End Using
+
+        Using fs As New FileStream("output\example_render.xlsx", IO.FileMode.Create)
+            Dim workbook As New XSSFWorkbook
+            Dim renderer As New XlsxRenderer(workbook)
             renderer.NewSheet("example_render")
             pages.Render(renderer)
             workbook.Write(fs)

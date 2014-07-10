@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 
 Imports NPOI.HSSF.UserModel
+Imports NPOI.XSSF.UserModel
 
 Imports jp.co.systembase.json
 Imports jp.co.systembase.report
@@ -12,6 +13,8 @@ Imports jp.co.systembase.report.renderer.pdf
 Imports jp.co.systembase.report.renderer.pdf.imageloader
 Imports jp.co.systembase.report.renderer.xls
 Imports jp.co.systembase.report.renderer.xls.imageloader
+Imports jp.co.systembase.report.renderer.xlsx
+Imports jp.co.systembase.report.renderer.xlsx.imageloader
 
 Module Example1
 
@@ -35,6 +38,15 @@ Module Example1
             Dim renderer As New XlsRenderer(workbook)
             renderer.NewSheet("example1")
             renderer.ImageLoaderMap.Add("image", New XlsImageLoader(imageMap))
+            pages.Render(renderer)
+            workbook.Write(fs)
+        End Using
+
+        Using fs As New FileStream("output\example1.xlsx", IO.FileMode.Create)
+            Dim workbook As New XSSFWorkbook
+            Dim renderer As New XlsxRenderer(workbook)
+            renderer.NewSheet("example1")
+            renderer.ImageLoaderMap.Add("image", New XlsxImageLoader(imageMap))
             pages.Render(renderer)
             workbook.Write(fs)
         End Using
