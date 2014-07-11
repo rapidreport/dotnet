@@ -29,6 +29,11 @@
 /renderer.xls/obj
 /renderer.xls/*.user
 
+# /renderer.xlsx/
+/renderer.xlsx/bin
+/renderer.xlsx/obj
+/renderer.xlsx/*.user
+
 # /report/
 /report/bin
 /report/obj
