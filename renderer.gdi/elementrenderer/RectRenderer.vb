@@ -111,8 +111,6 @@ Namespace elementrenderer
                                     p.DashStyle = Drawing2D.DashStyle.DashDot
                             End Select
                         End If
-                        If Not design.IsNull("round") Then
-                        End If
                         If t And b And l And r And rd = 0 Then
                             g.DrawRectangle(p, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight)
                         Else
