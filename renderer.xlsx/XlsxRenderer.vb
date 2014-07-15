@@ -70,7 +70,7 @@ Public Class XlsxRenderer
 
     Public Sub EndReport(ByVal reportDesign As ReportDesign) Implements IRenderer.EndReport
         Dim cols As List(Of Single) = RowColUtil.CreateCols(reportDesign, Me)
-        Dim colWidths As List(Of Integer) = RowColUtil.CreateColWidths(cols, 1.26F * Me.Setting.ColWidthCoefficent)
+        Dim colWidths As List(Of Integer) = RowColUtil.CreateColWidths(cols, 1.25F * Me.Setting.ColWidthCoefficent)
         For i As Integer = 0 To colWidths.Count - 1
             Me.Sheet.SetColumnWidth(i, colWidths(i))
         Next
