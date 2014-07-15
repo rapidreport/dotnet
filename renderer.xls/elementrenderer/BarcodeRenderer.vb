@@ -41,7 +41,7 @@ Namespace elementrenderer
                 If Me.Code Is Nothing Then
                     Exit Sub
                 End If
-                Const scale As Integer = 5
+                Const scale As Integer = 10
                 Dim width As Integer = CType(Shape.Region.GetWidth * scale, Integer)
                 Dim height As Integer = CType(Shape.Region.GetHeight * scale, Integer)
                 If width = 0 OrElse height = 0 Then
@@ -131,12 +131,14 @@ Namespace elementrenderer
                                 h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M)
                             End If
                             Dim bm As ByteMatrix = w.encode(Me.Code, BarcodeFormat.QR_CODE, 0, 0, h)
-                            Dim mw As Integer = image.Width / bm.Width
-                            Dim mh As Integer = image.Width / bm.Height
+                            Dim mw As Integer = Fix(image.Width / bm.Width)
+                            Dim mh As Integer = Fix(image.Height / bm.Height)
+                            Dim mgw As Integer = (image.Width - (mw * bm.Width)) / 2
+                            Dim mgh As Integer = (image.Height - (mh * bm.Height)) / 2
                             For y As Integer = 0 To bm.Height - 1
                                 For x As Integer = 0 To bm.Width - 1
                                     If Not bm.Array(y)(x) Then
-                                        g.FillRectangle(Brushes.Black, x * mw, y * mh, mw, mh)
+                                        g.FillRectangle(Brushes.Black, mgw + x * mw, mgh + y * mh, mw, mh)
                                     End If
                                 Next
                             Next
