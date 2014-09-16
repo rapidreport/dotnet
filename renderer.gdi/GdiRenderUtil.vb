@@ -57,6 +57,7 @@ Public Module GdiRenderUtil
       ByVal textDesign As TextDesign, _
       ByVal text As String)
         Dim font As Font = getFont(setting, textDesign, True)
+        Dim texts As List(Of String) = splitByCr(region, font, text, False)
         Dim color As Color = GetColor(textDesign.Color, Drawing.Color.Black)
         Dim sf As New StringFormat
         sf.Alignment = toStringAlignment(Report.EHAlign.CENTER)
@@ -66,28 +67,33 @@ Public Module GdiRenderUtil
             Case Report.EVAlign.TOP
                 y = 0
             Case Report.EVAlign.CENTER
-                y = (region.GetHeight - font.Size) / 2
+                y = (region.GetHeight - (font.Size * texts.Count)) / 2
             Case Report.EVAlign.BOTTOM
-                y = region.GetHeight - font.Size - font.Size / 8
+                y = region.GetHeight - (font.Size * texts.Count) - font.Size / 8
         End Select
-        Using b As New SolidBrush(color)
-            Dim mx As Single = font.Size / 6
-            Dim m As List(Of Single) = getDistributeMap(region.GetWidth - mx * 2, text.Length, font)
-            For i As Integer = 0 To text.Length - 1
-                g.DrawString(text(i), font, b, region.Left + m(i) + mx, region.Top + y, sf)
-            Next
-        End Using
-        If textDesign.Font.Underline Then
-            Using p As New Pen(color)
-                p.Width = textDesign.Font.Size / 13.4F
-                g.DrawLine( _
-                  p, _
-                  region.Left + font.Size / 6, _
-                  region.Top + y + (font.Size - p.Width), _
-                  region.Right - font.Size / 6, _
-                  region.Top + y + (font.Size - p.Width))
+        Dim yc As Integer = Fix((region.GetHeight + TOLERANCE) / font.Size)
+        For i As Integer = 0 To Math.Min(texts.Count, yc) - 1
+            Dim t As String = texts(i)
+            Using b As New SolidBrush(color)
+                Dim mx As Single = font.Size / 6
+                Dim m As List(Of Single) = getDistributeMap(region.GetWidth - mx * 2, t.Length, font)
+                For j As Integer = 0 To t.Length - 1
+                    g.DrawString(t(j), font, b, region.Left + m(j) + mx, region.Top + y, sf)
+                Next
             End Using
-        End If
+            If textDesign.Font.Underline Then
+                Using p As New Pen(color)
+                    p.Width = textDesign.Font.Size / 13.4F
+                    g.DrawLine( _
+                      p, _
+                      region.Left + font.Size / 6, _
+                      region.Top + y + (font.Size - p.Width), _
+                      region.Right - font.Size / 6, _
+                      region.Top + y + (font.Size - p.Width))
+                End Using
+            End If
+            y += font.Size
+        Next
     End Sub
 
     Private Sub _drawText_distribute_vertical( _
@@ -146,7 +152,7 @@ Public Module GdiRenderUtil
       ByVal textDesign As TextDesign, _
       ByVal text As String)
         Dim font As Font = getFont(setting, textDesign, True)
-        Dim texts As List(Of String) = splitVerticalText(region, font, text, False)
+        Dim texts As List(Of String) = splitByCr(region, font, text, False)
         _drawText_vertical_aux(g, region, textDesign, texts, font)
     End Sub
 
@@ -157,7 +163,7 @@ Public Module GdiRenderUtil
       ByVal textDesign As TextDesign, _
       ByVal text As String)
         Dim font As Font = getFont(setting, textDesign, True)
-        Dim texts As List(Of String) = splitVerticalText(region, font, text, False)
+        Dim texts As List(Of String) = splitByCr(region, font, text, False)
         With Nothing
             Dim m As Integer = 0
             For Each t As String In texts
@@ -182,7 +188,7 @@ Public Module GdiRenderUtil
       ByVal textDesign As TextDesign, _
       ByVal text As String)
         Dim font As Font = getFont(setting, textDesign, True)
-        Dim texts As List(Of String) = splitVerticalText(region, font, text, True)
+        Dim texts As List(Of String) = splitByCr(region, font, text, True)
         _drawText_vertical_aux(g, region, textDesign, texts, font)
     End Sub
 
@@ -347,13 +353,13 @@ Public Module GdiRenderUtil
         Return ret
     End Function
 
-    Private Function splitVerticalText( _
+    Private Function splitByCr( _
       ByVal region As Region, _
       ByVal font As Font, _
       ByVal text As String, _
       ByVal wrap As Boolean) As List(Of String)
-        Dim ch As Single = region.GetHeight
-        Dim yc As Integer = Fix((ch + TOLERANCE) / font.Size)
+        Dim h As Single = region.GetHeight
+        Dim yc As Integer = Fix((h + TOLERANCE) / font.Size)
         Dim ret As New List(Of String)
         For Each t As String In text.Split(vbCr)
             t = t.Replace(vbLf, "")
