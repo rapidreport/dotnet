@@ -68,8 +68,10 @@ Public Module GdiRenderUtil
                 y = 0
             Case Report.EVAlign.CENTER
                 y = (region.GetHeight - (font.Size * texts.Count)) / 2
+                y = Math.Max(y, 0)
             Case Report.EVAlign.BOTTOM
                 y = region.GetHeight - (font.Size * texts.Count) - font.Size / 8
+                y = Math.Max(y, 0)
         End Select
         Dim yc As Integer = Fix((region.GetHeight + TOLERANCE) / font.Size)
         For i As Integer = 0 To Math.Min(texts.Count, yc) - 1
@@ -117,7 +119,7 @@ Public Module GdiRenderUtil
             Case Report.EHAlign.LEFT
                 x = font.Size / 2 + mx
             Case Report.EHAlign.CENTER
-                x = region.GetWidth / 2
+                x = region.GetWidth / 2                
             Case Report.EHAlign.RIGHT
                 x = region.GetWidth - font.Size / 2 - mx
         End Select
