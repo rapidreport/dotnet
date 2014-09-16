@@ -105,6 +105,7 @@ Public Module GdiRenderUtil
       ByVal textDesign As TextDesign, _
       ByVal text As String)
         Dim font As Font = getFont(setting, textDesign, True)
+        Dim texts As List(Of String) = splitByCr(region, font, text, False)
         Dim color As Color = GetColor(textDesign.Color, Drawing.Color.Black)
         Dim sf As New StringFormat
         Dim sfr As New StringFormat
@@ -117,34 +118,41 @@ Public Module GdiRenderUtil
         Dim x As Single = 0
         Select Case textDesign.HAlign
             Case Report.EHAlign.LEFT
-                x = font.Size / 2 + mx
+                x = font.Size * (texts.Count - 1) + font.Size / 2 + mx
+                x = Math.Min(x, region.GetWidth - font.Size / 2 - mx)
             Case Report.EHAlign.CENTER
-                x = region.GetWidth / 2                
+                x = (region.GetWidth + font.Size * (texts.Count - 1)) / 2
+                x = Math.Min(x, region.GetWidth - font.Size / 2 - mx)
             Case Report.EHAlign.RIGHT
                 x = region.GetWidth - font.Size / 2 - mx
         End Select
-        Using b As New SolidBrush(color)
-            Dim m As List(Of Single) = getDistributeMap(region.GetHeight, text.Length, font)
-            For i As Integer = 0 To text.Length - 1
-                Dim c As String = text(i)
-                If VERTICAL_ROTATE_CHARS.IndexOf(c) >= 0 Then
-                    g.DrawString(c, font, b, region.Left + x - font.Size / 6, region.Top + m(i), sfr)
-                Else
-                    g.DrawString(c, font, b, region.Left + x, region.Top + m(i), sf)
-                End If
-            Next
-        End Using
-        If textDesign.Font.Underline Then
-            Using p As New Pen(color)
-                p.Width = textDesign.Font.Size / 13.4F
-                g.DrawLine( _
-                  p, _
-                  region.Left + x + font.Size / 2 + p.Width, _
-                  region.Top, _
-                  region.Left + x + font.Size / 2 + p.Width, _
-                  region.Bottom)
+        Dim xc As Integer = Fix((region.GetWidth - mx * 2 + TOLERANCE) / font.Size)
+        For i As Integer = 0 To Math.Min(xc, texts.Count) - 1
+            Dim t As String = texts(i)
+            Using b As New SolidBrush(color)
+                Dim m As List(Of Single) = getDistributeMap(region.GetHeight, t.Length, font)
+                For j As Integer = 0 To t.Length - 1
+                    Dim c As String = t(j)
+                    If VERTICAL_ROTATE_CHARS.IndexOf(c) >= 0 Then
+                        g.DrawString(c, font, b, region.Left + x - font.Size / 6, region.Top + m(j), sfr)
+                    Else
+                        g.DrawString(c, font, b, region.Left + x, region.Top + m(j), sf)
+                    End If
+                Next
             End Using
-        End If
+            If textDesign.Font.Underline Then
+                Using p As New Pen(color)
+                    p.Width = textDesign.Font.Size / 13.4F
+                    g.DrawLine( _
+                      p, _
+                      region.Left + x + font.Size / 2 + p.Width, _
+                      region.Top, _
+                      region.Left + x + font.Size / 2 + p.Width, _
+                      region.Bottom)
+                End Using
+            End If
+            x -= font.Size
+        Next
     End Sub
 
     Private Sub _drawText_vertical( _
