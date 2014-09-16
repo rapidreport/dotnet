@@ -125,28 +125,36 @@ Public Module PdfRenderUtil
       ByVal font As BaseFont, _
       ByVal text As String)
         Dim fontSize As Single = textDesign.Font.Size
+        Dim texts As List(Of String) = splitByCr(region, textDesign, text, False)
         Dim x As Single = 0
         Select Case textDesign.HAlign
             Case Report.EHAlign.LEFT
-                x = fontSize / 2 + MARGIN_X
+                x = fontSize * (texts.Count - 1) + fontSize / 2 + MARGIN_X
+                x = Math.Min(x, region.GetWidth - fontSize / 2 - MARGIN_X)
             Case Report.EHAlign.CENTER
-                x = region.GetWidth / 2
+                x = (region.GetWidth + (texts.Count - 1) * fontSize) / 2
+                x = Math.Min(x, region.GetWidth - fontSize / 2 - MARGIN_X)
             Case Report.EHAlign.RIGHT
                 x = region.GetWidth - fontSize / 2 - MARGIN_X
         End Select
-        If textDesign.Font.Underline Then
-            drawVerticalUnderLine(cb, region, trans, fontSize, x + fontSize / 2, 0, region.GetHeight)
-        End If
-        With Nothing
-            Dim m As List(Of Single) = getDistributeMap(region.GetHeight - MARGIN_BOTTOM, text.Length, fontSize)
-            cb.SetFontAndSize(font, fontSize)
-            cb.BeginText()
-            For i As Integer = 0 To text.Length - 1
-                showVerticalChar(cb, region, setting, trans, textDesign, font, fontSize, text(i), _
-                                 x, m(i) - fontSize / 2 + OFFSET_Y)
-            Next
-            cb.EndText()
-        End With
+        Dim cols As Integer = Fix(((region.GetWidth - MARGIN_X * 2) + TOLERANCE) / fontSize)
+        For i As Integer = 0 To Math.Max(Math.Min(texts.Count, cols) - 1, 0)
+            Dim t As String = texts(i)
+            If textDesign.Font.Underline Then
+                drawVerticalUnderLine(cb, region, trans, fontSize, x + fontSize / 2, 0, region.GetHeight)
+            End If
+            With Nothing
+                Dim m As List(Of Single) = getDistributeMap(region.GetHeight - MARGIN_BOTTOM, t.Length, fontSize)
+                cb.SetFontAndSize(font, fontSize)
+                cb.BeginText()
+                For j As Integer = 0 To t.Length - 1
+                    showVerticalChar(cb, region, setting, trans, textDesign, font, fontSize, t(j), _
+                                     x, m(j) - fontSize / 2 + OFFSET_Y)
+                Next
+                cb.EndText()
+            End With
+            x -= fontSize
+        Next
     End Sub
 
     Private Sub _drawText_vertical( _
