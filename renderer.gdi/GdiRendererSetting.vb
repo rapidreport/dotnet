@@ -36,6 +36,7 @@ Public Class GdiRendererSetting
         For Each k As String In setting.FontMap.Keys
             Me.FontMap.Add(k, setting.FontMap(k))
         Next
+        Me.ShrinkFontSizeMin = setting.ShrinkFontSizeMin
     End Sub
 
     Public Function GetElementRenderer(ByVal key As String) As IElementRenderer
