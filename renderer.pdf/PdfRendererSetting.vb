@@ -12,6 +12,8 @@ Public Class PdfRendererSetting
     Public ElementRendererMap As New Dictionary(Of String, IElementRenderer)
     Public FontMap As New Dictionary(Of String, BaseFont)
     Public ReplaceBackslashToYen As Boolean = False
+    Public ShrinkFontSizeMin As Single
+
     Public Shared SkipInitialFontCreate As Boolean = False
     Private Shared _loaded As Boolean = False
 
@@ -39,6 +41,7 @@ Public Class PdfRendererSetting
         Else
             Me.DefaultFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.EMBEDDED)
         End If
+        Me.ShrinkFontSizeMin = 4.0F
     End Sub
 
     Private Sub New(ByVal setting As PdfRendererSetting)
@@ -51,6 +54,7 @@ Public Class PdfRendererSetting
             Me.FontMap.Add(k, setting.FontMap(k))
         Next
         Me.ReplaceBackslashToYen = setting.ReplaceBackslashToYen
+        Me.ShrinkFontSizeMin = setting.ShrinkFontSizeMin
     End Sub
 
     Public Function GetElementRenderer(ByVal key As String) As IElementRenderer
