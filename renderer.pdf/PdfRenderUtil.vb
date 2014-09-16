@@ -84,30 +84,36 @@ Public Module PdfRenderUtil
       ByVal font As BaseFont, _
       ByVal text As String)
         Dim fontSize As Single = textDesign.Font.Size
+        Dim texts As List(Of String) = splitByCr(region, textDesign, text, False)
         Dim y As Single = 0
         Select Case textDesign.VAlign
             Case Report.EVAlign.TOP
                 y = 0
             Case Report.EVAlign.CENTER
-                y = (region.GetHeight - fontSize) / 2
+                y = (region.GetHeight - (fontSize * texts.Count)) / 2
+                y = Math.Max(y, 0)
             Case Report.EVAlign.BOTTOM
-                y = region.GetHeight - fontSize - MARGIN_BOTTOM
+                y = region.GetHeight - (fontSize * texts.Count) - MARGIN_BOTTOM
+                y = Math.Max(y, 0)
         End Select
         y += OFFSET_Y
-        With Nothing
-            Dim m As List(Of Single) = getDistributeMap(region.GetWidth - MARGIN_X * 2, text.Length, fontSize)
+        Dim rows As Integer = Fix((region.GetHeight + TOLERANCE) / fontSize)
+        For i As Integer = 0 To Math.Min(texts.Count, rows) - 1
+            Dim t As String = texts(i)
+            Dim m As List(Of Single) = getDistributeMap(region.GetWidth - MARGIN_X * 2, t.Length, fontSize)
             cb.BeginText()
             cb.SetFontAndSize(font, fontSize)
-            For i As Integer = 0 To text.Length - 1
-                Dim c As String = text(i)
+            For j As Integer = 0 To t.Length - 1
+                Dim c As String = t(j)
                 showText(cb, region, setting, trans, textDesign, font, fontSize, _
-                         c, m(i) - getTextWidth(setting, textDesign, font, fontSize, c) / 2 + MARGIN_X, y)
+                         c, m(j) - getTextWidth(setting, textDesign, font, fontSize, c) / 2 + MARGIN_X, y)
             Next
             cb.EndText()
-        End With
-        If textDesign.Font.Underline Then
-            drawUnderline(cb, region, trans, fontSize, MARGIN_X, y, region.GetWidth - MARGIN_X * 2)
-        End If
+            If textDesign.Font.Underline Then
+                drawUnderline(cb, region, trans, fontSize, MARGIN_X, y, region.GetWidth - MARGIN_X * 2)
+            End If
+            y += fontSize
+        Next
     End Sub
 
     Private Sub _drawText_distribute_vertical( _
@@ -151,7 +157,7 @@ Public Module PdfRenderUtil
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal text As String)
-        Dim texts As List(Of String) = splitVerticalText(region, textDesign, text, False)
+        Dim texts As List(Of String) = splitByCr(region, textDesign, text, False)
         _drawText_vertical_aux(cb, region, setting, trans, textDesign, font, textDesign.Font.Size, texts)
     End Sub
 
@@ -164,7 +170,7 @@ Public Module PdfRenderUtil
       ByVal font As BaseFont, _
       ByVal text As String)
         Dim fontSize As Single = textDesign.Font.Size
-        Dim texts As List(Of String) = splitVerticalText(region, textDesign, text, False)
+        Dim texts As List(Of String) = splitByCr(region, textDesign, text, False)
         With Nothing
             Dim m As Integer = 0
             For Each t As String In texts
@@ -188,7 +194,7 @@ Public Module PdfRenderUtil
       ByVal textDesign As TextDesign, _
       ByVal font As BaseFont, _
       ByVal text As String)
-        Dim texts As List(Of String) = splitVerticalText(region, textDesign, text, True)
+        Dim texts As List(Of String) = splitByCr(region, textDesign, text, True)
         _drawText_vertical_aux(cb, region, setting, trans, textDesign, font, textDesign.Font.Size, texts)
     End Sub
 
@@ -546,12 +552,12 @@ Public Module PdfRenderUtil
         Dim ret As New List(Of String)
         For Each t As String In text.Split(vbCr)
             t = t.Replace(vbLf, "")
-            If wrap AndAlso getTextWidth(setting, textDesign, Font, fontSize, t) > cw + TOLERANCE Then
+            If wrap AndAlso getTextWidth(setting, textDesign, font, fontSize, t) > cw + TOLERANCE Then
                 Dim _t As String = t
                 Do While Not String.IsNullOrEmpty(_t)
                     Dim i As Integer
                     For i = 2 To _t.Length
-                        If getTextWidth(setting, textDesign, Font, fontSize, _t.Substring(0, i)) > cw + TOLERANCE Then
+                        If getTextWidth(setting, textDesign, font, fontSize, _t.Substring(0, i)) > cw + TOLERANCE Then
                             Exit For
                         End If
                     Next
@@ -565,7 +571,7 @@ Public Module PdfRenderUtil
         Return ret
     End Function
 
-    Private Function splitVerticalText( _
+    Private Function splitByCr( _
       ByVal region As Region, _
       ByVal textDesign As TextDesign, _
       ByVal text As String, _
