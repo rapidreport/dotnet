@@ -6,7 +6,6 @@ Imports jp.co.systembase.report.component
 Public Module GdiRenderUtil
 
     Private Const TOLERANCE As Single = 0.1F
-    Private Const SHRINK_FONT_SIZE_MIN As Single = 4.0F
 
     Private Const VERTICAL_ROTATE_CHARS As String = "～…‥｜ーｰ(){}[]<>（）｛｝「」＜＞。、"
 
@@ -167,7 +166,7 @@ Public Module GdiRenderUtil
                 End If
             Next
             If m > 0 Then
-                Dim fontSize As Single = Math.Max(region.GetHeight / m, SHRINK_FONT_SIZE_MIN)
+                Dim fontSize As Single = Math.Max(region.GetHeight / m, setting.ShrinkFontSizeMin)
                 If font.Size > fontSize Then
                     font = New Font(font.Name, fontSize, font.Style)
                 End If
@@ -206,7 +205,7 @@ Public Module GdiRenderUtil
       ByVal text As String)
         Dim fd As New _FixDec(text)
         Dim font As Font = getFont(setting, textDesign, True)
-        font = getFitFont(g, region, fd.GetFullText(textDesign.DecimalPlace), font)
+        font = getFitFont(g, region, setting, fd.GetFullText(textDesign.DecimalPlace), font)
         fd.DrawText(g, region, setting, textDesign, font)
     End Sub
 
@@ -234,7 +233,7 @@ Public Module GdiRenderUtil
       ByVal textDesign As TextDesign, _
       ByVal text As String)
         Dim font As Font = getFont(setting, textDesign, False)
-        font = getFitFont(g, region, text, font)
+        font = getFitFont(g, region, setting, text, font)
         Dim color As Color = GetColor(textDesign.Color, Drawing.Color.Black)
         Dim r As New RectangleF(region.Left, region.Top, region.GetWidth, region.GetHeight)
         Dim sf As New StringFormat
@@ -529,6 +528,7 @@ Public Module GdiRenderUtil
     Private Function getFitFont( _
       ByVal g As Graphics, _
       ByVal region As Region, _
+      ByVal setting As GdiRendererSetting, _
       ByVal text As String, _
       ByVal baseFont As Font) As Font
         Dim ls As New SizeF(10000, 10000)
@@ -536,17 +536,17 @@ Public Module GdiRenderUtil
             Return baseFont
         End If
         Dim _i As Integer = 0
-        Do While SHRINK_FONT_SIZE_MIN + _i * 0.5 < baseFont.Size
+        Do While setting.ShrinkFontSizeMin + _i * 0.5 < baseFont.Size
             _i += 1
         Loop
         For i As Integer = _i - 1 To 1 Step -1
-            Dim s As Single = SHRINK_FONT_SIZE_MIN + i * 0.5
+            Dim s As Single = setting.ShrinkFontSizeMin + i * 0.5
             Dim font As New Font(baseFont.Name, s, baseFont.Style)
             If g.MeasureString(text, font, ls).Width <= region.GetWidth Then
                 Return font
             End If
         Next
-        Return New Font(baseFont.Name, SHRINK_FONT_SIZE_MIN, baseFont.Style)
+        Return New Font(baseFont.Name, setting.ShrinkFontSizeMin, baseFont.Style)
     End Function
 
     Public Function GetColor(ByVal v As String) As Color
