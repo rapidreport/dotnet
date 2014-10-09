@@ -80,6 +80,9 @@ Namespace elementrenderer
                         If Not design.IsNull("codabar_startstop_code") Then
                             ss = design.Get("codabar_startstop_code")
                         End If
+                        If design.Get("codabar_startstop_show") Then
+                            barcode.WithStartStopText = True
+                        End If
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, ss & code & ss)
                     Case "itf"
                         Dim barcode As New Itf

@@ -32,10 +32,10 @@ Namespace elementrenderer
         Public Class BarcodeShapeRenderer
             Implements IShapeRenderer
             Public Code As String
-            Public ElementDesc As ElementDesign
-            Public Sub New(ByVal elementDesc As ElementDesign, ByVal code As String)
+            Public Design As ElementDesign
+            Public Sub New(ByVal design As ElementDesign, ByVal code As String)
                 Me.Code = code
-                Me.ElementDesc = elementDesc
+                Me.Design = design
             End Sub
             Public Sub Render(ByVal Page As Page, ByVal Shape As Shape) Implements IShapeRenderer.Render
                 If Me.Code Is Nothing Then
@@ -50,58 +50,61 @@ Namespace elementrenderer
                 Dim image As New Bitmap(width, height)
                 Dim g As Graphics = Graphics.FromImage(image)
                 g.FillRectangle(Brushes.White, 0, 0, image.Width, image.Height)
-                Dim type As String = ElementDesc.Get("barcode_type")
+                Dim type As String = Design.Get("barcode_type")
                 Try
                     Select Case type
                         Case "ean8"
                             Dim barcode As New Ean8
-                            If ElementDesc.Get("without_text") Then
+                            If Design.Get("without_text") Then
                                 barcode.WithText = False
                             End If
                             barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
                         Case "code39"
                             Dim barcode As New Code39
-                            If ElementDesc.Get("without_text") Then
+                            If Design.Get("without_text") Then
                                 barcode.WithText = False
                             End If
-                            If ElementDesc.Get("generate_checksum") Then
+                            If Design.Get("generate_checksum") Then
                                 barcode.GenerateCheckSum = True
                             End If
                             barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
                         Case "codabar"
                             Dim barcode As New Codabar
-                            If ElementDesc.Get("without_text") Then
+                            If Design.Get("without_text") Then
                                 barcode.WithText = False
                             End If
-                            If ElementDesc.Get("generate_checksum") Then
+                            If Design.Get("generate_checksum") Then
                                 barcode.GenerateCheckSum = True
                             End If
                             Dim ss As String = "A"
-                            If Not ElementDesc.IsNull("codabar_startstop_code") Then
-                                ss = ElementDesc.Get("codabar_startstop_code")
+                            If Not Design.IsNull("codabar_startstop_code") Then
+                                ss = Design.Get("codabar_startstop_code")
+                            End If
+                            If Design.Get("codabar_startstop_show") Then
+                                barcode.WithStartStopText = True
                             End If
                             barcode.Render(g, 0, 0, image.Width, image.Height, ss & Me.Code & ss)
                         Case "itf"
                             Dim barcode As New Itf
-                            If ElementDesc.Get("without_text") Then
+                            If Design.Get("without_text") Then
                                 barcode.WithText = False
                             End If
-                            If ElementDesc.Get("generate_checksum") Then
+                            If Design.Get("generate_checksum") Then
                                 barcode.GenerateCheckSum = True
                             End If
                             barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
                         Case "code128"
                             Dim barcode As New Code128
-                            If ElementDesc.Get("without_text") Then
+                            If Design.Get("without_text") Then
                                 barcode.WithText = False
                             End If
                             barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
                         Case "gs1_128"
                             Dim barcode As New Gs1_128
-                            If ElementDesc.Get("without_text") Then
+                            If Design.Get("without_text") Then
                                 barcode.WithText = False
                             End If
-                            If ElementDesc.Get("gs1_conveni") Then
+                            If Design.Get("gs1_conveni") Then
                                 barcode.ConveniFormat = True
                             End If
                             barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
@@ -111,13 +114,13 @@ Namespace elementrenderer
                         Case "qrcode"
                             Dim w As New QRCodeWriter
                             Dim h As New Hashtable
-                            If Not ElementDesc.IsNull("qr_charset") Then
-                                h.Add(EncodeHintType.CHARACTER_SET, ElementDesc.Get("qr_charset"))
+                            If Not Design.IsNull("qr_charset") Then
+                                h.Add(EncodeHintType.CHARACTER_SET, Design.Get("qr_charset"))
                             Else
                                 h.Add(EncodeHintType.CHARACTER_SET, "shift_jis")
                             End If
-                            If Not ElementDesc.IsNull("qr_correction_level") Then
-                                Dim l As String = ElementDesc.Get("qr_correction_level")
+                            If Not Design.IsNull("qr_correction_level") Then
+                                Dim l As String = Design.Get("qr_correction_level")
                                 If l = "L" Then
                                     h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L)
                                 ElseIf l = "Q" Then
@@ -144,7 +147,7 @@ Namespace elementrenderer
                             Next
                         Case Else
                             Dim barcode As New Ean13
-                            If ElementDesc.Get("without_text") Then
+                            If Design.Get("without_text") Then
                                 barcode.WithText = False
                             End If
                             barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)

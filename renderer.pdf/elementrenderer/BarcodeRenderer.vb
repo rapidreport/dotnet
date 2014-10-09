@@ -60,6 +60,9 @@ Namespace elementrenderer
                         If Not design.IsNull("codabar_startstop_code") Then
                             ss = design.Get("codabar_startstop_code")
                         End If
+                        If design.Get("codabar_startstop_show") Then
+                            bc.StartStopText = True
+                        End If
                         bc.Code = ss & code & ss
                         image = bc.CreateImageWithBarcode(cb, Nothing, Nothing)
                     Case "itf"
