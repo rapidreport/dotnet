@@ -74,7 +74,7 @@ Public Module GdiRenderUtil
                 y = Math.Max(y, 0)
         End Select
         Dim yc As Integer = Fix((region.GetHeight + TOLERANCE) / font.Size)
-        For i As Integer = 0 To Math.Min(texts.Count, yc) - 1
+        For i As Integer = 0 To Math.Max(Math.Min(texts.Count, yc) - 1, 0)
             Dim t As String = texts(i)
             Using b As New SolidBrush(color)
                 Dim mx As Single = font.Size / 6
@@ -127,7 +127,7 @@ Public Module GdiRenderUtil
                 x = region.GetWidth - font.Size / 2 - mx
         End Select
         Dim xc As Integer = Fix((region.GetWidth - mx * 2 + TOLERANCE) / font.Size)
-        For i As Integer = 0 To Math.Min(xc, texts.Count) - 1
+        For i As Integer = 0 To Math.Max(Math.Min(xc, texts.Count) - 1, 0)
             Dim t As String = texts(i)
             Using b As New SolidBrush(color)
                 Dim m As List(Of Single) = getDistributeMap(region.GetHeight, t.Length, font)

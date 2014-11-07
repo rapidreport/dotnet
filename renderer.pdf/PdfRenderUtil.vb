@@ -98,7 +98,7 @@ Public Module PdfRenderUtil
         End Select
         y += OFFSET_Y
         Dim rows As Integer = Fix((region.GetHeight + TOLERANCE) / fontSize)
-        For i As Integer = 0 To Math.Min(texts.Count, rows) - 1
+        For i As Integer = 0 To Math.Max(Math.Min(texts.Count, rows) - 1, 0)
             Dim t As String = texts(i)
             Dim m As List(Of Single) = getDistributeMap(region.GetWidth - MARGIN_X * 2, t.Length, fontSize)
             cb.BeginText()
