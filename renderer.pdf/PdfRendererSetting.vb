@@ -13,6 +13,7 @@ Public Class PdfRendererSetting
     Public FontMap As New Dictionary(Of String, BaseFont)
     Public ReplaceBackslashToYen As Boolean = False
     Public ShrinkFontSizeMin As Single
+    Public UnderlineWidthCoefficent As Single
 
     Public Shared SkipInitialFontCreate As Boolean = False
     Private Shared _loaded As Boolean = False
@@ -42,6 +43,7 @@ Public Class PdfRendererSetting
             Me.DefaultFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.EMBEDDED)
         End If
         Me.ShrinkFontSizeMin = 4.0F
+        Me.UnderlineWidthCoefficent = 1.0F
     End Sub
 
     Private Sub New(ByVal setting As PdfRendererSetting)

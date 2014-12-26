@@ -110,7 +110,8 @@ Public Module PdfRenderUtil
             Next
             cb.EndText()
             If textDesign.Font.Underline Then
-                drawUnderline(cb, region, trans, fontSize, MARGIN_X, y, region.GetWidth - MARGIN_X * 2)
+                Dim lw As Single = (fontSize / 13.4) * setting.UnderlineWidthCoefficent
+                drawUnderline(cb, region, trans, fontSize, MARGIN_X, y, region.GetWidth - MARGIN_X * 2, lw)
             End If
             y += fontSize
         Next
@@ -141,7 +142,8 @@ Public Module PdfRenderUtil
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, cols) - 1, 0)
             Dim t As String = texts(i)
             If textDesign.Font.Underline Then
-                drawVerticalUnderLine(cb, region, trans, fontSize, x + fontSize / 2, 0, region.GetHeight)
+                Dim lw As Single = (fontSize / 13.4) * setting.UnderlineWidthCoefficent
+                drawVerticalUnderLine(cb, region, trans, fontSize, x + fontSize / 2, 0, region.GetHeight, lw)
             End If
             With Nothing
                 Dim m As List(Of Single) = getDistributeMap(region.GetHeight - MARGIN_BOTTOM, t.Length, fontSize)
@@ -330,7 +332,8 @@ Public Module PdfRenderUtil
             showText(cb, region, setting, trans, textDesign, font, fontSize, t, x, y)
             cb.EndText()
             If textDesign.Font.Underline Then
-                drawUnderline(cb, region, trans, fontSize, x, y, w)
+                Dim lw As Single = (fontSize / 13.4) * setting.UnderlineWidthCoefficent
+                drawUnderline(cb, region, trans, fontSize, x, y, w, lw)
             End If
             y += fontSize
         Next
@@ -374,7 +377,8 @@ Public Module PdfRenderUtil
             y += OFFSET_Y
             Dim _yc As Integer = Math.Min(t.Length, rows)
             If textDesign.Font.Underline Then
-                drawVerticalUnderLine(cb, region, trans, fontSize, x + fontSize / 2, y, _yc * fontSize)
+                Dim lw As Single = (fontSize / 13.4) * setting.UnderlineWidthCoefficent
+                drawVerticalUnderLine(cb, region, trans, fontSize, x + fontSize / 2, y, _yc * fontSize, lw)
             End If
             cb.SetFontAndSize(font, fontSize)
             cb.BeginText()
@@ -459,7 +463,8 @@ Public Module PdfRenderUtil
                 End If
                 cb.EndText()
                 If textDesign.Font.Underline Then
-                    drawUnderline(cb, region, trans, fontSize, x, y, fw)
+                    Dim lw As Single = (fontSize / 13.4) * setting.UnderlineWidthCoefficent
+                    drawUnderline(cb, region, trans, fontSize, x, y, fw, lw)
                 End If
             End With
         End Sub
@@ -755,7 +760,8 @@ Public Module PdfRenderUtil
       ByVal fontSize As Single, _
       ByVal x As Single, _
       ByVal y As Single, _
-      ByVal width As Single)
+      ByVal width As Single, _
+      ByVal lineWidth As Single)
         Dim lw As Single = fontSize / 13.4
         Dim _x1 As Single = region.Left + x
         Dim _x2 As Single = _x1 + width
@@ -763,7 +769,7 @@ Public Module PdfRenderUtil
         _x1 = Math.Max(_x1, region.Left + MARGIN_X)
         _x2 = Math.Min(_x2, region.Right - MARGIN_X)
         If _x1 < _x2 Then
-            cb.SetLineWidth(lw)
+            cb.SetLineWidth(lineWidth)
             cb.MoveTo(trans.X(_x1), trans.Y(_y))
             cb.LineTo(trans.X(_x2), trans.Y(_y))
             cb.Stroke()
@@ -777,11 +783,11 @@ Public Module PdfRenderUtil
       ByVal fontSize As Single, _
       ByVal x As Single, _
       ByVal y As Single, _
-      ByVal h As Single)
-        Dim lw As Single = fontSize / 13.4
+      ByVal h As Single, _
+      ByVal lineWidth As Single)
         Dim _x As Single = region.Left + x
         Dim _y As Single = (region.Top + y) - OFFSET_Y
-        cb.SetLineWidth(lw)
+        cb.SetLineWidth(lineWidth)
         cb.MoveTo(trans.X(_x), trans.Y(_y))
         cb.LineTo(trans.X(_x), trans.Y(_y + h))
         cb.Stroke()
