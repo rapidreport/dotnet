@@ -55,6 +55,9 @@ Public Class Printer
                 .PrinterSettings.MinimumPage = 1
                 .PrinterSettings.MaximumPage = Me.Pages.Count
             End With
+            If Me.Pages.Report.Design.Caption IsNot Nothing Then
+                Me.PrintDocument.DocumentName = Me.Pages.Report.Design.Caption
+            End If
             GdiRenderUtil.SetUpPrinterSetting( _
               Me.PrintDocument.DefaultPageSettings, Me.Pages.Report.Design)
             GdiRenderUtil.SetUpPageSettings( _
