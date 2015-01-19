@@ -29,6 +29,9 @@ Public Class Printer
     Public Sub New(ByVal pages As ReportPages, ByVal setting As GdiRendererSetting)
         With Me.PrintDialog
             .Document = Me.PrintDocument
+            If pages.Report.Design.Caption IsNot Nothing Then
+                .Document.DocumentName = pages.Report.Design.Caption
+            End If
             .AllowSomePages = True
             .UseEXDialog = True
         End With
