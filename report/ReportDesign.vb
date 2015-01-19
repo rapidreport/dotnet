@@ -19,6 +19,7 @@ Public Class ReportDesign
     Public CustomFieldsKeyList As List(Of String) = Nothing
     Public PaperName As String = Nothing
     Public PrinterName As String = Nothing
+    Public PaperSource As String = Nothing
     Public GroupDesign As GroupDesign = Nothing
     Public Memo As String = Nothing
 
@@ -68,6 +69,7 @@ Public Class ReportDesign
         End If
         Me.PrinterName = Desc("printer_name")
         Me.PaperName = Desc("paper_name")
+        Me.PaperSource = Desc("paper_source")
         Me.Memo = Desc("memo")
     End Sub
 

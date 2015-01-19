@@ -695,6 +695,13 @@ Public Module GdiRenderUtil
                 End With
             End If
         End With
+        If reportDesign.PaperSource IsNot Nothing Then
+            For Each source As PaperSource In pageSettings.PrinterSettings.PaperSources
+                If reportDesign.PaperSource.Equals(source.SourceName) Then
+                    pageSettings.PaperSource = source
+                End If
+            Next
+        End If
         pageSettings.Landscape = reportDesign.PaperDesign.Landscape
     End Sub
 
