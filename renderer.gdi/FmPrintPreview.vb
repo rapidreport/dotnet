@@ -1,7 +1,6 @@
 ﻿Public Class FmPrintPreview
 
     Public PrintExecuted As Boolean = False
-    Public StartUpZoomFit As Boolean = False
 
     Public Sub New()
         Me.InitializeComponent()
@@ -18,6 +17,10 @@
             Me.PrintPreviewZoom.Init(Me.PrintPreview)
             If Me.StartUpZoomFit Then
                 Me.PrintPreview.ZoomFit()
+                Me.PrintPreviewZoom.AutoFit = True
+            ElseIf Me.StartUpZoomFitWidth Then
+                Me.PrintPreview.ZoomFitWidth()
+                Me.PrintPreviewZoom.AutoFitWidth = True
             End If
         End Using
     End Sub
@@ -61,5 +64,31 @@
             Me.PrintExecuted = True
         End If
     End Sub
+
+    Private _StartUpZoomFit As Boolean = False
+    Public Property StartUpZoomFit As Boolean
+        Set(value As Boolean)
+            If value Then
+                Me.StartUpZoomFitWidth = False
+            End If
+            Me._StartUpZoomFit = value
+        End Set
+        Get
+            Return Me._StartUpZoomFit
+        End Get
+    End Property
+
+    Private _StartUpZoomFitWidth As Boolean = False
+    Public Property StartUpZoomFitWidth As Boolean
+        Set(value As Boolean)
+            If value Then
+                Me.StartUpZoomFit = False
+            End If
+            Me._StartUpZoomFitWidth = value
+        End Set
+        Get
+            Return Me._StartUpZoomFitWidth
+        End Get
+    End Property
 
 End Class

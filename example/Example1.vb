@@ -55,7 +55,7 @@ Module Example1
             Dim printer As New Printer(pages)
             printer.ImageLoaderMap.Add("image", New GdiImageLoader(imageMap))
             Dim preview As New FmPrintPreview(printer)
-            preview.StartUpZoomFit = True
+            preview.StartUpZoomFitWidth = True
             preview.ShowDialog()
         End With
     End Sub

@@ -23,11 +23,11 @@ Partial Class FmPrintPreview
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FmPrintPreview))
-        Me.BtnPrint = New System.Windows.Forms.Button
-        Me.BtnClose = New System.Windows.Forms.Button
-        Me.PrintPreviewZoom = New jp.co.systembase.report.renderer.gdi.PrintPreviewZoom
-        Me.PrintPreviewPage = New jp.co.systembase.report.renderer.gdi.PrintPreviewPage
-        Me.PrintPreview = New jp.co.systembase.report.renderer.gdi.PrintPreview
+        Me.BtnPrint = New System.Windows.Forms.Button()
+        Me.BtnClose = New System.Windows.Forms.Button()
+        Me.PrintPreviewZoom = New jp.co.systembase.report.renderer.gdi.PrintPreviewZoom()
+        Me.PrintPreviewPage = New jp.co.systembase.report.renderer.gdi.PrintPreviewPage()
+        Me.PrintPreview = New jp.co.systembase.report.renderer.gdi.PrintPreview()
         Me.SuspendLayout()
         '
         'BtnPrint
@@ -41,7 +41,7 @@ Partial Class FmPrintPreview
         '
         'BtnClose
         '
-        Me.BtnClose.Location = New System.Drawing.Point(560, 5)
+        Me.BtnClose.Location = New System.Drawing.Point(582, 5)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(60, 32)
         Me.BtnClose.TabIndex = 10
@@ -50,10 +50,12 @@ Partial Class FmPrintPreview
         '
         'PrintPreviewZoom
         '
+        Me.PrintPreviewZoom.AutoFit = False
+        Me.PrintPreviewZoom.AutoFitWidth = False
         Me.PrintPreviewZoom.Location = New System.Drawing.Point(345, 5)
         Me.PrintPreviewZoom.Name = "PrintPreviewZoom"
         Me.PrintPreviewZoom.PrintPreview = Nothing
-        Me.PrintPreviewZoom.Size = New System.Drawing.Size(193, 32)
+        Me.PrintPreviewZoom.Size = New System.Drawing.Size(231, 32)
         Me.PrintPreviewZoom.TabIndex = 13
         '
         'PrintPreviewPage
@@ -67,8 +69,8 @@ Partial Class FmPrintPreview
         'PrintPreview
         '
         Me.PrintPreview.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PrintPreview.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.PrintPreview.Location = New System.Drawing.Point(10, 43)
         Me.PrintPreview.Name = "PrintPreview"
@@ -88,7 +90,7 @@ Partial Class FmPrintPreview
         Me.Controls.Add(Me.BtnPrint)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
-        Me.MinimumSize = New System.Drawing.Size(640, 200)
+        Me.MinimumSize = New System.Drawing.Size(660, 200)
         Me.Name = "FmPrintPreview"
         Me.Text = "プレビュー"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized

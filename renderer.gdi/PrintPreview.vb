@@ -12,6 +12,8 @@ Public Class PrintPreview
 
     Public Event UpdateReportPage() Implements IPrintPreviewPage.UpdateReport
     Public Event UpdateReportZoom() Implements IPrintPreviewZoom.UpdateReport
+    Public Event ZoomInOrOut(zoomIn As Boolean) Implements IPrintPreviewZoom.ZoomInOrOut
+    Public Event ResizeZoom() Implements IPrintPreviewZoom.Resize
     Public Event Rendering(ByVal sender As Object, ByVal g As Graphics, ByRef cancel As Boolean)
     Public Event Rendered(ByVal sender As Object, ByVal g As Graphics)
 
@@ -147,13 +149,17 @@ Public Class PrintPreview
     Public Sub ZoomFit() Implements IPrintPreviewZoom.ZoomFit
         Dim page As ReportPage = Me.Printer.Pages(Me.PageCount - 1)
         Dim paperSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
-        Dim x As Decimal = (Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width)
-        Dim y As Decimal = (Me.Height - (MARGIN_VIEW * 2)) / Me.ToPixelY(paperSize.Height)
-        If x < y Then
-            Me.Zoom = x
-        Else
-            Me.Zoom = y
-        End If
+        Me.Zoom = Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width), _
+                           (Me.Height - (MARGIN_VIEW * 2)) / Me.ToPixelY(paperSize.Height))
+    End Sub
+
+    Public Sub ZoomFitWidth() Implements IPrintPreviewZoom.ZoomFitWidth
+        Dim page As ReportPage = Me.Printer.Pages(Me.PageCount - 1)
+        Dim paperSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
+        Dim z1 As Decimal = Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width), _
+                                     (Me.Height - (MARGIN_VIEW * 2)) / Me.ToPixelY(paperSize.Height))
+        Dim z2 As Decimal = (Me.Width - (MARGIN_VIEW * 3) - SCROLLBAR_WIDTH) / Me.ToPixelX(paperSize.Width)
+        Me.Zoom = Math.Max(z1, z2)
     End Sub
 
     Public Function GetPageCountTotal() As Integer Implements IPrintPreviewPage.GetPageCountTotal
@@ -165,6 +171,7 @@ Public Class PrintPreview
     End Sub
 
     Private Sub CPrintPreview_Resize(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Resize
+        RaiseEvent ResizeZoom()
         If Me.ClientRectangle.Width > 0 And Me.ClientRectangle.Height > 0 Then
             Me.scrollBarUpdate()
         End If
@@ -398,11 +405,7 @@ Public Class PrintPreview
 
     Public Sub HandleMouseWheelEvent(ByVal e As MouseEventArgs)
         If ModifierKeys = Keys.Control Then
-            If e.Delta > 0 Then
-                Me.ZoomIn()
-            Else
-                Me.ZoomOut()
-            End If
+            RaiseEvent ZoomInOrOut(e.Delta > 0)
         Else
             Me.ScrollOrPageChange(e.Delta)
         End If

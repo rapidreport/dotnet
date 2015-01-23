@@ -22,15 +22,16 @@ Partial Class PrintPreviewZoom
     'コード エディタを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PrintPreviewZoom))
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.TxtZoom = New System.Windows.Forms.TextBox
-        Me.BtnZoomFit = New System.Windows.Forms.Button
-        Me.BtnZoomOut = New System.Windows.Forms.Button
-        Me.BtnZoomIn = New System.Windows.Forms.Button
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.TxtZoom = New System.Windows.Forms.TextBox()
+        Me.BtnZoomFit = New System.Windows.Forms.Button()
+        Me.BtnZoomOut = New System.Windows.Forms.Button()
+        Me.BtnZoomIn = New System.Windows.Forms.Button()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.BtnZoomFitWidth = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label4
@@ -56,7 +57,7 @@ Partial Class PrintPreviewZoom
         Me.TxtZoom.Location = New System.Drawing.Point(107, 7)
         Me.TxtZoom.Name = "TxtZoom"
         Me.TxtZoom.Size = New System.Drawing.Size(34, 19)
-        Me.TxtZoom.TabIndex = 14
+        Me.TxtZoom.TabIndex = 2
         Me.TxtZoom.Text = "100"
         Me.TxtZoom.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -65,10 +66,10 @@ Partial Class PrintPreviewZoom
         Me.BtnZoomFit.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control
         Me.BtnZoomFit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnZoomFit.Image = CType(resources.GetObject("BtnZoomFit.Image"), System.Drawing.Image)
-        Me.BtnZoomFit.Location = New System.Drawing.Point(161, 0)
+        Me.BtnZoomFit.Location = New System.Drawing.Point(194, 0)
         Me.BtnZoomFit.Name = "BtnZoomFit"
         Me.BtnZoomFit.Size = New System.Drawing.Size(32, 32)
-        Me.BtnZoomFit.TabIndex = 15
+        Me.BtnZoomFit.TabIndex = 4
         Me.ToolTip.SetToolTip(Me.BtnZoomFit, "画面サイズに合わせて拡大/縮小")
         Me.BtnZoomFit.UseVisualStyleBackColor = True
         '
@@ -80,7 +81,7 @@ Partial Class PrintPreviewZoom
         Me.BtnZoomOut.Location = New System.Drawing.Point(38, 0)
         Me.BtnZoomOut.Name = "BtnZoomOut"
         Me.BtnZoomOut.Size = New System.Drawing.Size(32, 32)
-        Me.BtnZoomOut.TabIndex = 13
+        Me.BtnZoomOut.TabIndex = 1
         Me.ToolTip.SetToolTip(Me.BtnZoomOut, "縮小")
         Me.BtnZoomOut.UseVisualStyleBackColor = True
         '
@@ -92,22 +93,35 @@ Partial Class PrintPreviewZoom
         Me.BtnZoomIn.Location = New System.Drawing.Point(0, 0)
         Me.BtnZoomIn.Name = "BtnZoomIn"
         Me.BtnZoomIn.Size = New System.Drawing.Size(32, 32)
-        Me.BtnZoomIn.TabIndex = 12
+        Me.BtnZoomIn.TabIndex = 0
         Me.ToolTip.SetToolTip(Me.BtnZoomIn, "拡大")
         Me.BtnZoomIn.UseVisualStyleBackColor = True
         '
-        'UPrintPreviewZoom
+        'BtnZoomFitWidth
+        '
+        Me.BtnZoomFitWidth.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control
+        Me.BtnZoomFitWidth.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnZoomFitWidth.Image = CType(resources.GetObject("BtnZoomFitWidth.Image"), System.Drawing.Image)
+        Me.BtnZoomFitWidth.Location = New System.Drawing.Point(161, 0)
+        Me.BtnZoomFitWidth.Name = "BtnZoomFitWidth"
+        Me.BtnZoomFitWidth.Size = New System.Drawing.Size(32, 32)
+        Me.BtnZoomFitWidth.TabIndex = 3
+        Me.ToolTip.SetToolTip(Me.BtnZoomFitWidth, "画面幅に合わせて拡大/縮小")
+        Me.BtnZoomFitWidth.UseVisualStyleBackColor = True
+        '
+        'PrintPreviewZoom
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.TxtZoom)
+        Me.Controls.Add(Me.BtnZoomFitWidth)
         Me.Controls.Add(Me.BtnZoomFit)
         Me.Controls.Add(Me.BtnZoomOut)
         Me.Controls.Add(Me.BtnZoomIn)
-        Me.Name = "UPrintPreviewZoom"
-        Me.Size = New System.Drawing.Size(193, 32)
+        Me.Name = "PrintPreviewZoom"
+        Me.Size = New System.Drawing.Size(229, 32)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -119,5 +133,6 @@ Partial Class PrintPreviewZoom
     Friend WithEvents BtnZoomOut As System.Windows.Forms.Button
     Friend WithEvents BtnZoomIn As System.Windows.Forms.Button
     Friend WithEvents ToolTip As System.Windows.Forms.ToolTip
+    Friend WithEvents BtnZoomFitWidth As System.Windows.Forms.Button
 
 End Class
