@@ -10,6 +10,10 @@ Namespace [operator]
             evaluator.ValidateParamCount(params, 2)
             Dim v As Object = evaluator.Eval(params(0))
             Dim d As Integer = evaluator.Eval(params(1))
+            Dim ns As String = Nothing
+            If params.Count >= 3 Then
+                ns = evaluator.Eval(params(2))
+            End If
             If v IsNot Nothing Then
                 Dim _v As String = v.ToString
                 Dim l As Integer = _v.Length
@@ -20,7 +24,12 @@ Namespace [operator]
                 ElseIf j >= l Then
                     Return "0"
                 Else
-                    Return _v.Substring(j, 1)
+                    Dim c As String = _v.Substring(j, 1)
+                    If ns IsNot Nothing AndAlso c.Equals("-") Then
+                        Return ns
+                    Else
+                        Return c
+                    End If
                 End If
             Else
                 Return Nothing
