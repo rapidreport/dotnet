@@ -115,6 +115,7 @@
     </Compile>
     <Compile Include="operator\DigitOperator.vb" />
     <Compile Include="operator\Round5EOperator.vb" />
+    <Compile Include="operator\WSplitOperator.vb" />
     <Compile Include="Report.vb" />
     <Compile Include="ReportDesign.vb" />
     <Compile Include="ReportPage.vb" />
