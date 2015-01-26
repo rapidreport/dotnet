@@ -80,6 +80,7 @@ Public Class ReportSetting
         Me.OperatorMap.Add("wsub", New WSubStringOperator)
         Me.OperatorMap.Add("len", New StringLenOperator)
         Me.OperatorMap.Add("wlen", New WStringLenOperator)
+        Me.OperatorMap.Add("digit", New DigitOperator)
         Me.DefaultElementPreprocessor = New DefaultPreprocessor
         Me.ElementPreprocessorMap.Add("subpage", New SubPagePreprocessor)
         Me.DefaultTextFormatter = New DefaultTextFormatter

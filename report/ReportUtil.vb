@@ -159,9 +159,9 @@
     Public Function WSubString(ByVal str As String, ByVal begin As Integer) As String
         Dim b As Integer
         If begin >= 0 Then
-            b = getWIndex(str, 0, begin)
+            b = GetWIndex(str, 0, begin)
         Else
-            b = getWRevIndex(str, str.Length, -begin)
+            b = GetWRevIndex(str, str.Length, -begin)
         End If
         If b >= str.Length Then
             Return Nothing
@@ -174,12 +174,12 @@
         Dim b As Integer
         Dim e As Integer
         If begin >= 0 Then
-            b = getWIndex(str, 0, begin)
-            e = getWIndex(str, b, len)
+            b = GetWIndex(str, 0, begin)
+            e = GetWIndex(str, b, len)
         Else
             Dim _len As Integer = Math.Min(-begin, len)
-            e = getWRevIndex(str, str.Length, -(begin + _len))
-            b = getWRevIndex(str, e, _len)
+            e = GetWRevIndex(str, str.Length, -(begin + _len))
+            b = GetWRevIndex(str, e, _len)
         End If
         If e <= b Or b >= str.Length Then
             Return Nothing
@@ -190,7 +190,7 @@
         End If
     End Function
 
-    Private Function getWIndex(ByVal str As String, ByVal base As Integer, ByVal w As Integer) As Integer
+    Public Function GetWIndex(ByVal str As String, ByVal base As Integer, ByVal w As Integer) As Integer
         Dim _w As Integer = 0
         For i As Integer = base To str.Length - 1
             Dim c As Char = str.Chars(i)
@@ -206,7 +206,7 @@
         Return str.Length
     End Function
 
-    Private Function getWRevIndex(ByVal str As String, ByVal base As Integer, ByVal w As Integer) As Integer
+    Public Function GetWRevIndex(ByVal str As String, ByVal base As Integer, ByVal w As Integer) As Integer
         Dim _w As Integer = 0
         For i As Integer = base - 1 To 0 Step -1
             Dim c As Char = str.Chars(i)
