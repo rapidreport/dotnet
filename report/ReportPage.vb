@@ -73,6 +73,7 @@ Public Class ReportPage
         For Each instance As ContentInstance In scanner.ContentInstances
             Dim elements As New ElementDesigns(instance.Content.Design)
             Dim evaluator As New Evaluator(Me, pages, instance.Content, instance.ContentState, scanner.DataContainer)
+            _customizeElements(elements, evaluator)
             If Me.Report.Customizer IsNot Nothing Then
                 Me.Report.Customizer.RenderContent(instance.Content, evaluator, instance.Region, elements)
             End If
@@ -85,6 +86,31 @@ Public Class ReportPage
         Next
         For Each instance As ContentInstance In scanner.ContentInstances
             Me.renderContent(renderer, pages, instance, elementsMap(instance), evaluatorMap(instance), False)
+        Next
+    End Sub
+
+    Private Sub _customizeElements(elements As ElementDesigns, evaluator As Evaluator)
+        For Each e As ElementDesign In elements
+            If e.Base.Contains("customize") Then
+                For Each d As Hashtable In e.Base("customize")
+                    Dim ce As New ElementDesign(d)
+                    If Not ce.IsNull("property") AndAlso _
+                       Not ce.IsNull("cond") AndAlso _
+                       Not ce.IsNull("exp") Then
+                        If evaluator.EvalTry(ce.Get("cond")) Then
+                            Dim _e As ElementDesign = e
+                            Dim ps As String() = CType(ce.Get("property"), String).Split(".")
+                            For i As Integer = 0 To ps.Length - 2
+                                _e = _e.Child(ps(i).Trim)
+                            Next
+                            Try
+                                _e.Put(ps(ps.Length - 1), evaluator.Eval(ce.Get("exp")))
+                            Catch ex As Exception
+                            End Try
+                        End If
+                    End If
+                Next
+            End If
         Next
     End Sub
 
