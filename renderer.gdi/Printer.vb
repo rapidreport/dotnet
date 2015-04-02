@@ -111,23 +111,34 @@ Public Class Printer
         page.Render(renderer, Me.Pages)
     End Sub
 
-    Public Function GetImage(ByVal pageIndex As Integer) As Image
-        Dim w As Integer
-        Dim h As Integer
+    Public Function GetPixelSize(pageIndex As Integer) As Size
         Dim page As ReportPage = Me.Pages(pageIndex)
         With page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
             Dim g As Graphics = Graphics.FromImage(New Bitmap(1, 1))
-            w = GdiRenderUtil.ToPixelX(g, .Width)
-            h = GdiRenderUtil.ToPixelY(g, .Height)
+            Return New Size(GdiRenderUtil.ToPixelX(g, .Width), _
+                            GdiRenderUtil.ToPixelY(g, .Height))
         End With
-        Dim ret As New Bitmap(w, h)
-        With Nothing
-            Dim g As Graphics = Graphics.FromImage(ret)
-            g.FillRectangle(Brushes.White, 0, 0, w, h)
-            GdiRenderUtil.SetUpGraphics(g, page.Report.Design, Me.PageIndex, New PointF(0, 0))
-            Me.Render(g, page)
-        End With
+    End Function
+
+    Public Function GetImage(ByVal pageIndex As Integer, scaleX As Single, scaleY As Single) As Image
+        Dim size As Size = GetPixelSize(pageIndex)
+        Dim ret As New Bitmap(CType(size.Width * scaleX, Integer), _
+                              CType(size.Height * scaleY, Integer))
+        Dim g As Graphics = Graphics.FromImage(ret)
+        g.ScaleTransform(scaleX, scaleY)
+        g.FillRectangle(Brushes.White, 0, 0, size.Width, size.Height)
+        Me.Render(g, pageIndex)
         Return ret
+    End Function
+
+    Public Sub Render(graphics As Graphics, pageIndex As Integer)
+        Dim page As ReportPage = Me.Pages(pageIndex)
+        GdiRenderUtil.SetUpGraphics(graphics, page.Report.Design, Me.PageIndex, New PointF(0, 0))
+        Me.Render(graphics, page)
+    End Sub
+
+    Public Function GetImage(ByVal pageIndex As Integer) As Image
+        Return GetImage(pageIndex, 1.0, 1.0)
     End Function
 
 End Class
