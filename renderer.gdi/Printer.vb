@@ -91,7 +91,7 @@ Public Class Printer
                            e.PageSettings.HardMarginY * 72 / 100))
         End If
         GdiRenderUtil.SetUpGraphics(e.Graphics, page.Report.Design, Me.PageIndex, Me._HardMarginMap(page.Report.Design))
-        Me.Render(e.Graphics, page)
+        Me._Render(e.Graphics, page)
         If Not Me.PrintedPages.Contains(Me.PageIndex) Then
             Me.PrintedPages.Add(Me.PageIndex)
         End If
@@ -106,8 +106,8 @@ Public Class Printer
         End If
     End Sub
 
-    Public Sub Render(ByVal g As Graphics, ByVal page As ReportPage)
-        Dim renderer As IRenderer = New GdiRenderer(New RenderingEnv(g, Me))
+    Private Sub _Render(ByVal graphics As Graphics, ByVal page As ReportPage)
+        Dim renderer As IRenderer = New GdiRenderer(New RenderingEnv(graphics, Me))
         page.Render(renderer, Me.Pages)
     End Sub
 
@@ -134,7 +134,7 @@ Public Class Printer
     Public Sub Render(graphics As Graphics, pageIndex As Integer)
         Dim page As ReportPage = Me.Pages(pageIndex)
         GdiRenderUtil.SetUpGraphics(graphics, page.Report.Design, Me.PageIndex, New PointF(0, 0))
-        Me.Render(graphics, page)
+        Me._Render(graphics, page)
     End Sub
 
     Public Function GetImage(ByVal pageIndex As Integer) As Image
