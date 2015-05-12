@@ -347,7 +347,10 @@ Namespace data
                                     o = Me.DataSource.Get(_i, key)
                                 End If
                                 If o IsNot Nothing Then
-                                    _summary += o
+                                    Dim _o As Object = ReportUtil.Regularize(o)
+                                    If TypeOf _o Is Decimal Then
+                                        _summary += _o
+                                    End If
                                     _count += 1
                                 End If
                             Next
@@ -390,7 +393,10 @@ Namespace data
                             o = Me.DataSource.Get(i + Me.BeginIndex, key)
                         End If
                         If o IsNot Nothing Then
-                            summary += o
+                            Dim _o As Object = ReportUtil.Regularize(o)
+                            If TypeOf _o Is Decimal Then
+                                summary += _o
+                            End If
                             count += 1
                         End If
                     Next
