@@ -280,10 +280,12 @@ Namespace data
             End With
         End Function
 
-        Public Function GetAverage(ByVal key As String) As Decimal
+        Public Function GetAverage(ByVal key As String) As Object
             With Me.getSummary_Aux(key)
                 If .Count > 0 Then
                     Return .Summary / .Count
+                ElseIf Report.Compatibility._4_13_2_AverageZero Then
+                    Return 0D
                 Else
                     Return Nothing
                 End If
