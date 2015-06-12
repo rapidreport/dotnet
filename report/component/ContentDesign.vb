@@ -8,6 +8,7 @@
         Public Size As ContentSizeDesign = Nothing
         Public AggregateSrc As Boolean = False
         Public EveryPage As Boolean = False
+        Public ExistenceCond As String = Nothing
         Public VisibilityCond As String = Nothing
         Public Unbreakable As Boolean = False
         Public Weight As Integer = 0
@@ -46,6 +47,7 @@
             End If
             Me.AggregateSrc = Me.Desc("aggregate_src")
             Me.EveryPage = Me.Desc("every_page")
+            Me.ExistenceCond = Me.Desc("existence_cond")
             Me.VisibilityCond = Me.Desc("visibility_cond")
             Me.Unbreakable = Me.Desc("unbreakable")
             Me.Weight = Me.Desc("weight")

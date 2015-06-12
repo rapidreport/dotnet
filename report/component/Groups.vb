@@ -38,6 +38,12 @@ Namespace component
                     Me.DataOverridden = True
                 End If
             End If
+            If Not Me.Report.InDesigner AndAlso Not Me.DataOverridden _
+                AndAlso Me.Design.BlankData Then
+                _data = New ReportData(BlankDataSource.GetInstance, _
+                                       _data.Report, _
+                                       _data.Group)
+            End If
             If Me.Design.SortKeys IsNot Nothing Then
                 _data = New ReportData( _
                   New SortedDataSource(_data, Me.Design.SortKeys), _

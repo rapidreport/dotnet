@@ -23,10 +23,22 @@ Namespace component
             Me.Data.SetGroup(Me)
             Me.Contents = New List(Of Content)
             For Each cd As ContentDesign In Me.GetDesign.ContentDesigns
+                If Not Me.GetReport.InDesigner AndAlso cd.ExistenceCond IsNot Nothing Then
+                    Dim evaluator As New Evaluator(Me.GetReport, Me.Data, Me.Data.GetRecord)
+                    If Not ReportUtil.Condition(evaluator.EvalTry(cd.ExistenceCond)) Then
+                        Continue For
+                    End If
+                End If
                 Dim c As New Content(cd, Me)
                 Me.Contents.Add(c)
                 c.Fill(Me.Data)
             Next
+            If Me.Contents.Count = 0 Then
+                Dim cd As New ContentDesign(New Hashtable, Me.GetDesign)
+                Dim c As New Content(cd, Me)
+                Me.Contents.Add(c)
+                c.Fill(New ReportData(DummyDataSource.GetInstance, Me))
+            End If
         End Sub
 
         Public Function Scan( _

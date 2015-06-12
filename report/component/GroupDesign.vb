@@ -11,6 +11,7 @@ Namespace component
         Public Keys As List(Of String)
         Public Detail As Boolean = False
         Public MaxCount As Integer = 0
+        Public BlankData As Boolean = False
         Public PageBreak As Boolean = False
         Public ResetPageCount As Boolean = False
         Public SortKeys As List(Of String) = Nothing
@@ -56,6 +57,7 @@ Namespace component
             Me.DataSource = Me.Desc("data_source")
             Me.Detail = Me.Desc("detail")
             Me.MaxCount = Me.Desc("max_count")
+            Me.BlankData = Me.Desc("blank_data")
             Me.PageBreak = Me.Desc("page_break")
             Me.ResetPageCount = Me.Desc("reset_page_count")
             If Desc.ContainsKey("sort_keys") Then
