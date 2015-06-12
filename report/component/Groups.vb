@@ -30,6 +30,11 @@ Namespace component
         Public Sub Fill(ByVal data As ReportData)
             Me.Groups = New List(Of Group)
             Dim _data As ReportData = data
+            If Not Me.Report.InDesigner AndAlso Me.Design.BlankData Then
+                _data = New ReportData(BlankDataSource.GetInstance, _
+                                       _data.Report, _
+                                       _data.Group)
+            End If
             If Me.Report.GroupDataProvider IsNot Nothing Then
                 Dim dataSource As IReportDataSource = _
                   Me.Report.GroupDataProvider.GetGroupDataSource(Me, data)
@@ -37,12 +42,6 @@ Namespace component
                     _data = New ReportData(dataSource, data.Report, data.Group)
                     Me.DataOverridden = True
                 End If
-            End If
-            If Not Me.Report.InDesigner AndAlso Not Me.DataOverridden _
-                AndAlso Me.Design.BlankData Then
-                _data = New ReportData(BlankDataSource.GetInstance, _
-                                       _data.Report, _
-                                       _data.Group)
             End If
             If Me.Design.SortKeys IsNot Nothing Then
                 _data = New ReportData( _
