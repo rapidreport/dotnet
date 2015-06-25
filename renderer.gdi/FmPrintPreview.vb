@@ -15,6 +15,7 @@
         Using Me.PrintPreview.RenderBlock
             Me.PrintPreviewPage.Init(Me.PrintPreview)
             Me.PrintPreviewZoom.Init(Me.PrintPreview)
+            Me.PrintPreviewSearch.Init(Me.PrintPreview, Me.PrintPreviewSearchPanel)
             If Me.StartUpZoomFit Then
                 Me.PrintPreview.ZoomFit()
                 Me.PrintPreviewZoom.AutoFit = True
@@ -44,7 +45,11 @@
                     Me.Print()
                 End If
             Case Keys.Escape
-                Me.Close()
+                If Me.PrintPreviewSearchPanel.Visible Then
+                    Me.PrintPreviewSearch.PanelHide()
+                Else
+                    Me.Close()
+                End If
             Case Else
                 Me.PrintPreview.HandleKeyDownEvent(e)
         End Select

@@ -9,6 +9,7 @@ Public Class PrintPreview
     Inherits Control
     Implements IPrintPreviewPage
     Implements IPrintPreviewZoom
+    Implements IPrintPreviewSearch
 
     Public Event UpdateReportPage() Implements IPrintPreviewPage.UpdateReport
     Public Event UpdateReportZoom() Implements IPrintPreviewZoom.UpdateReport
@@ -33,6 +34,8 @@ Public Class PrintPreview
 
     Private _Gripping As Boolean = False
     Private _GripLocation As Point
+
+    Private _ReportMargin As SizeF
 
     Public Class CRenderBlock
         Implements IDisposable
@@ -166,11 +169,11 @@ Public Class PrintPreview
         Return Me.Printer.Pages.Count
     End Function
 
-    Private Sub CPrintPreview_MouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseClick
+    Private Sub PrintPreview_MouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseClick
         Me.Focus()
     End Sub
 
-    Private Sub CPrintPreview_Resize(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Resize
+    Private Sub PrintPreview_Resize(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Resize
         RaiseEvent ResizeZoom()
         If Me.ClientRectangle.Width > 0 And Me.ClientRectangle.Height > 0 Then
             Me.scrollBarUpdate()
@@ -233,10 +236,11 @@ Public Class PrintPreview
         With Nothing
             Dim m As PaperMarginDesign = page.Report.Design.PaperDesign.Margin.ToPoint(page.Report.Design.PaperDesign)
             If ((Me.PageCount - 1) Mod 2) And m.OddReverse Then
-                g.TranslateTransform(m.Right, m.Top)
+                Me._ReportMargin = New SizeF(m.Right, m.Top)
             Else
-                g.TranslateTransform(m.Left, m.Top)
+                Me._ReportMargin = New SizeF(m.Left, m.Top)
             End If
+            g.TranslateTransform(Me._ReportMargin.Width, Me._ReportMargin.Height)
         End With
         Dim cancel As Boolean = False
         RaiseEvent Rendering(Me, g, cancel)
@@ -326,14 +330,9 @@ Public Class PrintPreview
         Using b As New SolidBrush(Color.DimGray)
             g.FillRectangle(b, 0, 0, Me.Width, Me.Height)
         End Using
-        Dim x As Integer = (Me.Width - Me.PageBuffer.Width) / 2
-        Dim y As Integer = (Me.Height - Me.PageBuffer.Height) / 2
-        If x < MARGIN_VIEW Then
-            x = MARGIN_VIEW
-        End If
-        If y < MARGIN_VIEW Then
-            y = MARGIN_VIEW
-        End If
+        Dim m As Size = Me.PaperMargin
+        Dim x As Integer = m.Width
+        Dim y As Integer = m.Height
         x -= Me.HScrollBar.Value
         y -= Me.VScrollBar.Value
         g.DrawImage(Me.PageBuffer, x, y)
@@ -348,13 +347,25 @@ Public Class PrintPreview
         End If
     End Sub
 
-    Private Sub CPrintPreview_Paint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles Me.Paint
+    Private Sub PrintPreview_Paint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles Me.Paint
         If Not Me.DesignMode Then
             Me.viewUpdate(e.Graphics)
             RaiseEvent UpdateReportPage()
             RaiseEvent UpdateReportZoom()
         End If
     End Sub
+
+    Public Function PaperMargin() As Size
+        Dim x As Integer = (Me.Width - Me.PageBuffer.Width) / 2
+        Dim y As Integer = (Me.Height - Me.PageBuffer.Height) / 2
+        If x < MARGIN_VIEW Then
+            x = MARGIN_VIEW
+        End If
+        If y < MARGIN_VIEW Then
+            y = MARGIN_VIEW
+        End If
+        Return New Size(x, y)
+    End Function
 
     Public Function ToPixelX(ByVal v As Decimal) As Integer
         Return GdiRenderUtil.ToPixelX(Me.CreateGraphics, v)
@@ -372,7 +383,7 @@ Public Class PrintPreview
         Return GdiRenderUtil.ToPointY(Me.CreateGraphics, v)
     End Function
 
-    Private Sub UPrintPreview_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
+    Private Sub PrintPreview_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
         If Me.HScrollBar.Visible Or Me.VScrollBar.Visible Then
             Me._Gripping = True
             Me.Cursor = New Cursor(My.Resources.hand_grip.Handle)
@@ -380,14 +391,14 @@ Public Class PrintPreview
         End If
     End Sub
 
-    Private Sub UPrintPreview_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
+    Private Sub PrintPreview_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
         If Me._Gripping Then
             Me._Gripping = False
             Me.Cursor = New Cursor(My.Resources.hand.Handle)
         End If
     End Sub
 
-    Private Sub UPrintPreview_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseMove
+    Private Sub PrintPreview_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseMove
         If Me._Gripping Then
             Dim dx As Integer = Me._GripLocation.X - e.Location.X
             Dim dy As Integer = Me._GripLocation.Y - e.Location.Y
@@ -422,6 +433,41 @@ Public Class PrintPreview
             Case Keys.End
                 Me.PageCount = Me.GetPageCountTotal
         End Select
+    End Sub
+
+    Public Function ToRect(region As jp.co.systembase.report.component.Region) As Rectangle
+        Dim m As Size = Me.PaperMargin
+        Return New Rectangle( _
+          ToPixelX(Me._ReportMargin.Width + region.Left) * Me.Zoom + m.Width, _
+          ToPixelY(Me._ReportMargin.Height + region.Top) * Me.Zoom + m.Height, _
+          ToPixelX(region.GetWidth) * Me.Zoom, ToPixelX(region.GetHeight) * Me.Zoom)
+    End Function
+
+    Public Sub ScrollTo(rect As Rectangle)
+        Dim m As Integer = 10
+        Dim w As Integer = Me.Width
+        Dim h As Integer = Me.Height
+        If Me.VScrollBar.Visible Then
+            w -= 16
+        End If
+        If Me.HScrollBar.Visible Then
+            h -= 16
+        End If
+        If rect.Left - Me.HScrollBar.Value < m Then
+            _SetScrollValue(Me.HScrollBar, rect.Left - m)
+        ElseIf rect.Right - Me.HScrollBar.Value > w - m Then
+            _SetScrollValue(Me.HScrollBar, rect.Right - w + m)
+        End If
+        If rect.Top - Me.VScrollBar.Value < m Then
+            _SetScrollValue(Me.VScrollBar, rect.Top - m)
+        ElseIf rect.Bottom - Me.VScrollBar.Value > h - m Then
+            _SetScrollValue(Me.VScrollBar, rect.Bottom - h + m)
+        End If
+    End Sub
+
+    Private Sub _SetScrollValue(scrollBar As ScrollBar, v As Integer)
+        Dim _v As Integer = Math.Max(Math.Min(v, scrollBar.Maximum), scrollBar.Minimum)
+        scrollBar.Value = v
     End Sub
 
 End Class

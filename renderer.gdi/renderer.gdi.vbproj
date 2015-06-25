@@ -83,7 +83,20 @@
   <ItemGroup>
     <Compile Include="GdiRenderer.vb" />
     <Compile Include="GdiRendererSetting.vb" />
+    <Compile Include="IPrintPreviewSearch.vb" />
     <Compile Include="Printer.vb" />
+    <Compile Include="PrintPreviewSearch.Designer.vb">
+      <DependentUpon>PrintPreviewSearch.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PrintPreviewSearch.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PrintPreviewSearchPanel.Designer.vb">
+      <DependentUpon>PrintPreviewSearchPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PrintPreviewSearchPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="RenderingEnv.vb" />
     <Compile Include="elementrenderer\BarcodeRenderer.vb" />
     <Compile Include="elementrenderer\CircleRenderer.vb" />
@@ -153,6 +166,12 @@
     <EmbeddedResource Include="PrintPreviewPage.resx">
       <DependentUpon>PrintPreviewPage.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PrintPreviewSearch.resx">
+      <DependentUpon>PrintPreviewSearch.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintPreviewSearchPanel.resx">
+      <DependentUpon>PrintPreviewSearchPanel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PrintPreviewZoom.resx">
       <DependentUpon>PrintPreviewZoom.vb</DependentUpon>
     </EmbeddedResource>
@@ -201,6 +220,10 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
