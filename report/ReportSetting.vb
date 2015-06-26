@@ -2,7 +2,7 @@
 Imports jp.co.systembase.report.method
 Imports jp.co.systembase.report.operator
 Imports jp.co.systembase.report.elementpreprocessor
-Imports jp.co.systembase.report.elementseacher
+Imports jp.co.systembase.report.search.elementseacher
 Imports jp.co.systembase.report.textformatter
 
 Public Class ReportSetting

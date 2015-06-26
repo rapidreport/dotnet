@@ -62,6 +62,15 @@
             Return New ElementLayoutDesign(Me.Child("layout")).GetRegion(contentRegion)
         End Function
 
+        Public Function IsVisible(ByVal evaluator As Evaluator) As Boolean
+            If Not Me.IsNull("visibility_cond") Then
+                If Not ReportUtil.Condition(evaluator.EvalTry(Me.Get("visibility_cond"))) Then
+                    Return False
+                End If
+            End If
+            Return True
+        End Function
+
         Public Overrides Function ToString() As String
             Dim ret As String = ""
             If Not Me.IsNull("caption") Then

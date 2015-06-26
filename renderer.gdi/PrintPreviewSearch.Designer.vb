@@ -35,7 +35,7 @@ Partial Class PrintPreviewSearch
         Me.BtnSearch.Image = CType(resources.GetObject("BtnSearch.Image"), System.Drawing.Image)
         Me.BtnSearch.Location = New System.Drawing.Point(0, 0)
         Me.BtnSearch.Name = "BtnSearch"
-        Me.BtnSearch.Size = New System.Drawing.Size(32, 32)
+        Me.BtnSearch.Size = New System.Drawing.Size(34, 32)
         Me.BtnSearch.TabIndex = 0
         Me.ToolTip.SetToolTip(Me.BtnSearch, "テキスト検索")
         Me.BtnSearch.UseVisualStyleBackColor = True
@@ -46,7 +46,7 @@ Partial Class PrintPreviewSearch
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.BtnSearch)
         Me.Name = "PrintPreviewSearch"
-        Me.Size = New System.Drawing.Size(32, 32)
+        Me.Size = New System.Drawing.Size(34, 32)
         Me.ResumeLayout(False)
 
     End Sub

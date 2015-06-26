@@ -5,6 +5,7 @@ Imports jp.co.systembase.report.expression
 Imports jp.co.systembase.report.data
 Imports jp.co.systembase.report.method
 Imports jp.co.systembase.report.operator
+Imports jp.co.systembase.report.scanner
 
 Namespace component
 
@@ -52,6 +53,14 @@ Namespace component
             Me.ContentContext = New ContentContextClass
             Me.ContentContext.Content = content
             Me.ContentContext.ContentState = contentState
+        End Sub
+
+        Public Sub New( _
+          ByVal page As ReportPage, _
+          ByVal pages As ReportPages, _
+          ByVal contentInstance As ContentInstance, _
+          ByVal scanner As RenderingScanner)
+            Me.New(page, pages, contentInstance.Content, contentInstance.ContentState, scanner.DataContainer)
         End Sub
 
         Public Sub New( _

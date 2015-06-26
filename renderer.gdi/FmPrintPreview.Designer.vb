@@ -93,7 +93,7 @@ Partial Class FmPrintPreview
         Me.PrintPreviewSearch.Location = New System.Drawing.Point(577, 5)
         Me.PrintPreviewSearch.Name = "PrintPreviewSearch"
         Me.PrintPreviewSearch.PrintPreview = Nothing
-        Me.PrintPreviewSearch.Size = New System.Drawing.Size(32, 32)
+        Me.PrintPreviewSearch.Size = New System.Drawing.Size(34, 32)
         Me.PrintPreviewSearch.TabIndex = 3
         '
         'FmPrintPreview

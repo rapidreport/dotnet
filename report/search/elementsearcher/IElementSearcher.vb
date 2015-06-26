@@ -1,8 +1,8 @@
 ﻿Imports jp.co.systembase.report.component
 
-Namespace elementseacher
+Namespace search.elementseacher
     Public Interface IElementSearcher
-        Function SearchByKeyword( _
+        Function Search( _
           ByVal reportDesign As ReportDesign, _
           ByVal design As ElementDesign, _
           ByVal data As Object, _

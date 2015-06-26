@@ -1,13 +1,13 @@
 ﻿Imports jp.co.systembase.report.component
 
-Namespace elementseacher
+Namespace search.elementseacher
     Public Class DefaultSearcher
         Implements IElementSearcher
-        Public Function SearchByKeyword( _
+        Public Function Search( _
           reportDesign As ReportDesign, _
           design As ElementDesign, _
           data As Object, _
-          keyword As String) As Boolean Implements IElementSearcher.SearchByKeyword
+          keyword As String) As Boolean Implements IElementSearcher.Search
             Return False
         End Function
     End Class
