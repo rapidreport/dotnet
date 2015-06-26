@@ -15,7 +15,7 @@
         Using Me.PrintPreview.RenderBlock
             Me.PrintPreviewPage.Init(Me.PrintPreview)
             Me.PrintPreviewZoom.Init(Me.PrintPreview)
-            Me.PrintPreviewSearch.Init(Me.PrintPreview, Me.PrintPreviewSearchPanel)
+            Me.PrintPreviewSearch.Init(Me.PrintPreview.Printer.Pages, Me.PrintPreview, Me.PrintPreviewSearchPanel)
             If Me.StartUpZoomFit Then
                 Me.PrintPreview.ZoomFit()
                 Me.PrintPreviewZoom.AutoFit = True

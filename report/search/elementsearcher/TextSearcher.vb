@@ -15,7 +15,7 @@ Namespace search.elementseacher
                 text = textProcessor.EmbedData(reportDesign, design.Child("formatter"), text, data)
             End If
             If text IsNot Nothing Then
-                Return text.IndexOf(keyword) >= 0
+                Return text.ToLower.IndexOf(keyword.ToLower) >= 0
             Else
                 Return False
             End If

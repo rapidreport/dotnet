@@ -81,6 +81,12 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FmSearchNotFound.Designer.vb">
+      <DependentUpon>FmSearchNotFound.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FmSearchNotFound.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GdiRenderer.vb" />
     <Compile Include="GdiRendererSetting.vb" />
     <Compile Include="IPrintPreviewSearch.vb" />
@@ -156,6 +162,9 @@
   <ItemGroup>
     <EmbeddedResource Include="FmPrintPreview.resx">
       <DependentUpon>FmPrintPreview.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FmSearchNotFound.resx">
+      <DependentUpon>FmSearchNotFound.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

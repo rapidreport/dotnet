@@ -37,6 +37,9 @@ Public Class PrintPreview
 
     Private _ReportMargin As SizeF
 
+    Private _FocusPageIndex As Integer = -1
+    Private _FocusRegion As component.Region
+
     Public Class CRenderBlock
         Implements IDisposable
         Public PrintPreview As PrintPreview
@@ -340,6 +343,12 @@ Public Class PrintPreview
             g.DrawRectangle(p, x - 1, y - 1, Me.PageBuffer.Width + 1, Me.PageBuffer.Height + 1)
             g.DrawRectangle(p, 0, 0, Me.Width - 1, Me.Height - 1)
         End Using
+        If Me._FocusPageIndex >= 0 AndAlso Me.PageCount - 1 = Me._FocusPageIndex Then
+            Dim r As Rectangle = ToRect(Me._FocusRegion)
+            Using p As New Pen(Color.FromArgb(128, Color.OrangeRed), 4)
+                g.DrawRectangle(p, r.Left - Me.HScrollBar.Value, r.Top - Me.VScrollBar.Value, r.Width, r.Height)
+            End Using
+        End If
         If Me.VScrollBar.Visible AndAlso Me.HScrollBar.Visible Then
             Using b As New SolidBrush(System.Drawing.SystemColors.Control)
                 g.FillRectangle(b, Me.Width - SCROLLBAR_WIDTH, Me.Height - SCROLLBAR_WIDTH, SCROLLBAR_WIDTH, SCROLLBAR_WIDTH)
@@ -435,13 +444,17 @@ Public Class PrintPreview
         End Select
     End Sub
 
-    Public Function ToRect(region As jp.co.systembase.report.component.Region) As Rectangle
+    Public Function ToRect(region As component.Region) As Rectangle
         Dim m As Size = Me.PaperMargin
         Return New Rectangle( _
           ToPixelX(Me._ReportMargin.Width + region.Left) * Me.Zoom + m.Width, _
           ToPixelY(Me._ReportMargin.Height + region.Top) * Me.Zoom + m.Height, _
           ToPixelX(region.GetWidth) * Me.Zoom, ToPixelX(region.GetHeight) * Me.Zoom)
     End Function
+
+    Public Sub ScrollTo(region As component.Region)
+        Me.ScrollTo(ToRect(region))
+    End Sub
 
     Public Sub ScrollTo(rect As Rectangle)
         Dim m As Integer = 10
@@ -468,6 +481,36 @@ Public Class PrintPreview
     Private Sub _SetScrollValue(scrollBar As ScrollBar, v As Integer)
         Dim _v As Integer = Math.Max(Math.Min(v, scrollBar.Maximum), scrollBar.Minimum)
         scrollBar.Value = v
+    End Sub
+
+    Public Sub SetFocusRegion(pageIndex As Integer, region As component.Region)
+        Using Me.RenderBlock
+            Me._FocusPageIndex = pageIndex
+            Me._FocusRegion = region
+        End Using
+    End Sub
+
+    Public Sub ClearFocusRegion()
+        Using Me.RenderBlock
+            Me._FocusPageIndex = -1
+            Me._FocusRegion = Nothing
+        End Using
+    End Sub
+
+    Public Function _GetSearchPageIndex() As Object Implements IPrintPreviewSearch.GetPageIndex
+        Return Me.PageCount - 1
+    End Function
+
+    Private Sub _SearchFocus(pageIndex As Integer, region As component.Region) Implements IPrintPreviewSearch.Focus
+        Using Me.RenderBlock
+            Me.SetFocusRegion(pageIndex, region)
+            Me.PageCount = pageIndex + 1
+        End Using
+        Me.ScrollTo(region)
+    End Sub
+
+    Private Sub _SearchRelease() Implements IPrintPreviewSearch.Release
+        Me.ClearFocusRegion()
     End Sub
 
 End Class

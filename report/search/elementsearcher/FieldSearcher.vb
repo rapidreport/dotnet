@@ -11,7 +11,7 @@ Namespace search.elementseacher
           keyword As String) As Boolean Implements IElementSearcher.Search
             Dim text As String = RenderUtil.Format(reportDesign, design.Child("formatter"), data)
             If text IsNot Nothing Then
-                Return text.IndexOf(keyword) >= 0
+                Return text.ToLower.IndexOf(keyword.ToLower) >= 0
             Else
                 Return False
             End If
