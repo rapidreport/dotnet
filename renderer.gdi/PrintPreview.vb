@@ -345,7 +345,7 @@ Public Class PrintPreview
         End Using
         If Me._FocusPageIndex >= 0 AndAlso Me.PageCount - 1 = Me._FocusPageIndex Then
             Dim r As Rectangle = ToRect(Me._FocusRegion)
-            Using p As New Pen(Color.FromArgb(128, Color.OrangeRed), 4)
+            Using p As New Pen(Color.FromArgb(128, Color.OrangeRed), (1 + Me.Zoom) * 2)
                 g.DrawRectangle(p, r.Left - Me.HScrollBar.Value, r.Top - Me.VScrollBar.Value, r.Width, r.Height)
             End Using
         End If

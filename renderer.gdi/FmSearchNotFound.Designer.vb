@@ -48,9 +48,9 @@ Partial Class FmSearchNotFound
         '
         'BtnRetry
         '
-        Me.BtnRetry.Location = New System.Drawing.Point(42, 43)
+        Me.BtnRetry.Location = New System.Drawing.Point(9, 43)
         Me.BtnRetry.Name = "BtnRetry"
-        Me.BtnRetry.Size = New System.Drawing.Size(100, 23)
+        Me.BtnRetry.Size = New System.Drawing.Size(133, 23)
         Me.BtnRetry.TabIndex = 0
         Me.BtnRetry.Text = "先頭から検索"
         Me.BtnRetry.UseVisualStyleBackColor = True
