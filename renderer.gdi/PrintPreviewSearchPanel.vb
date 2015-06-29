@@ -59,6 +59,7 @@ Public Class PrintPreviewSearchPanel
     End Sub
 
     Private Sub _Search(forward As Boolean)
+        Me.TxtKeyword.Focus()
         Dim k As String = Me.TxtKeyword.Text
         If k IsNot Nothing Then
             k = k.Trim
