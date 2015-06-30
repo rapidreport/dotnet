@@ -45,7 +45,7 @@ Public Class ReportPage
             renderer.BeginPage(Me.Report.Design, pages.IndexOf(Me), paperRegion)
             Dim scanner As New RenderingScanner
             Me.Report.Groups.Scan(scanner, Me.Range, paperRegion)
-            Me._Render_aux(renderer, pages, scanner)
+            Me._Render_aux(renderer, pages, scanner, False)
             renderer.EndPage(Me.Report.Design)
         Catch ex As Exception
             If TypeOf ex Is RenderException Then
@@ -60,13 +60,14 @@ Public Class ReportPage
     Public Sub RenderSubPage(ByVal renderer As IRenderer, ByVal pages As ReportPages, ByVal paperRegion As Region)
         Dim scanner As New RenderingScanner
         Me.Report.Groups.Scan(scanner, Me.Range, paperRegion)
-        Me._Render_aux(renderer, pages, scanner)
+        Me._Render_aux(renderer, pages, scanner, True)
     End Sub
 
     Private Sub _Render_aux( _
       ByVal renderer As IRenderer, _
       ByVal pages As ReportPages, _
-      ByVal scanner As RenderingScanner)
+      ByVal scanner As RenderingScanner, _
+      ByVal subPage As Boolean)
         Me.ToggleValue = False
         Dim elementsMap As New Dictionary(Of ContentInstance, ElementDesigns)
         Dim evaluatorMap As New Dictionary(Of ContentInstance, Evaluator)
@@ -77,21 +78,25 @@ Public Class ReportPage
             evaluator.EvalTry("debug")
         Next
         For Each instance As ContentInstance In scanner.ContentInstances
-            Me.renderContent(renderer, pages, instance, elementsMap(instance), evaluatorMap(instance), True)
+            Me._RenderContent(renderer, pages, instance, elementsMap(instance), evaluatorMap(instance), subPage, True)
         Next
         For Each instance As ContentInstance In scanner.ContentInstances
-            Me.renderContent(renderer, pages, instance, elementsMap(instance), evaluatorMap(instance), False)
+            Me._RenderContent(renderer, pages, instance, elementsMap(instance), evaluatorMap(instance), subPage, False)
         Next
     End Sub
 
-    Private Sub renderContent( _
+    Private Sub _RenderContent( _
       ByVal renderer As IRenderer, _
       ByVal pages As ReportPages, _
       ByVal instance As ContentInstance, _
       ByVal elements As ElementDesigns, _
       ByVal evaluator As Evaluator, _
+      ByVal subPage As Boolean, _
       ByVal background As Boolean)
         For Each design As ElementDesign In elements
+            If subPage AndAlso design.Get("id") = "__trial__" Then
+                Continue For
+            End If
             If design.Get("background") <> background Then
                 Continue For
             End If
