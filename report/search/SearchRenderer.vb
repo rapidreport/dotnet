@@ -28,6 +28,9 @@ Namespace search
         End Sub
 
         Public Sub RenderElement(reportDesign As ReportDesign, region As Region, design As ElementDesign, data As Object) Implements IRenderer.RenderElement
+            If design.Get("id") = "__trial__" Then
+                Exit Sub
+            End If
             Dim searcher As IElementSearcher = reportDesign.Setting.GetElementSearcher(design.Get("type"))
             If searcher.Search(reportDesign, design, data, Me.Keyword) Then
                 Dim r As New Result
