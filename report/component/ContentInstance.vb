@@ -14,7 +14,7 @@
             Me.ContentState = contentState
         End Sub
 
-        Public Function GetElements(ByVal evaluator As Evaluator)
+        Public Function GetElementDesigns(ByVal evaluator As Evaluator) As ElementDesigns
             Dim ret As New ElementDesigns(Me.Content.Design)
             Dim report As Report = evaluator.BasicContext.Report
             _customizeElements(ret, evaluator)

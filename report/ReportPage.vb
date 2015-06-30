@@ -72,7 +72,7 @@ Public Class ReportPage
         Dim evaluatorMap As New Dictionary(Of ContentInstance, Evaluator)
         For Each instance As ContentInstance In scanner.ContentInstances
             Dim evaluator As New Evaluator(Me, pages, instance, scanner)
-            elementsMap.Add(instance, instance.GetElements(evaluator))
+            elementsMap.Add(instance, instance.GetElementDesigns(evaluator))
             evaluatorMap.Add(instance, evaluator)
             evaluator.EvalTry("debug")
         Next
