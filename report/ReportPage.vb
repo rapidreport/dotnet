@@ -78,16 +78,15 @@ Public Class ReportPage
             evaluator.EvalTry("debug")
         Next
         For Each instance As ContentInstance In scanner.ContentInstances
-            Me._RenderContent(renderer, pages, instance, elementsMap(instance), evaluatorMap(instance), subPage, True)
+            Me._RenderContent(renderer, instance, elementsMap(instance), evaluatorMap(instance), subPage, True)
         Next
         For Each instance As ContentInstance In scanner.ContentInstances
-            Me._RenderContent(renderer, pages, instance, elementsMap(instance), evaluatorMap(instance), subPage, False)
+            Me._RenderContent(renderer, instance, elementsMap(instance), evaluatorMap(instance), subPage, False)
         Next
     End Sub
 
     Private Sub _RenderContent( _
       ByVal renderer As IRenderer, _
-      ByVal pages As ReportPages, _
       ByVal instance As ContentInstance, _
       ByVal elements As ElementDesigns, _
       ByVal evaluator As Evaluator, _
