@@ -511,6 +511,9 @@ Public Class PrintPreview
     End Sub
 
     Public Sub ClearFocusRegion()
+        If Me._FocusRegion Is Nothing Then
+            Exit Sub
+        End If
         Using Me.RenderBlock(True)
             Me._FocusPageIndex = -1
             Me._FocusRegion = Nothing

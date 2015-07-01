@@ -20,7 +20,7 @@ Public Class PrintPreviewSearchPanel
     End Sub
 
     Public Sub DoClose()
-        Me.PrintPreview.Release()
+        Me.Reset()
         Me.Hide()
     End Sub
 
@@ -28,6 +28,7 @@ Public Class PrintPreviewSearchPanel
         Me._lastPageIndex = -1
         Me._lastElementIndex = -1
         Me._SearchResultsMap = Nothing
+        Me.PrintPreview.Release()
     End Sub
 
     Private Sub BtnNext_Click(sender As System.Object, e As System.EventArgs) Handles BtnNext.Click
@@ -52,7 +53,6 @@ Public Class PrintPreviewSearchPanel
     Private Sub TxtKeyword_TextChanged(sender As Object, e As System.EventArgs) Handles TxtKeyword.TextChanged
         If Me._SearchResultsMap IsNot Nothing Then
             Me.Reset()
-            Me.PrintPreview.Release()
         End If
     End Sub
 
@@ -69,28 +69,35 @@ Public Class PrintPreviewSearchPanel
         Do
             Dim pageIndex As Integer = Me.PrintPreview.GetPageIndex
             Dim found As Boolean = False
+            Dim entireSearched As Boolean = False
             If forward Then
                 If retry Then
+                    entireSearched = True
                     found = Me.SearchForward(k, 0)
-                ElseIf Me._SearchResultsMap IsNot Nothing Then
+                ElseIf Me._SearchResultsMap IsNot Nothing AndAlso Me._lastPageIndex >= 0 Then
                     found = Me.SearchForward(k, Me._lastPageIndex, Me._lastElementIndex)
                 Else
+                    entireSearched = (pageIndex = 0)
                     found = Me.SearchForward(k, pageIndex)
                 End If
             Else
                 If retry Then
+                    entireSearched = True
                     found = Me.SearchPrev(k, Me.PrintPreview.GetPages.Count - 1)
-                ElseIf Me._SearchResultsMap IsNot Nothing Then
+                ElseIf Me._SearchResultsMap IsNot Nothing AndAlso Me._lastPageIndex >= 0 Then
                     found = Me.SearchPrev(k, Me._lastPageIndex, Me._lastElementIndex)
                 ElseIf pageIndex = 0 Then
+                    entireSearched = True
                     found = Me.SearchPrev(k, Me.PrintPreview.GetPages.Count - 1)
                 Else
+                    entireSearched = (pageIndex = Me.PrintPreview.GetPages.Count - 1)
                     found = Me.SearchPrev(k, pageIndex)
                 End If
             End If
             retry = False
             If Not found Then
-                Dim f As New FmSearchNotFound(Me, k, forward)
+                Dim f As New FmSearchNotFound(Me, forward, entireSearched)
+                f.Location = Me.Parent.PointToScreen(New Point(Me.Right - f.Size.Width, Me.Bottom))
                 f.ShowDialog()
                 retry = f.Retry
             End If

@@ -1,6 +1,5 @@
 ﻿Public Class FmSearchNotFound
 
-    Public Keyword As String
     Public Forward As Boolean
     Public Retry As Boolean = False
 
@@ -8,17 +7,22 @@
         InitializeComponent()
     End Sub
 
-    Public Sub New(ByVal panel As PrintPreviewSearchPanel, ByVal keyword As String, ByVal forward As Boolean)
+    Public Sub New(ByVal panel As PrintPreviewSearchPanel, ByVal forward As Boolean, defaultClose As Boolean)
         InitializeComponent()
-        Me.Keyword = keyword
         Me.Forward = forward
-        Me.LblKeyword.Text = Me.Keyword
         If Me.Forward Then
-            Me.LblMessage.Text = "を、最後まで検索しましたが、見つかりませんでした。"
-            Me.BtnRetry.Text = "再度 先頭から検索"
+            Me.LblMessage.Text = "最後まで検索しましたが、見つかりませんでした。"
+            Me.BtnRetry.Text = "先頭から再検索"
         Else
-            Me.LblMessage.Text = "を、先頭まで検索しましたが、見つかりませんでした。"
-            Me.BtnRetry.Text = "再度 最後から検索"
+            Me.LblMessage.Text = "先頭まで検索しましたが、見つかりませんでした。"
+            Me.BtnRetry.Text = "最後から再検索"
+        End If
+        If defaultClose Then
+            Me.BtnClose.TabIndex = 0
+            Me.BtnRetry.TabIndex = 1
+        Else
+            Me.BtnRetry.TabIndex = 0
+            Me.BtnClose.TabIndex = 1
         End If
     End Sub
 

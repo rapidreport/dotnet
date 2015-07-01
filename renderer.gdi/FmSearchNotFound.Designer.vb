@@ -22,25 +22,15 @@ Partial Class FmSearchNotFound
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.LblKeyword = New System.Windows.Forms.Label()
         Me.LblMessage = New System.Windows.Forms.Label()
         Me.BtnRetry = New System.Windows.Forms.Button()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
-        'LblKeyword
-        '
-        Me.LblKeyword.AutoSize = True
-        Me.LblKeyword.Location = New System.Drawing.Point(7, 7)
-        Me.LblKeyword.Name = "LblKeyword"
-        Me.LblKeyword.Size = New System.Drawing.Size(47, 12)
-        Me.LblKeyword.TabIndex = 0
-        Me.LblKeyword.Text = "keyword"
-        '
         'LblMessage
         '
         Me.LblMessage.AutoSize = True
-        Me.LblMessage.Location = New System.Drawing.Point(7, 24)
+        Me.LblMessage.Location = New System.Drawing.Point(7, 9)
         Me.LblMessage.Name = "LblMessage"
         Me.LblMessage.Size = New System.Drawing.Size(247, 12)
         Me.LblMessage.TabIndex = 1
@@ -48,18 +38,18 @@ Partial Class FmSearchNotFound
         '
         'BtnRetry
         '
-        Me.BtnRetry.Location = New System.Drawing.Point(9, 43)
+        Me.BtnRetry.Location = New System.Drawing.Point(9, 28)
         Me.BtnRetry.Name = "BtnRetry"
-        Me.BtnRetry.Size = New System.Drawing.Size(133, 23)
+        Me.BtnRetry.Size = New System.Drawing.Size(128, 23)
         Me.BtnRetry.TabIndex = 0
-        Me.BtnRetry.Text = "先頭から検索"
+        Me.BtnRetry.Text = "先頭から再検索"
         Me.BtnRetry.UseVisualStyleBackColor = True
         '
         'BtnClose
         '
-        Me.BtnClose.Location = New System.Drawing.Point(148, 43)
+        Me.BtnClose.Location = New System.Drawing.Point(143, 28)
         Me.BtnClose.Name = "BtnClose"
-        Me.BtnClose.Size = New System.Drawing.Size(100, 23)
+        Me.BtnClose.Size = New System.Drawing.Size(105, 23)
         Me.BtnClose.TabIndex = 1
         Me.BtnClose.Text = "閉じる"
         Me.BtnClose.UseVisualStyleBackColor = True
@@ -68,21 +58,20 @@ Partial Class FmSearchNotFound
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(262, 74)
+        Me.ClientSize = New System.Drawing.Size(262, 59)
         Me.ControlBox = False
         Me.Controls.Add(Me.BtnClose)
         Me.Controls.Add(Me.BtnRetry)
         Me.Controls.Add(Me.LblMessage)
-        Me.Controls.Add(Me.LblKeyword)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.KeyPreview = True
         Me.Name = "FmSearchNotFound"
-        Me.Text = "テキスト検索"
+        Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents LblKeyword As System.Windows.Forms.Label
     Friend WithEvents LblMessage As System.Windows.Forms.Label
     Friend WithEvents BtnRetry As System.Windows.Forms.Button
     Friend WithEvents BtnClose As System.Windows.Forms.Button
