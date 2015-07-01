@@ -2,9 +2,9 @@
 
     Public SearchPanel As PrintPreviewSearchPanel
 
-    Public Sub Init(pages As ReportPages, printPreview As IPrintPreviewSearch, searchPanel As PrintPreviewSearchPanel)
+    Public Sub Init(printPreview As IPrintPreviewSearch, searchPanel As PrintPreviewSearchPanel)
         Me.SearchPanel = searchPanel
-        Me.SearchPanel.Init(pages, printPreview)
+        Me.SearchPanel.Init(printPreview)
         Me.SearchPanel.DoClose()
     End Sub
 

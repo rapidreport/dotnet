@@ -2,15 +2,13 @@
 
 Public Class PrintPreviewSearchPanel
 
-    Public Pages As ReportPages
     Public PrintPreview As IPrintPreviewSearch
 
     Private _lastPageIndex As Integer = -1
     Private _lastElementIndex As Integer = -1
     Private _SearchResultsMap As Dictionary(Of Integer, List(Of SearchRenderer.Result))
 
-    Public Sub Init(pages As ReportPages, printPreview As IPrintPreviewSearch)
-        Me.Pages = pages
+    Public Sub Init(printPreview As IPrintPreviewSearch)
         Me.PrintPreview = printPreview
     End Sub
 
@@ -81,11 +79,11 @@ Public Class PrintPreviewSearchPanel
                 End If
             Else
                 If retry Then
-                    found = Me.SearchPrev(k, Me.Pages.Count - 1)
+                    found = Me.SearchPrev(k, Me.PrintPreview.GetPages.Count - 1)
                 ElseIf Me._SearchResultsMap IsNot Nothing Then
                     found = Me.SearchPrev(k, Me._lastPageIndex, Me._lastElementIndex)
                 ElseIf pageIndex = 0 Then
-                    found = Me.SearchPrev(k, Me.Pages.Count - 1)
+                    found = Me.SearchPrev(k, Me.PrintPreview.GetPages.Count - 1)
                 Else
                     found = Me.SearchPrev(k, pageIndex)
                 End If
@@ -112,13 +110,13 @@ Public Class PrintPreviewSearchPanel
                 Dim rs As List(Of SearchRenderer.Result) = Me.GetSearchResults(keyword, pi)
                 If ei >= rs.Count Then
                     pi += 1
-                    If pi >= Me.Pages.Count Then
+                    If pi >= Me.PrintPreview.GetPages.Count Then
                         Exit Do
                     Else
                         ei = 0
                     End If
                 Else
-                    Me.PrintPreview.Focus(pi, rs(ei).Region.ToPointScale(Me.Pages(pi).Report.Design))
+                    Me.PrintPreview.Focus(pi, rs(ei).Region.ToPointScale(Me.PrintPreview.GetPages(pi).Report.Design))
                     Me._lastPageIndex = pi
                     Me._lastElementIndex = ei
                     Return True
@@ -149,7 +147,9 @@ Public Class PrintPreviewSearchPanel
                         ei = Me.GetSearchResults(keyword, pi).Count - 1
                     End If
                 Else
-                    Me.PrintPreview.Focus(pi, Me.GetSearchResults(keyword, pi)(ei).Region.ToPointScale(Me.Pages(pi).Report.Design))
+                    Dim r As component.Region = Me.GetSearchResults(keyword, pi)(ei).Region
+                    Dim p As ReportPage = Me.PrintPreview.GetPages(pi)
+                    Me.PrintPreview.Focus(pi, r.ToPointScale(p.Report.Design))
                     Me._lastPageIndex = pi
                     Me._lastElementIndex = ei
                     Return True
@@ -167,7 +167,8 @@ Public Class PrintPreviewSearchPanel
         End If
         If Not Me._SearchResultsMap.ContainsKey(pageIndex) Then
             Dim renderer As New SearchRenderer(keyword)
-            Me.Pages(pageIndex).Render(renderer, Me.Pages)
+            Dim pages As ReportPages = Me.PrintPreview.GetPages
+            pages(pageIndex).Render(renderer, pages)
             Me._SearchResultsMap.Add(pageIndex, renderer.Results)
         End If
         Return Me._SearchResultsMap(pageIndex)

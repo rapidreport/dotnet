@@ -497,7 +497,11 @@ Public Class PrintPreview
         End Using
     End Sub
 
-    Public Function _GetSearchPageIndex() As Object Implements IPrintPreviewSearch.GetPageIndex
+    Public Function GetPages() As ReportPages Implements IPrintPreviewSearch.GetPages
+        Return Me.Printer.Pages
+    End Function
+
+    Public Function _GetSearchPageIndex() As Integer Implements IPrintPreviewSearch.GetPageIndex
         Return Me.PageCount - 1
     End Function
 
