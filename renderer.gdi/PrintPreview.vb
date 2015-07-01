@@ -42,15 +42,31 @@ Public Class PrintPreview
 
     Public Class CRenderBlock
         Implements IDisposable
+
+        Public ScrollPreserve As Boolean
         Public PrintPreview As PrintPreview
-        Public Sub New(ByVal printPreview As PrintPreview)
+
+        Private _ScrollV As Integer
+        Private _ScrollH As Integer
+
+        Public Sub New(ByVal printPreview As PrintPreview, scrollPreserve As Boolean)
             Me.PrintPreview = printPreview
+            Me.ScrollPreserve = scrollPreserve
+            If Me.ScrollPreserve Then
+                Me._ScrollV = Me.PrintPreview.VScrollBar.Value
+                Me._ScrollH = Me.PrintPreview.HScrollBar.Value
+            End If
         End Sub
+
         Private disposedValue As Boolean = False
         Protected Overridable Sub Dispose(ByVal disposing As Boolean)
             If Not Me.disposedValue Then
                 Me.PrintPreview._RenderBlock = Nothing
                 Me.PrintPreview.Render()
+                If Me.ScrollPreserve Then
+                    Me.PrintPreview._SetScrollValue(Me.PrintPreview.VScrollBar, _ScrollV)
+                    Me.PrintPreview._SetScrollValue(Me.PrintPreview.HScrollBar, _ScrollH)
+                End If
             End If
             Me.disposedValue = True
         End Sub
@@ -212,8 +228,12 @@ Public Class PrintPreview
 
     Private _RenderBlock As CRenderBlock = Nothing
     Public Function RenderBlock() As CRenderBlock
+        Return RenderBlock(False)
+    End Function
+
+    Public Function RenderBlock(scrollPreserve As Boolean) As CRenderBlock
         If Me._RenderBlock Is Nothing Then
-            Me._RenderBlock = New CRenderBlock(Me)
+            Me._RenderBlock = New CRenderBlock(Me, scrollPreserve)
             Return Me._RenderBlock
         Else
             Return Nothing
@@ -469,12 +489,12 @@ Public Class PrintPreview
         If rect.Left - Me.HScrollBar.Value < m Then
             _SetScrollValue(Me.HScrollBar, rect.Left - m)
         ElseIf rect.Right - Me.HScrollBar.Value > w - m Then
-            _SetScrollValue(Me.HScrollBar, rect.Right - w + m)
+            _SetScrollValue(Me.HScrollBar, Math.Min(rect.Right - w + m, rect.Left - m))
         End If
         If rect.Top - Me.VScrollBar.Value < m Then
             _SetScrollValue(Me.VScrollBar, rect.Top - m)
         ElseIf rect.Bottom - Me.VScrollBar.Value > h - m Then
-            _SetScrollValue(Me.VScrollBar, rect.Bottom - h + m)
+            _SetScrollValue(Me.VScrollBar, Math.Min(rect.Bottom - h + m, rect.Top - m))
         End If
     End Sub
 
@@ -484,14 +504,14 @@ Public Class PrintPreview
     End Sub
 
     Public Sub SetFocusRegion(pageIndex As Integer, region As component.Region)
-        Using Me.RenderBlock
+        Using Me.RenderBlock(True)
             Me._FocusPageIndex = pageIndex
             Me._FocusRegion = region
         End Using
     End Sub
 
     Public Sub ClearFocusRegion()
-        Using Me.RenderBlock
+        Using Me.RenderBlock(True)
             Me._FocusPageIndex = -1
             Me._FocusRegion = Nothing
         End Using
@@ -506,7 +526,7 @@ Public Class PrintPreview
     End Function
 
     Private Sub _SearchFocus(pageIndex As Integer, region As component.Region) Implements IPrintPreviewSearch.Focus
-        Using Me.RenderBlock
+        Using Me.RenderBlock(Me.PageCount = pageIndex + 1)
             Me.SetFocusRegion(pageIndex, region)
             Me.PageCount = pageIndex + 1
         End Using
