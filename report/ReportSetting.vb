@@ -2,7 +2,7 @@
 Imports jp.co.systembase.report.method
 Imports jp.co.systembase.report.operator
 Imports jp.co.systembase.report.elementpreprocessor
-Imports jp.co.systembase.report.search.elementseacher
+Imports jp.co.systembase.report.search.searchobject
 Imports jp.co.systembase.report.textformatter
 
 Public Class ReportSetting
@@ -12,8 +12,8 @@ Public Class ReportSetting
     Public OperatorMap As New Dictionary(Of String, IOperator)
     Public DefaultElementPreprocessor As IElementPreprocessor
     Public ElementPreprocessorMap As New Dictionary(Of String, IElementPreprocessor)
-    Public DefaultElementSeacher As IElementSearcher
-    Public ElementSeacherMap As New Dictionary(Of String, IElementSearcher)
+    Public DefaultSeachObject As ISearchObject
+    Public SeacheObjectMap As New Dictionary(Of String, ISearchObject)
     Public DefaultTextFormatter As ITextFormatter
     Public TextFormatterMap As New Dictionary(Of String, ITextFormatter)
 
@@ -87,9 +87,9 @@ Public Class ReportSetting
         Me.OperatorMap.Add("wsplit", New WSplitOperator)
         Me.DefaultElementPreprocessor = New DefaultPreprocessor
         Me.ElementPreprocessorMap.Add("subpage", New SubPagePreprocessor)
-        Me.DefaultElementSeacher = New DefaultSearcher
-        Me.ElementSeacherMap.Add("field", New FieldSearcher)
-        Me.ElementSeacherMap.Add("text", New TextSearcher)
+        Me.DefaultSeachObject = New DefaultSearchObject
+        Me.SeacheObjectMap.Add("field", New FieldSearchObject)
+        Me.SeacheObjectMap.Add("text", New TextSearchObject)
         Me.DefaultTextFormatter = New DefaultTextFormatter
         Me.TextFormatterMap.Add("default", Me.DefaultTextFormatter)
     End Sub
@@ -105,9 +105,9 @@ Public Class ReportSetting
         For Each k As String In setting.ElementPreprocessorMap.Keys
             Me.ElementPreprocessorMap.Add(k, setting.ElementPreprocessorMap(k))
         Next
-        Me.DefaultElementSeacher = setting.DefaultElementSeacher
-        For Each k As String In setting.ElementSeacherMap.Keys
-            Me.ElementSeacherMap.Add(k, setting.ElementSeacherMap(k))
+        Me.DefaultSeachObject = setting.DefaultSeachObject
+        For Each k As String In setting.SeacheObjectMap.Keys
+            Me.SeacheObjectMap.Add(k, setting.SeacheObjectMap(k))
         Next
         Me.DefaultTextFormatter = setting.DefaultTextFormatter
         For Each k As String In setting.TextFormatterMap.Keys
@@ -142,11 +142,11 @@ Public Class ReportSetting
         End If
     End Function
 
-    Public Function GetElementSearcher(key As String) As IElementSearcher
-        If key IsNot Nothing AndAlso Me.ElementSeacherMap.ContainsKey(key) Then
-            Return Me.ElementSeacherMap(key)
+    Public Function GetSearchObject(key As String) As ISearchObject
+        If key IsNot Nothing AndAlso Me.SeacheObjectMap.ContainsKey(key) Then
+            Return Me.SeacheObjectMap(key)
         Else
-            Return Me.DefaultElementSeacher
+            Return Me.DefaultSeachObject
         End If
     End Function
 

@@ -1,5 +1,5 @@
 ﻿Imports jp.co.systembase.report.component
-Imports jp.co.systembase.report.search.elementseacher
+Imports jp.co.systembase.report.search.searchobject
 Imports jp.co.systembase.report.renderer
 
 Namespace search
@@ -31,8 +31,9 @@ Namespace search
             If design.Get("id") = "__trial__" Then
                 Exit Sub
             End If
-            Dim searcher As IElementSearcher = reportDesign.Setting.GetElementSearcher(design.Get("type"))
-            If searcher.Search(reportDesign, design, data, Me.Keyword) Then
+            Dim searchObject As ISearchObject = reportDesign.Setting.GetSearchObject(design.Get("type"))
+            Dim t As String = searchObject.GetText(reportDesign, design, data)
+            If t IsNot Nothing AndAlso t.ToLower.IndexOf(Me.Keyword.ToLower) >= 0 Then
                 Dim r As New Result
                 r.ElementDesign = design
                 r.Region = region

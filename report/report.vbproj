@@ -88,10 +88,10 @@
     <Compile Include="elementpreprocessor\DefaultPreprocessor.vb" />
     <Compile Include="elementpreprocessor\SubPagePreprocessor.vb" />
     <Compile Include="elementpreprocessor\IElementPreprocessor.vb" />
-    <Compile Include="search\elementsearcher\DefaultSearcher.vb" />
-    <Compile Include="search\elementsearcher\FieldSearcher.vb" />
-    <Compile Include="search\elementsearcher\IElementSearcher.vb" />
-    <Compile Include="search\elementsearcher\TextSearcher.vb" />
+    <Compile Include="search\searchobject\DefaultSearchObject.vb" />
+    <Compile Include="search\searchobject\FieldSearchObject.vb" />
+    <Compile Include="search\searchobject\ISearchObject.vb" />
+    <Compile Include="search\searchobject\TextSearchObject.vb" />
     <Compile Include="expression\EmbeddedTextProcessor.vb" />
     <Compile Include="expression\ImmediateExpression.vb" />
     <Compile Include="expression\MethodExpression.vb" />
