@@ -63,6 +63,7 @@ Public Class Report
     Public Class Compatibility
         Public Shared _4_6_PdfFontBold As Boolean = False
         Public Shared _4_13_2_AverageZero As Boolean = False
+        Public Shared _4_15_PreviewSearchDisabled As Boolean = False
     End Class
 
     Public Design As ReportDesign

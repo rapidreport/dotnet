@@ -24,6 +24,9 @@
                 Me.PrintPreviewZoom.AutoFitWidth = True
             End If
         End Using
+        If Report.Compatibility._4_15_PreviewSearchDisabled Then
+            Me.SearchEnabled = False
+        End If
     End Sub
 
     Private Sub FmPrintPreview_MouseWheel(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseWheel
@@ -93,6 +96,24 @@
         End Set
         Get
             Return Me._StartUpZoomFitWidth
+        End Get
+    End Property
+
+    Private _SearchEnabled As Boolean = True
+    Public Property SearchEnabled As Boolean
+        Set(value As Boolean)
+            Me._SearchEnabled = value
+            If Me.SearchEnabled Then
+                Me.PrintPreviewSearch.Show()
+                Me.BtnClose.Location = New Point(620, 5)
+            Else
+                Me.PrintPreviewSearch.PanelHide()
+                Me.PrintPreviewSearch.Hide()
+                Me.BtnClose.Location = New Point(575, 5)
+            End If
+        End Set
+        Get
+            Return _SearchEnabled
         End Get
     End Property
 

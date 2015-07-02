@@ -28,7 +28,9 @@ Public Class PrintPreviewSearchPanel
         Me._lastPageIndex = -1
         Me._lastElementIndex = -1
         Me._SearchResultsMap = Nothing
-        Me.PrintPreview.Release()
+        If Me.PrintPreview IsNot Nothing Then
+            Me.PrintPreview.Release()
+        End If
     End Sub
 
     Private Sub BtnNext_Click(sender As System.Object, e As System.EventArgs) Handles BtnNext.Click

@@ -17,13 +17,17 @@
     End Sub
 
     Public Sub PanelShow()
-        Me.SearchPanel.DoOpen()
-        Me.BtnSearch.BackColor = SystemColors.ControlDark
+        If Me.SearchPanel IsNot Nothing Then
+            Me.SearchPanel.DoOpen()
+            Me.BtnSearch.BackColor = SystemColors.ControlDark
+        End If
     End Sub
 
     Public Sub PanelHide()
-        Me.SearchPanel.DoClose()
-        Me.BtnSearch.BackColor = SystemColors.Control
+        If Me.SearchPanel IsNot Nothing Then
+            Me.SearchPanel.DoClose()
+            Me.BtnSearch.BackColor = SystemColors.Control
+        End If
     End Sub
 
 End Class

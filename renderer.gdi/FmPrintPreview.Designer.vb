@@ -43,7 +43,7 @@ Partial Class FmPrintPreview
         '
         'BtnClose
         '
-        Me.BtnClose.Location = New System.Drawing.Point(619, 5)
+        Me.BtnClose.Location = New System.Drawing.Point(620, 5)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(60, 32)
         Me.BtnClose.TabIndex = 5
@@ -90,7 +90,7 @@ Partial Class FmPrintPreview
         '
         'PrintPreviewSearch
         '
-        Me.PrintPreviewSearch.Location = New System.Drawing.Point(577, 5)
+        Me.PrintPreviewSearch.Location = New System.Drawing.Point(575, 5)
         Me.PrintPreviewSearch.Name = "PrintPreviewSearch"
         Me.PrintPreviewSearch.Size = New System.Drawing.Size(34, 32)
         Me.PrintPreviewSearch.TabIndex = 3
