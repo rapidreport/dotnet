@@ -26,12 +26,12 @@ Public Class Test_0_4
     End Function
 
     Private Function _GetImageMap() As ImageMap
-        Dim map As New ImageMap()
-        map.Add(1D, Image.FromFile("./img/logo.bmp"))
-        map.Add(2D, Image.FromFile("./img/logo.gif"))
-        map.Add(3D, Image.FromFile("./img/logo.jpg"))
-        map.Add(4D, Image.FromFile("./img/logo.png"))
-        Return map
+        Dim ret As New ImageMap()
+        ret.Add("bmp", Image.FromFile("./img/logo.bmp"))
+        ret.Add("gif", Image.FromFile("./img/logo.gif"))
+        ret.Add("jpg", Image.FromFile("./img/logo.jpg"))
+        ret.Add("png", Image.FromFile("./img/logo.png"))
+        Return ret
     End Function
 
     Public Sub Run() Implements ITest.Run

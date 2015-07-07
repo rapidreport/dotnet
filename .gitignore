@@ -4,10 +4,10 @@
 # /bin/
 /bin/*
 
-# /example/
-/example/bin
-/example/obj
-/example/*.user
+# /test/
+/test/bin
+/test/obj
+/test/*.user
 
 # /json/
 /json/bin

@@ -7,9 +7,6 @@ Imports jp.co.systembase.json
 Imports jp.co.systembase.report
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.data
-Imports jp.co.systembase.report.renderer.gdi
-Imports jp.co.systembase.report.renderer.pdf
-Imports jp.co.systembase.report.renderer.xls
 Imports jp.co.systembase.report.renderer.xlsx
 
 Public Class Test_0_5_XLSX
