@@ -11,6 +11,14 @@ Namespace elementrenderer
           ByVal region As Region, _
           ByVal design As ElementDesign, _
           ByVal data As Object) Implements IElementRenderer.Collect
+            If Not design.IsNull("rect") Then
+                renderer.Setting.GetElementRenderer("rect").Collect( _
+                  renderer, _
+                  reportDesign, _
+                  region, _
+                  design.Child("rect"), _
+                  Nothing)
+            End If
             Dim _region As Region = region.ToPointScale(reportDesign)
             If _region.GetWidth <= 0 Or _region.GetHeight <= 0 Then
                 Exit Sub

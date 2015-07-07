@@ -13,6 +13,14 @@ Namespace elementrenderer
           ByVal region As Region, _
           ByVal design As ElementDesign, _
           ByVal data As Object) Implements IElementRenderer.Render
+            If Not design.IsNull("rect") Then
+                env.Setting.GetElementRenderer("rect").Render( _
+                    env, _
+                    reportDesign, _
+                    region, _
+                    design.Child("rect"), _
+                    Nothing)
+            End If
             Dim text As String
             If env.InDesigner Then
                 If Not design.IsNull("mock") Then

@@ -16,6 +16,14 @@ Namespace elementrenderer
           ByVal region As Region, _
           ByVal design As ElementDesign, _
           ByVal data As Object) Implements IElementRenderer.Render
+            If Not design.IsNull("rect") Then
+                renderer.Setting.GetElementRenderer("rect").Render( _
+                  renderer, _
+                  reportDesign, _
+                  region, _
+                  design.Child("rect"), _
+                  Nothing)
+            End If
             Dim text As String = design.Get("text")
             If data IsNot Nothing Then
                 Dim textProcessor As New EmbeddedTextProcessor
