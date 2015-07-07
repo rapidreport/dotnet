@@ -1,0 +1,147 @@
+{
+  version: 0,
+  paper: {
+    landscape: true,
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  caption: "売上明細表",
+  font: {size:13.0},
+  custom_fields: [
+    {key:"kingaku",exp:"(* .tanka .suryo)"}
+  ],
+  group: {
+    caption: "部門グループ",
+    keys: ["bumonCd"],
+    page_break: true,
+    contents: [
+      {
+        size: {
+          initial: 110.0
+        },
+        caption: "ヘッダー",
+        every_page: true,
+        elements: [
+          {type:"text",layout:{x1:305.0,y1:5.0,x2:505.0,y2:25.0},distribute:true,font:{name:"gothic",size:20.0},halign:"center",text:"部門別売上明細表",valign:"center"},
+          {type:"line",layout:{x1:305.0,y1:25.0,x2:505.0,y2:25.0}},
+          {type:"text",layout:{x1:250.0,y1:40.0,x2:325.0,y2:55.0},text:"集計期間：",valign:"center"},
+          {type:"field",layout:{x1:325.0,y1:40.0,x2:430.0,y2:55.0},exp:"global.startDate",formatter:{format:"yyyy年MM月dd日",type:"default"},mock:"t",valign:"center"},
+          {type:"text",layout:{x1:430.0,y1:40.0,x2:450.0,y2:55.0},halign:"center",text:"～",valign:"center"},
+          {type:"field",layout:{x1:450.0,y1:40.0,x2:555.0,y2:55.0},exp:"global.endDate",formatter:{format:"yyyy年MM月dd日",type:"default"},mock:"t",valign:"center"},
+          {type:"text",layout:{x1:595.0,y1:25.0,x2:695.0,y2:40.0},halign:"right",text:"PAGE：",valign:"center"},
+          {type:"text",layout:{x1:695.0,y1:25.0,x2:802.0,y2:40.0},halign:"right",text:"#{page_count}/#{page_count.total}",valign:"center"},
+          {type:"text",layout:{x1:595.0,y1:40.0,x2:695.0,y2:55.0},halign:"right",text:"印刷日付：",valign:"center"},
+          {type:"field",layout:{x1:695.0,y1:40.0,x2:802.0,y2:55.0},exp:"global.printDate",formatter:{format:"yyyy年MM月dd日",type:"default"},halign:"right",mock:"t",valign:"center"},
+          {type:"field",layout:{x1:10.0,y1:55.0,x2:430.0,y2:75.0},exp:"global.kaisha",mock:"w20",valign:"center"},
+          {type:"text",layout:{x1:10.0,y1:75.0,x2:70.0,y2:95.0},text:"部門：",valign:"center"},
+          {type:"field",layout:{x1:70.0,y1:75.0,x2:110.0,y2:95.0},exp:".bumonCd",formatter:{format:"0000",type:"default"},halign:"left",mock:"d4",valign:"center",xls_format:"0000"},
+          {type:"field",layout:{x1:110.0,y1:75.0,x2:430.0,y2:95.0},exp:".bumon",mock:"w20",valign:"center"},
+          {type:"rect",layout:{x1:10.0,y1:95.0,x2:802.0,y2:110.0}},
+          {type:"line",layout:{x1:70.0,y1:95.0,x2:70.0,y2:110.0}},
+          {type:"line",layout:{x1:140.0,y1:95.0,x2:140.0,y2:110.0}},
+          {type:"line",layout:{x1:220.0,y1:95.0,x2:220.0,y2:110.0}},
+          {type:"line",layout:{x1:495.0,y1:95.0,x2:495.0,y2:110.0}},
+          {type:"line",layout:{x1:595.0,y1:95.0,x2:595.0,y2:110.0}},
+          {type:"line",layout:{x1:695.0,y1:95.0,x2:695.0,y2:110.0}},
+          {type:"text",layout:{x1:10.0,y1:95.0,x2:70.0,y2:110.0},halign:"center",text:"売上日付",valign:"center"},
+          {type:"text",layout:{x1:70.0,y1:95.0,x2:140.0,y2:110.0},text:"伝票No.",valign:"center"},
+          {type:"text",layout:{x1:140.0,y1:95.0,x2:220.0,y2:110.0},text:"商品コード",valign:"center"},
+          {type:"text",layout:{x1:220.0,y1:95.0,x2:495.0,y2:110.0},text:"商品名称",valign:"center"},
+          {type:"text",layout:{x1:495.0,y1:95.0,x2:595.0,y2:110.0},halign:"right",text:"単価",valign:"center"},
+          {type:"text",layout:{x1:595.0,y1:95.0,x2:695.0,y2:110.0},halign:"right",text:"数量",valign:"center"},
+          {type:"text",layout:{x1:695.0,y1:95.0,x2:802.0,y2:110.0},halign:"right",text:"金額",valign:"center"}
+        ]
+      },
+      {
+        size: {
+          initial: 445.0
+        },
+        aggregate_src: true,
+        caption: "ボディ",
+        elements: [
+          {type:"rect",layout:{x1:10.0,y1:0.0,x2:802.0,y2:445.0}},
+          {type:"line",layout:{x1:70.0,y1:0.0,x2:70.0,y2:445.0}},
+          {type:"line",layout:{x1:140.0,y1:0.0,x2:140.0,y2:445.0}},
+          {type:"line",layout:{x1:220.0,y1:0.0,x2:220.0,y2:445.0}},
+          {type:"line",layout:{x1:495.0,y1:0.0,x2:495.0,y2:445.0}},
+          {type:"line",layout:{x1:595.0,y1:0.0,x2:595.0,y2:445.0}},
+          {type:"line",layout:{x1:695.0,y1:0.0,x2:695.0,y2:445.0}}
+        ],
+        group: {
+          contents: [
+            {
+              aggregate_src: true,
+              caption: "部門ボディ",
+              group: {
+                caption: "伝票グループ",
+                keys: ["denpyoNo"],
+                contents: [
+                  {
+                    aggregate_src: true,
+                    caption: "伝票ボディ",
+                    unbreakable: true,
+                    group: {
+                      caption: "明細グループ",
+                      detail: true,
+                      contents: [
+                        {
+                          size: {
+                            initial: 15.0
+                          },
+                          aggregate_src: true,
+                          caption: "明細",
+                          elements: [
+                            {type:"field",layout:{x1:10.0,y1:0.0,x2:70.0,y2:15.0},exp:".uriageDate",formatter:{format:"yy/MM/dd",type:"default"},halign:"center",mock:"t",valign:"center",visibility_cond:"state.first"},
+                            {type:"field",layout:{x1:70.0,y1:0.0,x2:140.0,y2:15.0},exp:".denpyoNo",formatter:{format:"00000000",type:"default"},mock:"d8",valign:"center",visibility_cond:"state.first",xls_format:"00000000"},
+                            {type:"field",layout:{x1:140.0,y1:0.0,x2:220.0,y2:15.0},exp:".shohinCd",mock:"s8",valign:"center"},
+                            {type:"field",layout:{x1:220.0,y1:0.0,x2:495.0,y2:15.0},exp:".shohin",mock:"w20",valign:"center"},
+                            {type:"field",layout:{x1:495.0,y1:0.0,x2:595.0,y2:15.0},exp:".tanka",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d10",valign:"center",xls_format:"#,###"},
+                            {type:"field",layout:{x1:595.0,y1:0.0,x2:695.0,y2:15.0},exp:".suryo",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d10",valign:"center",xls_format:"#,###"},
+                            {type:"field",layout:{x1:695.0,y1:0.0,x2:802.0,y2:15.0},exp:".kingaku",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d10",valign:"center",xls_format:"#,###"}
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    size: {
+                      initial: 15.0
+                    },
+                    caption: "伝票フッター1",
+                    unbreakable: true,
+                    visibility_cond: "(> count 1)",
+                    elements: [
+                      {type:"text",layout:{x1:595.0,y1:0.0,x2:695.0,y2:15.0},halign:"right",text:"【伝票計】",valign:"center"},
+                      {type:"field",layout:{x1:695.0,y1:0.0,x2:802.0,y2:15.0},exp:"sum.kingaku",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d10",valign:"center",xls_format:"#,###"}
+                    ]
+                  },
+                  {
+                    size: {
+                      initial: 5.0
+                    },
+                    caption: "伝票フッター2",
+                    elements: [
+                      {type:"line",layout:{x1:10.0,y1:5.0,x2:802.0,y2:5.0}}
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              size: {
+                initial: 15.0
+              },
+              caption: "部門フッター",
+              visibility_cond: "(> count# 1)",
+              elements: [
+                {type:"text",layout:{x1:595.0,y1:0.0,x2:695.0,y2:15.0},halign:"right",text:"【部門計】",valign:"center"},
+                {type:"field",layout:{x1:695.0,y1:0.0,x2:802.0,y2:15.0},exp:"sum.kingaku",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d10",valign:"center",xls_format:"#,###"}
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

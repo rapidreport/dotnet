@@ -1,0 +1,82 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 30.0
+        },
+        caption: "日付",
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:5.0,x2:555.0,y2:25.0},formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"},text:"テスト日時：#{global.time} 言語：#{global.lang}",valign:"center"}
+        ]
+      },
+      {
+        size: {
+          initial: 770.0
+        },
+        caption: "バーコード",
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:555.0,y2:20.0},text:"バーコード",valign:"bottom"},
+          {type:"barcode",layout:{x1:0.0,y1:35.0,x2:85.0,y2:70.0},exp:"'9784810185508'"},
+          {type:"text",layout:{x1:0.0,y1:20.0,x2:75.0,y2:35.0},text:"□EAN13:",valign:"center"},
+          {type:"text",layout:{x1:205.0,y1:20.0,x2:280.0,y2:35.0},text:"□EAN8:",valign:"center"},
+          {type:"barcode",layout:{x1:205.0,y1:35.0,x2:290.0,y2:70.0},barcode_type:"ean8",exp:"'12345670'"},
+          {type:"text",layout:{x1:380.0,y1:20.0,x2:455.0,y2:35.0},text:"□CODE39:",valign:"center"},
+          {type:"barcode",layout:{x1:380.0,y1:35.0,x2:465.0,y2:70.0},barcode_type:"code39",exp:"'RREPORT123'"},
+          {type:"text",layout:{x1:0.0,y1:80.0,x2:75.0,y2:95.0},text:"□CODABAR:",valign:"center"},
+          {type:"barcode",layout:{x1:0.0,y1:95.0,x2:85.0,y2:130.0},barcode_type:"codabar",exp:"'1234567890'"},
+          {type:"text",layout:{x1:205.0,y1:80.0,x2:280.0,y2:95.0},text:"□ITF:",valign:"center"},
+          {type:"barcode",layout:{x1:205.0,y1:95.0,x2:290.0,y2:130.0},barcode_type:"itf",exp:"'12345678901231'"},
+          {type:"barcode",layout:{x1:380.0,y1:95.0,x2:465.0,y2:130.0},barcode_type:"code128",exp:"'RapidReport'"},
+          {type:"text",layout:{x1:380.0,y1:80.0,x2:455.0,y2:95.0},text:"□CODE128:",valign:"center"},
+          {type:"barcode",layout:{x1:0.0,y1:155.0,x2:170.0,y2:195.0},barcode_type:"gs1_128",exp:"'(01)14512345678903(17)061030(30)300{1}(10)001234'"},
+          {type:"text",layout:{x1:0.0,y1:140.0,x2:75.0,y2:155.0},text:"□GS1-128:",valign:"center"},
+          {type:"barcode",layout:{x1:0.0,y1:235.0,x2:170.0,y2:270.0},barcode_type:"yubin",exp:"'024000419-116-4'"},
+          {type:"text",layout:{x1:0.0,y1:220.0,x2:75.0,y2:235.0},text:"□YUBIN:",valign:"center"},
+          {type:"barcode",layout:{x1:205.0,y1:155.0,x2:255.0,y2:205.0},barcode_type:"qrcode",exp:"'RapidReport(ラピッドレポート)は、.NET(C#/VisualBasic)またはJavaから利用できる帳票ツールです。'"},
+          {type:"text",layout:{x1:205.0,y1:140.0,x2:280.0,y2:155.0},text:"□QRコード:",valign:"center"},
+          {type:"barcode",layout:{x1:285.0,y1:155.0,x2:335.0,y2:205.0},barcode_type:"qrcode",exp:"'RapidReport(ラピッドレポート)は、.NET(C#/VisualBasic)またはJavaから利用できる帳票ツールです。'",qr_correction_level:"L"},
+          {type:"barcode",layout:{x1:360.0,y1:155.0,x2:410.0,y2:205.0},barcode_type:"qrcode",exp:"'RapidReport(ラピッドレポート)は、.NET(C#/VisualBasic)またはJavaから利用できる帳票ツールです。'",qr_correction_level:"Q"},
+          {type:"barcode",layout:{x1:435.0,y1:155.0,x2:485.0,y2:205.0},barcode_type:"qrcode",exp:"'RapidReport(ラピッドレポート)は、.NET(C#/VisualBasic)またはJavaから利用できる帳票ツールです。'",qr_correction_level:"H"},
+          {type:"barcode",layout:{x1:0.0,y1:305.0,x2:85.0,y2:340.0},exp:"'9784810185508'",without_text:true},
+          {type:"text",layout:{x1:0.0,y1:290.0,x2:90.0,y2:305.0},text:"□EAN13(文字無):",valign:"center"},
+          {type:"text",layout:{x1:205.0,y1:290.0,x2:290.0,y2:305.0},text:"□EAN8(文字無):",valign:"center"},
+          {type:"barcode",layout:{x1:205.0,y1:305.0,x2:290.0,y2:340.0},barcode_type:"ean8",exp:"'12345670'",without_text:true},
+          {type:"text",layout:{x1:380.0,y1:290.0,x2:475.0,y2:305.0},text:"□CODE39(文字無):",valign:"center"},
+          {type:"barcode",layout:{x1:380.0,y1:305.0,x2:465.0,y2:340.0},barcode_type:"code39",exp:"'RREPORT123'",without_text:true},
+          {type:"text",layout:{x1:0.0,y1:355.0,x2:100.0,y2:370.0},text:"□CODABAR(文字無):",valign:"center"},
+          {type:"barcode",layout:{x1:0.0,y1:370.0,x2:85.0,y2:405.0},barcode_type:"codabar",exp:"'1234567890'",without_text:true},
+          {type:"text",layout:{x1:205.0,y1:355.0,x2:285.0,y2:370.0},text:"□ITF(文字無):",valign:"center"},
+          {type:"barcode",layout:{x1:205.0,y1:370.0,x2:290.0,y2:405.0},barcode_type:"itf",exp:"'12345678901231'",without_text:true},
+          {type:"barcode",layout:{x1:380.0,y1:370.0,x2:465.0,y2:405.0},barcode_type:"code128",exp:"'RapidReport'",without_text:true},
+          {type:"text",layout:{x1:380.0,y1:355.0,x2:480.0,y2:370.0},text:"□CODE128(文字無):",valign:"center"},
+          {type:"barcode",layout:{x1:0.0,y1:435.0,x2:170.0,y2:470.0},barcode_type:"gs1_128",exp:"'(01)14512345678903(17)061030(30)300{1}(10)001234'",without_text:true},
+          {type:"text",layout:{x1:0.0,y1:420.0,x2:100.0,y2:435.0},text:"□GS1-128(文字無):",valign:"center"},
+          {type:"text",layout:{x1:205.0,y1:420.0,x2:310.0,y2:435.0},text:"□CODE39(checksum):",valign:"center"},
+          {type:"barcode",layout:{x1:205.0,y1:435.0,x2:290.0,y2:470.0},barcode_type:"code39",exp:"'RREPORT123'",generate_checksum:true},
+          {type:"text",layout:{x1:380.0,y1:420.0,x2:490.0,y2:435.0},text:"□CODABAR(checksum):",valign:"center"},
+          {type:"barcode",layout:{x1:380.0,y1:435.0,x2:465.0,y2:470.0},barcode_type:"codabar",exp:"'1234567890'",generate_checksum:true},
+          {type:"barcode",layout:{x1:0.0,y1:570.0,x2:170.0,y2:630.0},barcode_type:"gs1_128",exp:"'(91)91234512345678901234567890101307030003150'",gs1_conveni:true},
+          {type:"text",layout:{x1:0.0,y1:555.0,x2:165.0,y2:570.0},text:"□GS1-128(コンビニバーコード):",valign:"center"},
+          {type:"barcode",layout:{x1:205.0,y1:570.0,x2:255.0,y2:620.0},barcode_type:"qrcode",exp:"'RapidReport(ラピッドレポート)は、.NET(C#/VisualBasic)またはJavaから利用できる帳票ツールです。'",qr_charset:"UTF-8"},
+          {type:"text",layout:{x1:205.0,y1:555.0,x2:320.0,y2:570.0},text:"□QRコード(UTF-8):",valign:"center"},
+          {type:"barcode",layout:{x1:285.0,y1:570.0,x2:335.0,y2:620.0},barcode_type:"qrcode",exp:"'RapidReport(ラピッドレポート)は、.NET(C#/VisualBasic)またはJavaから利用できる帳票ツールです。'",qr_charset:"UTF-8",qr_correction_level:"L"},
+          {type:"barcode",layout:{x1:360.0,y1:570.0,x2:410.0,y2:620.0},barcode_type:"qrcode",exp:"'RapidReport(ラピッドレポート)は、.NET(C#/VisualBasic)またはJavaから利用できる帳票ツールです。'",qr_charset:"UTF-8",qr_correction_level:"Q"},
+          {type:"barcode",layout:{x1:435.0,y1:570.0,x2:485.0,y2:620.0},barcode_type:"qrcode",exp:"'RapidReport(ラピッドレポート)は、.NET(C#/VisualBasic)またはJavaから利用できる帳票ツールです。'",qr_charset:"UTF-8",qr_correction_level:"H"},
+          {type:"text",layout:{x1:0.0,y1:485.0,x2:175.0,y2:500.0},text:"□CODABAR(ｽﾀｰﾄｽﾄｯﾌﾟ文字B):",valign:"center"},
+          {type:"barcode",layout:{x1:0.0,y1:500.0,x2:85.0,y2:535.0},barcode_type:"codabar",codabar_startstop_code:"B",codabar_startstop_show:true,exp:"'1234567890'",generate_checksum:true},
+          {type:"text",layout:{x1:205.0,y1:485.0,x2:380.0,y2:500.0},text:"□CODABAR(ｽﾀｰﾄｽﾄｯﾌﾟ文字C):",valign:"center"},
+          {type:"barcode",layout:{x1:205.0,y1:500.0,x2:290.0,y2:535.0},barcode_type:"codabar",codabar_startstop_code:"C",codabar_startstop_show:true,exp:"'1234567890'",generate_checksum:true},
+          {type:"text",layout:{x1:380.0,y1:485.0,x2:555.0,y2:500.0},text:"□CODABAR(ｽﾀｰﾄｽﾄｯﾌﾟ文字D):",valign:"center"},
+          {type:"barcode",layout:{x1:380.0,y1:500.0,x2:465.0,y2:535.0},barcode_type:"codabar",codabar_startstop_code:"D",codabar_startstop_show:true,exp:"'1234567890'",generate_checksum:true}
+        ]
+      }
+    ]
+  }
+}

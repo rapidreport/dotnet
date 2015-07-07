@@ -1,0 +1,163 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 30.0
+        },
+        caption: "日時",
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:5.0,x2:555.0,y2:25.0},formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"},text:"テスト日時：#{global.time} 言語：#{global.lang}",valign:"center"}
+        ]
+      },
+      {
+        size: {
+          initial: 240.0
+        },
+        caption: "直線",
+        elements: [
+          {type:"rect",layout:{x1:0.0,y1:0.0,x2:555.0,y2:230.0},line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:20.0,x2:75.0,y2:35.0},text:"□1px:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:30.0,x2:215.0,y2:30.0},line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:35.0,x2:75.0,y2:50.0},text:"□2px:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:45.0,x2:215.0,y2:45.0},line_width:2.0},
+          {type:"text",layout:{x1:0.0,y1:50.0,x2:75.0,y2:65.0},text:"□4px:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:60.0,x2:215.0,y2:60.0},line_width:4.0},
+          {type:"text",layout:{x1:0.0,y1:65.0,x2:75.0,y2:80.0},text:"□破線:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:75.0,x2:215.0,y2:75.0},line_style:"dash",line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:80.0,x2:75.0,y2:95.0},text:"□点線:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:90.0,x2:215.0,y2:90.0},line_style:"dot",line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:95.0,x2:75.0,y2:110.0},text:"□破線と点線:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:105.0,x2:215.0,y2:105.0},line_style:"dashdot",line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:110.0,x2:75.0,y2:125.0},text:"□パターン:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:120.0,x2:215.0,y2:120.0},line_pattern:"4,3,2,1",line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:125.0,x2:75.0,y2:140.0},text:"□二重線:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:135.0,x2:215.0,y2:135.0},doublet:true,line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:140.0,x2:75.0,y2:155.0},text:"□始点矢印:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:150.0,x2:215.0,y2:150.0},line_width:1.0,start_cap:"arrow"},
+          {type:"text",layout:{x1:0.0,y1:155.0,x2:75.0,y2:170.0},text:"□終点矢印:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:165.0,x2:215.0,y2:165.0},end_cap:"arrow",line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:170.0,x2:75.0,y2:185.0},text:"□red:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:180.0,x2:215.0,y2:180.0},color:"red",line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:185.0,x2:75.0,y2:200.0},text:"□green:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:195.0,x2:215.0,y2:195.0},color:"green",line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:200.0,x2:75.0,y2:215.0},text:"□#0000FF:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:210.0,x2:215.0,y2:210.0},color:"#0000FF",line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:215.0,x2:75.0,y2:230.0},text:"□#888888:",valign:"center"},
+          {type:"line",layout:{x1:85.0,y1:225.0,x2:215.0,y2:225.0},color:"#888888",line_width:1.0},
+          {type:"text",layout:{x1:230.0,y1:30.0,x2:265.0,y2:45.0},text:"□1px:",valign:"center"},
+          {type:"line",layout:{x1:240.0,y1:45.0,x2:280.0,y2:90.0},line_width:1.0},
+          {type:"text",layout:{x1:305.0,y1:30.0,x2:340.0,y2:45.0},text:"□2px:",valign:"center"},
+          {type:"line",layout:{x1:315.0,y1:45.0,x2:355.0,y2:90.0},line_width:2.0},
+          {type:"text",layout:{x1:365.0,y1:30.0,x2:400.0,y2:45.0},text:"□4px:",valign:"center"},
+          {type:"line",layout:{x1:375.0,y1:45.0,x2:415.0,y2:90.0},line_width:4.0},
+          {type:"text",layout:{x1:420.0,y1:30.0,x2:460.0,y2:45.0},text:"□破線:",valign:"center"},
+          {type:"line",layout:{x1:430.0,y1:45.0,x2:470.0,y2:90.0},line_style:"dash",line_width:1.0},
+          {type:"text",layout:{x1:485.0,y1:30.0,x2:525.0,y2:45.0},text:"□点線:",valign:"center"},
+          {type:"line",layout:{x1:495.0,y1:45.0,x2:535.0,y2:90.0},line_style:"dot",line_width:1.0},
+          {type:"text",layout:{x1:225.0,y1:95.0,x2:300.0,y2:110.0},text:"□破線と点線:",valign:"center"},
+          {type:"line",layout:{x1:235.0,y1:110.0,x2:275.0,y2:155.0},line_style:"dashdot",line_width:1.0},
+          {type:"text",layout:{x1:300.0,y1:95.0,x2:365.0,y2:110.0},text:"□パターン:",valign:"center"},
+          {type:"line",layout:{x1:310.0,y1:110.0,x2:350.0,y2:155.0},line_pattern:"4,3,2,1",line_width:1.0},
+          {type:"text",layout:{x1:365.0,y1:95.0,x2:415.0,y2:110.0},text:"□二重線:",valign:"center"},
+          {type:"line",layout:{x1:375.0,y1:110.0,x2:415.0,y2:155.0},doublet:true,line_width:1.0},
+          {type:"text",layout:{x1:420.0,y1:95.0,x2:480.0,y2:110.0},text:"□始点矢印:",valign:"center"},
+          {type:"line",layout:{x1:430.0,y1:110.0,x2:470.0,y2:155.0},line_width:1.0,start_cap:"arrow"},
+          {type:"text",layout:{x1:485.0,y1:95.0,x2:545.0,y2:110.0},text:"□終点矢印:",valign:"center"},
+          {type:"line",layout:{x1:495.0,y1:110.0,x2:535.0,y2:155.0},end_cap:"arrow",line_width:1.0},
+          {type:"text",layout:{x1:230.0,y1:160.0,x2:265.0,y2:175.0},text:"□red:",valign:"center"},
+          {type:"line",layout:{x1:240.0,y1:175.0,x2:280.0,y2:220.0},color:"red",line_width:1.0},
+          {type:"text",layout:{x1:300.0,y1:160.0,x2:345.0,y2:175.0},text:"□green:",valign:"center"},
+          {type:"line",layout:{x1:310.0,y1:175.0,x2:350.0,y2:220.0},color:"green",line_width:1.0},
+          {type:"text",layout:{x1:365.0,y1:160.0,x2:420.0,y2:175.0},text:"□#0000FF:",valign:"center"},
+          {type:"line",layout:{x1:375.0,y1:175.0,x2:415.0,y2:220.0},color:"#0000FF",line_width:1.0},
+          {type:"text",layout:{x1:425.0,y1:160.0,x2:500.0,y2:175.0},text:"□#888888:",valign:"center"},
+          {type:"line",layout:{x1:435.0,y1:175.0,x2:475.0,y2:220.0},color:"#888888",line_width:1.0},
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:555.0,y2:20.0},text:"直線",valign:"bottom"}
+        ]
+      },
+      {
+        size: {
+          initial: 220.0
+        },
+        caption: "四角形",
+        elements: [
+          {type:"rect",layout:{x1:0.0,y1:0.0,x2:555.0,y2:210.0}},
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:555.0,y2:20.0},text:"四角形",valign:"bottom"},
+          {type:"text",layout:{x1:0.0,y1:20.0,x2:75.0,y2:35.0},text:"□1px:",valign:"center"},
+          {type:"rect",layout:{x1:10.0,y1:40.0,x2:50.0,y2:70.0},line_width:1.0},
+          {type:"text",layout:{x1:75.0,y1:20.0,x2:150.0,y2:35.0},text:"□2px:",valign:"center"},
+          {type:"rect",layout:{x1:85.0,y1:40.0,x2:125.0,y2:70.0},line_width:2.0},
+          {type:"text",layout:{x1:150.0,y1:20.0,x2:225.0,y2:35.0},text:"□4px:",valign:"center"},
+          {type:"rect",layout:{x1:160.0,y1:40.0,x2:200.0,y2:70.0},line_width:4.0},
+          {type:"text",layout:{x1:225.0,y1:20.0,x2:300.0,y2:35.0},text:"□破線:",valign:"center"},
+          {type:"rect",layout:{x1:235.0,y1:40.0,x2:275.0,y2:70.0},line_style:"dash",line_width:1.0},
+          {type:"text",layout:{x1:300.0,y1:20.0,x2:375.0,y2:35.0},text:"□点線:",valign:"center"},
+          {type:"rect",layout:{x1:310.0,y1:40.0,x2:350.0,y2:70.0},line_style:"dot",line_width:1.0},
+          {type:"text",layout:{x1:375.0,y1:20.0,x2:450.0,y2:35.0},text:"□点線と破線:",valign:"center"},
+          {type:"rect",layout:{x1:385.0,y1:40.0,x2:425.0,y2:70.0},line_style:"dashdot",line_width:1.0},
+          {type:"text",layout:{x1:450.0,y1:20.0,x2:525.0,y2:35.0},text:"□パターン:",valign:"center"},
+          {type:"rect",layout:{x1:460.0,y1:40.0,x2:500.0,y2:70.0},line_pattern:"4,3,2,1"},
+          {type:"text",layout:{x1:0.0,y1:80.0,x2:75.0,y2:95.0},text:"□red:",valign:"center"},
+          {type:"rect",layout:{x1:10.0,y1:100.0,x2:50.0,y2:130.0},color:"red",line_width:1.0},
+          {type:"text",layout:{x1:75.0,y1:80.0,x2:150.0,y2:95.0},text:"□#00FF00:",valign:"center"},
+          {type:"rect",layout:{x1:85.0,y1:100.0,x2:125.0,y2:130.0},color:"#00FF00",line_width:1.0},
+          {type:"text",layout:{x1:150.0,y1:80.0,x2:225.0,y2:95.0},text:"□fill-blue:",valign:"center"},
+          {type:"rect",layout:{x1:160.0,y1:100.0,x2:200.0,y2:130.0},fill_color:"blue",line_width:1.0},
+          {type:"text",layout:{x1:225.0,y1:80.0,x2:310.0,y2:95.0},text:"□fill-#888888:",valign:"center"},
+          {type:"rect",layout:{x1:235.0,y1:100.0,x2:275.0,y2:130.0},fill_color:"#888888",line_width:1.0},
+          {type:"text",layout:{x1:310.0,y1:80.0,x2:385.0,y2:95.0},text:"□角丸(小):",valign:"center"},
+          {type:"rect",layout:{x1:320.0,y1:100.0,x2:360.0,y2:130.0},line_width:1.0,round:5.0},
+          {type:"text",layout:{x1:385.0,y1:80.0,x2:460.0,y2:95.0},text:"□角丸(大):",valign:"center"},
+          {type:"rect",layout:{x1:395.0,y1:100.0,x2:435.0,y2:130.0},line_width:1.0,round:15.0},
+          {type:"text",layout:{x1:0.0,y1:145.0,x2:85.0,y2:160.0},text:"□上枠線を隠す:",valign:"center"},
+          {type:"rect",layout:{x1:10.0,y1:165.0,x2:50.0,y2:195.0},hide_top:true,line_width:1.0},
+          {type:"text",layout:{x1:85.0,y1:145.0,x2:170.0,y2:160.0},text:"□左枠線を隠す:",valign:"center"},
+          {type:"rect",layout:{x1:95.0,y1:165.0,x2:135.0,y2:195.0},hide_left:true,line_width:1.0},
+          {type:"text",layout:{x1:170.0,y1:145.0,x2:255.0,y2:160.0},text:"□下枠線を隠す:",valign:"center"},
+          {type:"rect",layout:{x1:180.0,y1:165.0,x2:220.0,y2:195.0},hide_bottom:true,line_width:1.0},
+          {type:"text",layout:{x1:255.0,y1:145.0,x2:340.0,y2:160.0},text:"□右枠線を隠す:",valign:"center"},
+          {type:"rect",layout:{x1:265.0,y1:165.0,x2:305.0,y2:195.0},hide_right:true,line_width:1.0}
+        ]
+      },
+      {
+        size: {
+          initial: 150.0
+        },
+        caption: "円",
+        elements: [
+          {type:"rect",layout:{x1:0.0,y1:0.0,x2:555.0,y2:140.0}},
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:555.0,y2:20.0},text:"円",valign:"bottom"},
+          {type:"text",layout:{x1:0.0,y1:20.0,x2:75.0,y2:35.0},text:"□1px:",valign:"center"},
+          {type:"circle",layout:{x1:10.0,y1:40.0,x2:50.0,y2:70.0},line_width:1.0},
+          {type:"text",layout:{x1:75.0,y1:20.0,x2:150.0,y2:35.0},text:"□2px:",valign:"center"},
+          {type:"circle",layout:{x1:85.0,y1:40.0,x2:125.0,y2:70.0},line_width:2.0},
+          {type:"text",layout:{x1:150.0,y1:20.0,x2:225.0,y2:35.0},text:"□4px:",valign:"center"},
+          {type:"circle",layout:{x1:160.0,y1:40.0,x2:200.0,y2:70.0},line_width:4.0},
+          {type:"text",layout:{x1:225.0,y1:20.0,x2:300.0,y2:35.0},text:"□破線:",valign:"center"},
+          {type:"circle",layout:{x1:235.0,y1:40.0,x2:275.0,y2:70.0},line_style:"dash",line_width:1.0},
+          {type:"text",layout:{x1:300.0,y1:20.0,x2:375.0,y2:35.0},text:"□点線:",valign:"center"},
+          {type:"circle",layout:{x1:310.0,y1:40.0,x2:350.0,y2:70.0},line_style:"dot",line_width:1.0},
+          {type:"text",layout:{x1:375.0,y1:20.0,x2:450.0,y2:35.0},text:"□点線と破線:",valign:"center"},
+          {type:"circle",layout:{x1:385.0,y1:40.0,x2:425.0,y2:70.0},line_style:"dashdot",line_width:1.0},
+          {type:"text",layout:{x1:450.0,y1:20.0,x2:525.0,y2:35.0},text:"□パターン:",valign:"center"},
+          {type:"circle",layout:{x1:460.0,y1:40.0,x2:500.0,y2:70.0},line_pattern:"4,3,2,1"},
+          {type:"text",layout:{x1:0.0,y1:80.0,x2:75.0,y2:95.0},text:"□red:",valign:"center"},
+          {type:"circle",layout:{x1:10.0,y1:100.0,x2:50.0,y2:130.0},color:"red",line_width:1.0},
+          {type:"text",layout:{x1:75.0,y1:80.0,x2:150.0,y2:95.0},text:"□#00FF00:",valign:"center"},
+          {type:"circle",layout:{x1:85.0,y1:100.0,x2:125.0,y2:130.0},color:"#00FF00",line_width:1.0},
+          {type:"text",layout:{x1:150.0,y1:80.0,x2:225.0,y2:95.0},text:"□fill-blue:",valign:"center"},
+          {type:"circle",layout:{x1:160.0,y1:100.0,x2:200.0,y2:130.0},fill_color:"blue",line_width:1.0},
+          {type:"text",layout:{x1:225.0,y1:80.0,x2:310.0,y2:95.0},text:"□fill-#888888:",valign:"center"},
+          {type:"circle",layout:{x1:235.0,y1:100.0,x2:275.0,y2:130.0},fill_color:"#888888",line_width:1.0}
+        ]
+      }
+    ]
+  }
+}
