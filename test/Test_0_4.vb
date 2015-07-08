@@ -19,7 +19,6 @@ Imports jp.co.systembase.report.renderer.xlsx
 Imports jp.co.systembase.report.renderer.xlsx.imageloader
 
 Public Class Test_0_4
-    Implements ITest
 
     Public Overrides Function ToString() As String
         Return "0.4 画像"
@@ -34,7 +33,7 @@ Public Class Test_0_4
         Return ret
     End Function
 
-    Public Sub Run() Implements ITest.Run
+    Public Sub Run()
         Dim name As String = "test_0_4"
 
         Dim imageMap As ImageMap = Me._GetImageMap()

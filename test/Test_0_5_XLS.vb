@@ -10,13 +10,12 @@ Imports jp.co.systembase.report.data
 Imports jp.co.systembase.report.renderer.xls
 
 Public Class Test_0_5_XLS
-    Implements ITest
 
     Public Overrides Function ToString() As String
         Return "0.5 1000ページ(XLS)"
     End Function
 
-    Public Sub Run() Implements ITest.Run
+    Public Sub Run()
         Dim name As String = "test_0_5"
 
         Dim sw As New Stopwatch

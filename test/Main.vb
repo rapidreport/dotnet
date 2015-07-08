@@ -1,6 +1,6 @@
 ﻿Module Main
 
-    Public Tests As New List(Of ITest)
+    Public Tests As New List(Of Object)
 
     Public Sub Main()
         System.Windows.Forms.Application.EnableVisualStyles()
@@ -12,6 +12,7 @@
         Tests.Add(New Test_0_5_PDF)
         Tests.Add(New Test_0_5_XLS)
         Tests.Add(New Test_0_5_XLSX)
+        Tests.Add(New Test_4_17)
 
         Application.Run(New FmTest)
     End Sub

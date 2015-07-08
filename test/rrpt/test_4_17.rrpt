@@ -1,0 +1,25 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 802.0
+        },
+        elements: [
+          {type:"text",layout:{x1:15.0,y1:15.0,x2:215.0,y2:55.0},halign:"left",text:"テキスト",valign:"center"},
+          {type:"text",layout:{x1:15.0,y1:75.0,x2:215.0,y2:115.0},halign:"left",rect:{},text:"テキスト",valign:"center"},
+          {type:"text",layout:{x1:15.0,y1:135.0,x2:215.0,y2:175.0},halign:"left",rect:{fill_color:"yellow",round:10.0},text:"テキスト",valign:"center"},
+          {type:"field",layout:{x1:290.0,y1:15.0,x2:490.0,y2:55.0},exp:"'フィールド'",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:290.0,y1:75.0,x2:490.0,y2:115.0},exp:"'フィールド'",halign:"left",rect:{},valign:"center"},
+          {type:"field",layout:{x1:290.0,y1:135.0,x2:490.0,y2:175.0},exp:"'フィールド'",halign:"left",rect:{fill_color:"lightcyan",round:10.0},valign:"center"}
+        ]
+      }
+    ]
+  }
+}

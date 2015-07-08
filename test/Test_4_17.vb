@@ -12,14 +12,14 @@ Imports jp.co.systembase.report.renderer.pdf
 Imports jp.co.systembase.report.renderer.xls
 Imports jp.co.systembase.report.renderer.xlsx
 
-Public Class Test_0_3
+Public Class Test_4_17
 
     Public Overrides Function ToString() As String
-        Return "0.3 バーコード"
+        Return "4.17 rectプロパティ"
     End Function
 
     Public Sub Run()
-        Dim name As String = "test_0_3"
+        Dim name As String = "test_4_17"
 
         Dim report As New Report(Json.Read("rrpt\" & name & ".rrpt"))
         report.GlobalScope.Add("time", Now)

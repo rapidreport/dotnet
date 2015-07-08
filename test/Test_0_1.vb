@@ -13,13 +13,12 @@ Imports jp.co.systembase.report.renderer.xls
 Imports jp.co.systembase.report.renderer.xlsx
 
 Public Class Test_0_1
-    Implements ITest
 
     Public Overrides Function ToString() As String
         Return "0.1 基本機能"
     End Function
 
-    Public Sub Run() Implements ITest.Run
+    Public Sub Run()
         Dim name As String = "test_0_1"
 
         Dim report As New Report(Json.Read("rrpt\" & name & ".rrpt"))
