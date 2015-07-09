@@ -34,20 +34,20 @@ Public Class PrintPreviewSearchPanel
     End Sub
 
     Private Sub BtnNext_Click(sender As System.Object, e As System.EventArgs) Handles BtnNext.Click
-        Me._Search(True)
+        Me.Search(True)
     End Sub
 
     Private Sub BtnPrev_Click(sender As System.Object, e As System.EventArgs) Handles BtnPrev.Click
-        Me._Search(False)
+        Me.Search(False)
     End Sub
 
     Private Sub TxtKeyword_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtKeyword.KeyDown
         Select Case e.KeyCode
             Case Keys.Enter
                 If e.Modifiers = Keys.Shift Then
-                    Me._Search(False)
+                    Me.Search(False)
                 Else
-                    Me._Search(True)
+                    Me.Search(True)
                 End If
         End Select
     End Sub
@@ -58,7 +58,7 @@ Public Class PrintPreviewSearchPanel
         End If
     End Sub
 
-    Private Sub _Search(forward As Boolean)
+    Public Sub Search(forward As Boolean)
         Me.TxtKeyword.Focus()
         Dim k As String = Me.TxtKeyword.Text
         If k IsNot Nothing Then
