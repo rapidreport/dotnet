@@ -41,12 +41,10 @@
     End Sub
 
     Private Sub BtnZoomFit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnZoomFit.Click
-        Me.PrintPreview.ZoomFit()
         Me.AutoFit = Not Me.AutoFit
     End Sub
 
     Private Sub BtnZoomFitWidth_Click(sender As System.Object, e As System.EventArgs) Handles BtnZoomFitWidth.Click
-        Me.PrintPreview.ZoomFitWidth()
         Me.AutoFitWidth = Not Me.AutoFitWidth
     End Sub
 
@@ -105,6 +103,7 @@
             Me._AutoFit = value
             If Me.AutoFit Then
                 Me.BtnZoomFit.BackColor = SystemColors.ControlDark
+                Me.PrintPreview.ZoomFit()
             Else
                 Me.BtnZoomFit.BackColor = SystemColors.Control
             End If
@@ -123,6 +122,7 @@
             Me._AutoFitWidth = value
             If Me.AutoFitWidth Then
                 Me.BtnZoomFitWidth.BackColor = SystemColors.ControlDark
+                Me.PrintPreview.ZoomFitWidth()
             Else
                 Me.BtnZoomFitWidth.BackColor = SystemColors.Control
             End If

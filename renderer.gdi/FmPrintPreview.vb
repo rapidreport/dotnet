@@ -17,10 +17,8 @@
             Me.PrintPreviewZoom.Init(Me.PrintPreview)
             Me.PrintPreviewSearch.Init(Me.PrintPreview, Me.PrintPreviewSearchPanel)
             If Me.StartUpZoomFit Then
-                Me.PrintPreview.ZoomFit()
                 Me.PrintPreviewZoom.AutoFit = True
             ElseIf Me.StartUpZoomFitWidth Then
-                Me.PrintPreview.ZoomFitWidth()
                 Me.PrintPreviewZoom.AutoFitWidth = True
             End If
         End Using
