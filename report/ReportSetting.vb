@@ -85,6 +85,7 @@ Public Class ReportSetting
         Me.OperatorMap.Add("wlen", New WStringLenOperator)
         Me.OperatorMap.Add("digit", New DigitOperator)
         Me.OperatorMap.Add("wsplit", New WSplitOperator)
+        Me.OperatorMap.Add("trim", New TrimOperator)
         Me.DefaultElementPreprocessor = New DefaultPreprocessor
         Me.ElementPreprocessorMap.Add("subpage", New SubPagePreprocessor)
         Me.DefaultSeachObject = New DefaultSearchObject

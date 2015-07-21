@@ -13,6 +13,7 @@
         Tests.Add(New Test_0_5_XLS)
         Tests.Add(New Test_0_5_XLSX)
         Tests.Add(New Test_4_17)
+        Tests.Add(New Test_4_18_Trim)
 
         Application.Run(New FmTest)
     End Sub
