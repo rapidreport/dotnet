@@ -30,7 +30,7 @@ Namespace expression
             If source Is Nothing Then
                 Return Nothing
             End If
-            Dim _source As String = source.Trim
+            Dim _source As String = source.Replace(vbCrLf, " ").Trim
             If _source.Length = 0 Then
                 Return Nothing
             End If

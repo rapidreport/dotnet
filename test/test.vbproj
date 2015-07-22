@@ -140,6 +140,7 @@
     <Compile Include="Test_0_5_XLSX.vb" />
     <Compile Include="Test_4_17.vb" />
     <Compile Include="Test_4_18_Trim.vb" />
+    <Compile Include="Test_4_18_mexp.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -178,6 +179,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_17.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_18_mexp.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_18_trim.rrpt">

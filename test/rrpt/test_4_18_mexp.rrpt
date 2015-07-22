@@ -1,0 +1,23 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    detail: true,
+    contents: [
+      {
+        size: {
+          initial: 25.0
+        },
+        aggregate_src: true,
+        elements: [
+          {type:"field",layout:{x1:0.0,y1:0.0,x2:100.0,y2:25.0},exp:"(nvl\r\n  (if (= .op 'add') (+ .v1 .v2))\r\n  (if (= .op 'sub') (- .v1 .v2))\r\n  (if (= .op 'mul') (* .v1 .v2)))",halign:"left",valign:"center"},
+          {type:"line",layout:{x1:0.0,y1:25.0,x2:555.0,y2:25.0}}
+        ]
+      }
+    ]
+  }
+}
