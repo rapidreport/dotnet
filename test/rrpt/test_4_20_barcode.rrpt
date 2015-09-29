@@ -1,0 +1,29 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 802.0
+        },
+        elements: [
+          {type:"barcode",layout:{x1:15.0,y1:45.0,x2:205.0,y2:95.0},barcode_type:"gs1_128",exp:"'(99)1234'",vertical:"none"},
+          {type:"barcode",layout:{x1:15.0,y1:95.0,x2:205.0,y2:145.0},barcode_type:"gs1_128",exp:"'(99)12345678'",vertical:"none"},
+          {type:"barcode",layout:{x1:15.0,y1:145.0,x2:205.0,y2:195.0},barcode_type:"gs1_128",exp:"'(99)123456789012'",vertical:"none"},
+          {type:"barcode",layout:{x1:15.0,y1:195.0,x2:205.0,y2:245.0},barcode_type:"gs1_128",exp:"'(99)1234567890123456'",vertical:"none"},
+          {type:"barcode",layout:{x1:15.0,y1:245.0,x2:205.0,y2:295.0},barcode_type:"gs1_128",exp:"'(99)12345678901234567890'",vertical:"none"},
+          {type:"barcode",layout:{x1:260.0,y1:45.0,x2:450.0,y2:95.0},barcode_type:"code128",exp:"'(99)1234'",vertical:"none"},
+          {type:"barcode",layout:{x1:260.0,y1:95.0,x2:450.0,y2:145.0},barcode_type:"code128",exp:"'(99)12345678'",vertical:"none"},
+          {type:"barcode",layout:{x1:260.0,y1:145.0,x2:450.0,y2:195.0},barcode_type:"code128",exp:"'(99)123456789012'",vertical:"none"},
+          {type:"barcode",layout:{x1:260.0,y1:195.0,x2:450.0,y2:245.0},barcode_type:"code128",exp:"'(99)1234567890123456'",vertical:"none"},
+          {type:"barcode",layout:{x1:260.0,y1:245.0,x2:450.0,y2:295.0},barcode_type:"code128",exp:"'(99)12345678901234567890'",vertical:"none"}
+        ]
+      }
+    ]
+  }
+}

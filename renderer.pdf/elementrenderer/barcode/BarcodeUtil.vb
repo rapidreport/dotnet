@@ -9,7 +9,7 @@ Namespace barcode
             tmp.BeginText()
             Dim fs As Single = GetFontSize(tmp, text)
             SetFont(tmp, fs)
-            tmp.SetTextMatrix((tmp.Width - text.Length * fs / 2) / 2, tmp.Height - (tmp.Height * 0.7 + fs))
+            tmp.SetTextMatrix((tmp.Width - (text.Length + 2) * fs / 2) / 2, tmp.Height - (tmp.Height * 0.7 + fs))
             tmp.ShowText(text)
             tmp.EndText()
         End Sub

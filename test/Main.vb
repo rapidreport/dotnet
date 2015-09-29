@@ -15,6 +15,7 @@
         Tests.Add(New Test_4_17)
         Tests.Add(New Test_4_18_Trim)
         Tests.Add(New Test_4_18_MExp)
+        Tests.Add(New Test_4_20_barcode)
 
         Application.Run(New FmTest)
     End Sub
