@@ -7,7 +7,7 @@ Public Module TextFormatterUtil
     Public Function Format(ByVal v As Object, ByVal design As ElementDesign) As String
         Dim _v As Object = ReportUtil.Regularize(v)
         If _v Is Nothing Then
-            Return ""
+            Return Nothing
         ElseIf TypeOf v Is Boolean Then
             If v Then
                 Return "true"

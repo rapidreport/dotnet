@@ -4,22 +4,17 @@ Imports jp.co.systembase.report
 Imports jp.co.systembase.report.data
 Imports jp.co.systembase.report.renderer.pdf
 
-Public Class Test_4_20_barcode
+Public Class Test_4_20_FormatNull
 
     Public Overrides Function ToString() As String
-        Return "4.20 バーコード"
+        Return "4.20 Null値に対するFormat"
     End Function
 
     Public Sub Run()
-        Dim name As String = "test_4_20_barcode"
-
-        Dim sw As New Stopwatch
-        sw.Start()
+        Dim name As String = "test_4_20_format_null"
 
         Dim report As New Report(Json.Read("rrpt\" & name & ".rrpt"))
-        report.GlobalScope.Add("time", Now)
-        report.GlobalScope.Add("lang", "vb")
-        report.Fill(DummyDataSource.GetInstance)
+        report.Fill(New ReportDataSource(GetDataTable))
 
         Dim pages As ReportPages = report.GetPages()
 
@@ -28,9 +23,16 @@ Public Class Test_4_20_barcode
             pages.Render(renderer)
         End Using
 
-        sw.Stop()
-        MessageBox.Show(sw.ElapsedMilliseconds)
-
     End Sub
 
+    Private Function GetDataTable() As DataTable
+        Dim ret As New DataTable()
+        ret.Columns.Add("code", GetType(String))
+        ret.Rows.Add("11111")
+        ret.Rows.Add("22222")
+        ret.Rows.Add("33333")
+        Return ret
+    End Function
+
 End Class
+
