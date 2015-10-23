@@ -6,6 +6,16 @@
         End Sub
 
         Public Sub New(ByVal contentDesign As ContentDesign)
+            If contentDesign.MergeContentId IsNot Nothing Then
+                If Report.SharedContents.ContainsKey(contentDesign.MergeContentId) Then
+                    Dim cd As ContentDesign = Report.SharedContents(contentDesign.MergeContentId)
+                    If cd.Desc.ContainsKey("elements") Then
+                        For Each e As Hashtable In cd.Desc("elements")
+                            Me.Add(New ElementDesign(e))
+                        Next
+                    End If
+                End If
+            End If
             If contentDesign.Desc.ContainsKey("elements") Then
                 For Each e As Hashtable In contentDesign.Desc("elements")
                     Me.Add(New ElementDesign(e))

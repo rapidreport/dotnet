@@ -155,13 +155,9 @@ Namespace component
         Public Function FindContentDesign(ByVal id As String) As ContentDesign
             If Me.ContentDesigns IsNot Nothing Then
                 For Each cd As ContentDesign In Me.ContentDesigns
-                    If id.Equals(cd.Id) Then
-                        Return cd
-                    ElseIf cd.GroupDesign IsNot Nothing Then
-                        Dim ret As ContentDesign = cd.GroupDesign.FindContentDesign(id)
-                        If ret IsNot Nothing Then
-                            Return ret
-                        End If
+                    Dim ret As ContentDesign = cd.FindContentDesign(id)
+                    If ret IsNot Nothing Then
+                        Return ret
                     End If
                 Next
             End If
@@ -173,11 +169,9 @@ Namespace component
                 Return Me
             ElseIf Me.ContentDesigns IsNot Nothing Then
                 For Each cd As ContentDesign In Me.ContentDesigns
-                    If cd.GroupDesign IsNot Nothing Then
-                        Dim ret As GroupDesign = cd.GroupDesign.FindGroupDesign(id)
-                        If ret IsNot Nothing Then
-                            Return ret
-                        End If
+                    Dim ret As GroupDesign = cd.FindGroupDesign(id)
+                    If ret IsNot Nothing Then
+                        Return ret
                     End If
                 Next
             End If

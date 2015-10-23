@@ -18,7 +18,14 @@ Public Class Test_4_20_MergeContent
     Public Sub Run()
         Dim name As String = "test_4_20_merge_content"
 
+        Dim sharedReport As New ReportDesign(Json.Read("rrpt\test_4_20_shared.rrpt"))
+        jp.co.systembase.report.Report.AddSharedContent("company_info", sharedReport)
+
         Dim report As New Report(Json.Read("rrpt\" & name & ".rrpt"))
+
+        report.GlobalScope.Add("company_name", "株式会社ラピッドレポート")
+        report.GlobalScope.Add("tel", "0000-11-2222")
+
         report.Fill(New ReportDataSource(GetDataTable))
 
         Dim pages As ReportPages = report.GetPages()
@@ -53,6 +60,7 @@ Public Class Test_4_20_MergeContent
         Dim ret As New DataTable
         ret.Columns.Add("mitsumoriNo", GetType(Decimal))
         ret.Columns.Add("mitsumoriDate", GetType(Date))
+        ret.Columns.Add("tanto", GetType(String))
         ret.Columns.Add("tokuisaki1", GetType(String))
         ret.Columns.Add("tokuisaki2", GetType(String))
         ret.Columns.Add("hinmei", GetType(String))
@@ -61,16 +69,16 @@ Public Class Test_4_20_MergeContent
         ret.Columns.Add("tani", GetType(String))
         ret.Columns.Add("tanka", GetType(Decimal))
         ret.Rows.Add(101, DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing), _
-            "株式会社 岩手商事", "北上支社", _
+            "営業一部 佐藤太郎", "株式会社 岩手商事", "北上支社", _
             "ノートパソコン", 1, 10, "台", 70000)
         ret.Rows.Add(101, DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing), _
-            "株式会社 岩手商事", "北上支社", _
+            "営業一部 佐藤太郎", "株式会社 岩手商事", "北上支社", _
             "モニター", 1, 10, "台", 20000)
         ret.Rows.Add(101, DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing), _
-            "株式会社 岩手商事", "北上支社", _
+            "営業一部 佐藤太郎", "株式会社 岩手商事", "北上支社", _
             "プリンタ", 1, 2, "台", 25000)
         ret.Rows.Add(101, DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing), _
-            "株式会社 岩手商事", "北上支社", _
+            "営業一部 佐藤太郎", "株式会社 岩手商事", "北上支社", _
             "トナーカートリッジ", 2, 2, "本", 5000)
         Return ret
     End Function

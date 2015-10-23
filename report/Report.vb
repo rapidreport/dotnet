@@ -66,6 +66,8 @@ Public Class Report
         Public Shared _4_15_PreviewSearchDisabled As Boolean = False
     End Class
 
+    Public Shared SharedContents As New Dictionary(Of String, ContentDesign)
+
     Public Design As ReportDesign
     Public Customizer As IReportCustomizer
     Public Data As ReportData = Nothing
@@ -196,6 +198,13 @@ Public Class Report
         End If
         Dim pages As ReportPages = Me._SubPageMap(key)
         pages(index).RenderSubPage(renderer, pages, region)
+    End Sub
+
+    Public Shared Sub AddSharedContent(id As String, reportDesign As ReportDesign)
+        Dim cd As ContentDesign = reportDesign.FindContentDesign(id)
+        If cd IsNot Nothing Then
+            SharedContents.Add(id, cd)
+        End If
     End Sub
 
 End Class

@@ -15,6 +15,7 @@
         Public Weight As Integer = 0
         Public Variables As Dictionary(Of String, String) = Nothing
         Public VariablesKeyList As List(Of String) = Nothing
+        Public MergeContentId As String = Nothing
         Public GroupDesign As GroupDesign = Nothing
         Public SubContentDesigns As List(Of ContentDesign) = Nothing
 
@@ -72,6 +73,7 @@
                 Me.Variables = Nothing
                 Me.VariablesKeyList = Nothing
             End If
+            Me.MergeContentId = Me.Desc("merge_content_id")
         End Sub
 
         Public Sub LoadSubDesc()
@@ -108,6 +110,35 @@
 
         Public Function GetReportDesign() As ReportDesign
             Return Me.ParentGroupDesign.ReportDesign
+        End Function
+
+        Public Function FindContentDesign(ByVal id As String) As ContentDesign
+            If id.Equals(Me.Id) Then
+                Return Me
+            ElseIf Me.GroupDesign IsNot Nothing Then
+                Dim ret As ContentDesign = Me.GroupDesign.FindContentDesign(id)
+                If ret IsNot Nothing Then
+                    Return ret
+                ElseIf Me.SubContentDesigns IsNot Nothing Then
+                    For Each cd As ContentDesign In Me.SubContentDesigns
+                        ret = cd.FindContentDesign(id)
+                        If ret IsNot Nothing Then
+                            Return ret
+                        End If
+                    Next
+                End If
+            End If
+            Return Nothing
+        End Function
+
+        Public Function FindGroupDesign(ByVal id As String) As GroupDesign
+            If Me.GroupDesign IsNot Nothing Then
+                Dim ret As GroupDesign = Me.GroupDesign.FindGroupDesign(id)
+                If ret IsNot Nothing Then
+                    Return ret
+                End If
+            End If
+            Return Nothing
         End Function
 
     End Class

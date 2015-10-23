@@ -199,6 +199,9 @@
     <None Include="rrpt\test_4_20_merge_content.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="rrpt\test_4_20_shared.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="img\logo.bmp">
