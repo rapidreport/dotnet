@@ -17,6 +17,7 @@
         Tests.Add(New Test_4_18_MExp)
         Tests.Add(New Test_4_20_Code128)
         Tests.Add(New Test_4_20_FormatNull)
+        Tests.Add(New Test_4_20_MergeContent)
 
         Application.Run(New FmTest)
     End Sub

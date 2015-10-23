@@ -143,6 +143,7 @@
     <Compile Include="Test_4_18_mexp.vb" />
     <Compile Include="Test_4_20_FormatNull.vb" />
     <Compile Include="Test_4_20_Code128.vb" />
+    <Compile Include="Test_4_20_MergeContent.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -193,6 +194,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_20_code128.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_20_merge_content.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
