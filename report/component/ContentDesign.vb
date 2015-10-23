@@ -6,6 +6,7 @@
         Public Caption As String = Nothing
         Public Id As String = Nothing
         Public Size As ContentSizeDesign = Nothing
+        Public Layout As SubContentLayoutDesign = Nothing
         Public AggregateSrc As Boolean = False
         Public EveryPage As Boolean = False
         Public ExistenceCond As String = Nothing
@@ -44,6 +45,11 @@
                 Me.Size = New ContentSizeDesign(Me.Desc("size"))
             Else
                 Me.Size = New ContentSizeDesign
+            End If
+            If Me.Desc.Contains("layout") Then
+                Me.Layout = New SubContentLayoutDesign(Me.Desc("layout"))
+            Else
+                Me.Layout = New SubContentLayoutDesign()
             End If
             Me.AggregateSrc = Me.Desc("aggregate_src")
             Me.EveryPage = Me.Desc("every_page")

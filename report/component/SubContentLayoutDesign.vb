@@ -15,39 +15,43 @@
         Public RevX2 As Boolean
         Public RevY2 As Boolean
 
-        Public Sub New(ByVal desc As ElementDesign)
-            If Not desc.IsNull("x1") Then
-                Me.X1 = desc.Get("x1")
+        Public Sub New()
+            Me.new(New Hashtable)
+        End Sub
+
+        Public Sub New(ByVal desc As Hashtable)
+            If desc.ContainsKey("x1") Then
+                Me.X1 = desc("x1")
                 Me.SpecX1 = True
             Else
                 Me.X1 = 0
                 Me.SpecX1 = False
             End If
-            If Not desc.IsNull("y1") Then
-                Me.Y1 = desc.Get("y1")
+            If desc.ContainsKey("y1") Then
+                Me.Y1 = desc("y1")
                 Me.SpecY1 = True
             Else
                 Me.Y1 = 0
                 Me.SpecY1 = False
             End If
-            If Not desc.IsNull("x2") Then
-                Me.X2 = desc.Get("x2")
+            If desc.ContainsKey("x2") Then
+                Me.X2 = desc("x2")
                 Me.SpecX2 = True
             Else
                 Me.X2 = 0
                 Me.SpecX2 = False
             End If
-            If Not desc.IsNull("y2") Then
-                Me.Y2 = desc.Get("y2")
+            If desc.ContainsKey("y2") Then
+                Me.Y2 = desc("y2")
                 Me.SpecY2 = True
             Else
                 Me.Y2 = 0
                 Me.SpecY2 = False
             End If
-            Me.RevX1 = desc.Get("rev_x1")
-            Me.RevY1 = desc.Get("rev_y1")
-            Me.RevX2 = desc.Get("rev_x2")
-            Me.RevY2 = desc.Get("rev_y2")
+            Me.RevX1 = desc("rev_x1")
+            Me.RevY1 = desc("rev_y1")
+            Me.RevX2 = desc("rev_x2")
+            Me.RevY2 = desc("rev_y2")
         End Sub
 
         Public Function GetRegion(ByVal parentRegion As Region) As Region

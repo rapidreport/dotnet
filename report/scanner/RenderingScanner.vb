@@ -79,7 +79,8 @@ Namespace scanner
                     If c.Groups IsNot Nothing Then
                         gr = New GroupRange(c.Groups)
                     End If
-                    c.Scan(Me, gr, paperRegion, parentRegion, _region, contentState, evaluator)
+                    c.Scan(Me, gr, paperRegion, parentRegion, _
+                           c.Design.Layout.GetRegion(_region), contentState, evaluator)
                 Next
             End If
         End Sub
