@@ -203,7 +203,11 @@ Public Class Report
     Public Shared Sub AddSharedContent(id As String, reportDesign As ReportDesign)
         Dim cd As ContentDesign = reportDesign.FindContentDesign(id)
         If cd IsNot Nothing Then
-            SharedContents.Add(id, cd)
+            If Not SharedContents.ContainsKey(id) Then
+                SharedContents.Add(id, cd)
+            Else
+                SharedContents(id) = cd
+            End If
         End If
     End Sub
 
