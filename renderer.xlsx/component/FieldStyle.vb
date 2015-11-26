@@ -52,6 +52,8 @@ Namespace component
             If Me.TextDesign.XlsFormat IsNot Nothing Then
                 Dim dataFormat As Short = renderer.Workbook.CreateDataFormat().GetFormat(Me.TextDesign.XlsFormat)
                 cellStyle.DataFormat = dataFormat
+            Else
+                cellStyle.DataFormat = &H31
             End If
         End Sub
 
