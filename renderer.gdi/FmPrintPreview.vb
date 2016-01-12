@@ -12,6 +12,9 @@
     End Sub
 
     Private Sub FmPrintPreview_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+        If Me.PrintPreview.Printer Is Nothing Then
+            Exit Sub
+        End If
         Using Me.PrintPreview.RenderBlock
             Me.PrintPreviewPage.Init(Me.PrintPreview)
             Me.PrintPreviewZoom.Init(Me.PrintPreview)
