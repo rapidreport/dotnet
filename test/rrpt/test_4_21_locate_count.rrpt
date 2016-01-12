@@ -1,0 +1,75 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 50.0
+        },
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:555.0,y2:20.0},formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"},halign:"left",text:"出力日時：#{current_time}",valign:"center"}
+        ]
+      },
+      {
+        size: {
+          initial: 350.0
+        },
+        group: {
+          detail: true,
+          layout: {
+            size: 100.0,
+            locates: [
+              {count:5.0,x:0.0,y:0.0},
+              {count:5.0,x:200.0,y:30.0}
+            ]
+          },
+          contents: [
+            {
+              size: {
+                initial: 20.0
+              },
+              aggregate_src: true,
+              elements: [
+                {type:"field",layout:{x1:0.0,y1:0.0,x2:100.0,y2:20.0},exp:".no",halign:"left",rect:{},valign:"center"}
+              ]
+            }
+          ]
+        }
+      },
+      {
+        size: {
+          initial: 350.0
+        },
+        aggregate_src: true,
+        group: {
+          detail: true,
+          layout: {
+            size: 100.0,
+            locates: [
+              {count:3.0,x:10.0,y:10.0},
+              {count:3.0,x:150.0,y:20.0},
+              {count:3.0,x:300.0,y:30.0}
+            ],
+            blank: true
+          },
+          contents: [
+            {
+              size: {
+                initial: 20.0
+              },
+              aggregate_src: true,
+              elements: [
+                {type:"field",layout:{x1:0.0,y1:0.0,x2:100.0,y2:20.0},exp:".no",halign:"left",rect:{},valign:"center"}
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

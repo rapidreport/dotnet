@@ -4,10 +4,12 @@
 
         Public X As Single
         Public Y As Single
+        Public Count As Integer
 
         Public Sub New(ByVal desc As Hashtable)
             Me.X = desc("x")
             Me.Y = desc("y")
+            Me.Count = desc("count")
         End Sub
 
         Public Function GetRegion(ByVal parentRegion As Region) As Region

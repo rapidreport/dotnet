@@ -89,6 +89,7 @@
     <Compile Include="elementpreprocessor\DefaultPreprocessor.vb" />
     <Compile Include="elementpreprocessor\SubPagePreprocessor.vb" />
     <Compile Include="elementpreprocessor\IElementPreprocessor.vb" />
+    <Compile Include="method\CurrentTimeMethod.vb" />
     <Compile Include="operator\TrimOperator.vb" />
     <Compile Include="search\searchobject\DefaultSearchObject.vb" />
     <Compile Include="search\searchobject\FieldSearchObject.vb" />

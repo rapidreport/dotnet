@@ -46,7 +46,11 @@
 
         Public Function GetCount() As Integer
             If Me.IsLocateEnabled Then
-                Return Me.Locates.Count
+                Dim ret As Integer = 0
+                For Each l As GroupLocateDesign In Me.Locates
+                    ret += Math.Max(1, l.Count)
+                Next
+                Return ret
             Else
                 Return Me.MaxCount
             End If
@@ -61,8 +65,32 @@
           ByVal lastRegion As Region, _
           ByVal i As Integer) As Region
             If Me.IsLocateEnabled Then
-                Return Me.Locates(i).GetRegion(parentRegion)
-            Else
+                Dim _i As Integer = i
+                For Each l As GroupLocateDesign In Me.Locates
+                    If _i = 0 OrElse lastRegion Is Nothing Then
+                        Return l.GetRegion(parentRegion)
+                    Else
+                        _i -= Math.Max(1, l.Count)
+                        If _i < 0 Then
+                            Dim ret As New Region
+                            Select Case Me.Direction
+                                Case Report.EDirection.VERTICAL
+                                    ret.Top = lastRegion.Bottom
+                                    ret.Left = lastRegion.Left
+                                Case Report.EDirection.HORIZONTAL
+                                    ret.Top = lastRegion.Top
+                                    ret.Left = lastRegion.Right
+                            End Select
+                            ret.Bottom = lastRegion.Bottom
+                            ret.Right = lastRegion.Right
+                            ret.MaxBottom = lastRegion.MaxBottom
+                            ret.MaxRight = lastRegion.MaxRight
+                            Return ret
+                        End If
+                    End If
+                Next
+            End If
+            With Nothing
                 Dim ret As New Region
                 ret.Top = parentRegion.Top + Me.Y
                 ret.Left = parentRegion.Left + Me.X
@@ -79,7 +107,7 @@
                     End Select
                 End If
                 Return ret
-            End If
+            End With
         End Function
 
         Public Function GetGroupInitialRegion(ByVal parentRegion As Region) As Region

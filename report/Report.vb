@@ -78,6 +78,7 @@ Public Class Report
     Public Filled As Boolean = False
     Public InDesigner As Boolean = False
     Public CustomFieldStack As New CustomField.Stack
+    Public CurrentTime As Date = Now
 
     Public WrapperDataSourceMap As New Dictionary(Of GroupDesign, WrapperDataSource)
 

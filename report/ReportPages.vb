@@ -12,7 +12,7 @@ Public Class ReportPages
 
     Public Sub Render(ByVal renderer As IRenderer)
         If Me.Count = 0 Then
-            Throw New EvalException("ページがありません")
+            Throw New RenderException("ページがありません")
         End If
         Try
             Me.SetUpCountingPages()
