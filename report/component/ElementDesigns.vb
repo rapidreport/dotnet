@@ -11,6 +11,9 @@
                     Dim cd As ContentDesign = Report.SharedContents(contentDesign.MergeContentId)
                     If cd.Desc.ContainsKey("elements") Then
                         For Each e As Hashtable In cd.Desc("elements")
+                            If e.ContainsKey("id") AndAlso "__trial__".Equals(e("id")) Then
+                                Continue For
+                            End If
                             Me.Add(New ElementDesign(e))
                         Next
                     End If
