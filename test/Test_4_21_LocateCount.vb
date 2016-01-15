@@ -52,15 +52,15 @@ Public Class Test_4_21_LocateCount
 
     Private Function getDataTable() As DataTable
         Dim ret As New DataTable
-        ret.Columns.Add("no", GetType(Decimal))
-        ret.Rows.Add(1)
-        ret.Rows.Add(2)
-        ret.Rows.Add(3)
-        ret.Rows.Add(4)
-        ret.Rows.Add(5)
-        ret.Rows.Add(6)
-        ret.Rows.Add(7)
-        ret.Rows.Add(8)
+        ret.Columns.Add("no", GetType(String))
+        ret.Rows.Add("010")
+        ret.Rows.Add("020")
+        ret.Rows.Add("030")
+        ret.Rows.Add("040")
+        ret.Rows.Add("050")
+        ret.Rows.Add("060")
+        ret.Rows.Add("060")
+        ret.Rows.Add("070")
         Return ret
     End Function
 

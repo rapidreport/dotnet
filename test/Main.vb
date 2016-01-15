@@ -19,6 +19,7 @@
         Tests.Add(New Test_4_20_FormatNull)
         Tests.Add(New Test_4_20_MergeContent)
         Tests.Add(New Test_4_21_LocateCount)
+        Tests.Add(New Test_4_21_MergeContentLogo)
 
         Application.Run(New FmTest)
     End Sub

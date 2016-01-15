@@ -145,6 +145,7 @@
     <Compile Include="Test_4_20_Code128.vb" />
     <Compile Include="Test_4_20_MergeContent.vb" />
     <Compile Include="Test_4_21_LocateCount.vb" />
+    <Compile Include="Test_4_21_MergeContentLogo.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -204,6 +205,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_21_locate_count.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_21_merge_content_logo.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_21_shared_logo.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
