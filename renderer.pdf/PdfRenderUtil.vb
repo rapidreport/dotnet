@@ -13,6 +13,7 @@ Public Module PdfRenderUtil
     Private Const VERTICAL_ROTATE_CHARS As String = "～…‥｜ーｰ(){}[]<>（）｛｝「」＜＞"
     Private Const VERTICAL_SHIFT_CHARS As String = "。、"
 
+    <Obsolete("PdfTextクラスを利用して下さい。")> _
     Public Sub DrawText( _
       ByVal renderer As PdfRenderer, _
       ByVal region As Region, _

@@ -9,6 +9,7 @@ Public Module GdiRenderUtil
 
     Private Const VERTICAL_ROTATE_CHARS As String = "～…‥｜ーｰ(){}[]<>（）｛｝「」＜＞。、"
 
+    <Obsolete("GdiTextクラスを利用して下さい。")> _
     Public Sub DrawText( _
       ByVal g As Graphics, _
       ByVal region As Region, _

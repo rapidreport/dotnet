@@ -81,6 +81,7 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GdiText.vb" />
     <Compile Include="FmSearchNotFound.Designer.vb">
       <DependentUpon>FmSearchNotFound.vb</DependentUpon>
     </Compile>

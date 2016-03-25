@@ -37,12 +37,13 @@ Namespace elementrenderer
                 Exit Sub
             End If
             Dim _region As Region = region.ToPointScale(reportDesign)
-            GdiRenderUtil.DrawText( _
+            Dim gdiText As New GdiText( _
               env.Graphics, _
               _region, _
               env.Setting, _
               New TextDesign(reportDesign, design), _
               text)
+            gdiText.Draw()
         End Sub
 
     End Class
