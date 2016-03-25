@@ -36,11 +36,12 @@ Namespace elementrenderer
                 text = text.Replace("\", ChrW(&HA5))
             End If
             Dim _region As Region = region.ToPointScale(reportDesign)
-            PdfRenderUtil.DrawText( _
+            Dim pdfText As New PdfText(
               renderer, _
               _region, _
               New TextDesign(reportDesign, design), _
               text)
+            pdfText.Draw()
         End Sub
     End Class
 

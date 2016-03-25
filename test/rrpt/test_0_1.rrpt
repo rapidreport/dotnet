@@ -90,7 +90,7 @@
           {type:"field",layout:{x1:260.0,y1:40.0,x2:360.0,y2:70.0},exp:"'RapidReport'",font:{},formatter:{format:"#,##0",type:"default"},halign:"center",valign:"top"},
           {type:"field",layout:{x1:440.0,y1:40.0,x2:540.0,y2:70.0},exp:"'RapidReport'",font:{},formatter:{format:"#,##0",type:"default"},halign:"right",valign:"top"},
           {type:"rect",layout:{x1:0.0,y1:130.0,x2:555.0,y2:170.0}},
-          {type:"text",layout:{x1:0.0,y1:130.0,x2:140.0,y2:170.0},font:{},text:"□改行して全体を割り付け：",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:130.0,x2:140.0,y2:170.0},font:{},text:"□改行して全体を表示：",valign:"center"},
           {type:"field",layout:{x1:140.0,y1:130.0,x2:555.0,y2:170.0},exp:"'RapidReport(ラピッドレポート)は、.NET(C#/VisualBasic)またはJavaから利用できる帳票ツールです。 PHP/Javaブリッジを利用すると、PHPからも利用することができます。'",font:{},formatter:{format:"#,##0",type:"default"},valign:"center",wrap:true},
           {type:"rect",layout:{x1:0.0,y1:170.0,x2:555.0,y2:190.0}},
           {type:"text",layout:{x1:0.0,y1:170.0,x2:70.0,y2:190.0},font:{},text:"□均等割付：",valign:"center"},
