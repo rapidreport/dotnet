@@ -11,6 +11,7 @@ Public Class PdfText
     Public Text As String
     Public ContentByte As PdfContentByte
     Public Font As BaseFont
+    Public TextMatrix As List(Of Single) = Nothing
 
     Protected Const TOLERANCE As Single = 0.1F
     Protected Const OFFSET_Y As Single = -0.5F
@@ -39,21 +40,7 @@ Public Class PdfText
         End If
         ContentByte.SaveState()
         Try
-            If TextDesign.Color IsNot Nothing Then
-                Dim c As Color = GetColor(TextDesign.Color)
-                If c IsNot Nothing Then
-                    ContentByte.SetColorFill(c)
-                    ContentByte.SetColorStroke(c)
-                End If
-            End If
-            If TextDesign.Font.Bold Then
-                ContentByte.SetTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_STROKE)
-                If Not Report.Compatibility._4_6_PdfFontBold Then
-                    ContentByte.SetLineWidth(TextDesign.Font.Size * 0.01)
-                End If
-            Else
-                ContentByte.SetTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL)
-            End If
+            _Draw_Preprocess()
             If TextDesign.Distribute Then
                 If TextDesign.Vertical Then
                     _Draw_DistributeVertical()
@@ -84,6 +71,24 @@ Public Class PdfText
         Finally
             ContentByte.RestoreState()
         End Try
+    End Sub
+
+    Protected Overridable Sub _Draw_Preprocess()
+        If TextDesign.Color IsNot Nothing Then
+            Dim c As Color = GetColor(TextDesign.Color)
+            If c IsNot Nothing Then
+                ContentByte.SetColorFill(c)
+                ContentByte.SetColorStroke(c)
+            End If
+        End If
+        If TextDesign.Font.Bold Then
+            ContentByte.SetTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_STROKE)
+            If Not Report.Compatibility._4_6_PdfFontBold Then
+                ContentByte.SetLineWidth(TextDesign.Font.Size * 0.01)
+            End If
+        Else
+            ContentByte.SetTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL)
+        End If
     End Sub
 
     Protected Overridable Sub _Draw_Distribute()
@@ -211,7 +216,7 @@ Public Class PdfText
         _Draw_Aux(TextDesign.Font.Size, texts)
     End Sub
 
-    Private Sub _Draw_Aux( _
+    Protected Overridable Sub _Draw_Aux( _
       ByVal fontSize As Single, _
       ByVal texts As List(Of String))
         Dim y As Single = 0
@@ -272,7 +277,7 @@ Public Class PdfText
         Next
     End Sub
 
-    Private Sub _Draw_Vertical_Aux( _
+    Protected Overridable Sub _Draw_Vertical_Aux( _
       ByVal fontSize As Single, _
       ByVal texts As List(Of String))
         Dim x As Single = 0
@@ -325,10 +330,15 @@ Public Class PdfText
         Dim trans As PdfRenderer.TransClass = Renderer.Trans
         Dim _x As Single = Region.Left + x
         Dim _y As Single = (Region.Top + y + fontSize) - (fontSize / 13.4)
-        If TextDesign.Font.Italic Then
-            ContentByte.SetTextMatrix(1, 0, 0.3, 1, trans.X(_x), trans.Y(_y))
+        If TextMatrix IsNot Nothing Then
+            ContentByte.SetTextMatrix(TextMatrix(0), TextMatrix(1), TextMatrix(2), TextMatrix(3), _
+                                      trans.X(_x), trans.Y(_y))
         Else
-            ContentByte.SetTextMatrix(trans.X(_x), trans.Y(_y))
+            If TextDesign.Font.Italic Then
+                ContentByte.SetTextMatrix(1, 0, 0.3, 1, trans.X(_x), trans.Y(_y))
+            Else
+                ContentByte.SetTextMatrix(trans.X(_x), trans.Y(_y))
+            End If
         End If
     End Sub
 
