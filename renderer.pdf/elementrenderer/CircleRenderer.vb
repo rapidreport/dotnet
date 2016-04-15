@@ -67,17 +67,19 @@ Namespace elementrenderer
                         cb.SetColorFill(c)
                     End If
                 End If
-                cb.Ellipse( _
-                  renderer.Trans.X(_region.Left), _
-                  renderer.Trans.Y(_region.Bottom), _
-                  renderer.Trans.X(_region.Right), _
-                  renderer.Trans.Y(_region.Top))
-                If stroke And fill Then
-                    cb.FillStroke()
-                ElseIf stroke Then
-                    cb.Stroke()
-                ElseIf fill Then
-                    cb.Fill()
+                If stroke Or fill Then
+                    cb.Ellipse( _
+                      renderer.Trans.X(_region.Left), _
+                      renderer.Trans.Y(_region.Bottom), _
+                      renderer.Trans.X(_region.Right), _
+                      renderer.Trans.Y(_region.Top))
+                    If stroke And fill Then
+                        cb.FillStroke()
+                    ElseIf stroke Then
+                        cb.Stroke()
+                    ElseIf fill Then
+                        cb.Fill()
+                    End If
                 End If
             Finally
                 cb.RestoreState()

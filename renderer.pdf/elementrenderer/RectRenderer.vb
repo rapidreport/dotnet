@@ -36,17 +36,19 @@ Namespace elementrenderer
                 Try
                     Dim stroke As Boolean = Me.setupStroke(cb, design, reportDesign)
                     Dim fill As Boolean = Me.setupFill(cb, design)
-                    If rd = 0 Then
-                        cb.Rectangle(x1, y1, x2 - x1, y2 - y1)
-                    Else
-                        cb.RoundRectangle(x1, y1, x2 - x1, y2 - y1, rd)
-                    End If
-                    If stroke And fill Then
-                        cb.FillStroke()
-                    ElseIf stroke Then
-                        cb.Stroke()
-                    ElseIf fill Then
-                        cb.Fill()
+                    If stroke Or fill Then
+                        If rd = 0 Then
+                            cb.Rectangle(x1, y1, x2 - x1, y2 - y1)
+                        Else
+                            cb.RoundRectangle(x1, y1, x2 - x1, y2 - y1, rd)
+                        End If
+                        If stroke And fill Then
+                            cb.FillStroke()
+                        ElseIf stroke Then
+                            cb.Stroke()
+                        ElseIf fill Then
+                            cb.Fill()
+                        End If
                     End If
                 Finally
                     cb.RestoreState()

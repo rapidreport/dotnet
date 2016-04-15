@@ -1,0 +1,32 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 802.0
+        },
+        elements: [
+          {type:"rect",layout:{x1:25.0,y1:35.0,x2:125.0,y2:85.0},line_style:"dot",line_width:0.0},
+          {type:"line",layout:{x1:25.0,y1:15.0,x2:125.0,y2:15.0},line_style:"dot"},
+          {type:"rect",layout:{x1:140.0,y1:35.0,x2:240.0,y2:85.0},hide_bottom:true,line_style:"solid",line_width:0.0},
+          {type:"rect",layout:{x1:255.0,y1:35.0,x2:355.0,y2:85.0},line_style:"solid"},
+          {type:"rect",layout:{x1:370.0,y1:35.0,x2:470.0,y2:85.0},hide_bottom:true,line_style:"solid"},
+          {type:"circle",layout:{x1:25.0,y1:110.0,x2:105.0,y2:190.0},line_width:0.0},
+          {type:"circle",layout:{x1:255.0,y1:110.0,x2:335.0,y2:190.0}},
+          {type:"rect",layout:{x1:25.0,y1:225.0,x2:125.0,y2:275.0},fill_color:"pink",line_style:"dot",line_width:0.0},
+          {type:"rect",layout:{x1:140.0,y1:225.0,x2:240.0,y2:275.0},fill_color:"pink",hide_bottom:true,line_style:"solid",line_width:0.0},
+          {type:"rect",layout:{x1:255.0,y1:225.0,x2:355.0,y2:275.0},fill_color:"pink",line_style:"solid"},
+          {type:"rect",layout:{x1:370.0,y1:225.0,x2:470.0,y2:275.0},fill_color:"pink",hide_bottom:true,line_style:"solid"},
+          {type:"circle",layout:{x1:25.0,y1:300.0,x2:105.0,y2:380.0},fill_color:"pink",line_width:0.0},
+          {type:"circle",layout:{x1:255.0,y1:300.0,x2:335.0,y2:380.0},fill_color:"pink"}
+        ]
+      }
+    ]
+  }
+}
