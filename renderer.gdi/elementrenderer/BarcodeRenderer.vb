@@ -1,10 +1,11 @@
-﻿Imports com.google.zxing
-Imports com.google.zxing.common
-Imports com.google.zxing.qrcode
+﻿Imports ZXing
+Imports ZXing.Common
+Imports ZXing.QrCode
 
 Imports jp.co.systembase.barcode
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
+Imports ZXing.QrCode.Internal
 
 Namespace elementrenderer
 
@@ -113,33 +114,34 @@ Namespace elementrenderer
                         barcode.Render(g, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight, code)
                     Case "qrcode"
                         Dim w As New QRCodeWriter
-                        Dim h As New Hashtable
+                        Dim h As New Dictionary(Of EncodeHintType, Object)
                         If Not design.IsNull("qr_charset") Then
                             h.Add(EncodeHintType.CHARACTER_SET, design.Get("qr_charset"))
                         Else
-                            h.Add(EncodeHintType.CHARACTER_SET, "shift_jis")
+                            h.Add(EncodeHintType.CHARACTER_SET, "SJIS")
                         End If
                         If Not design.IsNull("qr_correction_level") Then
                             Select Case design.Get("qr_correction_level")
                                 Case "L"
-                                    h.Add(EncodeHintType.ERROR_CORRECTION, decoder.ErrorCorrectionLevel.L)
+                                    h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L)
                                 Case "Q"
-                                    h.Add(EncodeHintType.ERROR_CORRECTION, decoder.ErrorCorrectionLevel.Q)
+                                    h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.Q)
                                 Case "H"
-                                    h.Add(EncodeHintType.ERROR_CORRECTION, decoder.ErrorCorrectionLevel.H)
+                                    h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H)
                                 Case Else
-                                    h.Add(EncodeHintType.ERROR_CORRECTION, decoder.ErrorCorrectionLevel.M)
+                                    h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M)
                             End Select
                         Else
-                            h.Add(EncodeHintType.ERROR_CORRECTION, decoder.ErrorCorrectionLevel.M)
+                            h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M)
                         End If
-                        Dim bm As ByteMatrix
+                        h.Add(EncodeHintType.DISABLE_ECI, True)
+                        Dim bm As BitMatrix
                         bm = w.encode(code, BarcodeFormat.QR_CODE, 0, 0, h)
                         Dim mw As Single = _region.GetWidth / bm.Width
                         Dim mh As Single = _region.GetHeight / bm.Height
                         For y As Integer = 0 To bm.Height - 1
                             For x As Integer = 0 To bm.Width - 1
-                                If Not bm.Array(y)(x) Then
+                                If bm(x, y) Then
                                     g.FillRectangle(Brushes.Black, _region.Left + mw * x, _region.Top + mh * y, mw, mh)
                                 End If
                             Next
