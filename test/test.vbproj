@@ -107,6 +107,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Test_4_24_Exp.vb" />
     <Compile Include="FmTest.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -215,6 +216,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_23_rect.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_24_exp.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

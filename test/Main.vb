@@ -21,6 +21,7 @@
         Tests.Add(New Test_4_21_LocateCount)
         Tests.Add(New Test_4_21_MergeContentLogo)
         Tests.Add(New Test_4_23_Rect)
+        Tests.Add(New Test_4_24_Exp)
 
         Application.Run(New FmTest)
     End Sub

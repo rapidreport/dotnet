@@ -1,0 +1,94 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  font: {name:"mincho"},
+  group: {
+    id: "bu_group",
+    keys: ["日本語"],
+    page_break: true,
+    contents: [
+      {
+        size: {
+          initial: 170.0
+        },
+        caption: "ヘッダー",
+        every_page: true,
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:105.0,y2:15.0},text:"□ 日本語",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:0.0,x2:235.0,y2:15.0},exp:".日本語",formatter:{type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:200.0,y1:150.0,x2:255.0,y2:170.0},halign:"center",text:"□ 足し算",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:15.0,x2:105.0,y2:30.0},text:"□ 半角スペース",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:15.0,x2:235.0,y2:30.0},exp:".'半角 スペース'",formatter:{format:"yyyy年 MM月 dd日",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:30.0,x2:105.0,y2:45.0},text:"□ 全角スペース",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:30.0,x2:235.0,y2:45.0},exp:".'全角　スペース'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:45.0,x2:105.0,y2:60.0},text:"□ 半角カッコ",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:45.0,x2:235.0,y2:60.0},exp:".'半角()'",formatter:{format:"yyyy年 MM月 dd日",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:60.0,x2:105.0,y2:75.0},text:"□ 全角カッコ",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:60.0,x2:235.0,y2:75.0},exp:".'全角（）'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:75.0,x2:105.0,y2:90.0},text:"□ 円マーク",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:75.0,x2:235.0,y2:90.0},exp:".'円マーク\\\\'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:90.0,x2:105.0,y2:105.0},text:"□ 改行",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:90.0,x2:235.0,y2:105.0},exp:".'改行\\n改行'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:105.0,x2:105.0,y2:120.0},text:"□ シングルクォート",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:105.0,x2:235.0,y2:120.0},exp:".'シングルクォート\\''",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:90.0,y1:150.0,x2:145.0,y2:170.0},halign:"center",text:"□ 金額(1)",valign:"center"},
+          {type:"text",layout:{x1:255.0,y1:150.0,x2:310.0,y2:170.0},halign:"center",text:"□ 引き算",valign:"center"},
+          {type:"text",layout:{x1:270.0,y1:30.0,x2:375.0,y2:45.0},text:"□ 文字連結",valign:"center"},
+          {type:"field",layout:{x1:375.0,y1:30.0,x2:505.0,y2:45.0},exp:"(& .'全角　スペース' ' ' '御中')",formatter:{type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:270.0,y1:0.0,x2:375.0,y2:15.0},text:"□ ページカウント",valign:"center"},
+          {type:"field",layout:{x1:375.0,y1:0.0,x2:505.0,y2:15.0},exp:"page_count.日本語",formatter:{type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:145.0,y1:150.0,x2:200.0,y2:170.0},halign:"center",text:"金額(2)",valign:"center"}
+        ]
+      },
+      {
+        size: {
+          initial: 150.0
+        },
+        aggregate_src: true,
+        caption: "ボディ",
+        group: {
+          caption: "明細グループ",
+          detail: true,
+          layout: {
+            max_count: 10.0,
+            blank: true
+          },
+          contents: [
+            {
+              size: {
+                initial: 20.0
+              },
+              aggregate_src: true,
+              caption: "明細",
+              elements: [
+                {type:"field",layout:{x1:90.0,y1:0.0,x2:145.0,y2:20.0},exp:".'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+                {type:"field",layout:{x1:255.0,y1:0.0,x2:310.0,y2:20.0},exp:"(- .'kingaku(1)' .'kingaku(2)')",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+                {type:"field",layout:{x1:200.0,y1:0.0,x2:255.0,y2:20.0},exp:"(+ .'kingaku(1)' .'kingaku(2)')",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+                {type:"field",layout:{x1:145.0,y1:0.0,x2:200.0,y2:20.0},exp:".'kingaku(2)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"}
+              ]
+            }
+          ]
+        }
+      },
+      {
+        size: {
+          initial: 0.0,
+          rev_initial: true
+        },
+        caption: "フッター",
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:90.0,y2:20.0},halign:"center",text:"金額(1)の合計",valign:"center"},
+          {type:"field",layout:{x1:90.0,y1:0.0,x2:145.0,y2:20.0},exp:"sum.'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"text",layout:{x1:0.0,y1:20.0,x2:90.0,y2:40.0},halign:"center",text:"金額(1)の平均",valign:"center"},
+          {type:"field",layout:{x1:90.0,y1:20.0,x2:145.0,y2:40.0},exp:"avr.'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"field",layout:{x1:315.0,y1:0.0,x2:370.0,y2:20.0},exp:"sum.'kingaku(1)'@bu_group",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"field",layout:{x1:375.0,y1:0.0,x2:430.0,y2:20.0},exp:"sum.kingaku@bu_group",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"}
+        ]
+      }
+    ]
+  }
+}
