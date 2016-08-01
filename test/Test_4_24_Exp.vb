@@ -63,7 +63,8 @@ Public Class Test_4_24_Exp
         ret.Columns.Add("円マーク\", GetType(String))
         ret.Columns.Add("改行" & vbCrLf & "改行", GetType(String))
         ret.Columns.Add("シングルクォート'", GetType(String))
-        ret.Columns.Add("kingaku", GetType(Decimal))
+        ret.Columns.Add("bumonCd", GetType(String))
+        ret.Columns.Add("kaCd", GetType(String))
         ret.Columns.Add("kingaku(1)", GetType(Decimal))
         ret.Columns.Add("kingaku(2)", GetType(Decimal))
         ret.Columns.Add("kingaku(3)", GetType(Decimal))
@@ -71,13 +72,22 @@ Public Class Test_4_24_Exp
 
         ret.Rows.Add("１番", DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing),
             "株式会社　岩手商事", "半角カッコ()", "全角カッコ（）", "円マーク\", "改行" & vbCrLf & "した", "シングルクォート'",
-            10000, 1000, 10, 3, True)
+            10, 1, 1000, 10, 3, True)
         ret.Rows.Add("１番", DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing),
             "株式会社　岩手商事", "半角カッコ()", "全角カッコ（）", "円マーク\", "改行" & vbCrLf & "した", "シングルクォート'",
-            10000, 980, 20, 4, False)
-        ret.Rows.Add("２番", DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing),
+            10, 1, 990, 20, 4, False)
+        ret.Rows.Add("１番", DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing),
             "株式会社　岩手商事", "半角カッコ()", "全角カッコ（）", "円マーク\", "改行" & vbCrLf & "した", "シングルクォート'",
-            10000, 980, 20, 4, False)
+            10, 2, 990, 20, 4, False)
+        ret.Rows.Add("１番", DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing),
+            "株式会社　岩手商事", "半角カッコ()", "全角カッコ（）", "円マーク\", "改行" & vbCrLf & "した", "シングルクォート'",
+            10, 2, 990, 20, 4, False)
+        ret.Rows.Add("１番", DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing),
+            "株式会社　岩手商事", "半角カッコ()", "全角カッコ（）", "円マーク\", "改行" & vbCrLf & "した", "シングルクォート'",
+            20, 1, 980, 20, 4, False)
+        ret.Rows.Add("１番", DateTime.ParseExact("2013/03/01", "yyyy/MM/dd", Nothing),
+            "株式会社　岩手商事", "半角カッコ()", "全角カッコ（）", "円マーク\", "改行" & vbCrLf & "した", "シングルクォート'",
+            20, 1, 970, 20, 4, False)
         Return ret
     End Function
 

@@ -7,67 +7,107 @@
   },
   font: {name:"mincho"},
   group: {
+    id: "bumonCd",
     keys: ["日本語"],
     page_break: true,
     contents: [
       {
         size: {
-          initial: 170.0
+          initial: 320.0
         },
         caption: "ヘッダー",
         every_page: true,
         elements: [
-          {type:"text",layout:{x1:0.0,y1:0.0,x2:105.0,y2:15.0},text:"□ 日本語",valign:"center"},
-          {type:"field",layout:{x1:105.0,y1:0.0,x2:235.0,y2:15.0},exp:".日本語",formatter:{type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
-          {type:"text",layout:{x1:200.0,y1:150.0,x2:255.0,y2:170.0},halign:"center",text:"□ 足し算",valign:"center"},
-          {type:"text",layout:{x1:0.0,y1:15.0,x2:105.0,y2:30.0},text:"□ 半角スペース",valign:"center"},
-          {type:"field",layout:{x1:105.0,y1:15.0,x2:235.0,y2:30.0},exp:".'半角 スペース'",formatter:{format:"yyyy年 MM月 dd日",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
-          {type:"text",layout:{x1:0.0,y1:30.0,x2:105.0,y2:45.0},text:"□ 全角スペース",valign:"center"},
-          {type:"field",layout:{x1:105.0,y1:30.0,x2:235.0,y2:45.0},exp:".'全角　スペース'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:15.0,x2:105.0,y2:30.0},text:"□ 日本語",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:15.0,x2:235.0,y2:30.0},exp:".日本語",formatter:{type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:30.0,x2:105.0,y2:45.0},text:"□ 半角スペース",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:30.0,x2:235.0,y2:45.0},exp:".'半角 スペース'",formatter:{format:"yyyy年 MM月 dd日",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:270.0,y1:30.0,x2:375.0,y2:45.0},text:"□ 全角スペース",valign:"center"},
+          {type:"field",layout:{x1:375.0,y1:30.0,x2:505.0,y2:45.0},exp:".'全角　スペース'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
           {type:"text",layout:{x1:0.0,y1:45.0,x2:105.0,y2:60.0},text:"□ 半角カッコ",valign:"center"},
           {type:"field",layout:{x1:105.0,y1:45.0,x2:235.0,y2:60.0},exp:".'半角()'",formatter:{format:"yyyy年 MM月 dd日",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
-          {type:"text",layout:{x1:0.0,y1:60.0,x2:105.0,y2:75.0},text:"□ 全角カッコ",valign:"center"},
-          {type:"field",layout:{x1:105.0,y1:60.0,x2:235.0,y2:75.0},exp:".'全角（）'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
-          {type:"text",layout:{x1:0.0,y1:75.0,x2:105.0,y2:90.0},text:"□ 円マーク",valign:"center"},
-          {type:"field",layout:{x1:105.0,y1:75.0,x2:235.0,y2:90.0},exp:".'円マーク\\\\'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
-          {type:"text",layout:{x1:0.0,y1:105.0,x2:105.0,y2:120.0},text:"□ 改行",valign:"center"},
-          {type:"field",layout:{x1:105.0,y1:105.0,x2:235.0,y2:135.0},exp:".'改行\\n改行'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
-          {type:"text",layout:{x1:0.0,y1:90.0,x2:105.0,y2:105.0},text:"□ シングルクォート",valign:"center"},
-          {type:"field",layout:{x1:105.0,y1:90.0,x2:235.0,y2:105.0},exp:".'シングルクォート\\''",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
-          {type:"text",layout:{x1:90.0,y1:150.0,x2:145.0,y2:170.0},halign:"center",text:"□ 金額(1)",valign:"center"},
-          {type:"text",layout:{x1:365.0,y1:150.0,x2:440.0,y2:170.0},halign:"center",text:"□ 式のネスト",valign:"center"},
-          {type:"text",layout:{x1:270.0,y1:30.0,x2:375.0,y2:45.0},text:"□ 文字連結",valign:"center"},
-          {type:"field",layout:{x1:375.0,y1:30.0,x2:505.0,y2:45.0},exp:"(& .'全角　スペース' ' ' '御中')",formatter:{type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
-          {type:"text",layout:{x1:145.0,y1:150.0,x2:200.0,y2:170.0},halign:"center",text:"金額(2)",valign:"center"},
-          {type:"text",layout:{x1:310.0,y1:150.0,x2:365.0,y2:170.0},halign:"center",text:"金額(3)",valign:"center"}
+          {type:"text",layout:{x1:270.0,y1:45.0,x2:375.0,y2:60.0},text:"□ 全角カッコ",valign:"center"},
+          {type:"field",layout:{x1:375.0,y1:45.0,x2:505.0,y2:60.0},exp:".'全角（）'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:60.0,x2:105.0,y2:75.0},text:"□ 円マーク",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:60.0,x2:235.0,y2:75.0},exp:".'円マーク\\\\'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:75.0,x2:105.0,y2:90.0},text:"□ 改行",valign:"center"},
+          {type:"field",layout:{x1:105.0,y1:75.0,x2:235.0,y2:105.0},exp:".'改行\\n改行'",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:270.0,y1:60.0,x2:375.0,y2:75.0},text:"□ シングルクォート",valign:"center"},
+          {type:"field",layout:{x1:375.0,y1:60.0,x2:505.0,y2:75.0},exp:".'シングルクォート\\''",formatter:{format:"0000000000",type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:90.0,y1:305.0,x2:145.0,y2:320.0},halign:"center",text:"金額(1)",valign:"center"},
+          {type:"text",layout:{x1:270.0,y1:15.0,x2:375.0,y2:30.0},text:"□ 文字連結",valign:"center"},
+          {type:"field",layout:{x1:375.0,y1:15.0,x2:505.0,y2:30.0},exp:"(& .'全角　スペース' ' 御中')",formatter:{type:"default"},halign:"right",valign:"center",xls_format:"0000000000"},
+          {type:"text",layout:{x1:0.0,y1:150.0,x2:175.0,y2:165.0},text:"□ ２個のオペレータ",valign:"center"},
+          {type:"field",layout:{x1:370.0,y1:150.0,x2:455.0,y2:165.0},exp:"(/ (+ .'kingaku(1)' .'kingaku(2)') .'kingaku(3)')",formatter:{format:"#,##0.00",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"text",layout:{x1:0.0,y1:165.0,x2:175.0,y2:180.0},text:"□ ３個のオペレータ",valign:"center"},
+          {type:"field",layout:{x1:370.0,y1:165.0,x2:455.0,y2:180.0},exp:"(round5 (/ (+ .'kingaku(1)' .'kingaku(2)') .'kingaku(3)'))",formatter:{format:"#,##0.00",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"text",layout:{x1:0.0,y1:180.0,x2:175.0,y2:195.0},text:"□ ３個のオペレータ定数あり",valign:"center"},
+          {type:"field",layout:{x1:370.0,y1:180.0,x2:455.0,y2:195.0},exp:"(round5 (* 1.08 (+ .'kingaku(1)' .'kingaku(2)')))",formatter:{format:"#,##0.00",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"text",layout:{x1:0.0,y1:120.0,x2:55.0,y2:135.0},halign:"center",text:"金額(1)：",valign:"center"},
+          {type:"text",layout:{x1:120.0,y1:120.0,x2:175.0,y2:135.0},halign:"center",text:"金額(2)：",valign:"center"},
+          {type:"text",layout:{x1:240.0,y1:120.0,x2:295.0,y2:135.0},halign:"center",text:"金額(3)：",valign:"center"},
+          {type:"field",layout:{x1:295.0,y1:120.0,x2:350.0,y2:135.0},exp:".'kingaku(3)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"field",layout:{x1:175.0,y1:120.0,x2:230.0,y2:135.0},exp:".'kingaku(2)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"field",layout:{x1:55.0,y1:120.0,x2:110.0,y2:135.0},exp:".'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"text",layout:{x1:175.0,y1:150.0,x2:370.0,y2:165.0},text:"(金額1+金額2)/金額3",valign:"center"},
+          {type:"text",layout:{x1:175.0,y1:165.0,x2:370.0,y2:180.0},text:"(金額1+金額2)/金額3を四捨五入",valign:"center"},
+          {type:"text",layout:{x1:175.0,y1:180.0,x2:370.0,y2:195.0},text:"(金額1+金額2)*1.08を四捨五入",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:135.0,x2:175.0,y2:150.0},text:"□ １個のオペレータ",valign:"center"},
+          {type:"field",layout:{x1:370.0,y1:135.0,x2:455.0,y2:150.0},exp:"(+ .'kingaku(1)' .'kingaku(2)')",formatter:{format:"#,##0.00",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"text",layout:{x1:175.0,y1:135.0,x2:370.0,y2:150.0},text:"(金額1+金額2)",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:235.0,y2:15.0},font:{name:"mincho",bold:true,size:12.0},text:"クオートで囲んだ形式",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:105.0,x2:235.0,y2:120.0},font:{name:"mincho",bold:true,size:12.0},text:"複数のオペレータ",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:290.0,x2:235.0,y2:305.0},font:{name:"mincho",bold:true,size:12.0},text:"集計メソッド",valign:"center"}
         ]
       },
       {
         size: {
-          initial: 150.0
+          initial: 65.0
         },
-        aggregate_src: true,
         caption: "ボディ",
         group: {
           caption: "明細グループ",
-          detail: true,
-          layout: {
-            max_count: 10.0,
-            blank: true
-          },
+          keys: ["kaCd"],
           contents: [
             {
               size: {
-                initial: 20.0
+                initial: 15.0
               },
-              aggregate_src: true,
-              caption: "明細",
               elements: [
-                {type:"field",layout:{x1:90.0,y1:0.0,x2:145.0,y2:20.0},exp:".'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
-                {type:"field",layout:{x1:385.0,y1:0.0,x2:440.0,y2:20.0},exp:"(* .'kingaku(3)' (+ .'kingaku(1)' .'kingaku(2)'))",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
-                {type:"field",layout:{x1:200.0,y1:0.0,x2:255.0,y2:20.0},exp:"(+ .'kingaku(1)' .'kingaku(2)')",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
-                {type:"field",layout:{x1:145.0,y1:0.0,x2:200.0,y2:20.0},exp:".'kingaku(2)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
-                {type:"field",layout:{x1:310.0,y1:0.0,x2:365.0,y2:20.0},exp:".'kingaku(3)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"}
+                {type:"field",layout:{x1:55.0,y1:0.0,x2:110.0,y2:15.0},exp:".bumonCd",formatter:{format:"#,##0",type:"default"},halign:"right",valign:"center",xls_format:"#,##0"},
+                {type:"text",layout:{x1:0.0,y1:0.0,x2:55.0,y2:15.0},halign:"center",text:"部門CD",valign:"center"},
+                {type:"field",layout:{x1:190.0,y1:0.0,x2:245.0,y2:15.0},exp:".kaCd",formatter:{format:"#,##0",type:"default"},halign:"right",valign:"center",xls_format:"#,##0"},
+                {type:"text",layout:{x1:135.0,y1:0.0,x2:190.0,y2:15.0},halign:"center",text:"課CD",valign:"center"}
+              ]
+            },
+            {
+              size: {
+                initial: 15.0
+              },
+              caption: "明細",
+              group: {
+                detail: true,
+                max_count: 5.0,
+                contents: [
+                  {
+                    size: {
+                      initial: 15.0
+                    },
+                    aggregate_src: true,
+                    elements: [
+                      {type:"field",layout:{x1:110.0,y1:0.0,x2:165.0,y2:15.0},exp:".'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"}
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              size: {
+                initial: 15.0
+              },
+              elements: [
+                {type:"field",layout:{x1:110.0,y1:0.0,x2:165.0,y2:15.0},exp:"sum.'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+                {type:"text",layout:{x1:20.0,y1:0.0,x2:110.0,y2:15.0},halign:"center",text:"□ 部門合計",valign:"center"}
               ]
             }
           ]
@@ -80,10 +120,10 @@
         },
         caption: "フッター",
         elements: [
-          {type:"text",layout:{x1:0.0,y1:0.0,x2:90.0,y2:20.0},halign:"center",text:"金額(1)の合計",valign:"center"},
-          {type:"field",layout:{x1:90.0,y1:0.0,x2:145.0,y2:20.0},exp:"sum.'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
-          {type:"text",layout:{x1:0.0,y1:20.0,x2:90.0,y2:40.0},halign:"center",text:"金額(1)の平均",valign:"center"},
-          {type:"field",layout:{x1:90.0,y1:20.0,x2:145.0,y2:40.0},exp:"avr.'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"}
+          {type:"text",layout:{x1:75.0,y1:0.0,x2:165.0,y2:15.0},halign:"center",text:"□ 金額(1)の合計",valign:"center"},
+          {type:"field",layout:{x1:165.0,y1:0.0,x2:220.0,y2:15.0},exp:"sum.'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"},
+          {type:"text",layout:{x1:75.0,y1:20.0,x2:165.0,y2:35.0},halign:"center",text:"□ 金額(1)の平均",valign:"center"},
+          {type:"field",layout:{x1:165.0,y1:20.0,x2:220.0,y2:35.0},exp:"avr.'kingaku(1)'",formatter:{format:"#,##0",type:"default"},halign:"right",mock:"d8",valign:"center",xls_format:"#,##0"}
         ]
       }
     ]
