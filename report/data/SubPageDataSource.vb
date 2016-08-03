@@ -18,13 +18,14 @@ Namespace data
             Me.SubPageKeys = New List(Of String)(subPageKeys)
             For i As Integer = 0 To pages.Count - 1
                 Dim page As ReportPage = pages(i)
-                If i = 0 Then
+                Dim g As Group = Nothing
+                If pageGroupId IsNot Nothing Then
+                    g = page.FindStartedGroup(pageGroupId)
+                End If
+                If g IsNot Nothing Then
+                    Me.addBreak(g.Data.GetRecord)
+                Else
                     Me.addBreak(page.Report.Data.GetRecord)
-                ElseIf pageGroupId IsNot Nothing Then
-                    Dim g As Group = page.FindStartedGroup(pageGroupId)
-                    If g IsNot Nothing Then
-                        Me.addBreak(g.Data.GetRecord)
-                    End If
                 End If
                 Me.addSubPage(i)
             Next
