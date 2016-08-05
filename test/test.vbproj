@@ -148,6 +148,7 @@
     <Compile Include="Test_4_21_LocateCount.vb" />
     <Compile Include="Test_4_21_MergeContentLogo.vb" />
     <Compile Include="Test_4_23_Rect.vb" />
+    <Compile Include="Test_4_24_SubPage.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -219,6 +220,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_24_exp.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_24_subpage1.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_24_subpage2.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

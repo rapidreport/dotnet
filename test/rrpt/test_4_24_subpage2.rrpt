@@ -1,0 +1,67 @@
+{
+  version: 0,
+  paper: {
+    scale_unit: "point",
+    size: {height:400,width:270},
+    type: "a4"
+  },
+  font: {size:20},
+  group: {
+    id: "group1",
+    keys: ["g1"],
+    page_break: true,
+    custom_fields: [
+      {key:"sum_num",exp:"sum.num"}
+    ],
+    contents: [
+      {
+        size: {
+          initial: 50.0,
+          rev_initial: true
+        },
+        group: {
+          keys: ["g2"],
+          contents: [
+            {
+              size: {
+                initial: 50
+              },
+              every_page: true,
+              elements: [
+                {type:"line",layout:{y1:50}},
+                {type:"field",layout:{x2:120},exp:".g2",halign:"left",valign:"center"},
+                {type:"field",layout:{x1:160},exp:"sum.num",halign:"right",valign:"center"},
+                {type:"text",layout:{x1:120,x2:160},halign:"center",text:"計",valign:"center"}
+              ]
+            },
+            {
+              group: {
+                detail: true,
+                contents: [
+                  {
+                    size: {
+                      initial: 50
+                    },
+                    elements: [
+                      {type:"line",layout:{x1:120,y1:50}},
+                      {type:"field",layout:{x1:120},exp:".num",halign:"right",valign:"center"}
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        size: {
+          initial: 50
+        },
+        every_page: true,
+        elements: [
+          {type:"text",layout:{},halign:"center",text:"PAGE: #{page_count}",valign:"center"}
+        ]
+      }
+    ]
+  }
+}
