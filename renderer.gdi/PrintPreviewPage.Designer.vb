@@ -22,17 +22,17 @@ Partial Class PrintPreviewPage
     'コード エディタを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PrintPreviewPage))
-        Me.TxtPageTotal = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.TxtPage = New System.Windows.Forms.TextBox
-        Me.BtnEnd = New System.Windows.Forms.Button
-        Me.BtnNext = New System.Windows.Forms.Button
-        Me.BtnPrev = New System.Windows.Forms.Button
-        Me.BtnBegin = New System.Windows.Forms.Button
-        Me.SlPage = New jp.co.systembase.report.renderer.gdi.Slider
+        Me.TxtPageTotal = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TxtPage = New System.Windows.Forms.TextBox()
+        Me.BtnEnd = New System.Windows.Forms.Button()
+        Me.BtnNext = New System.Windows.Forms.Button()
+        Me.BtnPrev = New System.Windows.Forms.Button()
+        Me.BtnBegin = New System.Windows.Forms.Button()
+        Me.SlPage = New jp.co.systembase.report.renderer.gdi.Slider()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.SuspendLayout()
         '
@@ -66,6 +66,7 @@ Partial Class PrintPreviewPage
         'TxtPage
         '
         Me.TxtPage.Location = New System.Drawing.Point(76, 3)
+        Me.TxtPage.MaxLength = 6
         Me.TxtPage.Name = "TxtPage"
         Me.TxtPage.Size = New System.Drawing.Size(34, 19)
         Me.TxtPage.TabIndex = 8
@@ -131,7 +132,7 @@ Partial Class PrintPreviewPage
         Me.SlPage.Text = "USlider1"
         Me.SlPage.Value = 0
         '
-        'UPrintPreviewPage
+        'PrintPreviewPage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -144,7 +145,7 @@ Partial Class PrintPreviewPage
         Me.Controls.Add(Me.BtnNext)
         Me.Controls.Add(Me.BtnPrev)
         Me.Controls.Add(Me.BtnBegin)
-        Me.Name = "UPrintPreviewPage"
+        Me.Name = "PrintPreviewPage"
         Me.Size = New System.Drawing.Size(263, 32)
         Me.ResumeLayout(False)
         Me.PerformLayout()

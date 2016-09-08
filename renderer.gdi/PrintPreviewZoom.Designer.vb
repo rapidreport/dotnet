@@ -55,6 +55,7 @@ Partial Class PrintPreviewZoom
         'TxtZoom
         '
         Me.TxtZoom.Location = New System.Drawing.Point(107, 7)
+        Me.TxtZoom.MaxLength = 3
         Me.TxtZoom.Name = "TxtZoom"
         Me.TxtZoom.Size = New System.Drawing.Size(34, 19)
         Me.TxtZoom.TabIndex = 2
