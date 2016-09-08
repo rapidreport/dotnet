@@ -21,6 +21,7 @@ Public Class Printer
 
     Private _Pages As ReportPages
     Private _HardMarginMap As Dictionary(Of ReportDesign, PointF)
+    Private _CurrentPageCount As Integer = 0
 
     Public Sub New(ByVal pages As ReportPages)
         Me.New(pages, New GdiRendererSetting)
@@ -65,17 +66,30 @@ Public Class Printer
         End Set
     End Property
 
+    Public Property CurrentPageCount As Integer
+        Get
+            Return Me._CurrentPageCount
+        End Get
+        Set(value As Integer)
+            Me._CurrentPageCount = value
+            Me.PrintDialog.AllowCurrentPage = (Me.CurrentPageCount > 0)
+        End Set
+    End Property
+
     Private Sub PrintDocument_BeginPrint(ByVal sender As Object, ByVal e As PrintEventArgs) Handles PrintDocument.BeginPrint
         Me.PageIndex = 0
         Me._HardMarginMap = New Dictionary(Of ReportDesign, PointF)
     End Sub
 
     Private Sub PrintDocument_QueryPageSettings(ByVal sender As Object, ByVal e As QueryPageSettingsEventArgs) Handles PrintDocument.QueryPageSettings
-        If e.PageSettings.PrinterSettings.PrintRange = PrintRange.SomePages Then
-            Do While Me.PageIndex < e.PageSettings.PrinterSettings.FromPage - 1
-                Me.PageIndex += 1
-            Loop
-        End If
+        Select Case e.PageSettings.PrinterSettings.PrintRange
+            Case PrintRange.SomePages
+                Do While Me.PageIndex < e.PageSettings.PrinterSettings.FromPage - 1
+                    Me.PageIndex += 1
+                Loop
+            Case PrintRange.CurrentPage
+                Me.PageIndex = Me.CurrentPageCount - 1
+        End Select
         Dim page As ReportPage = Me.Pages(Me.PageIndex)
         If Me.DynamicPageSetting Then
             GdiRenderUtil.SetUpPageSettings(e.PageSettings, page.Report.Design)
@@ -98,11 +112,17 @@ Public Class Printer
         Me.PageIndex += 1
         If Me.PageIndex = Me.Pages.Count Then
             e.HasMorePages = False
-        ElseIf e.PageSettings.PrinterSettings.PrintRange = PrintRange.SomePages AndAlso _
-          Me.PageIndex = e.PageSettings.PrinterSettings.ToPage Then
-            e.HasMorePages = False
         Else
-            e.HasMorePages = True
+            Select e.PageSettings.PrinterSettings.PrintRange
+                Case PrintRange.SomePages
+                    If Me.PageIndex = e.PageSettings.PrinterSettings.ToPage Then
+                        e.HasMorePages = False
+                    Else
+                        e.HasMorePages = True
+                    End If
+                Case PrintRange.CurrentPage
+                    e.HasMorePages = False
+            End Select
         End If
     End Sub
 

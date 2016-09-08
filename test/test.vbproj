@@ -149,6 +149,7 @@
     <Compile Include="Test_4_21_MergeContentLogo.vb" />
     <Compile Include="Test_4_23_Rect.vb" />
     <Compile Include="Test_4_24_SubPage.vb" />
+    <Compile Include="Test_4_25_Page.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -226,6 +227,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_24_subpage2.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_25_page.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

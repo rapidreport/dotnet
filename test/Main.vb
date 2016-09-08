@@ -23,6 +23,7 @@
         Tests.Add(New Test_4_23_Rect)
         Tests.Add(New Test_4_24_Exp)
         Tests.Add(New Test_4_24_SubPage)
+        Tests.Add(New Test_4_25_Page)
 
         Application.Run(New FmTest)
     End Sub

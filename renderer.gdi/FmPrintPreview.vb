@@ -68,6 +68,7 @@
     End Sub
 
     Public Sub Print()
+        Me.PrintPreview.Printer.CurrentPageCount = Me.PrintPreview.PageCount
         If Me.PrintPreview.Printer.PrintDialog.ShowDialog = DialogResult.OK Then
             Me.PrintPreview.Printer.PrintDocument.Print()
             Me.PrintExecuted = True
