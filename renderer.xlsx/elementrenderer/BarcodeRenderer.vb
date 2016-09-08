@@ -1,10 +1,10 @@
 ﻿Imports NPOI.SS.UserModel
 Imports NPOI.XSSF.UserModel
 
-Imports com.google.zxing
-Imports com.google.zxing.common
-Imports com.google.zxing.qrcode
-Imports com.google.zxing.qrcode.decoder
+Imports ZXing
+Imports ZXing.Common
+Imports ZXing.QrCode
+Imports ZXing.QrCode.Internal
 
 Imports jp.co.systembase.barcode
 Imports jp.co.systembase.barcode.Barcode
@@ -114,11 +114,11 @@ Namespace elementrenderer
                             barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
                         Case "qrcode"
                             Dim w As New QRCodeWriter
-                            Dim h As New Hashtable
+                            Dim h As New Dictionary(Of EncodeHintType, Object)
                             If Not Design.IsNull("qr_charset") Then
                                 h.Add(EncodeHintType.CHARACTER_SET, Design.Get("qr_charset"))
                             Else
-                                h.Add(EncodeHintType.CHARACTER_SET, "shift_jis")
+                                h.Add(EncodeHintType.CHARACTER_SET, "SJIS")
                             End If
                             If Not Design.IsNull("qr_correction_level") Then
                                 Dim l As String = Design.Get("qr_correction_level")
@@ -134,14 +134,15 @@ Namespace elementrenderer
                             Else
                                 h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M)
                             End If
-                            Dim bm As ByteMatrix = w.encode(Me.Code, BarcodeFormat.QR_CODE, 0, 0, h)
+                            h.Add(EncodeHintType.DISABLE_ECI, True)
+                            Dim bm As BitMatrix = w.encode(Me.Code, BarcodeFormat.QR_CODE, 0, 0, h)
                             Dim mw As Integer = Fix(image.Width / bm.Width)
                             Dim mh As Integer = Fix(image.Height / bm.Height)
                             Dim mgw As Integer = (image.Width - (mw * bm.Width)) / 2
                             Dim mgh As Integer = (image.Height - (mh * bm.Height)) / 2
                             For y As Integer = 0 To bm.Height - 1
                                 For x As Integer = 0 To bm.Width - 1
-                                    If Not bm.Array(y)(x) Then
+                                    If bm(x, y) Then
                                         g.FillRectangle(Brushes.Black, mgw + x * mw, mgh + y * mh, mw, mh)
                                     End If
                                 Next
