@@ -122,6 +122,8 @@ Public Class Printer
                     End If
                 Case PrintRange.CurrentPage
                     e.HasMorePages = False
+                Case Else
+                    e.HasMorePages = True
             End Select
         End If
     End Sub
