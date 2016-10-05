@@ -1,0 +1,71 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    id: "super_group",
+    keys: ["field7"],
+    contents: [
+      {
+        size: {
+          initial: 628.0
+        },
+        elements: [
+          {type:"field",layout:{x1:170.0,y1:48.0,x2:305.0,y2:68.0},exp:".field1"},
+          {type:"text",layout:{x1:0.0,y1:22.0,x2:440.0,y2:42.0},font:{bold:true},text:"存在するフィールド"},
+          {type:"text",layout:{x1:305.0,y1:48.0,x2:515.0,y2:68.0},text:"□エラー発生しないこと　field1"},
+          {type:"text",layout:{x1:0.0,y1:104.0,x2:170.0,y2:124.0},text:"式"},
+          {type:"field",layout:{x1:170.0,y1:104.0,x2:305.0,y2:124.0},exp:".field2"},
+          {type:"text",layout:{x1:305.0,y1:104.0,x2:515.0,y2:124.0},text:"□エラー発生すること　field2"},
+          {type:"text",layout:{x1:0.0,y1:134.0,x2:170.0,y2:154.0},text:"表示条件"},
+          {type:"text",layout:{x1:0.0,y1:82.0,x2:440.0,y2:102.0},font:{bold:true},text:"存在しないフィールド"},
+          {type:"field",layout:{x1:170.0,y1:134.0,x2:305.0,y2:154.0},visibility_cond:".field3"},
+          {type:"text",layout:{x1:305.0,y1:134.0,x2:515.0,y2:154.0},text:"□エラー発生すること　field3"},
+          {type:"text",layout:{x1:0.0,y1:164.0,x2:170.0,y2:184.0},text:"メソッド"},
+          {type:"field",layout:{x1:170.0,y1:164.0,x2:305.0,y2:184.0},exp:"sum.field4"},
+          {type:"text",layout:{x1:305.0,y1:164.0,x2:515.0,y2:184.0},text:"□エラー発生すること　field4"},
+          {type:"text",layout:{x1:0.0,y1:194.0,x2:170.0,y2:214.0},text:"式（オペレータあり）"},
+          {type:"field",layout:{x1:170.0,y1:194.0,x2:305.0,y2:214.0},exp:"(& 'Rapid' .field5)"},
+          {type:"text",layout:{x1:305.0,y1:194.0,x2:515.0,y2:214.0},text:"□エラー発生すること　field5"},
+          {type:"text",layout:{x1:0.0,y1:224.0,x2:170.0,y2:244.0},text:"式（高度な書き方）"},
+          {type:"field",layout:{x1:170.0,y1:224.0,x2:305.0,y2:244.0},exp:"count.field6@super_group#sub_group"},
+          {type:"text",layout:{x1:305.0,y1:224.0,x2:515.0,y2:244.0},text:"□エラー発生すること　field6"},
+          {type:"text",layout:{x1:305.0,y1:254.0,x2:515.0,y2:274.0},text:"□エラー発生すること　field7"},
+          {type:"text",layout:{x1:0.0,y1:254.0,x2:170.0,y2:274.0},text:"グループのブレーク条件キー"},
+          {type:"text",layout:{x1:0.0,y1:282.0,x2:170.0,y2:302.0},text:"式埋め込み"},
+          {type:"text",layout:{x1:305.0,y1:282.0,x2:515.0,y2:302.0},text:"□エラー発生すること　field8"},
+          {type:"text",layout:{x1:170.0,y1:282.0,x2:305.0,y2:302.0},text:"式埋め込み#{.field8}"},
+          {type:"text",layout:{x1:0.0,y1:312.0,x2:170.0,y2:332.0},text:"コンテント生成条件"},
+          {type:"text",layout:{x1:305.0,y1:312.0,x2:515.0,y2:332.0},text:"□エラー発生すること　field9"},
+          {type:"text",layout:{x1:0.0,y1:340.0,x2:170.0,y2:360.0},text:"コンテント表示条件"},
+          {type:"text",layout:{x1:305.0,y1:340.0,x2:515.0,y2:360.0},text:"□エラー発生すること　field10"},
+          {type:"text",layout:{x1:0.0,y1:48.0,x2:170.0,y2:68.0},text:"正常系"}
+        ]
+      },
+      {
+        size: {
+          initial: 90.0
+        },
+        existence_cond: ".field9"
+      },
+      {
+        size: {
+          initial: 84.0
+        },
+        visibility_cond: ".field10"
+      },
+      {
+        aggregate_src: true,
+        group: {
+          id: "sub_group",
+          contents: [
+            {}
+          ]
+        }
+      }
+    ]
+  }
+}

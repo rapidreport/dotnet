@@ -24,6 +24,7 @@
         Tests.Add(New Test_4_24_Exp)
         Tests.Add(New Test_4_24_SubPage)
         Tests.Add(New Test_4_25_Page)
+        Tests.Add(New Test_4_26_FieldExistCheck)
 
         Application.Run(New FmTest)
     End Sub
