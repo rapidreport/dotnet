@@ -13,6 +13,7 @@ Imports jp.co.systembase.report.renderer.xls
 Imports jp.co.systembase.report.renderer.xlsx
 
 Imports iTextSharp.text.pdf
+Imports System.Text
 
 Public Class Test_4_26_FieldExistCheck
     Public Overrides Function ToString() As String
@@ -22,12 +23,18 @@ Public Class Test_4_26_FieldExistCheck
     Public Sub Run()
         Dim name As String = "test_4_26_field_exist_check"
 
-        Dim report As New Report(Json.Read("rrpt\" & name & ".rrpt"))
+        Dim setting As New ReportSetting
+        Dim logger As New Logger
+        setting.Logger = logger
+
+        Dim report As New Report(Json.Read("rrpt\" & name & ".rrpt"), setting)
         report.Fill(New ReportDataSource(GetDataTable))
         Dim pages As ReportPages = report.GetPages()
 
         Dim preview As New FmPrintPreview(New Printer(pages))
         preview.ShowDialog()
+
+        MessageBox.Show(logger.ErrorStringBuilder.ToString)
     End Sub
 
     Public Function GetDataTable() As DataTable
@@ -37,4 +44,15 @@ Public Class Test_4_26_FieldExistCheck
         Return ret
     End Function
 
+    Public Class Logger
+        Implements IReportLogger
+        Public ErrorStringBuilder As New StringBuilder
+        Public Sub EvaluateError(exp As String, ex As EvalException) Implements IReportLogger.EvaluateError
+            ErrorStringBuilder.AppendLine("式：" & exp & " " & ex.GetType.ToString & " " & ex.Message)
+        End Sub
+        Public Sub ElementRenderingError(contentDesign As ContentDesign, design As ElementDesign, ex As Exception) Implements IReportLogger.ElementRenderingError
+        End Sub
+    End Class
+
 End Class
+
