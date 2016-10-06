@@ -41,6 +41,7 @@ Public Class Test_4_26_FieldExistCheck
         Dim ret As New DataTable()
         ret.Columns.Add("field1", GetType(String))
         ret.Rows.Add("正常に文字列が出力")
+        ret.Rows.Add("正常に文字列が出力")
         Return ret
     End Function
 
@@ -48,7 +49,10 @@ Public Class Test_4_26_FieldExistCheck
         Implements IReportLogger
         Public ErrorStringBuilder As New StringBuilder
         Public Sub EvaluateError(exp As String, ex As EvalException) Implements IReportLogger.EvaluateError
-            ErrorStringBuilder.AppendLine("式：" & exp & " " & ex.GetType.ToString & " " & ex.Message)
+            ErrorStringBuilder.AppendLine(ex.Message)
+            If ex.InnerException IsNot Nothing Then
+                ErrorStringBuilder.AppendLine(" " & ex.InnerException.GetType.ToString & ":" & ex.InnerException.Message)
+            End If
         End Sub
         Public Sub ElementRenderingError(contentDesign As ContentDesign, design As ElementDesign, ex As Exception) Implements IReportLogger.ElementRenderingError
         End Sub

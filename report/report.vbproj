@@ -77,6 +77,7 @@
     <Compile Include="component\GroupDesign.vb" />
     <Compile Include="component\IndexRange.vb" />
     <Compile Include="component\SubContentLayoutDesign.vb" />
+    <Compile Include="component\UnknownFieldException.vb" />
     <Compile Include="customizer\DefaultCustomizer.vb" />
     <Compile Include="customizer\IReportCustomizer.vb" />
     <Compile Include="data\GroupDataMap.vb" />

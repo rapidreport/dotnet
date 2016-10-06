@@ -141,9 +141,16 @@ Namespace component
                 Return True
             ElseIf Me.Keys IsNot Nothing Then
                 For Each key As String In Me.Keys
-                    If Not ReportUtil.Eq(data.Get(i, key), data.Get(j, key)) Then
-                        Return True
-                    End If
+                    Try
+                        If Not ReportUtil.Eq(data.Get(i, key), data.Get(j, key)) Then
+                            Return True
+                        End If
+                    Catch ex As UnknownFieldException
+                        Dim logger As IReportLogger = data.Report.Design.Setting.Logger
+                        If logger IsNot Nothing Then
+                            logger.EvaluateError("[Breaking group]", New EvalException("グループのブレーク処理中にエラーが発生しました。キー：" + key, ex))
+                        End If
+                    End Try
                 Next
             End If
             If Me.MaxCount > 0 AndAlso j - i >= Me.MaxCount Then

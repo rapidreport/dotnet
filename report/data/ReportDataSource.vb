@@ -20,7 +20,11 @@ Namespace data
                     Return v
                 End If
             Else
-                Return Nothing
+                If Report.Compatibility._4_25_UnknownFieldNull Then
+                    Return Nothing
+                Else
+                    Throw New UnknownFieldException("Unknown field: " + key)
+                End If
             End If
         End Function
 
