@@ -7,7 +7,7 @@
   },
   group: {
     id: "super_group",
-    keys: ["field7"],
+    keys: ["field7","field1"],
     contents: [
       {
         size: {

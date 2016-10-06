@@ -40,8 +40,8 @@ Public Class Test_4_26_FieldExistCheck
     Public Function GetDataTable() As DataTable
         Dim ret As New DataTable()
         ret.Columns.Add("field1", GetType(String))
-        ret.Rows.Add("正常に文字列が出力")
-        ret.Rows.Add("正常に文字列が出力")
+        ret.Rows.Add("正常に文字列が出力 頁1")
+        ret.Rows.Add("正常に文字列が出力 頁2")
         Return ret
     End Function
 
