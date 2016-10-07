@@ -23,7 +23,7 @@ Namespace data
                 If Report.Compatibility._4_25_UnknownFieldNull Then
                     Return Nothing
                 Else
-                    Throw New UnknownFieldException("Unknown field: " + key)
+                    Throw New UnknownFieldException("不明な列: " + key)
                 End If
             End If
         End Function
