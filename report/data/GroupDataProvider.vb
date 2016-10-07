@@ -67,10 +67,11 @@ Namespace data
                             Return Me.GroupDataMap.GetDataSource(groupId)
                         Else
                             If Not Me.groupDataCache.ContainsKey(groupId) Then
-                                Me.groupDataCache.Add( _
-                                  groupId, _
-                                  splitData(keyNames, _
-                                            Me.GroupDataMap.GetDataSource(groupId)))
+                                Me.groupDataCache.Add(
+                                  groupId,
+                                  splitData(keyNames,
+                                            Me.GroupDataMap.GetDataSource(groupId),
+                                            data.Report.Design.Setting.Logger))
                             End If
                             Dim keys As _KeyList = getKeys(keyNames, data)
                             If Me.groupDataCache(groupId).ContainsKey(keys) Then
@@ -121,25 +122,34 @@ Namespace data
             Return ret
         End Function
 
-        Private Shared Function getKeys( _
-          ByVal keyNames As List(Of String), _
-          ByVal dataSource As IReportDataSource, _
-          ByVal index As Integer) As _KeyList
+        Private Shared Function getKeys(
+          ByVal keyNames As List(Of String),
+          ByVal dataSource As IReportDataSource,
+          ByVal index As Integer,
+          ByVal logger As IReportLogger) As _KeyList
             Dim ret As New _KeyList
             For Each k As String In keyNames
-                ret.Add(ReportUtil.Regularize(dataSource.Get(index, k)))
+                Try
+                    ret.Add(ReportUtil.Regularize(dataSource.Get(index, k)))
+                Catch ex As UnknownFieldException
+                    If logger IsNot Nothing Then
+                        logger.unknownFieldError(ex)
+                    End If
+                    ret.Add(Nothing)
+                End Try
             Next
             Return ret
         End Function
 
-        Private Shared Function splitData( _
-          ByVal keyNames As List(Of String), _
-          ByVal dataSource As IReportDataSource) As Dictionary(Of _KeyList, IReportDataSource)
+        Private Shared Function splitData(
+          ByVal keyNames As List(Of String),
+          ByVal dataSource As IReportDataSource,
+          ByVal logger As IReportLogger) As Dictionary(Of _KeyList, IReportDataSource)
             Dim ret As New Dictionary(Of _KeyList, IReportDataSource)
             Dim keys As _KeyList = Nothing
             Dim beginIndex As Integer = 0
             For i As Integer = 0 To dataSource.Size - 1
-                Dim _keys As _KeyList = getKeys(keyNames, dataSource, i)
+                Dim _keys As _KeyList = getKeys(keyNames, dataSource, i, logger)
                 If Not _keys.Equals(keys) Then
                     If keys IsNot Nothing Then
                         ret.Add(keys, New SubDataSource(dataSource, beginIndex, i))

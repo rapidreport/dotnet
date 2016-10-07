@@ -157,6 +157,11 @@ Namespace data
                     Me.Logger.EvaluateError(key, ex)
                 End If
                 Return Nothing
+            Catch ex As UnknownFieldException
+                If Me.Logger IsNot Nothing Then
+                    Me.Logger.unknownFieldError(ex)
+                End If
+                Return Nothing
             End Try
         End Function
 
@@ -375,6 +380,11 @@ Namespace data
                     Me.Logger.EvaluateError(key, ex)
                 End If
                 Return New _SummaryResult(0, 0)
+            Catch ex As UnknownFieldException
+                If Me.Logger IsNot Nothing Then
+                    Me.Logger.unknownFieldError(ex)
+                End If
+                Return New _SummaryResult(0, 0)
             End Try
         End Function
 
@@ -411,6 +421,11 @@ Namespace data
             Catch ex As EvalException
                 If Me.Logger IsNot Nothing Then
                     Me.Logger.EvaluateError(key, ex)
+                End If
+                Return New _SummaryResult(0, 0)
+            Catch ex As UnknownFieldException
+                If Me.Logger IsNot Nothing Then
+                    Me.Logger.unknownFieldError(ex)
                 End If
                 Return New _SummaryResult(0, 0)
             End Try

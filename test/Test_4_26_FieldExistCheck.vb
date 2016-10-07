@@ -49,14 +49,12 @@ Public Class Test_4_26_FieldExistCheck
         Implements IReportLogger
         Public ErrorStringBuilder As New StringBuilder
         Public Sub EvaluateError(exp As String, ex As EvalException) Implements IReportLogger.EvaluateError
-            ErrorStringBuilder.AppendLine(ex.Message)
-            If ex.InnerException IsNot Nothing Then
-                ErrorStringBuilder.AppendLine(" " & ex.InnerException.GetType.ToString & ":" & ex.InnerException.Message)
-            End If
         End Sub
         Public Sub ElementRenderingError(contentDesign As ContentDesign, design As ElementDesign, ex As Exception) Implements IReportLogger.ElementRenderingError
+        End Sub
+        Public Sub unknownFieldError(ex As UnknownFieldException) Implements IReportLogger.unknownFieldError
+            ErrorStringBuilder.AppendLine(ex.Message)
         End Sub
     End Class
 
 End Class
-
