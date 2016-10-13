@@ -1,6 +1,4 @@
-﻿Imports jp.co.systembase.report.component
-
-Namespace data
+﻿Namespace data
 
     Public Class ReportDataRecord
 

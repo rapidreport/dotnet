@@ -150,7 +150,7 @@
     <Compile Include="Test_4_23_Rect.vb" />
     <Compile Include="Test_4_24_SubPage.vb" />
     <Compile Include="Test_4_25_Page.vb" />
-    <Compile Include="Test_4_26_FieldExistCheck.vb" />
+    <Compile Include="Test_4_26_UnknownField.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -233,7 +233,7 @@
     <None Include="rrpt\test_4_25_page.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="rrpt\test_4_26_field_exist_check.rrpt">
+    <None Include="rrpt\test_4_26_unknownfield.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

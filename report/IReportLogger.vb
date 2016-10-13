@@ -1,4 +1,5 @@
-﻿Imports jp.co.systembase.report.component
+﻿Imports jp.co.systembase.report.data
+Imports jp.co.systembase.report.component
 
 Public Interface IReportLogger
     Sub EvaluateError(ByVal exp As String, ByVal ex As EvalException)
@@ -6,5 +7,5 @@ Public Interface IReportLogger
       ByVal contentDesign As ContentDesign,
       ByVal design As ElementDesign,
       ByVal ex As Exception)
-    Sub unknownFieldError(ByVal ex As UnknownFieldException)
+    Sub UnknownFieldError(ByVal ex As UnknownFieldException)
 End Interface

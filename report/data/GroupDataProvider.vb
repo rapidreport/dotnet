@@ -133,7 +133,7 @@ Namespace data
                     ret.Add(ReportUtil.Regularize(dataSource.Get(index, k)))
                 Catch ex As UnknownFieldException
                     If logger IsNot Nothing Then
-                        logger.unknownFieldError(ex)
+                        logger.UnknownFieldError(ex)
                     End If
                     ret.Add(Nothing)
                 End Try

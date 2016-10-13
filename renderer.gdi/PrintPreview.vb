@@ -40,7 +40,7 @@ Public Class PrintPreview
     Private _FocusPageIndex As Integer = -1
     Private _FocusRegion As component.Region
 
-    Public Class CRenderBlock
+    Public Class RenderBlockClass
         Implements IDisposable
 
         Public ScrollPreserve As Boolean
@@ -226,14 +226,14 @@ Public Class PrintPreview
         End If
     End Sub
 
-    Private _RenderBlock As CRenderBlock = Nothing
-    Public Function RenderBlock() As CRenderBlock
+    Private _RenderBlock As RenderBlockClass = Nothing
+    Public Function RenderBlock() As RenderBlockClass
         Return RenderBlock(False)
     End Function
 
-    Public Function RenderBlock(scrollPreserve As Boolean) As CRenderBlock
+    Public Function RenderBlock(scrollPreserve As Boolean) As RenderBlockClass
         If Me._RenderBlock Is Nothing Then
-            Me._RenderBlock = New CRenderBlock(Me, scrollPreserve)
+            Me._RenderBlock = New RenderBlockClass(Me, scrollPreserve)
             Return Me._RenderBlock
         Else
             Return Nothing
