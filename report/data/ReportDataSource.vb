@@ -18,7 +18,7 @@
                     Return v
                 End If
             Else
-                If Report.Compatibility._4_25_UnknownFieldNull Then
+                If Report.Compatibility._4_25_UnknownFieldNeverThrow Then
                     Return Nothing
                 Else
                     Throw New UnknownFieldException(Me, i, key)

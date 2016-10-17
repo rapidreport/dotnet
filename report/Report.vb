@@ -64,7 +64,7 @@ Public Class Report
         Public Shared _4_6_PdfFontBold As Boolean = False
         Public Shared _4_13_2_AverageZero As Boolean = False
         Public Shared _4_15_PreviewSearchDisabled As Boolean = False
-        Public Shared _4_25_UnknownFieldNull As Boolean = False
+        Public Shared _4_25_UnknownFieldNeverThrow As Boolean = False
     End Class
 
     Public Shared SharedContents As New Dictionary(Of String, ContentDesign)
