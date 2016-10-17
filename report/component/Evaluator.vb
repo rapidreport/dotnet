@@ -145,11 +145,11 @@ Namespace component
                 Dim dataSource As IReportDataSource = scopeData.GetWrapperDataSource(unitGroupDesign)
                 Dim indexRange As IndexRange = scopeData.GetDataIndexRange(unitGroupDesign)
                 Dim dataCache As DataCache = Me.BasicContext.Report.DataCache
-                Dim setting As ReportSetting = Me.BasicContext.Report.Design.Setting
+                Dim logger As IReportLogger = Me.BasicContext.Report.Design.Setting.Logger
                 If indexRange IsNot Nothing Then
-                    Return New ReportData(dataSource, indexRange.BeginIndex, indexRange.EndIndex, dataCache, setting)
+                    Return New ReportData(dataSource, indexRange.BeginIndex, indexRange.EndIndex, dataCache, logger)
                 Else
-                    Return New ReportData(dataSource, dataCache, setting)
+                    Return New ReportData(dataSource, dataCache, logger)
                 End If
             End If
         End Function

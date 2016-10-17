@@ -54,24 +54,28 @@ Namespace component
         End Sub
 
         Public Function [Get](ByVal i As Integer) As Object
-            If Not TypeOf Me.Data.DataSource Is INoCache Then
-                With Me.Report.DataCache.CustomField(Me.Data, Key)
-                    If .ContainsKey(i) Then
-                        Return .Item(i)
-                    Else
-                        Dim ret As Object = Me.evalTry(i)
-                        .Add(i, ret)
-                        Return ret
-                    End If
-                End With
-            Else
-                Return Me.evalTry(i)
-            End If
+            Try
+                If Not TypeOf Me.Data.DataSource Is INoCache Then
+                    With Me.Report.DataCache.CustomField(Me.Data, Key)
+                        If .ContainsKey(i) Then
+                            Return .Item(i)
+                        Else
+                            Dim ret As Object = Me.eval(i)
+                            .Add(i, ret)
+                            Return ret
+                        End If
+                    End With
+                Else
+                    Return Me.eval(i)
+                End If
+            Catch ex As EvalException
+                Return Nothing
+            End Try
         End Function
 
-        Private Function evalTry(ByVal i As Integer) As Object
+        Private Function eval(ByVal i As Integer) As Object
             Dim r As New ReportDataRecord(Me.Data, i)
-            Return New Evaluator(Me.Report, Me.Data, r).EvalTry(Me.Exp)
+            Return New Evaluator(Me.Report, Me.Data, r).Eval(Me.Exp)
         End Function
 
     End Class

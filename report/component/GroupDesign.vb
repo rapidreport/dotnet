@@ -101,59 +101,24 @@ Namespace component
         End Sub
 
         Public Function DataSplit(ByVal data As ReportData) As List(Of ReportData)
-            If Me.unbreakable Then
-                Return Me._getWholeData(data)
-            Else
-                Try
-                    Dim ret As New List(Of ReportData)
-                    Dim i As Integer = 0
-                    Do While i < data.Size
-                        Dim j As Integer = i + 1
-                        Do While j < data.Size
-                            If Me.Detail Then
-                                Exit Do
-                            ElseIf Me.Keys IsNot Nothing Then
-                                For Each key As String In Me.Keys
-                                    If data.IsBreak(i, j, Me.Keys) Then
-                                        Exit Do
-                                    End If
-                                Next
-                            End If
-                            If Me.MaxCount > 0 AndAlso j - i >= Me.MaxCount Then
-                                Exit Do
-                            End If
-                            j += 1
-                        Loop
-                        ret.Add(ReportData.GetPartialData(data, i, j))
-                        i = j
-                    Loop
-                    Return ret
-                Catch ex As EvalException
-                    If Me.ReportDesign.Setting.Logger IsNot Nothing Then
-                        Dim m As String = "(ブレーク処理:"
-                        For i As Integer = 0 To Me.Keys.Count - 1
-                            If i > 0 Then
-                                m &= ","
-                            End If
-                            m &= Me.Keys(i)
-                        Next
-                        m &= ")"
-                        Me.ReportDesign.Setting.Logger.EvaluateError(m, ex)
-                    End If
-                    Return _getWholeData(data)
-                Catch ex As UnknownFieldException
-                    If Me.ReportDesign.Setting.Logger IsNot Nothing Then
-                        Me.ReportDesign.Setting.Logger.UnknownFieldError(ex)
-                    End If
-                    Return _getWholeData(data)
-                End Try
-            End If
-        End Function
-
-        Private Function _getWholeData(ByVal data As ReportData) As List(Of ReportData)
             Dim ret As New List(Of ReportData)
-            If data.Size > 0 Then
-                ret.Add(New ReportData(data))
+            If Me.unbreakable Then
+                If data.Size > 0 Then
+                    ret.Add(New ReportData(data))
+                End If
+            Else
+                Dim i As Integer = 0
+                Do While (i < data.Size)
+                    Dim j As Integer = i + 1
+                    Do While (j < data.Size)
+                        If Me.isBreak(data, i, j) Then
+                            Exit Do
+                        End If
+                        j += 1
+                    Loop
+                    ret.Add(ReportData.GetPartialData(data, i, j))
+                    i = j
+                Loop
             End If
             Return ret
         End Function
