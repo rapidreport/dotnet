@@ -55,6 +55,7 @@ Namespace component
 
         Public Function [Get](ByVal i As Integer) As Object
             Try
+                Me.Report.CustomFieldStack.Push(Me)
                 If Not TypeOf Me.Data.DataSource Is INoCache Then
                     With Me.Report.Context.DataCache.CustomField(Me.Data, Key)
                         If .ContainsKey(i) Then
@@ -69,7 +70,13 @@ Namespace component
                     Return Me.eval(i)
                 End If
             Catch ex As EvalException
+                Dim logger As IReportLogger = Me.Report.Design.Setting.Logger
+                If logger IsNot Nothing Then
+                    logger.EvaluateError("カスタム列：" & Key, ex)
+                End If
                 Return Nothing
+            Finally
+                Me.Report.CustomFieldStack.Pop()
             End Try
         End Function
 

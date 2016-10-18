@@ -72,7 +72,6 @@ Public Class Report
             Me.report = report
         End Sub
         Public DataCache As New DataCache
-        Public CustomFieldStack As New CustomField.Stack
         Public WrapperDataSourceMap As New Dictionary(Of GroupDesign, WrapperDataSource)
         Public Function GetLogger() As IReportLogger
             Return Me.report.Design.Setting.Logger
@@ -89,6 +88,7 @@ Public Class Report
     Public GlobalScope As New Dictionary(Of String, Object)
     Public Filled As Boolean = False
     Public CurrentTime As Date = Now
+    Public CustomFieldStack As New CustomField.Stack
     Public Context As New ContextClass(Me)
 
     Public InDesigner As Boolean = False

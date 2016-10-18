@@ -134,30 +134,11 @@ Namespace data
                 Throw New ArgumentOutOfRangeException
             End If
             Dim customField As CustomField = Me.findCustomField(key)
-            Try
-                If customField IsNot Nothing Then
-                    Me.Context.CustomFieldStack.Push(customField)
-                    Try
-                        Return customField.Get(customField.Data.TransIndex(Me, i))
-                    Finally
-                        Me.Context.CustomFieldStack.Pop()
-                    End Try
-                Else
-                    Return Me.DataSource.Get(i + Me.BeginIndex, key)
-                End If
-            Catch ex As EvalException
-                Dim logger As IReportLogger = Me.Context.GetLogger
-                If logger IsNot Nothing Then
-                    logger.EvaluateError(key, ex)
-                End If
-                Return Nothing
-            Catch ex As UnknownFieldException
-                Dim logger As IReportLogger = Me.Context.GetLogger
-                If logger IsNot Nothing Then
-                    logger.UnknownFieldError(ex)
-                End If
-                Return Nothing
-            End Try
+            If customField IsNot Nothing Then
+                Return customField.Get(customField.Data.TransIndex(Me, i))
+            Else
+                Return getTry(i + Me.BeginIndex, key)
+            End If
         End Function
 
         Public Function Size() As Integer Implements IReportDataSource.Size
@@ -166,6 +147,18 @@ Namespace data
             Else
                 Return Me.EndIndex - Me.BeginIndex
             End If
+        End Function
+
+        Private Function getTry(ByVal i As Integer, ByVal key As String) As Object
+            Try
+                Return Me.DataSource.Get(i, key)
+            Catch ex As UnknownFieldException
+                Dim logger As IReportLogger = Me.Context.GetLogger
+                If logger IsNot Nothing Then
+                    logger.UnknownFieldError(ex)
+                End If
+                Return Nothing
+            End Try
         End Function
 
         Private Function findCustomField(ByVal key As String) As CustomField
@@ -309,125 +302,81 @@ Namespace data
             Dim _beginIndex As Integer
             Dim _endIndex As Integer
             Dim customField As CustomField = Me.findCustomField(key)
-            Try
+            With Nothing
+                Dim dc As DataCache = Me.Context.DataCache
                 If customField IsNot Nothing Then
-                    Me.Context.CustomFieldStack.Push(customField)
+                    summaryCache = dc.CustomFieldSummary(customField.Data, key)
+                    countCache = dc.CustomFieldCount(customField.Data, key)
+                    _beginIndex = customField.Data.TransIndex(Me, 0)
+                    _endIndex = customField.Data.TransIndex(Me, Me.Size)
+                Else
+                    summaryCache = dc.Summary(Me.DataSource, key)
+                    countCache = dc.Count(Me.DataSource, key)
+                    _beginIndex = Me.BeginIndex
+                    _endIndex = Me.EndIndex
                 End If
-                With Nothing
-                    Dim dc As DataCache = Me.Context.DataCache
-                    If customField IsNot Nothing Then
-                        summaryCache = dc.CustomFieldSummary(customField.Data, key)
-                        countCache = dc.CustomFieldCount(customField.Data, key)
-                        _beginIndex = customField.Data.TransIndex(Me, 0)
-                        _endIndex = customField.Data.TransIndex(Me, Me.Size)
+            End With
+            With Nothing
+                Dim segf As Integer = _beginIndex >> 8
+                Dim segt As Integer = _endIndex >> 8
+                For i As Integer = segf To segt
+                    Dim offf As Integer = IIf(i = segf, _beginIndex And &HFF, 0)
+                    Dim offt As Integer = IIf(i = segt, _endIndex And &HFF, &H100) - 1
+                    Dim entire As Boolean = (offf = 0 And offt = &HFF)
+                    If entire AndAlso summaryCache.ContainsKey(i) Then
+                        summary += summaryCache(i)
+                        count += countCache(i)
                     Else
-                        summaryCache = dc.Summary(Me.DataSource, key)
-                        countCache = dc.Count(Me.DataSource, key)
-                        _beginIndex = Me.BeginIndex
-                        _endIndex = Me.EndIndex
-                    End If
-                End With
-                Try
-                    Dim segf As Integer = _beginIndex >> 8
-                    Dim segt As Integer = _endIndex >> 8
-                    For i As Integer = segf To segt
-                        Dim offf As Integer = IIf(i = segf, _beginIndex And &HFF, 0)
-                        Dim offt As Integer = IIf(i = segt, _endIndex And &HFF, &H100) - 1
-                        Dim entire As Boolean = (offf = 0 And offt = &HFF)
-                        If entire AndAlso summaryCache.ContainsKey(i) Then
-                            summary += summaryCache(i)
-                            count += countCache(i)
-                        Else
-                            Dim _summary As Decimal = 0
-                            Dim _count As Integer = 0
-                            For j As Integer = offf To offt
-                                Dim o As Object = Nothing
-                                Dim _i As Integer = (i << 8) Or j
-                                If customField IsNot Nothing Then
-                                    o = customField.Get(_i)
-                                Else
-                                    o = Me.DataSource.Get(_i, key)
-                                End If
-                                If o IsNot Nothing Then
-                                    Dim _o As Object = ReportUtil.Regularize(o)
-                                    If TypeOf _o Is Decimal Then
-                                        _summary += _o
-                                    End If
-                                    _count += 1
-                                End If
-                            Next
-                            summary += _summary
-                            count += _count
-                            If entire Then
-                                summaryCache.Add(i, _summary)
-                                countCache.Add(i, _count)
+                        Dim _summary As Decimal = 0
+                        Dim _count As Integer = 0
+                        For j As Integer = offf To offt
+                            Dim o As Object = Nothing
+                            Dim _i As Integer = (i << 8) Or j
+                            If customField IsNot Nothing Then
+                                o = customField.Get(_i)
+                            Else
+                                o = Me.getTry(_i, key)
                             End If
+                            If o IsNot Nothing Then
+                                Dim _o As Object = ReportUtil.Regularize(o)
+                                If TypeOf _o Is Decimal Then
+                                    _summary += _o
+                                End If
+                                _count += 1
+                            End If
+                        Next
+                        summary += _summary
+                        count += _count
+                        If entire Then
+                            summaryCache.Add(i, _summary)
+                            countCache.Add(i, _count)
                         End If
-                    Next
-                Finally
-                    If customField IsNot Nothing Then
-                        Me.Context.CustomFieldStack.Pop()
                     End If
-                End Try
-                Return New _SummaryResult(summary, count)
-            Catch ex As EvalException
-                Dim logger As IReportLogger = Me.Context.GetLogger
-                If logger IsNot Nothing Then
-                    logger.EvaluateError(key, ex)
-                End If
-                Return New _SummaryResult(0, 0)
-            Catch ex As UnknownFieldException
-                Dim logger As IReportLogger = Me.Context.GetLogger
-                If logger IsNot Nothing Then
-                    logger.UnknownFieldError(ex)
-                End If
-                Return New _SummaryResult(0, 0)
-            End Try
+                Next
+            End With
+            Return New _SummaryResult(summary, count)
         End Function
 
         Private Function getSummary_NoCache(ByVal key As String) As _SummaryResult
             Dim summary As Decimal = 0
             Dim count As Integer = 0
             Dim customField As CustomField = Me.findCustomField(key)
-            Try
+            For i As Integer = 0 To Me.Size - 1
+                Dim o As Object
                 If customField IsNot Nothing Then
-                    Me.Context.CustomFieldStack.Push(customField)
+                    o = customField.Get(customField.Data.TransIndex(Me, i))
+                Else
+                    o = getTry(i + Me.BeginIndex, key)
                 End If
-                Try
-                    For i As Integer = 0 To Me.Size - 1
-                        Dim o As Object
-                        If customField IsNot Nothing Then
-                            o = customField.Get(customField.Data.TransIndex(Me, i))
-                        Else
-                            o = Me.DataSource.Get(i + Me.BeginIndex, key)
-                        End If
-                        If o IsNot Nothing Then
-                            Dim _o As Object = ReportUtil.Regularize(o)
-                            If TypeOf _o Is Decimal Then
-                                summary += _o
-                            End If
-                            count += 1
-                        End If
-                    Next
-                Finally
-                    If customField IsNot Nothing Then
-                        Me.Context.CustomFieldStack.Pop()
+                If o IsNot Nothing Then
+                    Dim _o As Object = ReportUtil.Regularize(o)
+                    If TypeOf _o Is Decimal Then
+                        summary += _o
                     End If
-                End Try
-                Return New _SummaryResult(summary, count)
-            Catch ex As EvalException
-                Dim logger As IReportLogger = Me.Context.GetLogger
-                If logger IsNot Nothing Then
-                    logger.EvaluateError(key, ex)
+                    count += 1
                 End If
-                Return New _SummaryResult(0, 0)
-            Catch ex As UnknownFieldException
-                Dim logger As IReportLogger = Me.Context.GetLogger
-                If logger IsNot Nothing Then
-                    logger.UnknownFieldError(ex)
-                End If
-                Return New _SummaryResult(0, 0)
-            End Try
+            Next
+            Return New _SummaryResult(summary, count)
         End Function
 
         Public Function GetId() As String
