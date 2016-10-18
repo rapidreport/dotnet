@@ -106,11 +106,11 @@ Namespace component
                 If _exp.Length = 0 Then
                     Return Nothing
                 End If
-                If Not Me.BasicContext.Data.DataCache.Expression.ContainsKey(_exp) Then
+                If Not Me.BasicContext.Data.Context.DataCache.Expression.ContainsKey(_exp) Then
                     Dim parser As New Parser(Me.BasicContext.Report.Design.Setting)
-                    Me.BasicContext.Data.DataCache.Expression.Add(_exp, parser.Parse(_exp))
+                    Me.BasicContext.Data.Context.DataCache.Expression.Add(_exp, parser.Parse(_exp))
                 End If
-                Return Me.Eval(Me.BasicContext.Data.DataCache.Expression(_exp))
+                Return Me.Eval(Me.BasicContext.Data.Context.DataCache.Expression(_exp))
             Catch ex As Exception
                 Dim _ex As EvalException
                 If TypeOf ex Is EvalException Then
@@ -144,12 +144,11 @@ Namespace component
                 End If
                 Dim dataSource As IReportDataSource = scopeData.GetWrapperDataSource(unitGroupDesign)
                 Dim indexRange As IndexRange = scopeData.GetDataIndexRange(unitGroupDesign)
-                Dim dataCache As DataCache = Me.BasicContext.Report.DataCache
-                Dim logger As IReportLogger = Me.BasicContext.Report.Design.Setting.Logger
+                Dim context As Report.ContextClass = Me.BasicContext.Report.Context
                 If indexRange IsNot Nothing Then
-                    Return New ReportData(dataSource, indexRange.BeginIndex, indexRange.EndIndex, dataCache, logger)
+                    Return New ReportData(dataSource, indexRange.BeginIndex, indexRange.EndIndex, context)
                 Else
-                    Return New ReportData(dataSource, dataCache, logger)
+                    Return New ReportData(dataSource, context)
                 End If
             End If
         End Function

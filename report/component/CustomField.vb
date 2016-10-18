@@ -56,7 +56,7 @@ Namespace component
         Public Function [Get](ByVal i As Integer) As Object
             Try
                 If Not TypeOf Me.Data.DataSource Is INoCache Then
-                    With Me.Report.DataCache.CustomField(Me.Data, Key)
+                    With Me.Report.Context.DataCache.CustomField(Me.Data, Key)
                         If .ContainsKey(i) Then
                             Return .Item(i)
                         Else

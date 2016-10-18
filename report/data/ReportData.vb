@@ -11,35 +11,34 @@ Namespace data
         Public Group As Group = Nothing
         Public BeginIndex As Integer = -1
         Public EndIndex As Integer = -1
-        Public DataCache As DataCache
-        Public Logger As IReportLogger
+        Public Context As Report.ContextClass
 
-        Public Sub New(ByVal dataSource As IReportDataSource, ByVal dataCache As DataCache, ByVal logger As IReportLogger)
-            Me.initialize(dataSource, 0, dataSource.Size, Nothing, Nothing, dataCache, logger)
+        Public Sub New(ByVal dataSource As IReportDataSource, ByVal context As Report.ContextClass)
+            Me.initialize(dataSource, 0, dataSource.Size, Nothing, Nothing, context)
         End Sub
 
-        Public Sub New(ByVal dataSource As IReportDataSource, ByVal beginIndex As Integer, ByVal endIndex As Integer, ByVal dataCache As DataCache, ByVal logger As IReportLogger)
-            Me.initialize(dataSource, beginIndex, endIndex, Nothing, Nothing, dataCache, logger)
+        Public Sub New(ByVal dataSource As IReportDataSource, ByVal beginIndex As Integer, ByVal endIndex As Integer, ByVal context As Report.ContextClass)
+            Me.initialize(dataSource, beginIndex, endIndex, Nothing, Nothing, context)
         End Sub
 
         Public Sub New(ByVal dataSource As IReportDataSource, ByVal group As Group)
-            Me.initialize(dataSource, 0, dataSource.Size, group.GetReport, group, group.GetReport.DataCache, group.GetReport.Design.Setting.Logger)
+            Me.initialize(dataSource, 0, dataSource.Size, group.GetReport, group, group.GetReport.Context)
         End Sub
 
         Public Sub New(ByVal dataSource As IReportDataSource, ByVal report As Report, ByVal group As Group)
-            Me.initialize(dataSource, 0, dataSource.Size, report, group, report.DataCache, report.Design.Setting.Logger)
+            Me.initialize(dataSource, 0, dataSource.Size, report, group, report.Context)
         End Sub
 
         Public Sub New(ByVal dataSource As IReportDataSource, ByVal beginIndex As Integer, ByVal endIndex As Integer, ByVal report As Report, ByVal group As Group)
-            Me.initialize(dataSource, beginIndex, endIndex, report, group, report.DataCache, report.Design.Setting.Logger)
+            Me.initialize(dataSource, beginIndex, endIndex, report, group, report.Context)
         End Sub
 
         Public Sub New(ByVal data As ReportData)
-            Me.initialize(data.DataSource, data.BeginIndex, data.EndIndex, data.Report, data.Group, data.DataCache, data.Logger)
+            Me.initialize(data.DataSource, data.BeginIndex, data.EndIndex, data.Report, data.Group, data.Context)
         End Sub
 
         Public Sub New(ByVal data As ReportData, ByVal beginIndex As Integer, ByVal endIndex As Integer)
-            Me.initialize(data.DataSource, beginIndex, endIndex, data.Report, data.Group, data.DataCache, data.Logger)
+            Me.initialize(data.DataSource, beginIndex, endIndex, data.Report, data.Group, data.Context)
         End Sub
 
         Public Shared Function GetPartialData(ByVal data As ReportData, ByVal beginIndex As Integer, ByVal endIndex As Integer)
@@ -60,13 +59,11 @@ Namespace data
           ByVal endIndex As Integer, _
           ByVal report As Report, _
           ByVal group As Group, _
-          ByVal dataCache As DataCache, _
-          ByVal logger As IReportLogger)
+          ByVal context As Report.ContextClass)
             Me.DataSource = dataSource
             Me.Report = report
             Me.Group = group
-            Me.DataCache = dataCache
-            Me.Logger = logger
+            Me.Context = context
             If beginIndex >= 0 And beginIndex < endIndex Then
                 Me.BeginIndex = beginIndex
                 Me.EndIndex = endIndex
@@ -79,10 +76,10 @@ Namespace data
         Public Sub SetGroup(ByVal group As Group)
             Me.Group = group
             Dim groupDesign As GroupDesign = group.GetDesign
-            If Not Me.Report.WrapperDataSourceMap.ContainsKey(groupDesign) Then
-                Me.Report.WrapperDataSourceMap.Add(groupDesign, New WrapperDataSource)
+            If Not Me.Context.WrapperDataSourceMap.ContainsKey(groupDesign) Then
+                Me.Context.WrapperDataSourceMap.Add(groupDesign, New WrapperDataSource)
             End If
-            Dim wrapperDataSource As WrapperDataSource = Me.Report.WrapperDataSourceMap(groupDesign)
+            Dim wrapperDataSource As WrapperDataSource = Me.Context.WrapperDataSourceMap(groupDesign)
             Dim index As Integer = wrapperDataSource.DataList.Count
             Me.Group.TraversalIndex = index
             With Nothing
@@ -139,27 +136,25 @@ Namespace data
             Dim customField As CustomField = Me.findCustomField(key)
             Try
                 If customField IsNot Nothing Then
-                    If Me.Report IsNot Nothing Then
-                        Me.Report.CustomFieldStack.Push(customField)
-                    End If
+                    Me.Context.CustomFieldStack.Push(customField)
                     Try
                         Return customField.Get(customField.Data.TransIndex(Me, i))
                     Finally
-                        If Me.Report IsNot Nothing Then
-                            Me.Report.CustomFieldStack.Pop()
-                        End If
+                        Me.Context.CustomFieldStack.Pop()
                     End Try
                 Else
                     Return Me.DataSource.Get(i + Me.BeginIndex, key)
                 End If
             Catch ex As EvalException
-                If Me.Logger IsNot Nothing Then
-                    Me.Logger.EvaluateError(key, ex)
+                Dim logger As IReportLogger = Me.Context.GetLogger
+                If logger IsNot Nothing Then
+                    logger.EvaluateError(key, ex)
                 End If
                 Return Nothing
             Catch ex As UnknownFieldException
-                If Me.Logger IsNot Nothing Then
-                    Me.Logger.unknownFieldError(ex)
+                Dim logger As IReportLogger = Me.Context.GetLogger
+                If logger IsNot Nothing Then
+                    logger.UnknownFieldError(ex)
                 End If
                 Return Nothing
             End Try
@@ -315,11 +310,11 @@ Namespace data
             Dim _endIndex As Integer
             Dim customField As CustomField = Me.findCustomField(key)
             Try
-                If Me.Report IsNot Nothing And customField IsNot Nothing Then
-                    Me.Report.CustomFieldStack.Push(customField)
+                If customField IsNot Nothing Then
+                    Me.Context.CustomFieldStack.Push(customField)
                 End If
                 With Nothing
-                    Dim dc As DataCache = Me.DataCache
+                    Dim dc As DataCache = Me.Context.DataCache
                     If customField IsNot Nothing Then
                         summaryCache = dc.CustomFieldSummary(customField.Data, key)
                         countCache = dc.CustomFieldCount(customField.Data, key)
@@ -370,19 +365,21 @@ Namespace data
                         End If
                     Next
                 Finally
-                    If Me.Report IsNot Nothing And customField IsNot Nothing Then
-                        Me.Report.CustomFieldStack.Pop()
+                    If customField IsNot Nothing Then
+                        Me.Context.CustomFieldStack.Pop()
                     End If
                 End Try
                 Return New _SummaryResult(summary, count)
             Catch ex As EvalException
-                If Me.Logger IsNot Nothing Then
-                    Me.Logger.EvaluateError(key, ex)
+                Dim logger As IReportLogger = Me.Context.GetLogger
+                If logger IsNot Nothing Then
+                    logger.EvaluateError(key, ex)
                 End If
                 Return New _SummaryResult(0, 0)
             Catch ex As UnknownFieldException
-                If Me.Logger IsNot Nothing Then
-                    Me.Logger.unknownFieldError(ex)
+                Dim logger As IReportLogger = Me.Context.GetLogger
+                If logger IsNot Nothing Then
+                    logger.UnknownFieldError(ex)
                 End If
                 Return New _SummaryResult(0, 0)
             End Try
@@ -393,8 +390,8 @@ Namespace data
             Dim count As Integer = 0
             Dim customField As CustomField = Me.findCustomField(key)
             Try
-                If Me.Report IsNot Nothing And customField IsNot Nothing Then
-                    Me.Report.CustomFieldStack.Push(customField)
+                If customField IsNot Nothing Then
+                    Me.Context.CustomFieldStack.Push(customField)
                 End If
                 Try
                     For i As Integer = 0 To Me.Size - 1
@@ -413,19 +410,21 @@ Namespace data
                         End If
                     Next
                 Finally
-                    If Me.Report IsNot Nothing And customField IsNot Nothing Then
-                        Me.Report.CustomFieldStack.Pop()
+                    If customField IsNot Nothing Then
+                        Me.Context.CustomFieldStack.Pop()
                     End If
                 End Try
                 Return New _SummaryResult(summary, count)
             Catch ex As EvalException
-                If Me.Logger IsNot Nothing Then
-                    Me.Logger.EvaluateError(key, ex)
+                Dim logger As IReportLogger = Me.Context.GetLogger
+                If logger IsNot Nothing Then
+                    logger.EvaluateError(key, ex)
                 End If
                 Return New _SummaryResult(0, 0)
             Catch ex As UnknownFieldException
-                If Me.Logger IsNot Nothing Then
-                    Me.Logger.unknownFieldError(ex)
+                Dim logger As IReportLogger = Me.Context.GetLogger
+                If logger IsNot Nothing Then
+                    logger.UnknownFieldError(ex)
                 End If
                 Return New _SummaryResult(0, 0)
             End Try
@@ -544,7 +543,7 @@ Namespace data
         End Function
 
         Public Function GetWrapperDataSource(ByVal groupDesign As GroupDesign) As WrapperDataSource
-            Return Me.Report.WrapperDataSourceMap(groupDesign)
+            Return Me.Context.WrapperDataSourceMap(groupDesign)
         End Function
 
     End Class

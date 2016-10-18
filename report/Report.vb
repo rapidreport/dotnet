@@ -66,6 +66,19 @@ Public Class Report
         Public Shared _4_15_PreviewSearchDisabled As Boolean = False
     End Class
 
+    Public Class ContextClass
+        Private report As Report
+        Public Sub New(report As Report)
+            Me.report = report
+        End Sub
+        Public DataCache As New DataCache
+        Public CustomFieldStack As New CustomField.Stack
+        Public WrapperDataSourceMap As New Dictionary(Of GroupDesign, WrapperDataSource)
+        Public Function GetLogger() As IReportLogger
+            Return Me.report.Design.Setting.Logger
+        End Function
+    End Class
+
     Public Shared SharedContents As New Dictionary(Of String, ContentDesign)
 
     Public Design As ReportDesign
@@ -74,13 +87,11 @@ Public Class Report
     Public GroupDataProvider As IGroupDataProvider = Nothing
     Public Groups As Groups = Nothing
     Public GlobalScope As New Dictionary(Of String, Object)
-    Public DataCache As New DataCache
     Public Filled As Boolean = False
-    Public InDesigner As Boolean = False
-    Public CustomFieldStack As New CustomField.Stack
     Public CurrentTime As Date = Now
+    Public Context As New ContextClass(Me)
 
-    Public WrapperDataSourceMap As New Dictionary(Of GroupDesign, WrapperDataSource)
+    Public InDesigner As Boolean = False
 
     Private _SubPageMap As New Dictionary(Of String, ReportPages)
 
