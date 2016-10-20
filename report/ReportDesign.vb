@@ -11,7 +11,7 @@ Public Class ReportDesign
     Public Caption As String = Nothing
     Public Id As String = Nothing
     Public PaperDesign As PaperDesign = Nothing
-    Public DefaultFont As TextDesign.FontDesign = Nothing
+    Public DefaultFontDesign As FontDesign = Nothing
     Public DefaultLineWidth As Single = 0
     Public PageCapacity As Integer = 0
     Public ResetPageCount As Boolean = False
@@ -44,7 +44,7 @@ Public Class ReportDesign
         Else
             Me.PaperDesign = New PaperDesign
         End If
-        Me.DefaultFont = New TextDesign.FontDesign(CType(Me.Desc("font"), Hashtable))
+        Me.DefaultFontDesign = New FontDesign(CType(Me.Desc("font"), Hashtable))
         If Me.Desc.ContainsKey("line_width") Then
             Me.DefaultLineWidth = Me.Desc("line_width")
         Else

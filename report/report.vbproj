@@ -74,6 +74,7 @@
     <Compile Include="component\ContentDesign.vb" />
     <Compile Include="component\CustomField.vb" />
     <Compile Include="component\ElementDesigns.vb" />
+    <Compile Include="component\FontDesign.vb" />
     <Compile Include="component\GroupDesign.vb" />
     <Compile Include="component\IndexRange.vb" />
     <Compile Include="component\SubContentLayoutDesign.vb" />
