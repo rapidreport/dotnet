@@ -35,12 +35,8 @@ Namespace elementrenderer
             If renderer.Setting.ReplaceBackslashToYen Then
                 text = text.Replace("\", ChrW(&HA5))
             End If
-            Dim _region As Region = region.ToPointScale(reportDesign)
-            Dim pdfText As New PdfText(
-              renderer, _
-              _region, _
-              New TextDesign(reportDesign, design), _
-              text)
+            Dim pdfText As New PdfText()
+            pdfText.Initialize(renderer, reportDesign, region, design, text)
             pdfText.Draw()
         End Sub
     End Class

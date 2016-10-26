@@ -21,17 +21,18 @@ Public Class PdfText
     Protected Const VERTICAL_ROTATE_CHARS As String = "～…‥｜ーｰ(){}[]<>（）｛｝「」＜＞"
     Protected Const VERTICAL_SHIFT_CHARS As String = "。、"
 
-    Public Sub New( _
+    Public Overridable Sub Initialize( _
       ByVal renderer As PdfRenderer, _
+      ByVal reportDesign As ReportDesign, _
       ByVal region As Region, _
-      ByVal textDesign As TextDesign, _
+      ByVal design As ElementDesign, _
       ByVal text As String)
         Me.Renderer = renderer
-        Me.Region = region
-        Me.TextDesign = textDesign
+        Me.Region = region.ToPointScale(reportDesign)
+        Me.TextDesign = New TextDesign(reportDesign, design)
         Me.Text = text
         Me.ContentByte = Me.Renderer.Writer.DirectContent
-        Me.Font = Me.Renderer.Setting.GetFont(textDesign.Font.Name)
+        Me.Font = Me.Renderer.Setting.GetFont(TextDesign.Font.Name)
     End Sub
 
     Public Overridable Sub Draw()
@@ -95,18 +96,18 @@ Public Class PdfText
         Dim fontSize As Single = TextDesign.Font.Size
         Dim texts As List(Of String) = _SplitByCr(Region, TextDesign, Text, False)
         Dim y As Single = 0
-        Select Case textDesign.VAlign
+        Select Case TextDesign.VAlign
             Case Report.EVAlign.TOP
                 y = 0
             Case Report.EVAlign.CENTER
-                y = (region.GetHeight - (fontSize * texts.Count)) / 2
+                y = (Region.GetHeight - (fontSize * texts.Count)) / 2
                 y = Math.Max(y, 0)
             Case Report.EVAlign.BOTTOM
-                y = region.GetHeight - (fontSize * texts.Count) - MARGIN_BOTTOM
+                y = Region.GetHeight - (fontSize * texts.Count) - MARGIN_BOTTOM
                 y = Math.Max(y, 0)
         End Select
         y += OFFSET_Y
-        Dim rows As Integer = Fix((region.GetHeight + TOLERANCE) / fontSize)
+        Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / fontSize)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, rows) - 1, 0)
             Dim t As String = texts(i)
             Dim m As List(Of Single) = _GetDistributeMap(Region.GetWidth - MARGIN_X * 2, t.Length, fontSize)
@@ -117,7 +118,7 @@ Public Class PdfText
                 _DrawText(fontSize, c, m(j) - _GetTextWidth(Renderer.Setting, TextDesign, Font, fontSize, c) / 2 + MARGIN_X, y)
             Next
             ContentByte.EndText()
-            If textDesign.Font.Underline Then
+            If TextDesign.Font.Underline Then
                 Dim lw As Single = (fontSize / 13.4) * Renderer.Setting.UnderlineWidthCoefficient
                 _DrawUnderline(fontSize, MARGIN_X, y, Region.GetWidth - MARGIN_X * 2, lw)
             End If
@@ -125,7 +126,7 @@ Public Class PdfText
         Next
     End Sub
 
-    Private Sub _Draw_DistributeVertical()
+    Protected Overridable Sub _Draw_DistributeVertical()
         Dim fontSize As Single = TextDesign.Font.Size
         Dim texts As List(Of String) = _SplitByCr(Region, TextDesign, Text, False)
         Dim x As Single = 0
