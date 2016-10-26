@@ -36,15 +36,14 @@ Namespace elementrenderer
             If text Is Nothing Then
                 Exit Sub
             End If
-            Dim _region As Region = region.ToPointScale(reportDesign)
-            Dim gdiText As New GdiText( _
-              env.Graphics, _
-              _region, _
-              env.Setting, _
-              New TextDesign(reportDesign, design), _
-              text)
+            Dim gdiText As GdiText = _GetGdiText()
+            gdiText.Initialize(env, reportDesign, region, design, text)
             gdiText.Draw()
         End Sub
+
+        Protected Overridable Function _GetGdiText() As GdiText
+            Return New GdiText()
+        End Function
 
     End Class
 

@@ -13,16 +13,16 @@ Public Class GdiText
     Protected Const TOLERANCE As Single = 0.1F
     Protected Const VERTICAL_ROTATE_CHARS As String = "～…‥｜ーｰ(){}[]<>（）｛｝「」＜＞。、"
 
-    Public Sub New( _
-      ByVal graphics As Graphics, _
+    Public Overridable Sub Initialize( _
+      ByVal env As RenderingEnv, _
+      ByVal reportDesign As ReportDesign, _
       ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
+      ByVal design As ElementDesign, _
       ByVal text As String)
-        Me.Graphics = graphics
-        Me.Region = region
-        Me.Setting = setting
-        Me.TextDesign = textDesign
+        Me.Graphics = env.Graphics
+        Me.Region = region.ToPointScale(reportDesign)
+        Me.Setting = env.Setting
+        Me.TextDesign = New TextDesign(reportDesign, design)
         Me.Text = text
     End Sub
 
@@ -63,7 +63,7 @@ Public Class GdiText
         Dim font As Font = _GetFont(Me.Setting, Me.TextDesign, True)
         Dim texts As List(Of String) = _SplitByCr(Me.Region, font, Me.Text, False)
         Dim color As Color = GdiRenderUtil.GetColor(Me.TextDesign.Color, Drawing.Color.Black)
-        Dim sf As New StringFormat
+        Dim sf As StringFormat = _GetStringFormat()
         sf.Alignment = _ToStringAlignment(Report.EHAlign.CENTER)
         sf.LineAlignment = _ToStringAlignment(Report.EVAlign.TOP)
         Dim y As Single = 0
@@ -106,8 +106,8 @@ Public Class GdiText
         Dim font As Font = _GetFont(Setting, TextDesign, True)
         Dim texts As List(Of String) = _SplitByCr(Region, font, Text, False)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
-        Dim sf As New StringFormat
-        Dim sfr As New StringFormat
+        Dim sf As StringFormat = _GetStringFormat()
+        Dim sfr As StringFormat = _GetStringFormat()
         sf.Alignment = _ToStringAlignment(Report.EHAlign.CENTER)
         sf.LineAlignment = _ToStringAlignment(Report.EVAlign.CENTER)
         sfr.Alignment = _ToStringAlignment(Report.EHAlign.CENTER)
@@ -171,7 +171,7 @@ Public Class GdiText
                 End If
             Next
             If m > 0 Then
-                Dim fontSize As Single = Math.Max(region.GetHeight / m, setting.ShrinkFontSizeMin)
+                Dim fontSize As Single = Math.Max(Region.GetHeight / m, Setting.ShrinkFontSizeMin)
                 If font.Size > fontSize Then
                     font = New Font(font.Name, fontSize, font.Style)
                 End If
@@ -202,8 +202,8 @@ Public Class GdiText
     Protected Overridable Sub _Draw_Wrap()
         Dim font As Font = _GetFont(Setting, TextDesign, False)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
-        Dim r As New RectangleF(region.Left, region.Top, region.GetWidth, region.GetHeight)
-        Dim sf As New StringFormat
+        Dim r As New RectangleF(Region.Left, Region.Top, Region.GetWidth, Region.GetHeight)
+        Dim sf As StringFormat = _GetStringFormat()
         sf.Alignment = _ToStringAlignment(TextDesign.HAlign)
         sf.LineAlignment = _ToStringAlignment(TextDesign.VAlign)
         Using b As New SolidBrush(color)
@@ -215,8 +215,8 @@ Public Class GdiText
         Dim font As Font = _GetFont(Setting, TextDesign, False)
         font = _GetFitFont(Graphics, Region, Setting, Text, font)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
-        Dim r As New RectangleF(region.Left, region.Top, region.GetWidth, region.GetHeight)
-        Dim sf As New StringFormat
+        Dim r As New RectangleF(Region.Left, Region.Top, Region.GetWidth, Region.GetHeight)
+        Dim sf As StringFormat = _GetStringFormat()
         sf.Alignment = _ToStringAlignment(TextDesign.HAlign)
         sf.LineAlignment = _ToStringAlignment(TextDesign.VAlign)
         sf.FormatFlags = StringFormatFlags.NoWrap
@@ -228,8 +228,8 @@ Public Class GdiText
     Protected Overridable Sub _Draw()
         Dim font As Font = _GetFont(Setting, TextDesign, False)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
-        Dim r As New RectangleF(region.Left, region.Top, region.GetWidth, region.GetHeight)
-        Dim sf As New StringFormat
+        Dim r As New RectangleF(Region.Left, Region.Top, Region.GetWidth, Region.GetHeight)
+        Dim sf As StringFormat = _GetStringFormat()
         sf.Alignment = _ToStringAlignment(TextDesign.HAlign)
         sf.LineAlignment = _ToStringAlignment(TextDesign.VAlign)
         sf.FormatFlags = StringFormatFlags.NoWrap
@@ -254,8 +254,8 @@ Public Class GdiText
             Case Report.EHAlign.RIGHT
                 x = Region.GetWidth - font.Size / 2 - mx
         End Select
-        Dim sf As New StringFormat
-        Dim sfr As New StringFormat
+        Dim sf As StringFormat = _GetStringFormat()
+        Dim sfr As StringFormat = _GetStringFormat()
         sf.Alignment = _ToStringAlignment(Report.EHAlign.CENTER)
         sf.LineAlignment = _ToStringAlignment(Report.EVAlign.TOP)
         sfr.Alignment = _ToStringAlignment(Report.EHAlign.LEFT)
@@ -269,7 +269,7 @@ Public Class GdiText
             For i As Integer = 0 To Math.Min(texts.Count, xc) - 1
                 Dim t As String = texts(i)
                 Dim y As Single = 0
-                Select Case textDesign.VAlign
+                Select Case TextDesign.VAlign
                     Case Report.EVAlign.TOP
                         y = 0
                     Case Report.EVAlign.CENTER
@@ -304,6 +304,10 @@ Public Class GdiText
             Next
         End Using
     End Sub
+
+    Protected Overridable Function _GetStringFormat() As StringFormat
+        Return New StringFormat
+    End Function
 
     Protected Overridable Function _IsEmpty() As Boolean
         If String.IsNullOrEmpty(Me.Text) Then
@@ -470,7 +474,7 @@ Public Class GdiText
                     y = GdiText.Region.GetHeight - font.Size - font.Size / 8
             End Select
             Using b As New SolidBrush(color)
-                Dim sf As New StringFormat
+                Dim sf As StringFormat = GdiText._GetStringFormat()
                 sf.Alignment = StringAlignment.Near
                 sf.LineAlignment = StringAlignment.Near
                 sf.FormatFlags = StringFormatFlags.NoWrap
@@ -498,7 +502,7 @@ Public Class GdiText
                     GdiText.Graphics.DrawString(Me.Text1 & Me.Text2, font, b, r, sf)
                 End With
                 If Me.Text3.Length > 0 Then
-                    Dim _x As Single = x + w - Font.Size / 3
+                    Dim _x As Single = x + w - font.Size / 3
                     If _x < GdiText.Region.GetWidth Then
                         Dim r As New RectangleF( _
                           GdiText.Region.Left + _x, _
