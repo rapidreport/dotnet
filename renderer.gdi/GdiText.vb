@@ -195,7 +195,7 @@ Public Class GdiText
     Protected Overridable Sub _Draw_FixdecShrink()
         Dim fd As New _FixDec(Me)
         Dim font As Font = _GetFont(Setting, TextDesign, True)
-        font = _GetFitFont(Graphics, Region, Setting, fd.GetFullText(TextDesign.DecimalPlace), font)
+        font = _GetFitFont(Graphics, Region, Setting, fd.GetFullText(TextDesign.DecimalPlace), font, Me._GetStringFormat)
         fd.DrawText(font)
     End Sub
 
@@ -213,7 +213,7 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_Shrink()
         Dim font As Font = _GetFont(Setting, TextDesign, False)
-        font = _GetFitFont(Graphics, Region, Setting, Text, font)
+        font = _GetFitFont(Graphics, Region, Setting, Text, font, Me._GetStringFormat)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
         Dim r As New RectangleF(Region.Left, Region.Top, Region.GetWidth, Region.GetHeight)
         Dim sf As StringFormat = _GetStringFormat()
@@ -370,8 +370,9 @@ Public Class GdiText
       ByVal region As Region, _
       ByVal setting As GdiRendererSetting, _
       ByVal text As String, _
-      ByVal baseFont As Font) As Font
-        If g.MeasureString(text, baseFont).Width <= region.GetWidth Then
+      ByVal baseFont As Font, _
+      ByVal stringFormat As StringFormat) As Font
+        If g.MeasureString(text, baseFont, 100000, stringFormat).Width <= region.GetWidth Then
             Return baseFont
         End If
         Dim _i As Integer = 0
@@ -381,7 +382,7 @@ Public Class GdiText
         For i As Integer = _i - 1 To 1 Step -1
             Dim s As Single = setting.ShrinkFontSizeMin + i * 0.5
             Dim font As New Font(baseFont.Name, s, baseFont.Style)
-            If g.MeasureString(text, font).Width <= region.GetWidth Then
+            If g.MeasureString(text, font, 100000, stringFormat).Width <= region.GetWidth Then
                 Return font
             End If
         Next
