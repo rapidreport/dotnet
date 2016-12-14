@@ -25,6 +25,7 @@
         Tests.Add(New Test_4_24_SubPage)
         Tests.Add(New Test_4_25_Page)
         Tests.Add(New Test_4_26_UnknownField)
+        Tests.Add(New Test_4_28_MonthEn)
 
         Application.Run(New FmTest)
     End Sub

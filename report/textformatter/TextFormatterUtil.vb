@@ -44,41 +44,109 @@ Namespace textformatter
             If formatString Is Nothing Then
                 Return FormatDate(d, "yyyy/MM/dd")
             End If
-            Dim ret As String = formatString
-            ret = ret.Replace("yyyy", d.Year.ToString)
-            ret = ret.Replace("yy", d.Year.ToString.Substring(2, 2))
-            ret = ret.Replace("MM", d.Month.ToString.PadLeft(2, "0"))
-            ret = ret.Replace("M", d.Month.ToString)
-            ret = ret.Replace("ddd", getDayOfWeek(d.DayOfWeek))
-            ret = ret.Replace("dddd", getDayOfWeekL(d.DayOfWeek))
-            ret = ret.Replace("AAA", getDayOfWeekJ(d.DayOfWeek))
-            ret = ret.Replace("dd", d.Day.ToString.PadLeft(2, "0"))
-            ret = ret.Replace("d", d.Day.ToString)
-            ret = ret.Replace("hh", d.Hour.ToString.PadLeft(2, "0"))
-            ret = ret.Replace("h", d.Hour.ToString)
-            ret = ret.Replace("mm", d.Minute.ToString.PadLeft(2, "0"))
-            ret = ret.Replace("m", d.Minute.ToString)
-            ret = ret.Replace("ss", d.Second.ToString.PadLeft(2, "0"))
-            ret = ret.Replace("s", d.Second.ToString)
 
-            If ret.IndexOf("gg") <> -1 OrElse _
-              ret.IndexOf("n") <> -1 OrElse _
-              ret.IndexOf("N") <> -1 Then
-                Dim cal As JapaneseCalendar = New JapaneseCalendar
-                Dim year As Integer = cal.GetYear(d)
-                ret = ret.Replace("nn", cal.GetYear(d).ToString.PadLeft(2, "0"))
-                ret = ret.Replace("n", cal.GetYear(d).ToString)
-                ret = ret.Replace("NN", IIf(year = 1, "元", year.ToString.PadLeft(2, "0")))
-                ret = ret.Replace("N", IIf(year = 1, "元", year.ToString))
+            Dim i As Integer = 0
+            Dim j As Integer = 0
+            Dim ret As String = ""
 
-                Dim culture As CultureInfo = New CultureInfo("ja-JP", True)
-                culture.DateTimeFormat.Calendar = cal
-                ret = ret.Replace("gg", d.ToString("gg", culture))
+            Do While j < formatString.Length
+                Dim t As String = formatString.Substring(j)
+                Dim p As String = Nothing
+                Dim w As Integer = 0
+                If t.StartsWith("yyyy") Then
+                    p = d.Year.ToString
+                    w = 4
+                ElseIf t.StartsWith("yy") Then
+                    p = d.Year.ToString.Substring(2, 2)
+                    w = 2
+                ElseIf t.StartsWith("MMMM") Then
+                    p = getMonthEnL(d.Month)
+                    w = 4
+                ElseIf t.StartsWith("MMM") Then
+                    p = getMonthEn(d.Month)
+                    w = 3
+                ElseIf t.StartsWith("MM") Then
+                    p = d.Month.ToString.PadLeft(2, "0")
+                    w = 2
+                ElseIf t.StartsWith("M") Then
+                    p = d.Month.ToString
+                    w = 1
+                ElseIf t.StartsWith("dddd") Then
+                    p = getDayOfWeekL(d.DayOfWeek)
+                    w = 4
+                ElseIf t.StartsWith("ddd") Then
+                    p = getDayOfWeek(d.DayOfWeek)
+                    w = 3
+                ElseIf t.StartsWith("AAA") Then
+                    p = getDayOfWeekJ(d.DayOfWeek)
+                    w = 3
+                ElseIf t.StartsWith("dd") Then
+                    p = d.Day.ToString.PadLeft(2, "0")
+                    w = 2
+                ElseIf t.StartsWith("d") Then
+                    p = d.Day.ToString
+                    w = 1
+                ElseIf t.StartsWith("hh") Then
+                    p = d.Hour.ToString.PadLeft(2, "0")
+                    w = 2
+                ElseIf t.StartsWith("h") Then
+                    p = d.Hour.ToString
+                    w = 1
+                ElseIf t.StartsWith("mm") Then
+                    p = d.Minute.ToString.PadLeft(2, "0")
+                    w = 2
+                ElseIf t.StartsWith("m") Then
+                    p = d.Minute.ToString
+                    w = 1
+                ElseIf t.StartsWith("ss") Then
+                    p = d.Second.ToString.PadLeft(2, "0")
+                    w = 2
+                ElseIf t.StartsWith("s") Then
+                    p = d.Second.ToString
+                    w = 1
+                ElseIf t.StartsWith("nn") Then
+                    Dim jcal As New JapaneseCalendar
+                    p = jcal.GetYear(d).ToString.PadLeft(2, "0")
+                    w = 2
+                ElseIf t.StartsWith("n") Then
+                    Dim jcal As New JapaneseCalendar
+                    p = jcal.GetYear(d).ToString
+                    w = 1
+                ElseIf t.StartsWith("NN") Then
+                    Dim jcal As New JapaneseCalendar
+                    Dim year As Integer = jcal.GetYear(d)
+                    p = IIf(year = 1, "元", year.ToString.PadLeft(2, "0"))
+                    w = 2
+                ElseIf t.StartsWith("N") Then
+                    Dim jcal As New JapaneseCalendar
+                    Dim year As Integer = jcal.GetYear(d)
+                    p = IIf(year = 1, "元", year.ToString)
+                    w = 1
+                ElseIf t.StartsWith("gg") Then
+                    Dim culture As CultureInfo = New CultureInfo("ja-JP", True)
+                    culture.DateTimeFormat.Calendar = New JapaneseCalendar
+                    p = d.ToString("gg", culture)
+                    w = 2
+                End If
+                If p IsNot Nothing Then
+                    If i < j Then
+                        ret &= formatString.Substring(i, j - i)
+                    End If
+                    ret &= p
+                    j += w
+                    i = j
+                Else
+                    j += 1
+                End If
+            Loop
+            If i < formatString.Length Then
+                ret &= formatString.Substring(i)
             End If
+
             Return ret
         End Function
 
-        Private Function getDayOfWeek(ByVal d As DayOfWeek)
+        Private Function getDayOfWeek(ByVal d As DayOfWeek) As String
             Select Case d
                 Case DayOfWeek.Sunday
                     Return "Sun"
@@ -98,7 +166,7 @@ Namespace textformatter
             Return Nothing
         End Function
 
-        Private Function getDayOfWeekL(ByVal d As DayOfWeek)
+        Private Function getDayOfWeekL(ByVal d As DayOfWeek) As String
             Select Case d
                 Case DayOfWeek.Sunday
                     Return "Sunday"
@@ -118,7 +186,7 @@ Namespace textformatter
             Return Nothing
         End Function
 
-        Private Function getDayOfWeekJ(ByVal d As DayOfWeek)
+        Private Function getDayOfWeekJ(ByVal d As DayOfWeek) As String
             Select Case d
                 Case DayOfWeek.Sunday
                     Return "日"
@@ -134,6 +202,66 @@ Namespace textformatter
                     Return "金"
                 Case DayOfWeek.Saturday
                     Return "土"
+            End Select
+            Return Nothing
+        End Function
+
+        Private Function getMonthEn(ByVal m As Integer) As String
+            Select Case m
+                Case 1
+                    Return "Jan"
+                Case 2
+                    Return "Feb"
+                Case 3
+                    Return "Mar"
+                Case 4
+                    Return "Apr"
+                Case 5
+                    Return "May"
+                Case 6
+                    Return "Jun"
+                Case 7
+                    Return "Jul"
+                Case 8
+                    Return "Aug"
+                Case 9
+                    Return "Sep"
+                Case 10
+                    Return "Oct"
+                Case 11
+                    Return "Nov"
+                Case 12
+                    Return "Dec"
+            End Select
+            Return Nothing
+        End Function
+
+        Private Function getMonthEnL(ByVal m As Integer) As String
+            Select Case m
+                Case 1
+                    Return "January"
+                Case 2
+                    Return "February"
+                Case 3
+                    Return "March"
+                Case 4
+                    Return "April"
+                Case 5
+                    Return "May"
+                Case 6
+                    Return "June"
+                Case 7
+                    Return "July"
+                Case 8
+                    Return "August"
+                Case 9
+                    Return "September"
+                Case 10
+                    Return "October"
+                Case 11
+                    Return "November"
+                Case 12
+                    Return "December"
             End Select
             Return Nothing
         End Function

@@ -236,6 +236,10 @@
     <None Include="rrpt\test_4_26_unknownfield.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="Test_4_28_MonthEn.vb" />
+    <None Include="rrpt\test_4_28_month_en.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="img\logo.bmp">

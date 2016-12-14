@@ -1,0 +1,27 @@
+{
+  version: 0,
+  paper: {
+    landscape: true,
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    detail: true,
+    contents: [
+      {
+        size: {
+          initial: 20.0
+        },
+        aggregate_src: true,
+        elements: [
+          {type:"field",layout:{x1:0.0,y1:0.0,x2:120.0,y2:20.0},exp:".date",formatter:{format:"MMM dd, yyyy",type:"default"},halign:"left",valign:"center"},
+          {type:"field",layout:{x1:120.0,y1:0.0,x2:240.0,y2:20.0},exp:".date",formatter:{format:"MMMM dd, yyyy",type:"default"},halign:"left",valign:"center"},
+          {type:"field",layout:{x1:240.0,y1:0.0,x2:420.0,y2:20.0},exp:".date",formatter:{format:"yy/MM/dd(ddd) hh:mm:ss",type:"default"},halign:"left",valign:"center"},
+          {type:"field",layout:{x1:420.0,y1:0.0,x2:600.0,y2:20.0},exp:".date",formatter:{format:"yyyy/MM/dd(dddd) hh:mm:ss",type:"default"},halign:"left",valign:"center"},
+          {type:"field",layout:{x1:600.0,y1:0.0,x2:780.0,y2:20.0},exp:".date",formatter:{format:"ggNN年MM月dd日(AAA) hh時mm分ss秒",type:"default"},halign:"left",valign:"center"}
+        ]
+      }
+    ]
+  }
+}
