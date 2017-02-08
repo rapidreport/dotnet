@@ -75,9 +75,9 @@ Namespace elementrenderer
                 Dim p As XSSFDrawing = s.CreateDrawingPatriarch
                 Dim sp As XSSFSimpleShape = p.CreateSimpleShape(shape.GetXSSFClientAnchor(page.TopRow))
                 If shape.IsInverted Then
-                    sp.SetShapeType(NPOI.SS.UserModel.ShapeTypes.LineInv - 1)
+                    sp.ShapeType = NPOI.SS.UserModel.ShapeTypes.LineInv - 1
                 Else
-                    sp.SetShapeType(NPOI.SS.UserModel.ShapeTypes.Line - 1)
+                    sp.ShapeType = NPOI.SS.UserModel.ShapeTypes.Line - 1
                 End If
                 sp.SetLineStyleColor(0, 0, 0)
                 sp.LineWidth = lineWidth
