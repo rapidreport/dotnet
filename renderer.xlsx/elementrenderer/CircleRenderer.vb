@@ -41,7 +41,7 @@ Namespace elementrenderer
                 Dim s As XSSFSheet = page.Renderer.Sheet
                 Dim p As XSSFDrawing = s.CreateDrawingPatriarch
                 Dim sp As XSSFSimpleShape = p.CreateSimpleShape(shape.GetXSSFClientAnchor(page.TopRow))
-                sp.SetShapeType(ShapeTypes.Ellipse - 1)
+                sp.ShapeType = ShapeTypes.Ellipse - 1
                 If lineWidth > 0 Then
                     sp.SetLineStyleColor(0, 0, 0)
                     sp.LineWidth = lineWidth
