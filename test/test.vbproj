@@ -107,6 +107,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Test_4_29_Gaiji.vb" />
     <Compile Include="Test_4_24_Exp.vb" />
     <Compile Include="FmTest.vb">
       <SubType>Form</SubType>
@@ -173,6 +174,12 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="rrpt\font\eudc.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\font\msgothic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="rrpt\test_0_1.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -238,6 +245,9 @@
     </None>
     <Compile Include="Test_4_28_MonthEn.vb" />
     <None Include="rrpt\test_4_28_month_en.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_29_gaiji.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

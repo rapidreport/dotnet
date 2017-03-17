@@ -11,6 +11,7 @@ Public Class PdfRendererSetting
     Public GaijiFont As BaseFont = Nothing
     Public ElementRendererMap As New Dictionary(Of String, IElementRenderer)
     Public FontMap As New Dictionary(Of String, BaseFont)
+    Public GaijiFontMap As New Dictionary(Of String, BaseFont)
     Public ReplaceBackslashToYen As Boolean = False
     Public ShrinkFontSizeMin As Single
     Public UnderlineWidthCoefficient As Single
@@ -72,6 +73,14 @@ Public Class PdfRendererSetting
             Return Me.FontMap(key)
         Else
             Return Me.DefaultFont
+        End If
+    End Function
+
+    Public Function GetGaijiFont(ByVal key As String) As BaseFont
+        If Not String.IsNullOrEmpty(key) AndAlso Me.GaijiFontMap.ContainsKey(key) Then
+            Return Me.GaijiFontMap(key)
+        Else
+            Return Nothing
         End If
     End Function
 

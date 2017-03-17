@@ -11,6 +11,7 @@ Public Class PdfText
     Public Text As String
     Public ContentByte As PdfContentByte
     Public Font As BaseFont
+    Public GaijiFont As BaseFont
     Public TextMatrix As List(Of Single) = Nothing
 
     Protected Const TOLERANCE As Single = 0.1F
@@ -33,6 +34,7 @@ Public Class PdfText
         Me.Text = text
         Me.ContentByte = Me.Renderer.Writer.DirectContent
         Me.Font = Me.Renderer.Setting.GetFont(TextDesign.Font.Name)
+        Me.GaijiFont = Me.Renderer.Setting.GetGaijiFont(TextDesign.Font.Name)
     End Sub
 
     Public Overridable Sub Draw()
@@ -94,7 +96,7 @@ Public Class PdfText
 
     Protected Overridable Sub _Draw_Distribute()
         Dim fontSize As Single = TextDesign.Font.Size
-        Dim texts As List(Of String) = _SplitByCr(Region, TextDesign, Text, False)
+        Dim texts As List(Of String) = _SplitTextVertical(False)
         Dim y As Single = 0
         Select Case TextDesign.VAlign
             Case Report.EVAlign.TOP
@@ -115,7 +117,7 @@ Public Class PdfText
             ContentByte.SetFontAndSize(Font, fontSize)
             For j As Integer = 0 To t.Length - 1
                 Dim c As String = t(j)
-                _DrawText(fontSize, c, m(j) - _GetTextWidth(Renderer.Setting, TextDesign, Font, fontSize, c) / 2 + MARGIN_X, y)
+                _DrawText(fontSize, c, m(j) - _GetTextWidth(fontSize, c) / 2 + MARGIN_X, y)
             Next
             ContentByte.EndText()
             If TextDesign.Font.Underline Then
@@ -128,7 +130,7 @@ Public Class PdfText
 
     Protected Overridable Sub _Draw_DistributeVertical()
         Dim fontSize As Single = TextDesign.Font.Size
-        Dim texts As List(Of String) = _SplitByCr(Region, TextDesign, Text, False)
+        Dim texts As List(Of String) = _SplitTextVertical(False)
         Dim x As Single = 0
         Select Case TextDesign.HAlign
             Case Report.EHAlign.LEFT
@@ -161,13 +163,13 @@ Public Class PdfText
     End Sub
 
     Protected Overridable Sub _Draw_Vertical()
-        Dim texts As List(Of String) = _SplitByCr(Region, TextDesign, Text, False)
+        Dim texts As List(Of String) = _SplitTextVertical(False)
         _Draw_Vertical_Aux(TextDesign.Font.Size, texts)
     End Sub
 
     Protected Overridable Sub _Draw_VerticalShrink()
         Dim fontSize As Single = TextDesign.Font.Size
-        Dim texts As List(Of String) = _SplitByCr(Region, TextDesign, Text, False)
+        Dim texts As List(Of String) = _SplitTextVertical(False)
         With Nothing
             Dim m As Integer = 0
             For Each t As String In texts
@@ -184,7 +186,7 @@ Public Class PdfText
     End Sub
 
     Protected Overridable Sub _Draw_VerticalWrap()
-        Dim texts As List(Of String) = _SplitByCr(Region, TextDesign, Text, True)
+        Dim texts As List(Of String) = _SplitTextVertical(True)
         _Draw_Vertical_Aux(TextDesign.Font.Size, texts)
     End Sub
 
@@ -197,28 +199,28 @@ Public Class PdfText
         Dim fd As New _FixDec(Me)
         Dim texts As New List(Of String)
         texts.Add(fd.GetFullText(TextDesign.DecimalPlace))
-        Dim fontSize As Single = _GetFitFontSize(Region, Renderer.Setting, Font, TextDesign, TextDesign.Font.Size, texts)
+        Dim fontSize As Single = _GetFitFontSize(texts)
         fd.DrawText(fontSize)
     End Sub
 
     Protected Overridable Sub _Draw_Shrink()
-        Dim texts As List(Of String) = _SplitText(Region, Renderer.Setting, TextDesign, Font, Text, False)
-        Dim fontSize As Single = _GetFitFontSize(Region, Renderer.Setting, Font, TextDesign, TextDesign.Font.Size, texts)
+        Dim texts As List(Of String) = _SplitText(False)
+        Dim fontSize As Single = _GetFitFontSize(texts)
         _Draw_Aux(fontSize, texts)
     End Sub
 
     Protected Overridable Sub _Draw_Wrap()
-        Dim texts As List(Of String) = _SplitText(Region, Renderer.Setting, TextDesign, Font, Text, True)
+        Dim texts As List(Of String) = _SplitText(True)
         _Draw_Aux(TextDesign.Font.Size, texts)
     End Sub
 
     Protected Overridable Sub _Draw()
-        Dim texts As List(Of String) = _SplitText(Region, Renderer.Setting, TextDesign, Font, Text, False)
+        Dim texts As List(Of String) = _SplitText(False)
         _Draw_Aux(TextDesign.Font.Size, texts)
     End Sub
 
-    Protected Overridable Sub _Draw_Aux( _
-      ByVal fontSize As Single, _
+    Protected Overridable Sub _Draw_Aux(
+      ByVal fontSize As Single,
       ByVal texts As List(Of String))
         Dim y As Single = 0
         Select Case TextDesign.VAlign
@@ -235,7 +237,7 @@ Public Class PdfText
         Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / fontSize)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, rows) - 1, 0)
             Dim t As String = texts(i)
-            Dim w As Single = _GetTextWidth(Renderer.Setting, TextDesign, Font, fontSize, t)
+            Dim w As Single = _GetTextWidth(fontSize, t)
             With Nothing
                 Dim rw As Single = Region.GetWidth - MARGIN_X * 2
                 If w > rw Then
@@ -243,7 +245,7 @@ Public Class PdfText
                     Dim _w As Single = 0
                     For j As Integer = 1 To t.Length
                         Dim __t As String = t.Substring(0, j)
-                        Dim __w As Single = _GetTextWidth(Renderer.Setting, TextDesign, Font, fontSize, __t)
+                        Dim __w As Single = _GetTextWidth(fontSize, __t)
                         If __w <= rw + TOLERANCE Then
                             _t = __t
                             _w = __w
@@ -278,8 +280,8 @@ Public Class PdfText
         Next
     End Sub
 
-    Protected Overridable Sub _Draw_Vertical_Aux( _
-      ByVal fontSize As Single, _
+    Protected Overridable Sub _Draw_Vertical_Aux(
+      ByVal fontSize As Single,
       ByVal texts As List(Of String))
         Dim x As Single = 0
         Select Case TextDesign.HAlign
@@ -324,15 +326,15 @@ Public Class PdfText
         Next
     End Sub
 
-    Protected Overridable Sub _SetTextMatrix( _
-      ByVal fontSize As Single, _
-      ByVal x As Single, _
+    Protected Overridable Sub _SetTextMatrix(
+      ByVal fontSize As Single,
+      ByVal x As Single,
       ByVal y As Single)
         Dim trans As PdfRenderer.TransClass = Renderer.Trans
         Dim _x As Single = Region.Left + x
         Dim _y As Single = (Region.Top + y + fontSize) - (fontSize / 13.4)
         If TextMatrix IsNot Nothing Then
-            ContentByte.SetTextMatrix(TextMatrix(0), TextMatrix(1), TextMatrix(2), TextMatrix(3), _
+            ContentByte.SetTextMatrix(TextMatrix(0), TextMatrix(1), TextMatrix(2), TextMatrix(3),
                                       trans.X(_x), trans.Y(_y))
         Else
             If TextDesign.Font.Italic Then
@@ -343,9 +345,9 @@ Public Class PdfText
         End If
     End Sub
 
-    Protected Overridable Sub _SetRotateTextMatrix( _
-      ByVal fontSize As Single, _
-      ByVal x As Single, _
+    Protected Overridable Sub _SetRotateTextMatrix(
+      ByVal fontSize As Single,
+      ByVal x As Single,
       ByVal y As Single)
         Dim trans As PdfRenderer.TransClass = Renderer.Trans
         Dim _x As Single = Region.Left + x
@@ -357,13 +359,13 @@ Public Class PdfText
         End If
     End Sub
 
-    Protected Overridable Sub _DrawText( _
-      ByVal fontSize As Single, _
-      ByVal text As String, _
-      ByVal x As Single, _
+    Protected Overridable Sub _DrawText(
+      ByVal fontSize As Single,
+      ByVal text As String,
+      ByVal x As Single,
       ByVal y As Single)
         Dim _texts As List(Of String) = Nothing
-        If Renderer.Setting.GaijiFont IsNot Nothing Then
+        If Renderer.Setting.GaijiFont IsNot Nothing OrElse GaijiFont IsNot Nothing Then
             _texts = _DetectGaiji(text)
         End If
         If _texts Is Nothing Then
@@ -379,8 +381,15 @@ Public Class PdfText
                         ContentByte.ShowText(t)
                         _x += Font.GetWidthPoint(t, fontSize)
                     Else
-                        ContentByte.SetFontAndSize(Renderer.Setting.GaijiFont, fontSize)
                         For Each c As Char In t
+                            Dim f As BaseFont = Renderer.Setting.GaijiFont
+                            If GaijiFont IsNot Nothing AndAlso GaijiFont.GetWidth(c) > 0 Then
+                                f = GaijiFont
+                            End If
+                            If f Is Nothing Then
+                                f = Font
+                            End If
+                            ContentByte.SetFontAndSize(f, fontSize)
                             _SetTextMatrix(fontSize, _x, y)
                             ContentByte.ShowText(c)
                             _x += fontSize
@@ -393,10 +402,10 @@ Public Class PdfText
         End If
     End Sub
 
-    Protected Overridable Sub _DrawVerticalChar( _
-      ByVal fontSize As Single, _
-      ByVal c As String, _
-      ByVal x As Single, _
+    Protected Overridable Sub _DrawVerticalChar(
+      ByVal fontSize As Single,
+      ByVal c As String,
+      ByVal x As Single,
       ByVal y As Single)
         Dim gaiji As Boolean = False
         If Renderer.Setting.GaijiFont IsNot Nothing AndAlso _IsGaiji(c) Then
@@ -404,13 +413,13 @@ Public Class PdfText
             gaiji = True
         End If
         If VERTICAL_ROTATE_CHARS.IndexOf(c) >= 0 Then
-            _SetRotateTextMatrix( _
-              fontSize, x - fontSize / 3, y - _GetTextWidth(Renderer.Setting, TextDesign, Font, fontSize, c))
+            _SetRotateTextMatrix(
+              fontSize, x - fontSize / 3, y - _GetTextWidth(fontSize, c))
         ElseIf VERTICAL_SHIFT_CHARS.IndexOf(c) >= 0 Then
             _SetTextMatrix(fontSize, x, y - fontSize / 2)
         Else
-            _SetTextMatrix( _
-              fontSize, x - _GetTextWidth(Renderer.Setting, TextDesign, Font, fontSize, c) / 2, y)
+            _SetTextMatrix(
+              fontSize, x - _GetTextWidth(fontSize, c) / 2, y)
         End If
         ContentByte.ShowText(c)
         If gaiji Then
@@ -418,11 +427,11 @@ Public Class PdfText
         End If
     End Sub
 
-    Protected Overridable Sub _DrawUnderline( _
-      ByVal fontSize As Single, _
-      ByVal x As Single, _
-      ByVal y As Single, _
-      ByVal width As Single, _
+    Protected Overridable Sub _DrawUnderline(
+      ByVal fontSize As Single,
+      ByVal x As Single,
+      ByVal y As Single,
+      ByVal width As Single,
       ByVal lineWidth As Single)
         Dim trans As PdfRenderer.TransClass = Renderer.Trans
         Dim lw As Single = fontSize / 13.4
@@ -439,11 +448,11 @@ Public Class PdfText
         End If
     End Sub
 
-    Protected Overridable Sub _DrawVerticalUnderLine( _
-      ByVal fontSize As Single, _
-      ByVal x As Single, _
-      ByVal y As Single, _
-      ByVal h As Single, _
+    Protected Overridable Sub _DrawVerticalUnderLine(
+      ByVal fontSize As Single,
+      ByVal x As Single,
+      ByVal y As Single,
+      ByVal h As Single,
       ByVal lineWidth As Single)
         Dim trans As PdfRenderer.TransClass = Renderer.Trans
         Dim _x As Single = Region.Left + x
@@ -478,57 +487,45 @@ Public Class PdfText
         Return ret
     End Function
 
-    Protected Shared Function _GetFitFontSize( _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal font As BaseFont, _
-      ByVal textDesign As TextDesign, _
-      ByVal fontSize As Single, _
-      ByVal texts As List(Of String)) As Single
+    Protected Function _GetFitFontSize(ByVal texts As List(Of String)) As Single
         Dim t As String = Nothing
         Dim w As Single = 0
-        Dim rw As Single = region.GetWidth - MARGIN_X * 2
+        Dim rw As Single = Region.GetWidth - MARGIN_X * 2
         For Each _t As String In texts
-            Dim _w As Single = _GetTextWidth(setting, textDesign, font, fontSize, _t)
+            Dim _w As Single = _GetTextWidth(TextDesign.Font.Size, _t)
             If w < _w Then
                 w = _w
                 t = _t
             End If
         Next
         If w <= rw Then
-            Return fontSize
+            Return TextDesign.Font.Size
         End If
         Dim _i As Integer = 0
-        Do While setting.ShrinkFontSizeMin + _i * 0.5 < fontSize
+        Do While Renderer.Setting.ShrinkFontSizeMin + _i * 0.5 < TextDesign.Font.Size
             _i += 1
         Loop
         For i As Integer = _i - 1 To 1 Step -1
-            Dim s As Single = setting.ShrinkFontSizeMin + i * 0.5
-            If _GetTextWidth(setting, textDesign, font, s, t) <= rw Then
+            Dim s As Single = Renderer.Setting.ShrinkFontSizeMin + i * 0.5
+            If _GetTextWidth(s, t) <= rw Then
                 Return s
             End If
         Next
-        Return setting.ShrinkFontSizeMin
+        Return Renderer.Setting.ShrinkFontSizeMin
     End Function
 
-    Protected Shared Function _SplitText( _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String, _
-      ByVal wrap As Boolean) As List(Of String)
-        Dim fontSize As Single = textDesign.Font.Size
-        Dim cw As Single = region.GetWidth - MARGIN_X * 2
+    Protected Function _SplitText(ByVal wrap As Boolean) As List(Of String)
+        Dim fontSize As Single = TextDesign.Font.Size
+        Dim cw As Single = Region.GetWidth - MARGIN_X * 2
         Dim ret As New List(Of String)
-        For Each t As String In text.Split(vbCr)
+        For Each t As String In Text.Split(vbCr)
             t = t.Replace(vbLf, "")
-            If wrap AndAlso _GetTextWidth(setting, textDesign, font, fontSize, t) > cw + TOLERANCE Then
+            If wrap AndAlso _GetTextWidth(fontSize, t) > cw + TOLERANCE Then
                 Dim _t As String = t
                 Do While Not String.IsNullOrEmpty(_t)
                     Dim i As Integer
                     For i = 2 To _t.Length
-                        If _GetTextWidth(setting, textDesign, font, fontSize, _t.Substring(0, i)) > cw + TOLERANCE Then
+                        If _GetTextWidth(fontSize, _t.Substring(0, i)) > cw + TOLERANCE Then
                             Exit For
                         End If
                     Next
@@ -542,16 +539,12 @@ Public Class PdfText
         Return ret
     End Function
 
-    Protected Shared Function _SplitByCr( _
-      ByVal region As Region, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String, _
-      ByVal wrap As Boolean) As List(Of String)
-        Dim fontSize As Single = textDesign.Font.Size
-        Dim ch As Single = region.GetHeight
+    Protected Function _SplitTextVertical(ByVal wrap As Boolean) As List(Of String)
+        Dim fontSize As Single = TextDesign.Font.Size
+        Dim ch As Single = Region.GetHeight
         Dim yc As Integer = Fix((ch + TOLERANCE) / fontSize)
         Dim ret As New List(Of String)
-        For Each t As String In text.Split(vbCr)
+        For Each t As String In Text.Split(vbCr)
             t = t.Replace(vbLf, "")
             If wrap Then
                 Do
@@ -570,25 +563,20 @@ Public Class PdfText
         Return ret
     End Function
 
-    Protected Shared Function _GetTextWidth( _
-      ByVal setting As PdfRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal fontSize As Single, _
-      ByVal text As String) As Single
+    Protected Function _GetTextWidth(ByVal fontSize As Single, ByVal text As String) As Single
         Dim _texts As List(Of String) = Nothing
-        If setting.GaijiFont IsNot Nothing Then
+        If Renderer.Setting.GaijiFont IsNot Nothing OrElse GaijiFont IsNot Nothing Then
             _texts = _DetectGaiji(text)
         End If
         Dim ret As Single = 0
         If _texts Is Nothing Then
-            ret = font.GetWidthPoint(text, fontSize)
+            ret = Font.GetWidthPoint(text, fontSize)
         Else
             Dim g As Boolean = False
             For Each t As String In _texts
                 If t.Length > 0 Then
                     If Not g Then
-                        ret += font.GetWidthPoint(t, fontSize)
+                        ret += Font.GetWidthPoint(t, fontSize)
                     Else
                         ret += t.Length * fontSize
                     End If
@@ -596,7 +584,7 @@ Public Class PdfText
                 g = Not g
             Next
         End If
-        If textDesign.Font.Italic Then
+        If TextDesign.Font.Italic Then
             ret += fontSize / 6
         End If
         Return ret
@@ -681,8 +669,8 @@ Public Class PdfText
             With Nothing
                 Dim t As String = Me.Text1 & Me.GetFullText2(PdfText.TextDesign.DecimalPlace)
                 Dim ft As String = t & Me.Text3
-                Dim w As Single = PdfText._GetTextWidth(PdfText.Renderer.Setting, PdfText.TextDesign, PdfText.Font, fontSize, t)
-                Dim fw As Single = _GetTextWidth(PdfText.Renderer.Setting, PdfText.TextDesign, PdfText.Font, fontSize, ft)
+                Dim w As Single = PdfText._GetTextWidth(fontSize, t)
+                Dim fw As Single = PdfText._GetTextWidth(fontSize, ft)
                 Dim x As Single = 0
                 Select Case PdfText.TextDesign.HAlign
                     Case Report.EHAlign.LEFT
@@ -719,12 +707,12 @@ Public Class PdfText
             If w < 0 Then
                 Exit Sub
             End If
-            If _GetTextWidth(PdfText.Renderer.Setting, PdfText.TextDesign, PdfText.Font, fontSize, t) > w + TOLERANCE Then
+            If PdfText._GetTextWidth(fontSize, t) > w + TOLERANCE Then
                 Dim _t As String = ""
                 Dim __t As String = ""
                 For i As Integer = 1 To t.Length
                     __t = t.Substring(0, i)
-                    If _GetTextWidth(PdfText.Renderer.Setting, PdfText.TextDesign, PdfText.Font, fontSize, __t) <= w + TOLERANCE Then
+                    If PdfText._GetTextWidth(fontSize, __t) <= w + TOLERANCE Then
                         _t = __t
                     Else
                         Exit For
