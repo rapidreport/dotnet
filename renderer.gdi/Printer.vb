@@ -13,6 +13,7 @@ Public Class Printer
     Public WithEvents PrintDocument As New PrintDocument
     Public DynamicPageSetting As Boolean = False
     Public PrintedPages As New List(Of Integer)
+    Public PreviewBackgroundImage As Image = Nothing
 
     Private _Pages As ReportPages
     Private _HardMarginMap As Dictionary(Of ReportDesign, PointF)

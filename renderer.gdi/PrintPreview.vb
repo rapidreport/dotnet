@@ -256,6 +256,13 @@ Public Class PrintPreview
         g.PageUnit = GraphicsUnit.Point
         g.ScaleTransform(Me.Zoom, Me.Zoom)
         g.FillRectangle(Brushes.White, 0, 0, pageSize.Width, pageSize.Height)
+        If Me.Printer.PreviewBackgroundImage IsNot Nothing Then
+            Dim scale As Single = Math.Min(pageSize.Width / Me.Printer.PreviewBackgroundImage.Width,
+                                           pageSize.Height / Me.Printer.PreviewBackgroundImage.Height)
+            g.DrawImage(Me.Printer.PreviewBackgroundImage, New Rectangle(0, 0,
+                                                                         Me.Printer.PreviewBackgroundImage.Width * scale,
+                                                                         Me.Printer.PreviewBackgroundImage.Height * scale))
+        End If
         With Nothing
             Dim m As PaperMarginDesign = page.Report.Design.PaperDesign.Margin.ToPoint(page.Report.Design.PaperDesign)
             If ((Me.PageCount - 1) Mod 2) And m.OddReverse Then
