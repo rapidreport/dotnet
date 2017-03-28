@@ -1,10 +1,5 @@
 ﻿Imports System.Drawing.Printing
-Imports System.Drawing
 
-Imports jp.co.systembase.report.component
-Imports jp.co.systembase.report.textformatter
-Imports jp.co.systembase.report.renderer
-Imports jp.co.systembase.report.renderer.gdi.elementrenderer
 Imports jp.co.systembase.report.renderer.gdi.imageloader
 
 Public Class Printer
