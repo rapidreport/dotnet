@@ -107,6 +107,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Test_4_29_Background.vb" />
     <Compile Include="Test_4_29_Gaiji.vb" />
     <Compile Include="Test_4_24_Exp.vb" />
     <Compile Include="FmTest.vb">
@@ -247,11 +248,17 @@
     <None Include="rrpt\test_4_28_month_en.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="rrpt\test_4_29_background.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="rrpt\test_4_29_gaiji.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="img\background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\logo.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

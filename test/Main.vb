@@ -27,6 +27,7 @@
         Tests.Add(New Test_4_26_UnknownField)
         Tests.Add(New Test_4_28_MonthEn)
         Tests.Add(New Test_4_29_Gaiji)
+        Tests.Add(New Test_4_29_Background)
 
         Application.Run(New FmTest)
     End Sub
