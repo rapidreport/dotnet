@@ -151,14 +151,14 @@ Namespace data
             For i As Integer = 0 To dataSource.Size - 1
                 Dim _keys As _KeyList = getKeys(keyNames, dataSource, i, logger)
                 If Not _keys.Equals(keys) Then
-                    If keys IsNot Nothing Then
+                    If keys IsNot Nothing AndAlso Not ret.ContainsKey(keys) Then
                         ret.Add(keys, New SubDataSource(dataSource, beginIndex, i))
                     End If
                     keys = _keys
                     beginIndex = i
                 End If
             Next
-            If keys IsNot Nothing AndAlso beginIndex < dataSource.Size Then
+            If keys IsNot Nothing AndAlso Not ret.ContainsKey(keys) AndAlso beginIndex < dataSource.Size Then
                 ret.Add(keys, New SubDataSource(dataSource, beginIndex, dataSource.Size))
             End If
             Return ret
