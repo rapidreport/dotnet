@@ -376,11 +376,11 @@ Public Class GdiText
             Return baseFont
         End If
         Dim _i As Integer = 0
-        Do While setting.ShrinkFontSizeMin + _i * 0.5 < baseFont.Size
+        Do While setting.ShrinkFontSizeMin + _i * setting.ShrinkFontSizeStep < baseFont.Size
             _i += 1
         Loop
         For i As Integer = _i - 1 To 1 Step -1
-            Dim s As Single = setting.ShrinkFontSizeMin + i * 0.5
+            Dim s As Single = setting.ShrinkFontSizeMin + i * setting.ShrinkFontSizeStep
             Dim font As New Font(baseFont.Name, s, baseFont.Style)
             If g.MeasureString(text, font, 100000, stringFormat).Width <= region.GetWidth Then
                 Return font

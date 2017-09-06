@@ -14,6 +14,7 @@ Public Class PdfRendererSetting
     Public GaijiFontMap As New Dictionary(Of String, BaseFont)
     Public ReplaceBackslashToYen As Boolean = False
     Public ShrinkFontSizeMin As Single
+    Public ShrinkFontSizeStep As Single
     Public UnderlineWidthCoefficient As Single
 
     Public Shared SkipInitialFontCreate As Boolean = False
@@ -44,6 +45,7 @@ Public Class PdfRendererSetting
             Me.DefaultFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.EMBEDDED)
         End If
         Me.ShrinkFontSizeMin = 4.0F
+        Me.ShrinkFontSizeStep = 0.5F
         Me.UnderlineWidthCoefficient = 1.0F
     End Sub
 
@@ -58,6 +60,7 @@ Public Class PdfRendererSetting
         Next
         Me.ReplaceBackslashToYen = setting.ReplaceBackslashToYen
         Me.ShrinkFontSizeMin = setting.ShrinkFontSizeMin
+        Me.ShrinkFontSizeStep = setting.ShrinkFontSizeStep
     End Sub
 
     Public Function GetElementRenderer(ByVal key As String) As IElementRenderer

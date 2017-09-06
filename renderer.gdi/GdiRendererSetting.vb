@@ -10,6 +10,7 @@ Public Class GdiRendererSetting
     Public ElementRendererMap As New Dictionary(Of String, IElementRenderer)
     Public FontMap As New Dictionary(Of String, String)
     Public ShrinkFontSizeMin As Single
+    Public ShrinkFontSizeStep As Single
 
     Public Sub New()
         Me.DummyElementRenderer = New DummyRenderer
@@ -25,6 +26,7 @@ Public Class GdiRendererSetting
         Me.FontMap.Add("gothic", "ＭＳ ゴシック")
         Me.FontMap.Add("mincho", "ＭＳ 明朝")
         Me.ShrinkFontSizeMin = 4.0F
+        Me.ShrinkFontSizeStep = 0.5F
     End Sub
 
     Private Sub New(ByVal setting As GdiRendererSetting)
@@ -37,6 +39,7 @@ Public Class GdiRendererSetting
             Me.FontMap.Add(k, setting.FontMap(k))
         Next
         Me.ShrinkFontSizeMin = setting.ShrinkFontSizeMin
+        Me.ShrinkFontSizeStep = setting.ShrinkFontSizeStep
     End Sub
 
     Public Function GetElementRenderer(ByVal key As String) As IElementRenderer

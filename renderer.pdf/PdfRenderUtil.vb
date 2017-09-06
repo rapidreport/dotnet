@@ -542,11 +542,11 @@ Public Module PdfRenderUtil
             Return fontSize
         End If
         Dim _i As Integer = 0
-        Do While setting.ShrinkFontSizeMin + _i * 0.5 < fontSize
+        Do While setting.ShrinkFontSizeMin + _i * setting.ShrinkFontSizeStep < fontSize
             _i += 1
         Loop
         For i As Integer = _i - 1 To 1 Step -1
-            Dim s As Single = setting.ShrinkFontSizeMin + i * 0.5
+            Dim s As Single = setting.ShrinkFontSizeMin + i * setting.ShrinkFontSizeStep
             If getTextWidth(setting, textDesign, font, s, t) <= rw Then
                 Return s
             End If

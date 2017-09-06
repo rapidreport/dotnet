@@ -502,11 +502,11 @@ Public Class PdfText
             Return TextDesign.Font.Size
         End If
         Dim _i As Integer = 0
-        Do While Renderer.Setting.ShrinkFontSizeMin + _i * 0.5 < TextDesign.Font.Size
+        Do While Renderer.Setting.ShrinkFontSizeMin + _i * Renderer.Setting.ShrinkFontSizeStep < TextDesign.Font.Size
             _i += 1
         Loop
         For i As Integer = _i - 1 To 1 Step -1
-            Dim s As Single = Renderer.Setting.ShrinkFontSizeMin + i * 0.5
+            Dim s As Single = Renderer.Setting.ShrinkFontSizeMin + i * Renderer.Setting.ShrinkFontSizeStep
             If _GetTextWidth(s, t) <= rw Then
                 Return s
             End If
