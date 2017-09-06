@@ -154,6 +154,7 @@
     <Compile Include="Test_4_25_Page.vb" />
     <Compile Include="Test_4_26_UnknownField.vb" />
     <Compile Include="Test_4_31_GroupDataProvider.vb" />
+    <Compile Include="Test_4_31_ShrinkFontSizeStep.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -256,6 +257,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_31_group_data_provider.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_31_shrink_font_size_step.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

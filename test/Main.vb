@@ -29,6 +29,7 @@
         Tests.Add(New Test_4_29_Gaiji)
         Tests.Add(New Test_4_29_Background)
         Tests.Add(New Test_4_31_GroupDataProvider)
+        Tests.Add(New Test_4_31_ShrinkFontSizeStep)
 
         Application.Run(New FmTest)
     End Sub

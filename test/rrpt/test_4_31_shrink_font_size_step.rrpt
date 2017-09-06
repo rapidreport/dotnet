@@ -1,0 +1,63 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 30.0
+        },
+        caption: "日時",
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:5.0,x2:555.0,y2:25.0},formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"},text:"テスト日時：#{global.time} 言語：#{global.lang}",valign:"center"}
+        ]
+      },
+      {
+        id: "フィールド",
+        size: {
+          initial: 375.0
+        },
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:555.0,y2:20.0},text:"フィールド",valign:"bottom"},
+          {type:"field",layout:{x1:0.0,y1:100.0,x2:254.0,y2:120.0},exp:"'1234567890123456789012345678901234567890123456789'",font:{},formatter:{format:"#,##0",type:"default"},mock:"s49",rect:{},shrink_to_fit:true,valign:"center"},
+          {type:"field",layout:{x1:0.0,y1:70.0,x2:256.0,y2:90.0},exp:"'1234567890123456789012345678901234567890123456789'",font:{},formatter:{format:"#,##0",type:"default"},mock:"s49",rect:{},shrink_to_fit:true,valign:"center"},
+          {type:"field",layout:{x1:0.0,y1:40.0,x2:350.0,y2:60.0},exp:"'1234567890123456789012345678901234567890123456789'",font:{},formatter:{format:"#,##0",type:"default"},mock:"s49",rect:{},shrink_to_fit:true,valign:"center"},
+          {type:"text",layout:{x1:350.0,y1:40.0,x2:544.0,y2:60.0},text:"←49文字が全て表示できるサイズ"},
+          {type:"text",layout:{x1:350.0,y1:70.0,x2:544.0,y2:90.0},text:"←49文字がちょうど表示できるサイズ"},
+          {type:"text",layout:{x1:0.0,y1:20.0,x2:170.0,y2:40.0},text:"GDI用のテスト"},
+          {type:"text",layout:{x1:350.0,y1:100.0,x2:544.0,y2:120.0},text:"←49文字が表示できないサイズ"},
+          {type:"field",layout:{x1:0.0,y1:255.0,x2:275.0,y2:275.0},exp:"'1234567890123456789012345678901234567890123456789'",font:{},formatter:{format:"#,##0",type:"default"},mock:"s49",rect:{},shrink_to_fit:true,valign:"center"},
+          {type:"field",layout:{x1:0.0,y1:225.0,x2:280.0,y2:245.0},exp:"'1234567890123456789012345678901234567890123456789'",font:{},formatter:{format:"#,##0",type:"default"},mock:"s49",rect:{},shrink_to_fit:true,valign:"center"},
+          {type:"field",layout:{x1:0.0,y1:195.0,x2:350.0,y2:215.0},exp:"'1234567890123456789012345678901234567890123456789'",font:{},formatter:{format:"#,##0",type:"default"},mock:"s49",rect:{},shrink_to_fit:true,valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:170.0,x2:194.0,y2:190.0},text:"PDF用のテスト"},
+          {type:"text",layout:{x1:350.0,y1:20.0,x2:455.0,y2:40.0},text:"GDIの場合、"}
+        ]
+      },
+      {
+        size: {
+          initial: 312.0
+        },
+        caption: "テキスト",
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:555.0,y2:20.0},text:"テキスト",valign:"bottom"},
+          {type:"text",layout:{x1:0.0,y1:105.0,x2:254.0,y2:125.0},font:{},formatter:{format:"#,##0",type:"default"},rect:{},shrink_to_fit:true,text:"1234567890123456789012345678901234567890123456789",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:75.0,x2:256.0,y2:95.0},font:{},formatter:{format:"#,##0",type:"default"},rect:{},shrink_to_fit:true,text:"1234567890123456789012345678901234567890123456789",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:45.0,x2:350.0,y2:65.0},font:{},formatter:{format:"#,##0",type:"default"},rect:{},shrink_to_fit:true,text:"1234567890123456789012345678901234567890123456789",valign:"center"},
+          {type:"text",layout:{x1:352.0,y1:45.0,x2:546.0,y2:65.0},text:"←49文字が全て表示できるサイズ"},
+          {type:"text",layout:{x1:352.0,y1:75.0,x2:546.0,y2:95.0},text:"←49文字がちょうど表示できるサイズ"},
+          {type:"text",layout:{x1:352.0,y1:105.0,x2:546.0,y2:125.0},text:"←49文字が表示できないサイズ"},
+          {type:"text",layout:{x1:0.0,y1:245.0,x2:275.0,y2:265.0},font:{},formatter:{format:"#,##0",type:"default"},rect:{},shrink_to_fit:true,text:"1234567890123456789012345678901234567890123456789",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:215.0,x2:280.0,y2:235.0},font:{},formatter:{format:"#,##0",type:"default"},rect:{},shrink_to_fit:true,text:"1234567890123456789012345678901234567890123456789",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:185.0,x2:350.0,y2:205.0},font:{},formatter:{format:"#,##0",type:"default"},rect:{},shrink_to_fit:true,text:"1234567890123456789012345678901234567890123456789",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:160.0,x2:194.0,y2:180.0},text:"PDF用のテスト"},
+          {type:"text",layout:{x1:350.0,y1:25.0,x2:455.0,y2:45.0},text:"GDIの場合、"},
+          {type:"text",layout:{x1:0.0,y1:25.0,x2:170.0,y2:45.0},text:"GDI用のテスト"}
+        ]
+      }
+    ]
+  }
+}
