@@ -1,5 +1,5 @@
 ﻿Imports System.Drawing.Printing
-
+Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer.gdi.imageloader
 
 Public Class Printer
@@ -14,10 +14,18 @@ Public Class Printer
     Public DynamicPageSetting As Boolean = False
     Public PrintedPages As New List(Of Integer)
     Public PreviewBackgroundImage As Image = Nothing
+    Public PreviewBackgroundSetting As New PreviewBackgroundSettingClass
 
     Private _Pages As ReportPages
     Private _HardMarginMap As Dictionary(Of ReportDesign, PointF)
     Private _CurrentPageCount As Integer = 0
+
+    Public Class PreviewBackgroundSettingClass
+        Public X As Decimal = 0
+        Public Y As Decimal = 0
+        Public Scale As Decimal = 1
+        Public Alpha As Decimal = 0.5
+    End Class
 
     Public Sub New(ByVal pages As ReportPages)
         Me.New(pages, New GdiRendererSetting)
@@ -33,7 +41,7 @@ Public Class Printer
             Me.PrintDocument.PrintController = New StandardPrintController
         End If
         Me.Pages = pages
-        Me.Setting = Setting
+        Me.Setting = setting
     End Sub
 
     Public Property Pages() As ReportPages
@@ -55,9 +63,9 @@ Public Class Printer
             If Me.Pages.Report.Design.Caption IsNot Nothing Then
                 Me.PrintDocument.DocumentName = Me.Pages.Report.Design.Caption
             End If
-            GdiRenderUtil.SetUpPrinterSetting( _
+            GdiRenderUtil.SetUpPrinterSetting(
               Me.PrintDocument.DefaultPageSettings, Me.Pages.Report.Design)
-            GdiRenderUtil.SetUpPageSettings( _
+            GdiRenderUtil.SetUpPageSettings(
               Me.PrintDocument.DefaultPageSettings, Me.Pages.Report.Design)
         End Set
     End Property
@@ -95,9 +103,9 @@ Public Class Printer
     Private Sub PrintDocument_PrintPage(ByVal sender As Object, ByVal e As PrintPageEventArgs) Handles PrintDocument.PrintPage
         Dim page As ReportPage = Me.Pages(PageIndex)
         If Not Me._HardMarginMap.ContainsKey(page.Report.Design) Then
-            Me._HardMarginMap.Add( _
-                page.Report.Design, _
-                New PointF(e.PageSettings.HardMarginX * 72 / 100, _
+            Me._HardMarginMap.Add(
+                page.Report.Design,
+                New PointF(e.PageSettings.HardMarginX * 72 / 100,
                            e.PageSettings.HardMarginY * 72 / 100))
         End If
         GdiRenderUtil.SetUpGraphics(e.Graphics, page.Report.Design, Me.PageIndex, Me._HardMarginMap(page.Report.Design))
@@ -109,7 +117,7 @@ Public Class Printer
         If Me.PageIndex = Me.Pages.Count Then
             e.HasMorePages = False
         Else
-            Select e.PageSettings.PrinterSettings.PrintRange
+            Select Case e.PageSettings.PrinterSettings.PrintRange
                 Case PrintRange.SomePages
                     If Me.PageIndex = e.PageSettings.PrinterSettings.ToPage Then
                         e.HasMorePages = False
@@ -133,14 +141,14 @@ Public Class Printer
         Dim page As ReportPage = Me.Pages(pageIndex)
         With page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
             Dim g As Graphics = Graphics.FromImage(New Bitmap(1, 1))
-            Return New Size(GdiRenderUtil.ToPixelX(g, .Width), _
+            Return New Size(GdiRenderUtil.ToPixelX(g, .Width),
                             GdiRenderUtil.ToPixelY(g, .Height))
         End With
     End Function
 
     Public Function GetImage(ByVal pageIndex As Integer, scaleX As Single, scaleY As Single) As Image
         Dim size As Size = GetPixelSize(pageIndex)
-        Dim ret As New Bitmap(CType(size.Width * scaleX, Integer), _
+        Dim ret As New Bitmap(CType(size.Width * scaleX, Integer),
                               CType(size.Height * scaleY, Integer))
         Dim g As Graphics = Graphics.FromImage(ret)
         g.ScaleTransform(scaleX, scaleY)
@@ -158,5 +166,23 @@ Public Class Printer
     Public Function GetImage(ByVal pageIndex As Integer) As Image
         Return GetImage(pageIndex, 1.0, 1.0)
     End Function
+
+    Public Shared Sub DrawBackgroundImage(ByVal graphics As Graphics, ByVal image As Image, ByVal setting As PreviewBackgroundSettingClass, ByVal paperDesign As PaperDesign)
+        Dim pageSize As PaperSizeDesign = paperDesign.GetActualSize.ToPoint(paperDesign)
+        Dim scale As Single = Math.Min((pageSize.Width / image.Width),
+                                       (pageSize.Height / image.Height)) * setting.Scale
+        Dim cm As New Imaging.ColorMatrix()
+        cm.Matrix00 = 1
+        cm.Matrix11 = 1
+        cm.Matrix22 = 1
+        cm.Matrix33 = setting.Alpha
+        cm.Matrix44 = 1
+        Dim ia As New Imaging.ImageAttributes()
+        ia.SetColorMatrix(cm)
+        graphics.DrawImage(image,
+                           New Rectangle(paperDesign.ToPoint(setting.X), paperDesign.ToPoint(setting.Y),
+                                         image.Width * scale, image.Height * scale),
+                           0, 0, image.Width, image.Height, GraphicsUnit.Pixel, ia)
+    End Sub
 
 End Class

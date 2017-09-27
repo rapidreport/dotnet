@@ -257,11 +257,22 @@ Public Class PrintPreview
         g.ScaleTransform(Me.Zoom, Me.Zoom)
         g.FillRectangle(Brushes.White, 0, 0, pageSize.Width, pageSize.Height)
         If Me.Printer.PreviewBackgroundImage IsNot Nothing Then
-            Dim scale As Single = Math.Min(pageSize.Width / Me.Printer.PreviewBackgroundImage.Width,
-                                           pageSize.Height / Me.Printer.PreviewBackgroundImage.Height)
-            g.DrawImage(Me.Printer.PreviewBackgroundImage, New Rectangle(0, 0,
+
+            Dim scale As Single = Math.Min((pageSize.Width / Me.Printer.PreviewBackgroundImage.Width) * Me.Printer.PreviewBackgroundSetting.Scale,
+                                           (pageSize.Height / Me.Printer.PreviewBackgroundImage.Height) * Me.Printer.PreviewBackgroundSetting.Scale)
+
+            Dim cm As New Imaging.ColorMatrix()
+            cm.Matrix00 = 1
+            cm.Matrix11 = 1
+            cm.Matrix22 = 1
+            cm.Matrix33 = Me.Printer.PreviewBackgroundSetting.Alpha
+            cm.Matrix44 = 1
+            Dim ia As New Imaging.ImageAttributes()
+            ia.SetColorMatrix(cm)
+            g.DrawImage(Me.Printer.PreviewBackgroundImage, New Rectangle(Me.Printer.PreviewBackgroundSetting.X, Me.Printer.PreviewBackgroundSetting.Y,
                                                                          Me.Printer.PreviewBackgroundImage.Width * scale,
-                                                                         Me.Printer.PreviewBackgroundImage.Height * scale))
+                                                                         Me.Printer.PreviewBackgroundImage.Height * scale),
+                        0, 0, Me.Printer.PreviewBackgroundImage.Width, Me.Printer.PreviewBackgroundImage.Height, GraphicsUnit.Pixel, ia)
         End If
         With Nothing
             Dim m As PaperMarginDesign = page.Report.Design.PaperDesign.Margin.ToPoint(page.Report.Design.PaperDesign)

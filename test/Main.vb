@@ -30,6 +30,7 @@
         Tests.Add(New Test_4_29_Background)
         Tests.Add(New Test_4_31_GroupDataProvider)
         Tests.Add(New Test_4_31_ShrinkFontSizeStep)
+        Tests.Add(New Test_4_32_BackgroundSetting)
 
         Application.Run(New FmTest)
     End Sub
