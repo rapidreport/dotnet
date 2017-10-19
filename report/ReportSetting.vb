@@ -80,6 +80,7 @@ Public Class ReportSetting
         Me.OperatorMap.Add("hour", New HourOperator)
         Me.OperatorMap.Add("minute", New MinuteOperator)
         Me.OperatorMap.Add("second", New SecondOperator)
+        Me.OperatorMap.Add("dateadd", New DateAddOperator)
         Me.OperatorMap.Add("sub", New SubStringOperator)
         Me.OperatorMap.Add("wsub", New WSubStringOperator)
         Me.OperatorMap.Add("len", New StringLenOperator)

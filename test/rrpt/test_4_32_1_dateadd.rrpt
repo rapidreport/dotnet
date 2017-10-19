@@ -1,0 +1,33 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 802.0
+        },
+        elements: [
+          {type:"field",layout:{x1:25.0,y1:40.0,x2:225.0,y2:60.0},exp:"(dateadd #20000101101010 'y' 1)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:25.0,y1:60.0,x2:225.0,y2:80.0},exp:"(dateadd #20000101101010 'M' 5)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:25.0,y1:80.0,x2:225.0,y2:100.0},exp:"(dateadd #20000101101010 'd' 10)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:25.0,y1:100.0,x2:225.0,y2:120.0},exp:"(dateadd #20000101101010 'h' 5)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:25.0,y1:120.0,x2:225.0,y2:140.0},exp:"(dateadd #20000101101010 'm' 15)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:25.0,y1:140.0,x2:225.0,y2:160.0},exp:"(dateadd #20000101101010 's' 20)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:275.0,y1:40.0,x2:475.0,y2:60.0},exp:"(dateadd #20000101101010 'y' -1)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:275.0,y1:60.0,x2:475.0,y2:80.0},exp:"(dateadd #20000101101010 'M' -5)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:275.0,y1:80.0,x2:475.0,y2:100.0},exp:"(dateadd #20000101101010 'd' -10)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:275.0,y1:100.0,x2:475.0,y2:120.0},exp:"(dateadd #20000101101010 'h' -5)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:275.0,y1:120.0,x2:475.0,y2:140.0},exp:"(dateadd #20000101101010 'm' -15)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:275.0,y1:140.0,x2:475.0,y2:160.0},exp:"(dateadd #20000101101010 's' -20)",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:25.0,y1:20.0,x2:225.0,y2:40.0},exp:"#20000101101010",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}},
+          {type:"field",layout:{x1:275.0,y1:20.0,x2:475.0,y2:40.0},exp:"#20000101101010",formatter:{format:"yyyy/MM/dd hh:mm:ss",type:"default"}}
+        ]
+      }
+    ]
+  }
+}

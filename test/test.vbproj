@@ -153,6 +153,7 @@
     <Compile Include="Test_4_24_SubPage.vb" />
     <Compile Include="Test_4_25_Page.vb" />
     <Compile Include="Test_4_26_UnknownField.vb" />
+    <Compile Include="Test_4_32_1_DateAdd.vb" />
     <Compile Include="Test_4_32_BackgroundSetting.vb" />
     <Compile Include="Test_4_31_GroupDataProvider.vb" />
     <Compile Include="Test_4_31_ShrinkFontSizeStep.vb" />
@@ -177,6 +178,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="rrpt\test_4_32_1_dateadd.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\font\eudc.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
