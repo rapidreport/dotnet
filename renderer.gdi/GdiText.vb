@@ -107,12 +107,9 @@ Public Class GdiText
         Dim texts As List(Of String) = _SplitByCr(Region, font, Text, False)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
         Dim sf As StringFormat = _GetStringFormat()
-        Dim sfr As StringFormat = _GetStringFormat()
         sf.Alignment = _ToStringAlignment(Report.EHAlign.CENTER)
         sf.LineAlignment = _ToStringAlignment(Report.EVAlign.CENTER)
-        sfr.Alignment = _ToStringAlignment(Report.EHAlign.CENTER)
-        sfr.LineAlignment = _ToStringAlignment(Report.EVAlign.CENTER)
-        sfr.FormatFlags = StringFormatFlags.DirectionVertical
+        sf.FormatFlags = StringFormatFlags.DirectionVertical
         Dim mx As Single = font.Size / 6
         Dim x As Single = 0
         Select Case TextDesign.HAlign
@@ -132,11 +129,7 @@ Public Class GdiText
                 Dim m As List(Of Single) = _GetDistributeMap(Region.GetHeight, t.Length, font)
                 For j As Integer = 0 To t.Length - 1
                     Dim c As String = t(j)
-                    If VERTICAL_ROTATE_CHARS.IndexOf(c) >= 0 Then
-                        Graphics.DrawString(c, font, b, Region.Left + x - font.Size / 6, Region.Top + m(j), sfr)
-                    Else
-                        Graphics.DrawString(c, font, b, Region.Left + x, Region.Top + m(j), sf)
-                    End If
+                    Graphics.DrawString(c, font, b, Region.Left + x - font.Size / 6, Region.Top + m(j) + font.Size / 10, sf)
                 Next
             End Using
             If TextDesign.Font.Underline Then
@@ -255,12 +248,9 @@ Public Class GdiText
                 x = Region.GetWidth - font.Size / 2 - mx
         End Select
         Dim sf As StringFormat = _GetStringFormat()
-        Dim sfr As StringFormat = _GetStringFormat()
-        sf.Alignment = _ToStringAlignment(Report.EHAlign.CENTER)
-        sf.LineAlignment = _ToStringAlignment(Report.EVAlign.TOP)
-        sfr.Alignment = _ToStringAlignment(Report.EHAlign.LEFT)
-        sfr.LineAlignment = _ToStringAlignment(Report.EVAlign.CENTER)
-        sfr.FormatFlags = StringFormatFlags.DirectionVertical
+        sf.Alignment = _ToStringAlignment(Report.EHAlign.LEFT)
+        sf.LineAlignment = _ToStringAlignment(Report.EVAlign.CENTER)
+        sf.FormatFlags = StringFormatFlags.DirectionVertical
         Dim cw As Single = Region.GetWidth - mx * 2
         Dim ch As Single = Region.GetHeight
         Dim xc As Integer = Fix((cw + TOLERANCE) / font.Size)
@@ -283,21 +273,17 @@ Public Class GdiText
                 If TextDesign.Font.Underline Then
                     Using p As New Pen(color)
                         p.Width = TextDesign.Font.Size / 13.4F
-                        Graphics.DrawLine( _
-                          p, _
-                          Region.Left + x + font.Size / 2, _
-                          Region.Top + y, _
-                          Region.Left + x + font.Size / 2, _
+                        Graphics.DrawLine(
+                          p,
+                          Region.Left + x + font.Size / 2,
+                          Region.Top + y,
+                          Region.Left + x + font.Size / 2,
                           Region.Top + y + font.Size * _yc)
                     End Using
                 End If
                 For j As Integer = 0 To _yc - 1
                     Dim c As String = t(j)
-                    If VERTICAL_ROTATE_CHARS.IndexOf(c) >= 0 Then
-                        Graphics.DrawString(c, font, b, Region.Left + x - font.Size / 6, Region.Top + y, sfr)
-                    Else
-                        Graphics.DrawString(c, font, b, Region.Left + x, Region.Top + y, sf)
-                    End If
+                    Graphics.DrawString(c, font, b, Region.Left + x - font.Size / 6, Region.Top + y - font.Size / 10, sf)
                     y += font.Size
                 Next
                 x -= font.Size
@@ -394,7 +380,7 @@ Public Class GdiText
         If c = 1 Then
             ret.Add(w / 2)
         Else
-            Dim t As Single = 1 + font.Size / 2
+            Dim t As Single = font.Size / 2
             Do
                 ret.Add(t)
                 t += (w - font.Size - 2) / (c - 1)
