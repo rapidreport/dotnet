@@ -140,9 +140,12 @@ Public Class Printer
     Public Function GetPixelSize(pageIndex As Integer) As Size
         Dim page As ReportPage = Me.Pages(pageIndex)
         With page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
-            Dim g As Graphics = Graphics.FromImage(New Bitmap(1, 1))
-            Return New Size(GdiRenderUtil.ToPixelX(g, .Width),
-                            GdiRenderUtil.ToPixelY(g, .Height))
+            Using tmp As New Bitmap(1, 1)
+                Using g As Graphics = Graphics.FromImage(tmp)
+                    Return New Size(GdiRenderUtil.ToPixelX(g, .Width),
+                                    GdiRenderUtil.ToPixelY(g, .Height))
+                End Using
+            End Using
         End With
     End Function
 
@@ -150,10 +153,11 @@ Public Class Printer
         Dim size As Size = GetPixelSize(pageIndex)
         Dim ret As New Bitmap(CType(size.Width * scaleX, Integer),
                               CType(size.Height * scaleY, Integer))
-        Dim g As Graphics = Graphics.FromImage(ret)
-        g.ScaleTransform(scaleX, scaleY)
-        g.FillRectangle(Brushes.White, 0, 0, size.Width, size.Height)
-        Me.Render(g, pageIndex)
+        Using g As Graphics = Graphics.FromImage(ret)
+            g.ScaleTransform(scaleX, scaleY)
+            g.FillRectangle(Brushes.White, 0, 0, size.Width, size.Height)
+            Me.Render(g, pageIndex)
+        End Using
         Return ret
     End Function
 

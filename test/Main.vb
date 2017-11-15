@@ -32,6 +32,7 @@
         Tests.Add(New Test_4_31_ShrinkFontSizeStep)
         Tests.Add(New Test_4_32_BackgroundSetting)
         Tests.Add(New Test_4_32_1_DateAdd)
+        Tests.Add(New Test_4_33_BufferLimit)
 
         Application.Run(New FmTest)
     End Sub

@@ -1,0 +1,23 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    size: {height:4000.0,width:4000.0},
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 0.0,
+          rev_initial: true
+        },
+        elements: [
+          {type:"rect",layout:{x1:0.0,y1:0.0,x2:0.0,y2:0.0,rev_x2:true,rev_y2:true}},
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:200.0,y2:20.0},halign:"center",text:"4000 x 4000",valign:"center"}
+        ]
+      }
+    ]
+  }
+}

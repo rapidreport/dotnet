@@ -47,119 +47,123 @@ Namespace elementrenderer
                 If width = 0 OrElse height = 0 Then
                     Exit Sub
                 End If
-                Dim image As New Bitmap(width, height)
-                Dim g As Graphics = Graphics.FromImage(image)
-                g.FillRectangle(Brushes.White, 0, 0, image.Width, image.Height)
-                Dim type As String = Design.Get("barcode_type")
-                Try
-                    Select Case type
-                        Case "ean8"
-                            Dim barcode As New Ean8
-                            If Design.Get("without_text") Then
-                                barcode.WithText = False
-                            End If
-                            barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
-                        Case "code39"
-                            Dim barcode As New Code39
-                            If Design.Get("without_text") Then
-                                barcode.WithText = False
-                            End If
-                            If Design.Get("generate_checksum") Then
-                                barcode.GenerateCheckSum = True
-                            End If
-                            barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
-                        Case "codabar"
-                            Dim barcode As New Codabar
-                            If Design.Get("without_text") Then
-                                barcode.WithText = False
-                            End If
-                            If Design.Get("generate_checksum") Then
-                                barcode.GenerateCheckSum = True
-                            End If
-                            Dim ss As String = "A"
-                            If Not Design.IsNull("codabar_startstop_code") Then
-                                ss = Design.Get("codabar_startstop_code")
-                            End If
-                            If Design.Get("codabar_startstop_show") Then
-                                barcode.WithStartStopText = True
-                            End If
-                            barcode.Render(g, 0, 0, image.Width, image.Height, ss & Me.Code & ss)
-                        Case "itf"
-                            Dim barcode As New Itf
-                            If Design.Get("without_text") Then
-                                barcode.WithText = False
-                            End If
-                            If Design.Get("generate_checksum") Then
-                                barcode.GenerateCheckSum = True
-                            End If
-                            barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
-                        Case "code128"
-                            Dim barcode As New Code128
-                            If Design.Get("without_text") Then
-                                barcode.WithText = False
-                            End If
-                            barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
-                        Case "gs1_128"
-                            Dim barcode As New Gs1_128
-                            If Design.Get("without_text") Then
-                                barcode.WithText = False
-                            End If
-                            If Design.Get("gs1_conveni") Then
-                                barcode.ConveniFormat = True
-                            End If
-                            barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
-                        Case "yubin"
-                            Dim barcode As New Yubin
-                            barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
-                        Case "qrcode"
-                            Dim w As New QRCodeWriter
-                            Dim h As New Dictionary(Of EncodeHintType, Object)
-                            If Not Design.IsNull("qr_charset") Then
-                                h.Add(EncodeHintType.CHARACTER_SET, Design.Get("qr_charset"))
-                            Else
-                                h.Add(EncodeHintType.CHARACTER_SET, "SJIS")
-                            End If
-                            If Not Design.IsNull("qr_correction_level") Then
-                                Dim l As String = Design.Get("qr_correction_level")
-                                If l = "L" Then
-                                    h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L)
-                                ElseIf l = "Q" Then
-                                    h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.Q)
-                                ElseIf l = "H" Then
-                                    h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H)
-                                Else
-                                    h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M)
-                                End If
-                            Else
-                                h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M)
-                            End If
-                            h.Add(EncodeHintType.DISABLE_ECI, True)
-                            Dim bm As BitMatrix = w.encode(Me.Code, BarcodeFormat.QR_CODE, 0, 0, h)
-                            Dim mw As Integer = Fix(image.Width / bm.Width)
-                            Dim mh As Integer = Fix(image.Height / bm.Height)
-                            Dim mgw As Integer = (image.Width - (mw * bm.Width)) / 2
-                            Dim mgh As Integer = (image.Height - (mh * bm.Height)) / 2
-                            For y As Integer = 0 To bm.Height - 1
-                                For x As Integer = 0 To bm.Width - 1
-                                    If bm(x, y) Then
-                                        g.FillRectangle(Brushes.Black, mgw + x * mw, mgh + y * mh, mw, mh)
+                Using image As New Bitmap(width, height)
+                    Using g As Graphics = Graphics.FromImage(image)
+                        g.FillRectangle(Brushes.White, 0, 0, image.Width, image.Height)
+
+                        Dim type As String = Design.Get("barcode_type")
+                        Try
+                            Select Case type
+                                Case "ean8"
+                                    Dim barcode As New Ean8
+                                    If Design.Get("without_text") Then
+                                        barcode.WithText = False
                                     End If
-                                Next
-                            Next
-                        Case Else
-                            Dim barcode As New Ean13
-                            If Design.Get("without_text") Then
-                                barcode.WithText = False
-                            End If
-                            barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
-                    End Select
-                    Dim p As HSSFPatriarch = Page.Renderer.Sheet.DrawingPatriarch
-                    Dim index As Integer = Page.Renderer.Workbook.AddPicture( _
-                      (New ImageConverter).ConvertTo(image, GetType(Byte())), _
-                      NPOI.SS.UserModel.PictureType.PNG)
-                    p.CreatePicture(Shape.GetHSSFClientAnchor(Page.TopRow), index)
-                Catch ex As Exception
-                End Try
+                                    barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
+                                Case "code39"
+                                    Dim barcode As New Code39
+                                    If Design.Get("without_text") Then
+                                        barcode.WithText = False
+                                    End If
+                                    If Design.Get("generate_checksum") Then
+                                        barcode.GenerateCheckSum = True
+                                    End If
+                                    barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
+                                Case "codabar"
+                                    Dim barcode As New Codabar
+                                    If Design.Get("without_text") Then
+                                        barcode.WithText = False
+                                    End If
+                                    If Design.Get("generate_checksum") Then
+                                        barcode.GenerateCheckSum = True
+                                    End If
+                                    Dim ss As String = "A"
+                                    If Not Design.IsNull("codabar_startstop_code") Then
+                                        ss = Design.Get("codabar_startstop_code")
+                                    End If
+                                    If Design.Get("codabar_startstop_show") Then
+                                        barcode.WithStartStopText = True
+                                    End If
+                                    barcode.Render(g, 0, 0, image.Width, image.Height, ss & Me.Code & ss)
+                                Case "itf"
+                                    Dim barcode As New Itf
+                                    If Design.Get("without_text") Then
+                                        barcode.WithText = False
+                                    End If
+                                    If Design.Get("generate_checksum") Then
+                                        barcode.GenerateCheckSum = True
+                                    End If
+                                    barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
+                                Case "code128"
+                                    Dim barcode As New Code128
+                                    If Design.Get("without_text") Then
+                                        barcode.WithText = False
+                                    End If
+                                    barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
+                                Case "gs1_128"
+                                    Dim barcode As New Gs1_128
+                                    If Design.Get("without_text") Then
+                                        barcode.WithText = False
+                                    End If
+                                    If Design.Get("gs1_conveni") Then
+                                        barcode.ConveniFormat = True
+                                    End If
+                                    barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
+                                Case "yubin"
+                                    Dim barcode As New Yubin
+                                    barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
+                                Case "qrcode"
+                                    Dim w As New QRCodeWriter
+                                    Dim h As New Dictionary(Of EncodeHintType, Object)
+                                    If Not Design.IsNull("qr_charset") Then
+                                        h.Add(EncodeHintType.CHARACTER_SET, Design.Get("qr_charset"))
+                                    Else
+                                        h.Add(EncodeHintType.CHARACTER_SET, "SJIS")
+                                    End If
+                                    If Not Design.IsNull("qr_correction_level") Then
+                                        Dim l As String = Design.Get("qr_correction_level")
+                                        If l = "L" Then
+                                            h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L)
+                                        ElseIf l = "Q" Then
+                                            h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.Q)
+                                        ElseIf l = "H" Then
+                                            h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H)
+                                        Else
+                                            h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M)
+                                        End If
+                                    Else
+                                        h.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M)
+                                    End If
+                                    h.Add(EncodeHintType.DISABLE_ECI, True)
+                                    Dim bm As BitMatrix = w.encode(Me.Code, BarcodeFormat.QR_CODE, 0, 0, h)
+                                    Dim mw As Integer = Fix(image.Width / bm.Width)
+                                    Dim mh As Integer = Fix(image.Height / bm.Height)
+                                    Dim mgw As Integer = (image.Width - (mw * bm.Width)) / 2
+                                    Dim mgh As Integer = (image.Height - (mh * bm.Height)) / 2
+                                    For y As Integer = 0 To bm.Height - 1
+                                        For x As Integer = 0 To bm.Width - 1
+                                            If bm(x, y) Then
+                                                g.FillRectangle(Brushes.Black, mgw + x * mw, mgh + y * mh, mw, mh)
+                                            End If
+                                        Next
+                                    Next
+                                Case Else
+                                    Dim barcode As New Ean13
+                                    If Design.Get("without_text") Then
+                                        barcode.WithText = False
+                                    End If
+                                    barcode.Render(g, 0, 0, image.Width, image.Height, Me.Code)
+                            End Select
+
+                            Dim p As HSSFPatriarch = Page.Renderer.Sheet.DrawingPatriarch
+                            Dim index As Integer = Page.Renderer.Workbook.AddPicture(
+                              (New ImageConverter).ConvertTo(image, GetType(Byte())),
+                              NPOI.SS.UserModel.PictureType.PNG)
+                            p.CreatePicture(Shape.GetHSSFClientAnchor(Page.TopRow), index)
+                        Catch ex As Exception
+                        End Try
+                    End Using
+                End Using
             End Sub
         End Class
 

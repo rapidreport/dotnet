@@ -31,6 +31,7 @@ Public Class PrintPreview
     Private Const SCROLLBAR_WIDTH As Integer = 16
     Private Const ZOOM_MIN As Decimal = 0.3
     Private Const ZOOM_MAX As Decimal = 3.0
+    Private Const BUFFERSIZE_MAX As Decimal = 5000
 
     Private _Gripping As Boolean = False
     Private _GripLocation As Point
@@ -99,7 +100,7 @@ Public Class PrintPreview
         Me.DoubleBuffered = True
     End Sub
 
-    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
     Public Property Printer() As Printer
         Get
             Return Me._Printer
@@ -112,7 +113,7 @@ Public Class PrintPreview
         End Set
     End Property
 
-    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
     Public Property PageCount() As Integer Implements IPrintPreviewPage.PageCount
         Get
             Return Me._PageCount
@@ -130,7 +131,7 @@ Public Class PrintPreview
         End Set
     End Property
 
-    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
     Public Property Zoom() As Decimal Implements IPrintPreviewZoom.Zoom
         Get
             Return Me._Zoom
@@ -171,14 +172,14 @@ Public Class PrintPreview
     Public Sub ZoomFit() Implements IPrintPreviewZoom.ZoomFit
         Dim page As ReportPage = Me.Printer.Pages(Me.PageCount - 1)
         Dim paperSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
-        Me.Zoom = Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width), _
+        Me.Zoom = Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width),
                            (Me.Height - (MARGIN_VIEW * 2)) / Me.ToPixelY(paperSize.Height))
     End Sub
 
     Public Sub ZoomFitWidth() Implements IPrintPreviewZoom.ZoomFitWidth
         Dim page As ReportPage = Me.Printer.Pages(Me.PageCount - 1)
         Dim paperSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
-        Dim z1 As Decimal = Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width), _
+        Dim z1 As Decimal = Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width),
                                      (Me.Height - (MARGIN_VIEW * 2)) / Me.ToPixelY(paperSize.Height))
         Dim z2 As Decimal = (Me.Width - (MARGIN_VIEW * 3) - SCROLLBAR_WIDTH) / Me.ToPixelX(paperSize.Width)
         Me.Zoom = Math.Max(z1, z2)
@@ -201,7 +202,7 @@ Public Class PrintPreview
 
     Public Sub ScrollOrPageChange(ByVal delta As Integer)
         If delta > 0 Then
-            If Not Me.VScrollBar.Visible OrElse _
+            If Not Me.VScrollBar.Visible OrElse
                Me.VScrollBar.Value = 0 AndAlso Me.PageCount > 1 Then
                 Me.PageCount -= 1
             Else
@@ -213,7 +214,7 @@ Public Class PrintPreview
             End If
         Else
             Dim max As Integer = Me.VScrollBar.Maximum - Me.VScrollBar.LargeChange
-            If Not Me.VScrollBar.Visible OrElse _
+            If Not Me.VScrollBar.Visible OrElse
                Me.VScrollBar.Value = max AndAlso Me.PageCount < Me.Printer.Pages.Count Then
                 Me.PageCount += 1
             Else
@@ -250,49 +251,63 @@ Public Class PrintPreview
         End If
         Dim page As ReportPage = Me.Printer.Pages(Me.PageCount - 1)
         Dim pageSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
-        Me.PageBuffer = New Bitmap(CType(Me.ToPixelX(pageSize.Width) * Me.Zoom, Integer), _
-                                   CType(Me.ToPixelY(pageSize.Height) * Me.Zoom, Integer))
-        Dim g As Graphics = Graphics.FromImage(Me.PageBuffer)
-        g.PageUnit = GraphicsUnit.Point
-        g.ScaleTransform(Me.Zoom, Me.Zoom)
-        g.FillRectangle(Brushes.White, 0, 0, pageSize.Width, pageSize.Height)
-        If Me.Printer.PreviewBackgroundImage IsNot Nothing Then
+        Dim zoom As Decimal = Me.Zoom
 
-            Dim scale As Single = Math.Min((pageSize.Width / Me.Printer.PreviewBackgroundImage.Width) * Me.Printer.PreviewBackgroundSetting.Scale,
+        With Nothing
+            If Me.PageBuffer IsNot Nothing Then
+                Me.PageBuffer.Dispose()
+            End If
+            Dim w As Integer = Me.ToPixelX(pageSize.Width)
+            Dim h As Integer = Me.ToPixelY(pageSize.Height)
+            zoom = Math.Min(zoom, BUFFERSIZE_MAX / w)
+            zoom = Math.Min(zoom, BUFFERSIZE_MAX / h)
+            Me.PageBuffer = New Bitmap(
+                    CType(w * zoom, Integer),
+                    CType(h * zoom, Integer))
+        End With
+
+        Using g As Graphics = Graphics.FromImage(Me.PageBuffer)
+            g.PageUnit = GraphicsUnit.Point
+            g.ScaleTransform(zoom, zoom)
+            g.FillRectangle(Brushes.White, 0, 0, pageSize.Width, pageSize.Height)
+            If Me.Printer.PreviewBackgroundImage IsNot Nothing Then
+
+                Dim scale As Single = Math.Min((pageSize.Width / Me.Printer.PreviewBackgroundImage.Width) * Me.Printer.PreviewBackgroundSetting.Scale,
                                            (pageSize.Height / Me.Printer.PreviewBackgroundImage.Height) * Me.Printer.PreviewBackgroundSetting.Scale)
 
-            Dim cm As New Imaging.ColorMatrix()
-            cm.Matrix00 = 1
-            cm.Matrix11 = 1
-            cm.Matrix22 = 1
-            cm.Matrix33 = Me.Printer.PreviewBackgroundSetting.Alpha
-            cm.Matrix44 = 1
-            Dim ia As New Imaging.ImageAttributes()
-            ia.SetColorMatrix(cm)
-            g.DrawImage(Me.Printer.PreviewBackgroundImage, New Rectangle(Me.Printer.PreviewBackgroundSetting.X, Me.Printer.PreviewBackgroundSetting.Y,
+                Dim cm As New Imaging.ColorMatrix()
+                cm.Matrix00 = 1
+                cm.Matrix11 = 1
+                cm.Matrix22 = 1
+                cm.Matrix33 = Me.Printer.PreviewBackgroundSetting.Alpha
+                cm.Matrix44 = 1
+                Dim ia As New Imaging.ImageAttributes()
+                ia.SetColorMatrix(cm)
+                g.DrawImage(Me.Printer.PreviewBackgroundImage, New Rectangle(Me.Printer.PreviewBackgroundSetting.X, Me.Printer.PreviewBackgroundSetting.Y,
                                                                          Me.Printer.PreviewBackgroundImage.Width * scale,
                                                                          Me.Printer.PreviewBackgroundImage.Height * scale),
                         0, 0, Me.Printer.PreviewBackgroundImage.Width, Me.Printer.PreviewBackgroundImage.Height, GraphicsUnit.Pixel, ia)
-        End If
-        With Nothing
-            Dim m As PaperMarginDesign = page.Report.Design.PaperDesign.Margin.ToPoint(page.Report.Design.PaperDesign)
-            If ((Me.PageCount - 1) Mod 2) And m.OddReverse Then
-                Me._ReportMargin = New SizeF(m.Right, m.Top)
-            Else
-                Me._ReportMargin = New SizeF(m.Left, m.Top)
             End If
-            g.TranslateTransform(Me._ReportMargin.Width, Me._ReportMargin.Height)
-        End With
-        Dim cancel As Boolean = False
-        RaiseEvent Rendering(Me, g, cancel)
-        If Not cancel Then
-            Dim r As New GdiRenderer(New RenderingEnv(g, Me.Printer))
-            page.Render(r, Me.Printer.Pages)
-            Me.VScrollBar.Value = 0
-            Me.HScrollBar.Value = 0
-            Me.scrollBarUpdate()
-            RaiseEvent Rendered(Me, g)
-        End If
+            With Nothing
+                Dim m As PaperMarginDesign = page.Report.Design.PaperDesign.Margin.ToPoint(page.Report.Design.PaperDesign)
+                If ((Me.PageCount - 1) Mod 2) And m.OddReverse Then
+                    Me._ReportMargin = New SizeF(m.Right, m.Top)
+                Else
+                    Me._ReportMargin = New SizeF(m.Left, m.Top)
+                End If
+                g.TranslateTransform(Me._ReportMargin.Width, Me._ReportMargin.Height)
+            End With
+            Dim cancel As Boolean = False
+            RaiseEvent Rendering(Me, g, cancel)
+            If Not cancel Then
+                Dim r As New GdiRenderer(New RenderingEnv(g, Me.Printer))
+                page.Render(r, Me.Printer.Pages)
+                Me.VScrollBar.Value = 0
+                Me.HScrollBar.Value = 0
+                Me.scrollBarUpdate()
+                RaiseEvent Rendered(Me, g)
+            End If
+        End Using
     End Sub
 
     Private Sub scrollBarUpdate()
@@ -450,11 +465,11 @@ Public Class PrintPreview
             Dim dx As Integer = Me._GripLocation.X - e.Location.X
             Dim dy As Integer = Me._GripLocation.Y - e.Location.Y
             If Me.HScrollBar.Visible Then
-                Me.HScrollBar.Value = Math.Min(Math.Max(Me.HScrollBar.Value + dx, 0), _
+                Me.HScrollBar.Value = Math.Min(Math.Max(Me.HScrollBar.Value + dx, 0),
                                                Me.HScrollBar.Maximum - Me.HScrollBar.LargeChange)
             End If
             If Me.VScrollBar.Visible Then
-                Me.VScrollBar.Value = Math.Min(Math.Max(Me.VScrollBar.Value + dy, 0), _
+                Me.VScrollBar.Value = Math.Min(Math.Max(Me.VScrollBar.Value + dy, 0),
                                                Me.VScrollBar.Maximum - Me.VScrollBar.LargeChange)
             End If
             Me._GripLocation = e.Location
@@ -484,9 +499,9 @@ Public Class PrintPreview
 
     Public Function ToRect(region As component.Region) As Rectangle
         Dim m As Size = Me.PaperMargin
-        Return New Rectangle( _
-          ToPixelX(Me._ReportMargin.Width + region.Left) * Me.Zoom + m.Width, _
-          ToPixelY(Me._ReportMargin.Height + region.Top) * Me.Zoom + m.Height, _
+        Return New Rectangle(
+          ToPixelX(Me._ReportMargin.Width + region.Left) * Me.Zoom + m.Width,
+          ToPixelY(Me._ReportMargin.Height + region.Top) * Me.Zoom + m.Height,
           ToPixelX(region.GetWidth) * Me.Zoom, ToPixelX(region.GetHeight) * Me.Zoom)
     End Function
 
