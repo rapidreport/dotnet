@@ -107,16 +107,27 @@
             Me._SearchEnabled = value
             If Me.SearchEnabled Then
                 Me.PrintPreviewSearch.Show()
-                Me.BtnClose.Location = New Point(620, 5)
             Else
                 Me.PrintPreviewSearch.PanelHide()
                 Me.PrintPreviewSearch.Hide()
-                Me.BtnClose.Location = New Point(575, 5)
             End If
+            Me._ReLayout()
         End Set
         Get
             Return _SearchEnabled
         End Get
     End Property
+
+    Private Sub _ReLayout()
+        If Me.PrintPreviewSearch.Visible Then
+            With Me.PrintPreviewSearch
+                Me.BtnClose.Location = New Point(.Left + .Width, 5)
+            End With
+        Else
+            With Me.PrintPreviewZoom
+                Me.BtnClose.Location = New Point(.Left + .Width, 5)
+            End With
+        End If
+    End Sub
 
 End Class

@@ -25,11 +25,11 @@ Partial Class FmPrintPreview
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FmPrintPreview))
         Me.BtnPrint = New System.Windows.Forms.Button()
         Me.BtnClose = New System.Windows.Forms.Button()
+        Me.PrintPreviewSearch = New jp.co.systembase.report.renderer.gdi.PrintPreviewSearch()
         Me.PrintPreviewSearchPanel = New jp.co.systembase.report.renderer.gdi.PrintPreviewSearchPanel()
         Me.PrintPreviewZoom = New jp.co.systembase.report.renderer.gdi.PrintPreviewZoom()
         Me.PrintPreviewPage = New jp.co.systembase.report.renderer.gdi.PrintPreviewPage()
         Me.PrintPreview = New jp.co.systembase.report.renderer.gdi.PrintPreview()
-        Me.PrintPreviewSearch = New jp.co.systembase.report.renderer.gdi.PrintPreviewSearch()
         Me.SuspendLayout()
         '
         'BtnPrint
@@ -49,6 +49,13 @@ Partial Class FmPrintPreview
         Me.BtnClose.TabIndex = 5
         Me.BtnClose.Text = "閉じる"
         Me.BtnClose.UseVisualStyleBackColor = True
+        '
+        'PrintPreviewSearch
+        '
+        Me.PrintPreviewSearch.Location = New System.Drawing.Point(576, 5)
+        Me.PrintPreviewSearch.Name = "PrintPreviewSearch"
+        Me.PrintPreviewSearch.Size = New System.Drawing.Size(34, 32)
+        Me.PrintPreviewSearch.TabIndex = 3
         '
         'PrintPreviewSearchPanel
         '
@@ -87,13 +94,6 @@ Partial Class FmPrintPreview
         Me.PrintPreview.Size = New System.Drawing.Size(765, 510)
         Me.PrintPreview.TabIndex = 6
         Me.PrintPreview.TabStop = False
-        '
-        'PrintPreviewSearch
-        '
-        Me.PrintPreviewSearch.Location = New System.Drawing.Point(575, 5)
-        Me.PrintPreviewSearch.Name = "PrintPreviewSearch"
-        Me.PrintPreviewSearch.Size = New System.Drawing.Size(34, 32)
-        Me.PrintPreviewSearch.TabIndex = 3
         '
         'FmPrintPreview
         '
