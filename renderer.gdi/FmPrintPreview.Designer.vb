@@ -67,8 +67,6 @@ Partial Class FmPrintPreview
         '
         'PrintPreviewZoom
         '
-        Me.PrintPreviewZoom.AutoFit = False
-        Me.PrintPreviewZoom.AutoFitWidth = False
         Me.PrintPreviewZoom.Location = New System.Drawing.Point(345, 5)
         Me.PrintPreviewZoom.Name = "PrintPreviewZoom"
         Me.PrintPreviewZoom.PrintPreview = Nothing

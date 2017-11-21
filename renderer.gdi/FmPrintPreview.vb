@@ -20,9 +20,9 @@
             Me.PrintPreviewZoom.Init(Me.PrintPreview)
             Me.PrintPreviewSearch.Init(Me.PrintPreview, Me.PrintPreviewSearchPanel)
             If Me.StartUpZoomFit Then
-                Me.PrintPreviewZoom.AutoFit = True
+                Me.PrintPreview.AutoZoomFit = True
             ElseIf Me.StartUpZoomFitWidth Then
-                Me.PrintPreviewZoom.AutoFitWidth = True
+                Me.PrintPreview.AutoZoomFitWidth = True
             End If
         End Using
         If Report.Compatibility._4_15_PreviewSearchDisabled Then

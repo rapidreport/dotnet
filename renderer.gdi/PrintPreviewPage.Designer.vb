@@ -28,10 +28,10 @@ Partial Class PrintPreviewPage
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TxtPage = New System.Windows.Forms.TextBox()
-        Me.BtnEnd = New System.Windows.Forms.Button()
+        Me.BtnLast = New System.Windows.Forms.Button()
         Me.BtnNext = New System.Windows.Forms.Button()
         Me.BtnPrev = New System.Windows.Forms.Button()
-        Me.BtnBegin = New System.Windows.Forms.Button()
+        Me.BtnFirst = New System.Windows.Forms.Button()
         Me.SlPage = New jp.co.systembase.report.renderer.gdi.Slider()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.SuspendLayout()
@@ -75,15 +75,15 @@ Partial Class PrintPreviewPage
         '
         'BtnEnd
         '
-        Me.BtnEnd.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control
-        Me.BtnEnd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnEnd.Image = CType(resources.GetObject("BtnEnd.Image"), System.Drawing.Image)
-        Me.BtnEnd.Location = New System.Drawing.Point(231, 0)
-        Me.BtnEnd.Name = "BtnEnd"
-        Me.BtnEnd.Size = New System.Drawing.Size(32, 32)
-        Me.BtnEnd.TabIndex = 13
-        Me.ToolTip.SetToolTip(Me.BtnEnd, "最後のページへ移動")
-        Me.BtnEnd.UseVisualStyleBackColor = True
+        Me.BtnLast.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control
+        Me.BtnLast.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnLast.Image = CType(resources.GetObject("BtnEnd.Image"), System.Drawing.Image)
+        Me.BtnLast.Location = New System.Drawing.Point(231, 0)
+        Me.BtnLast.Name = "BtnEnd"
+        Me.BtnLast.Size = New System.Drawing.Size(32, 32)
+        Me.BtnLast.TabIndex = 13
+        Me.ToolTip.SetToolTip(Me.BtnLast, "最後のページへ移動")
+        Me.BtnLast.UseVisualStyleBackColor = True
         '
         'BtnNext
         '
@@ -111,15 +111,15 @@ Partial Class PrintPreviewPage
         '
         'BtnBegin
         '
-        Me.BtnBegin.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control
-        Me.BtnBegin.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnBegin.Image = CType(resources.GetObject("BtnBegin.Image"), System.Drawing.Image)
-        Me.BtnBegin.Location = New System.Drawing.Point(0, 0)
-        Me.BtnBegin.Name = "BtnBegin"
-        Me.BtnBegin.Size = New System.Drawing.Size(32, 32)
-        Me.BtnBegin.TabIndex = 6
-        Me.ToolTip.SetToolTip(Me.BtnBegin, "最初のページへ移動")
-        Me.BtnBegin.UseVisualStyleBackColor = True
+        Me.BtnFirst.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control
+        Me.BtnFirst.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFirst.Image = CType(resources.GetObject("BtnBegin.Image"), System.Drawing.Image)
+        Me.BtnFirst.Location = New System.Drawing.Point(0, 0)
+        Me.BtnFirst.Name = "BtnBegin"
+        Me.BtnFirst.Size = New System.Drawing.Size(32, 32)
+        Me.BtnFirst.TabIndex = 6
+        Me.ToolTip.SetToolTip(Me.BtnFirst, "最初のページへ移動")
+        Me.BtnFirst.UseVisualStyleBackColor = True
         '
         'SlPage
         '
@@ -141,10 +141,10 @@ Partial Class PrintPreviewPage
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TxtPage)
-        Me.Controls.Add(Me.BtnEnd)
+        Me.Controls.Add(Me.BtnLast)
         Me.Controls.Add(Me.BtnNext)
         Me.Controls.Add(Me.BtnPrev)
-        Me.Controls.Add(Me.BtnBegin)
+        Me.Controls.Add(Me.BtnFirst)
         Me.Name = "PrintPreviewPage"
         Me.Size = New System.Drawing.Size(263, 32)
         Me.ResumeLayout(False)
@@ -155,10 +155,10 @@ Partial Class PrintPreviewPage
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents TxtPage As System.Windows.Forms.TextBox
-    Friend WithEvents BtnEnd As System.Windows.Forms.Button
+    Friend WithEvents BtnLast As System.Windows.Forms.Button
     Friend WithEvents BtnNext As System.Windows.Forms.Button
     Friend WithEvents BtnPrev As System.Windows.Forms.Button
-    Friend WithEvents BtnBegin As System.Windows.Forms.Button
+    Friend WithEvents BtnFirst As System.Windows.Forms.Button
     Friend WithEvents SlPage As jp.co.systembase.report.renderer.gdi.Slider
     Friend WithEvents ToolTip As System.Windows.Forms.ToolTip
 

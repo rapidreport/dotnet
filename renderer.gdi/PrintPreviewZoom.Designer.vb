@@ -27,11 +27,11 @@ Partial Class PrintPreviewZoom
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TxtZoom = New System.Windows.Forms.TextBox()
-        Me.BtnZoomFit = New System.Windows.Forms.Button()
+        Me.BtnAutoZoomFit = New System.Windows.Forms.Button()
         Me.BtnZoomOut = New System.Windows.Forms.Button()
         Me.BtnZoomIn = New System.Windows.Forms.Button()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.BtnZoomFitWidth = New System.Windows.Forms.Button()
+        Me.BtnAutoZoomFitWidth = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label4
@@ -64,15 +64,15 @@ Partial Class PrintPreviewZoom
         '
         'BtnZoomFit
         '
-        Me.BtnZoomFit.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control
-        Me.BtnZoomFit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnZoomFit.Image = CType(resources.GetObject("BtnZoomFit.Image"), System.Drawing.Image)
-        Me.BtnZoomFit.Location = New System.Drawing.Point(194, 0)
-        Me.BtnZoomFit.Name = "BtnZoomFit"
-        Me.BtnZoomFit.Size = New System.Drawing.Size(32, 32)
-        Me.BtnZoomFit.TabIndex = 4
-        Me.ToolTip.SetToolTip(Me.BtnZoomFit, "画面サイズに合わせて拡大/縮小")
-        Me.BtnZoomFit.UseVisualStyleBackColor = True
+        Me.BtnAutoZoomFit.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control
+        Me.BtnAutoZoomFit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnAutoZoomFit.Image = CType(resources.GetObject("BtnZoomFit.Image"), System.Drawing.Image)
+        Me.BtnAutoZoomFit.Location = New System.Drawing.Point(194, 0)
+        Me.BtnAutoZoomFit.Name = "BtnZoomFit"
+        Me.BtnAutoZoomFit.Size = New System.Drawing.Size(32, 32)
+        Me.BtnAutoZoomFit.TabIndex = 4
+        Me.ToolTip.SetToolTip(Me.BtnAutoZoomFit, "画面サイズに合わせて拡大/縮小")
+        Me.BtnAutoZoomFit.UseVisualStyleBackColor = True
         '
         'BtnZoomOut
         '
@@ -100,15 +100,15 @@ Partial Class PrintPreviewZoom
         '
         'BtnZoomFitWidth
         '
-        Me.BtnZoomFitWidth.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control
-        Me.BtnZoomFitWidth.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnZoomFitWidth.Image = CType(resources.GetObject("BtnZoomFitWidth.Image"), System.Drawing.Image)
-        Me.BtnZoomFitWidth.Location = New System.Drawing.Point(161, 0)
-        Me.BtnZoomFitWidth.Name = "BtnZoomFitWidth"
-        Me.BtnZoomFitWidth.Size = New System.Drawing.Size(32, 32)
-        Me.BtnZoomFitWidth.TabIndex = 3
-        Me.ToolTip.SetToolTip(Me.BtnZoomFitWidth, "画面幅に合わせて拡大/縮小")
-        Me.BtnZoomFitWidth.UseVisualStyleBackColor = True
+        Me.BtnAutoZoomFitWidth.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control
+        Me.BtnAutoZoomFitWidth.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnAutoZoomFitWidth.Image = CType(resources.GetObject("BtnZoomFitWidth.Image"), System.Drawing.Image)
+        Me.BtnAutoZoomFitWidth.Location = New System.Drawing.Point(161, 0)
+        Me.BtnAutoZoomFitWidth.Name = "BtnZoomFitWidth"
+        Me.BtnAutoZoomFitWidth.Size = New System.Drawing.Size(32, 32)
+        Me.BtnAutoZoomFitWidth.TabIndex = 3
+        Me.ToolTip.SetToolTip(Me.BtnAutoZoomFitWidth, "画面幅に合わせて拡大/縮小")
+        Me.BtnAutoZoomFitWidth.UseVisualStyleBackColor = True
         '
         'PrintPreviewZoom
         '
@@ -117,8 +117,8 @@ Partial Class PrintPreviewZoom
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.TxtZoom)
-        Me.Controls.Add(Me.BtnZoomFitWidth)
-        Me.Controls.Add(Me.BtnZoomFit)
+        Me.Controls.Add(Me.BtnAutoZoomFitWidth)
+        Me.Controls.Add(Me.BtnAutoZoomFit)
         Me.Controls.Add(Me.BtnZoomOut)
         Me.Controls.Add(Me.BtnZoomIn)
         Me.Name = "PrintPreviewZoom"
@@ -130,10 +130,10 @@ Partial Class PrintPreviewZoom
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents TxtZoom As System.Windows.Forms.TextBox
-    Friend WithEvents BtnZoomFit As System.Windows.Forms.Button
+    Friend WithEvents BtnAutoZoomFit As System.Windows.Forms.Button
     Friend WithEvents BtnZoomOut As System.Windows.Forms.Button
     Friend WithEvents BtnZoomIn As System.Windows.Forms.Button
     Friend WithEvents ToolTip As System.Windows.Forms.ToolTip
-    Friend WithEvents BtnZoomFitWidth As System.Windows.Forms.Button
+    Friend WithEvents BtnAutoZoomFitWidth As System.Windows.Forms.Button
 
 End Class

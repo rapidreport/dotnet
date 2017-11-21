@@ -1,12 +1,34 @@
 ﻿Public Class PrintPreviewZoom
 
     Public WithEvents PrintPreview As IPrintPreviewZoom
+    Private _zoomTextChanged As Boolean = False
 
     Public Sub Init(ByVal printPreview As IPrintPreviewZoom)
         Me.PrintPreview = printPreview
+        Me._UpdateReport()
     End Sub
 
-    Private _zoomTextChanged As Boolean = False
+    Private Sub _UpdateReport() Handles PrintPreview.UpdateReport
+        Me.TxtZoom.Text = Fix(Me.PrintPreview.Zoom * 100)
+        Me._zoomTextChanged = False
+        If Me.PrintPreview.AutoZoomFit Then
+            Me.BtnAutoZoomFit.BackColor = SystemColors.ControlDark
+        Else
+            Me.BtnAutoZoomFit.BackColor = SystemColors.Control
+        End If
+        If Me.PrintPreview.AutoZoomFitWidth Then
+            Me.BtnAutoZoomFitWidth.BackColor = SystemColors.ControlDark
+        Else
+            Me.BtnAutoZoomFitWidth.BackColor = SystemColors.Control
+        End If
+    End Sub
+
+    Private Sub _SetUpZoom()
+        If IsNumeric(Me.TxtZoom.Text) Then
+            Dim d As Decimal = Me.TxtZoom.Text
+            Me.PrintPreview.Zoom = d / 100.0
+        End If
+    End Sub
 
     Private Sub TxtZoom_GotFocus(sender As Object, e As System.EventArgs) Handles TxtZoom.GotFocus
         Me._zoomTextChanged = False
@@ -18,65 +40,30 @@
 
     Private Sub TxtZoom_Validated(ByVal sender As Object, ByVal e As EventArgs) Handles TxtZoom.Validated
         If Me._zoomTextChanged Then
-            Me.zoom()
+            Me._SetUpZoom()
         End If
     End Sub
 
     Private Sub TxtZoom_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TxtZoom.KeyDown
         If e.KeyCode.Equals(System.Windows.Forms.Keys.Enter) Then
-            Me.zoom()
+            Me._SetUpZoom()
         End If
     End Sub
 
     Private Sub BtnZoomIn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnZoomIn.Click
         Me.PrintPreview.ZoomIn()
-        Me.AutoFit = False
-        Me.AutoFitWidth = False
     End Sub
 
     Private Sub BtnZoomOut_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnZoomOut.Click
         Me.PrintPreview.ZoomOut()
-        Me.AutoFit = False
-        Me.AutoFitWidth = False
     End Sub
 
-    Private Sub BtnZoomFit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnZoomFit.Click
-        Me.AutoFit = Not Me.AutoFit
+    Private Sub BtnAutoZoomFit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAutoZoomFit.Click
+        Me.PrintPreview.AutoZoomFit = Not Me.PrintPreview.AutoZoomFit
     End Sub
 
-    Private Sub BtnZoomFitWidth_Click(sender As System.Object, e As System.EventArgs) Handles BtnZoomFitWidth.Click
-        Me.AutoFitWidth = Not Me.AutoFitWidth
-    End Sub
-
-    Private Sub PrintPreview_UpdateReport() Handles PrintPreview.UpdateReport
-        Me.TxtZoom.Text = Fix(Me.PrintPreview.Zoom * 100)
-    End Sub
-
-    Private Sub PrintPreview_Resize() Handles PrintPreview.Resize
-        If Me.AutoFit Then
-            Me.PrintPreview.ZoomFit()
-        ElseIf Me.AutoFitWidth Then
-            Me.PrintPreview.ZoomFitWidth()
-        End If
-    End Sub
-
-    Private Sub PrintPreview_ZoomInOrOut(zoomIn As Boolean) Handles PrintPreview.ZoomInOrOut
-        If zoomIn Then
-            Me.PrintPreview.ZoomIn()
-        Else
-            Me.PrintPreview.ZoomOut()
-        End If
-        Me.AutoFit = False
-        Me.AutoFitWidth = False
-    End Sub
-
-    Private Sub zoom()
-        If IsNumeric(Me.TxtZoom.Text) Then
-            Dim d As Decimal = Me.TxtZoom.Text
-            Me.PrintPreview.Zoom = d / 100.0
-            Me.AutoFit = False
-            Me.AutoFitWidth = False
-        End If
+    Private Sub BtnAutoZoomFitWidth_Click(sender As System.Object, e As System.EventArgs) Handles BtnAutoZoomFitWidth.Click
+        Me.PrintPreview.AutoZoomFitWidth = Not Me.PrintPreview.AutoZoomFitWidth
     End Sub
 
     Public Function HandleMouseWheelEvent(ByVal e As MouseEventArgs) As Boolean
@@ -86,50 +73,9 @@
             Else
                 Me.PrintPreview.ZoomOut()
             End If
-            Me.AutoFit = False
-            Me.AutoFitWidth = False
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
-
-    Private _AutoFit As Boolean = False
-    Public Property AutoFit As Boolean
-        Set(value As Boolean)
-            If value Then
-                Me.AutoFitWidth = False
-            End If
-            Me._AutoFit = value
-            If Me.AutoFit Then
-                Me.BtnZoomFit.BackColor = SystemColors.ControlDark
-                Me.PrintPreview.ZoomFit()
-            Else
-                Me.BtnZoomFit.BackColor = SystemColors.Control
-            End If
-        End Set
-        Get
-            Return Me._AutoFit
-        End Get
-    End Property
-
-    Private _AutoFitWidth As Boolean = False
-    Public Property AutoFitWidth As Boolean
-        Set(value As Boolean)
-            If value Then
-                Me.AutoFit = False
-            End If
-            Me._AutoFitWidth = value
-            If Me.AutoFitWidth Then
-                Me.BtnZoomFitWidth.BackColor = SystemColors.ControlDark
-                Me.PrintPreview.ZoomFitWidth()
-            Else
-                Me.BtnZoomFitWidth.BackColor = SystemColors.Control
-            End If
-        End Set
-        Get
-            Return Me._AutoFitWidth
-        End Get
-    End Property
 
 End Class

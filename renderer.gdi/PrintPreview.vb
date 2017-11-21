@@ -13,8 +13,6 @@ Public Class PrintPreview
 
     Public Event UpdateReportPage() Implements IPrintPreviewPage.UpdateReport
     Public Event UpdateReportZoom() Implements IPrintPreviewZoom.UpdateReport
-    Public Event ZoomInOrOut(zoomIn As Boolean) Implements IPrintPreviewZoom.ZoomInOrOut
-    Public Event ResizeZoom() Implements IPrintPreviewZoom.Resize
     Public Event Rendering(ByVal sender As Object, ByVal g As Graphics, ByRef cancel As Boolean)
     Public Event Rendered(ByVal sender As Object, ByVal g As Graphics)
 
@@ -131,23 +129,51 @@ Public Class PrintPreview
         End Set
     End Property
 
+    Public Sub PrevPage() Implements IPrintPreviewPage.PrevPage
+        Dim i As Integer = Me.PageCount
+        If i > 1 Then
+            Me.PageCount = i - 1
+        End If
+    End Sub
+
+    Public Sub NextPage() Implements IPrintPreviewPage.NextPage
+        Dim i As Integer = Me.PageCount
+        If i < Me.GetPageCountTotal Then
+            Me.PageCount = i + 1
+        End If
+    End Sub
+
+    Public Sub FirstPage() Implements IPrintPreviewPage.FirstPage
+        Me.PageCount = 1
+    End Sub
+
+    Public Sub LastPage() Implements IPrintPreviewPage.LastPage
+        Me.PageCount = Me.GetPageCountTotal
+    End Sub
+
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
     Public Property Zoom() As Decimal Implements IPrintPreviewZoom.Zoom
         Get
             Return Me._Zoom
         End Get
         Set(ByVal value As Decimal)
-            Using Me.RenderBlock
-                Me._Zoom = value
-                If Me._Zoom < ZOOM_MIN Then
-                    Me._Zoom = ZOOM_MIN
-                End If
-                If Me._Zoom > ZOOM_MAX Then
-                    Me._Zoom = ZOOM_MAX
-                End If
-            End Using
+            Me.AutoZoomFit = False
+            Me.AutoZoomFitWidth = False
+            Me._SetZoom(value)
         End Set
     End Property
+
+    Private Sub _SetZoom(zoom As Decimal)
+        Using Me.RenderBlock
+            Me._Zoom = zoom
+            If Me._Zoom < ZOOM_MIN Then
+                Me._Zoom = ZOOM_MIN
+            End If
+            If Me._Zoom > ZOOM_MAX Then
+                Me._Zoom = ZOOM_MAX
+            End If
+        End Using
+    End Sub
 
     Public Sub ZoomIn() Implements IPrintPreviewZoom.ZoomIn
         Dim i As Integer
@@ -172,8 +198,8 @@ Public Class PrintPreview
     Public Sub ZoomFit() Implements IPrintPreviewZoom.ZoomFit
         Dim page As ReportPage = Me.Printer.Pages(Me.PageCount - 1)
         Dim paperSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
-        Me.Zoom = Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width),
-                           (Me.Height - (MARGIN_VIEW * 2)) / Me.ToPixelY(paperSize.Height))
+        Me._SetZoom(Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width),
+                             (Me.Height - (MARGIN_VIEW * 2)) / Me.ToPixelY(paperSize.Height)))
     End Sub
 
     Public Sub ZoomFitWidth() Implements IPrintPreviewZoom.ZoomFitWidth
@@ -182,8 +208,42 @@ Public Class PrintPreview
         Dim z1 As Decimal = Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width),
                                      (Me.Height - (MARGIN_VIEW * 2)) / Me.ToPixelY(paperSize.Height))
         Dim z2 As Decimal = (Me.Width - (MARGIN_VIEW * 3) - SCROLLBAR_WIDTH) / Me.ToPixelX(paperSize.Width)
-        Me.Zoom = Math.Max(z1, z2)
+        Me._SetZoom(Math.Max(z1, z2))
     End Sub
+
+    Private _AutoZoomFit As Boolean = False
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
+    Public Property AutoZoomFit As Boolean Implements IPrintPreviewZoom.AutoZoomFit
+        Set(value As Boolean)
+            If value Then
+                Me.AutoZoomFitWidth = False
+            End If
+            Me._AutoZoomFit = value
+            If Me.AutoZoomFit Then
+                Me.ZoomFit()
+            End If
+        End Set
+        Get
+            Return Me._AutoZoomFit
+        End Get
+    End Property
+
+    Private _AutoZoomFitWidth As Boolean = False
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
+    Public Property AutoZoomFitWidth As Boolean Implements IPrintPreviewZoom.AutoZoomFitWidth
+        Set(value As Boolean)
+            If value Then
+                Me.AutoZoomFit = False
+            End If
+            Me._AutoZoomFitWidth = value
+            If Me.AutoZoomFitWidth Then
+                Me.ZoomFitWidth()
+            End If
+        End Set
+        Get
+            Return Me._AutoZoomFitWidth
+        End Get
+    End Property
 
     Public Function GetPageCountTotal() As Integer Implements IPrintPreviewPage.GetPageCountTotal
         Return Me.Printer.Pages.Count
@@ -194,7 +254,11 @@ Public Class PrintPreview
     End Sub
 
     Private Sub PrintPreview_Resize(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Resize
-        RaiseEvent ResizeZoom()
+        If Me.AutoZoomFit Then
+            Me.ZoomFit()
+        ElseIf Me.AutozoomFitWidth Then
+            Me.ZoomFitWidth()
+        End If
         If Me.ClientRectangle.Width > 0 And Me.ClientRectangle.Height > 0 Then
             Me.scrollBarUpdate()
         End If
@@ -478,7 +542,11 @@ Public Class PrintPreview
 
     Public Sub HandleMouseWheelEvent(ByVal e As MouseEventArgs)
         If ModifierKeys = Keys.Control Then
-            RaiseEvent ZoomInOrOut(e.Delta > 0)
+            If e.Delta > 0 Then
+                Me.ZoomIn()
+            Else
+                Me.ZoomOut()
+            End If
         Else
             Me.ScrollOrPageChange(e.Delta)
         End If
