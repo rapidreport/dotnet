@@ -4,19 +4,21 @@ Imports System.ComponentModel
 
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
+Imports jp.co.systembase.report.renderer.gdi
 
 Public Class PrintPreview
     Inherits Control
     Implements IPrintPreviewPage
     Implements IPrintPreviewZoom
     Implements IPrintPreviewSearch
+    Implements IPrintPreviewMultiPage
 
     Public Event UpdateReportPage() Implements IPrintPreviewPage.UpdateReport
     Public Event UpdateReportZoom() Implements IPrintPreviewZoom.UpdateReport
+    Public Event UpdateReportMultiPage() Implements IPrintPreviewMultiPage.UpdateReport
     Public Event Rendering(ByVal sender As Object, ByVal g As Graphics, ByRef cancel As Boolean)
     Public Event Rendered(ByVal sender As Object, ByVal g As Graphics)
-
-    Public PageBuffer As Bitmap = Nothing
+    Public PageBuffers As List(Of Bitmap) = Nothing
     Public WithEvents VScrollBar As New VScrollBar
     Public WithEvents HScrollBar As New HScrollBar
 
@@ -25,7 +27,9 @@ Public Class PrintPreview
     Private _PageCount As Integer = 1
 
     Private ZOOM_DEGREE() As Decimal = {0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0}
+    Private Const MULTI_PAGE_COUNT As Integer = 2
     Private Const MARGIN_VIEW As Integer = 8
+    Private Const BORDER_VIEW As Integer = 2
     Private Const SCROLLBAR_WIDTH As Integer = 16
     Private Const ZOOM_MIN As Decimal = 0.3
     Private Const ZOOM_MAX As Decimal = 3.0
@@ -105,8 +109,8 @@ Public Class PrintPreview
         End Get
         Set(ByVal value As Printer)
             Me._Printer = value
-            If Me.PageCount > Me.GetPageCountTotal Then
-                Me.PageCount = Me.GetPageCountTotal
+            If Me.PageCount > Me.PageCountTotal Then
+                Me.PageCount = Me.PageCountTotal
             End If
         End Set
     End Property
@@ -122,24 +126,22 @@ Public Class PrintPreview
                 If Me._PageCount < 1 Then
                     Me._PageCount = 1
                 End If
-                If Me.Printer IsNot Nothing AndAlso Me._PageCount > Me.GetPageCountTotal Then
-                    Me._PageCount = Me.GetPageCountTotal
+                If Me.Printer IsNot Nothing AndAlso Me._PageCount > Me.PageCountTotal Then
+                    Me._PageCount = Me.PageCountTotal
                 End If
+                Me._UpdatePageZoomStatus()
             End Using
         End Set
     End Property
 
     Public Sub PrevPage() Implements IPrintPreviewPage.PrevPage
-        Dim i As Integer = Me.PageCount
-        If i > 1 Then
-            Me.PageCount = i - 1
-        End If
+        Me.PageCount -= IIf(Me.MultiPage, MULTI_PAGE_COUNT, 1)
     End Sub
 
     Public Sub NextPage() Implements IPrintPreviewPage.NextPage
-        Dim i As Integer = Me.PageCount
-        If i < Me.GetPageCountTotal Then
-            Me.PageCount = i + 1
+        Dim c As Integer = IIf(Me.MultiPage, MULTI_PAGE_COUNT, 1)
+        If Me.PageCount + c - 1 < Me.PageCountTotal Then
+            Me.PageCount += c
         End If
     End Sub
 
@@ -148,7 +150,7 @@ Public Class PrintPreview
     End Sub
 
     Public Sub LastPage() Implements IPrintPreviewPage.LastPage
-        Me.PageCount = Me.GetPageCountTotal
+        Me.PageCount = Me.PageCountTotal - (IIf(Me.MultiPage, MULTI_PAGE_COUNT, 1) - 1)
     End Sub
 
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
@@ -159,6 +161,8 @@ Public Class PrintPreview
         Set(ByVal value As Decimal)
             Me.AutoZoomFit = False
             Me.AutoZoomFitWidth = False
+            Me.MultiPage = False
+            Me._UpdatePageZoomStatus()
             Me._SetZoom(value)
         End Set
     End Property
@@ -195,14 +199,14 @@ Public Class PrintPreview
         Me.Zoom = ZOOM_DEGREE(i)
     End Sub
 
-    Public Sub ZoomFit() Implements IPrintPreviewZoom.ZoomFit
+    Public Sub ZoomFit()
         Dim page As ReportPage = Me.Printer.Pages(Me.PageCount - 1)
         Dim paperSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
         Me._SetZoom(Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width),
                              (Me.Height - (MARGIN_VIEW * 2)) / Me.ToPixelY(paperSize.Height)))
     End Sub
 
-    Public Sub ZoomFitWidth() Implements IPrintPreviewZoom.ZoomFitWidth
+    Public Sub ZoomFitWidth()
         Dim page As ReportPage = Me.Printer.Pages(Me.PageCount - 1)
         Dim paperSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
         Dim z1 As Decimal = Math.Min((Me.Width - (MARGIN_VIEW * 2)) / Me.ToPixelX(paperSize.Width),
@@ -211,17 +215,37 @@ Public Class PrintPreview
         Me._SetZoom(Math.Max(z1, z2))
     End Sub
 
+    Public Sub ZoomMultiPage()
+        Dim w As Integer
+        Dim h As Integer
+        With Nothing
+            Dim page As ReportPage = Me.Printer.Pages(Me.PageCount - 1)
+            Dim paperSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
+            w = Me.ToPixelX(paperSize.Width)
+            h = Me.ToPixelY(paperSize.Height)
+        End With
+        If Me.PageCount < Me.PageCountTotal - 1 Then
+            Dim page As ReportPage = Me.Printer.Pages(Me.PageCount)
+            Dim paperSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
+            w += BORDER_VIEW + Me.ToPixelX(paperSize.Width)
+            h = Math.Max(h, Me.ToPixelY(paperSize.Height))
+        Else
+            w += BORDER_VIEW + w
+        End If
+        Me._SetZoom(Math.Min((Me.Width - SCROLLBAR_WIDTH - MARGIN_VIEW) / w,
+                             (Me.Height - (MARGIN_VIEW * 2)) / h))
+    End Sub
+
     Private _AutoZoomFit As Boolean = False
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
     Public Property AutoZoomFit As Boolean Implements IPrintPreviewZoom.AutoZoomFit
         Set(value As Boolean)
             If value Then
                 Me.AutoZoomFitWidth = False
+                Me.MultiPage = False
             End If
             Me._AutoZoomFit = value
-            If Me.AutoZoomFit Then
-                Me.ZoomFit()
-            End If
+            Me._UpdatePageZoomStatus()
         End Set
         Get
             Return Me._AutoZoomFit
@@ -234,18 +258,33 @@ Public Class PrintPreview
         Set(value As Boolean)
             If value Then
                 Me.AutoZoomFit = False
+                Me.MultiPage = False
             End If
             Me._AutoZoomFitWidth = value
-            If Me.AutoZoomFitWidth Then
-                Me.ZoomFitWidth()
-            End If
+            Me._UpdatePageZoomStatus()
         End Set
         Get
             Return Me._AutoZoomFitWidth
         End Get
     End Property
 
-    Public Function GetPageCountTotal() As Integer Implements IPrintPreviewPage.GetPageCountTotal
+    Private _MultiPage As Boolean = False
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
+    Public Property MultiPage As Boolean Implements IPrintPreviewMultiPage.MultiPage
+        Set(value As Boolean)
+            If value Then
+                Me.AutoZoomFit = False
+                Me.AutoZoomFitWidth = False
+            End If
+            Me._MultiPage = value
+            Me._UpdatePageZoomStatus()
+        End Set
+        Get
+            Return Me._MultiPage
+        End Get
+    End Property
+
+    Public Function PageCountTotal() As Integer Implements IPrintPreviewPage.PageCountTotal
         Return Me.Printer.Pages.Count
     End Function
 
@@ -254,21 +293,29 @@ Public Class PrintPreview
     End Sub
 
     Private Sub PrintPreview_Resize(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Resize
+        Me._UpdatePageZoomStatus()
+    End Sub
+
+    Private Sub _UpdatePageZoomStatus()
         If Me.AutoZoomFit Then
             Me.ZoomFit()
-        ElseIf Me.AutozoomFitWidth Then
+        ElseIf Me.AutoZoomFitWidth Then
             Me.ZoomFitWidth()
+        ElseIf Me.MultiPage Then
+            Me.ZoomMultiPage()
         End If
         If Me.ClientRectangle.Width > 0 And Me.ClientRectangle.Height > 0 Then
-            Me.scrollBarUpdate()
+            Me._ScrollBarUpdate()
         End If
+        RaiseEvent UpdateReportPage()
+        RaiseEvent UpdateReportZoom()
+        RaiseEvent UpdateReportMultiPage()
     End Sub
 
     Public Sub ScrollOrPageChange(ByVal delta As Integer)
         If delta > 0 Then
-            If Not Me.VScrollBar.Visible OrElse
-               Me.VScrollBar.Value = 0 AndAlso Me.PageCount > 1 Then
-                Me.PageCount -= 1
+            If Not Me.VScrollBar.Visible OrElse Me.VScrollBar.Value = 0 Then
+                Me.PrevPage()
             Else
                 Dim v As Integer = Me.VScrollBar.Value - Me.VScrollBar.SmallChange
                 If v < 0 Then
@@ -278,9 +325,8 @@ Public Class PrintPreview
             End If
         Else
             Dim max As Integer = Me.VScrollBar.Maximum - Me.VScrollBar.LargeChange
-            If Not Me.VScrollBar.Visible OrElse
-               Me.VScrollBar.Value = max AndAlso Me.PageCount < Me.Printer.Pages.Count Then
-                Me.PageCount += 1
+            If Not Me.VScrollBar.Visible OrElse Me.VScrollBar.Value = max Then
+                Me.NextPage()
             Else
                 Dim v As Integer = Me.VScrollBar.Value + Me.VScrollBar.SmallChange
                 If v > max Then
@@ -313,75 +359,93 @@ Public Class PrintPreview
         If Me.Printer Is Nothing Then
             Return
         End If
-        Dim page As ReportPage = Me.Printer.Pages(Me.PageCount - 1)
-        Dim pageSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
-        Dim zoom As Decimal = Me.Zoom
 
-        With Nothing
-            If Me.PageBuffer IsNot Nothing Then
-                Me.PageBuffer.Dispose()
+        Me._ClearPageBuffer()
+
+        For i As Integer = 0 To IIf(Me.MultiPage, MULTI_PAGE_COUNT, 1) - 1
+            If Me.PageCount + i > Me.PageCountTotal Then
+                Exit For
             End If
-            Dim w As Integer = Me.ToPixelX(pageSize.Width)
-            Dim h As Integer = Me.ToPixelY(pageSize.Height)
-            zoom = Math.Min(zoom, BUFFERSIZE_MAX / w)
-            zoom = Math.Min(zoom, BUFFERSIZE_MAX / h)
-            Me.PageBuffer = New Bitmap(
-                    CType(w * zoom, Integer),
-                    CType(h * zoom, Integer))
-        End With
-
-        Using g As Graphics = Graphics.FromImage(Me.PageBuffer)
-            g.PageUnit = GraphicsUnit.Point
-            g.ScaleTransform(zoom, zoom)
-            g.FillRectangle(Brushes.White, 0, 0, pageSize.Width, pageSize.Height)
-            If Me.Printer.PreviewBackgroundImage IsNot Nothing Then
-
-                Dim scale As Single = Math.Min((pageSize.Width / Me.Printer.PreviewBackgroundImage.Width) * Me.Printer.PreviewBackgroundSetting.Scale,
-                                           (pageSize.Height / Me.Printer.PreviewBackgroundImage.Height) * Me.Printer.PreviewBackgroundSetting.Scale)
-
-                Dim cm As New Imaging.ColorMatrix()
-                cm.Matrix00 = 1
-                cm.Matrix11 = 1
-                cm.Matrix22 = 1
-                cm.Matrix33 = Me.Printer.PreviewBackgroundSetting.Alpha
-                cm.Matrix44 = 1
-                Dim ia As New Imaging.ImageAttributes()
-                ia.SetColorMatrix(cm)
-                g.DrawImage(Me.Printer.PreviewBackgroundImage, New Rectangle(Me.Printer.PreviewBackgroundSetting.X, Me.Printer.PreviewBackgroundSetting.Y,
-                                                                         Me.Printer.PreviewBackgroundImage.Width * scale,
-                                                                         Me.Printer.PreviewBackgroundImage.Height * scale),
-                        0, 0, Me.Printer.PreviewBackgroundImage.Width, Me.Printer.PreviewBackgroundImage.Height, GraphicsUnit.Pixel, ia)
-            End If
+            Dim page As ReportPage = Me.Printer.Pages(Me.PageCount + i - 1)
+            Dim pageSize As PaperSizeDesign = page.Report.Design.PaperDesign.GetActualSize.ToPoint(page.Report.Design.PaperDesign)
+            Dim zoom As Decimal = Me.Zoom
+            Dim buf As Bitmap
             With Nothing
-                Dim m As PaperMarginDesign = page.Report.Design.PaperDesign.Margin.ToPoint(page.Report.Design.PaperDesign)
-                If ((Me.PageCount - 1) Mod 2) And m.OddReverse Then
-                    Me._ReportMargin = New SizeF(m.Right, m.Top)
-                Else
-                    Me._ReportMargin = New SizeF(m.Left, m.Top)
-                End If
-                g.TranslateTransform(Me._ReportMargin.Width, Me._ReportMargin.Height)
+                Dim w As Integer = Me.ToPixelX(pageSize.Width)
+                Dim h As Integer = Me.ToPixelY(pageSize.Height)
+                zoom = Math.Min(zoom, BUFFERSIZE_MAX / w)
+                zoom = Math.Min(zoom, BUFFERSIZE_MAX / h)
+                buf = New Bitmap(CType(w * zoom, Integer), CType(h * zoom, Integer))
             End With
-            Dim cancel As Boolean = False
-            RaiseEvent Rendering(Me, g, cancel)
-            If Not cancel Then
-                Dim r As New GdiRenderer(New RenderingEnv(g, Me.Printer))
-                page.Render(r, Me.Printer.Pages)
-                Me.VScrollBar.Value = 0
-                Me.HScrollBar.Value = 0
-                Me.scrollBarUpdate()
-                RaiseEvent Rendered(Me, g)
-            End If
-        End Using
+
+            Using g As Graphics = Graphics.FromImage(buf)
+                g.PageUnit = GraphicsUnit.Point
+                g.ScaleTransform(zoom, zoom)
+                g.FillRectangle(Brushes.White, 0, 0, pageSize.Width, pageSize.Height)
+                If Me.Printer.PreviewBackgroundImage IsNot Nothing Then
+
+                    Dim scale As Single = Math.Min((pageSize.Width / Me.Printer.PreviewBackgroundImage.Width) * Me.Printer.PreviewBackgroundSetting.Scale,
+                                               (pageSize.Height / Me.Printer.PreviewBackgroundImage.Height) * Me.Printer.PreviewBackgroundSetting.Scale)
+
+                    Dim cm As New Imaging.ColorMatrix()
+                    cm.Matrix00 = 1
+                    cm.Matrix11 = 1
+                    cm.Matrix22 = 1
+                    cm.Matrix33 = Me.Printer.PreviewBackgroundSetting.Alpha
+                    cm.Matrix44 = 1
+                    Dim ia As New Imaging.ImageAttributes()
+                    ia.SetColorMatrix(cm)
+                    g.DrawImage(Me.Printer.PreviewBackgroundImage, New Rectangle(Me.Printer.PreviewBackgroundSetting.X, Me.Printer.PreviewBackgroundSetting.Y,
+                                                                             Me.Printer.PreviewBackgroundImage.Width * scale,
+                                                                             Me.Printer.PreviewBackgroundImage.Height * scale),
+                            0, 0, Me.Printer.PreviewBackgroundImage.Width, Me.Printer.PreviewBackgroundImage.Height, GraphicsUnit.Pixel, ia)
+                End If
+                With Nothing
+                    Dim m As PaperMarginDesign = page.Report.Design.PaperDesign.Margin.ToPoint(page.Report.Design.PaperDesign)
+                    If ((Me.PageCount - 1) Mod 2) And m.OddReverse Then
+                        Me._ReportMargin = New SizeF(m.Right, m.Top)
+                    Else
+                        Me._ReportMargin = New SizeF(m.Left, m.Top)
+                    End If
+                    g.TranslateTransform(Me._ReportMargin.Width, Me._ReportMargin.Height)
+                End With
+                Dim cancel As Boolean = False
+                RaiseEvent Rendering(Me, g, cancel)
+                If Not cancel Then
+                    Dim r As New GdiRenderer(New RenderingEnv(g, Me.Printer))
+                    page.Render(r, Me.Printer.Pages)
+                    Me.VScrollBar.Value = 0
+                    Me.HScrollBar.Value = 0
+                    Me._ScrollBarUpdate()
+                    RaiseEvent Rendered(Me, g)
+                End If
+            End Using
+            Me.PageBuffers.Add(buf)
+        Next
+
     End Sub
 
-    Private Sub scrollBarUpdate()
+    Private Sub _ClearPageBuffer()
+        If Me.PageBuffers IsNot Nothing Then
+            For Each buf As Bitmap In Me.PageBuffers
+                buf.Dispose()
+            Next
+        End If
+        Me.PageBuffers = New List(Of Bitmap)
+    End Sub
+
+    Private Sub _ScrollBarUpdate()
         Me.VScrollBar.Visible = False
         Me.HScrollBar.Visible = False
-        If Me.PageBuffer Is Nothing Then
+        If Me.PageBuffers Is Nothing Then
             Return
         End If
-        Dim w As Integer = Me.PageBuffer.Width + MARGIN_VIEW * 2
-        Dim h As Integer = Me.PageBuffer.Height + MARGIN_VIEW * 2
+        Dim w As Integer
+        Dim h As Integer
+        With Me._EntireBufferSize(False)
+            w = .Width
+            h = .Height
+        End With
         If w > Me.Width Then
             Me.HScrollBar.Visible = True
         End If
@@ -443,55 +507,93 @@ Public Class PrintPreview
         Me.Invalidate()
     End Sub
 
-    Private Sub viewUpdate(ByVal g As Graphics)
-        If Me.PageBuffer Is Nothing Then
+    Private Sub _ViewUpdate(ByVal g As Graphics)
+        If Me.PageBuffers Is Nothing Then
             Exit Sub
         End If
         Using b As New SolidBrush(Color.DimGray)
             g.FillRectangle(b, 0, 0, Me.Width, Me.Height)
         End Using
-        Dim m As Size = Me.PaperMargin
-        Dim x As Integer = m.Width
-        Dim y As Integer = m.Height
-        x -= Me.HScrollBar.Value
-        y -= Me.VScrollBar.Value
-        g.DrawImage(Me.PageBuffer, x, y)
-        Using p As New Pen(Color.Black)
-            g.DrawRectangle(p, x - 1, y - 1, Me.PageBuffer.Width + 1, Me.PageBuffer.Height + 1)
-            g.DrawRectangle(p, 0, 0, Me.Width - 1, Me.Height - 1)
-        End Using
-        If Me._FocusPageIndex >= 0 AndAlso Me.PageCount - 1 = Me._FocusPageIndex Then
-            Dim r As Rectangle = ToRect(Me._FocusRegion)
-            Using p As New Pen(Color.FromArgb(128, Color.OrangeRed), (1 + Me.Zoom) * 2)
-                g.DrawRectangle(p, r.Left - Me.HScrollBar.Value, r.Top - Me.VScrollBar.Value, r.Width, r.Height)
+        For i As Integer = 0 To IIf(Me.MultiPage, MULTI_PAGE_COUNT, 1) - 1
+            If i >= Me.PageBuffers.Count Then
+                Exit For
+            End If
+            Dim buf As Bitmap = Me.PageBuffers(i)
+            Dim base As Point = Me._BaseLocation(i)
+            Dim x As Integer = base.X
+            Dim y As Integer = base.Y
+            x -= Me.HScrollBar.Value
+            y -= Me.VScrollBar.Value
+            g.DrawImage(buf, x, y)
+            Using p As New Pen(Color.Black)
+                g.DrawRectangle(p, x - 1, y - 1, buf.Width + 1, buf.Height + 1)
+                g.DrawRectangle(p, 0, 0, Me.Width - 1, Me.Height - 1)
             End Using
-        End If
-        If Me.VScrollBar.Visible AndAlso Me.HScrollBar.Visible Then
-            Using b As New SolidBrush(System.Drawing.SystemColors.Control)
-                g.FillRectangle(b, Me.Width - SCROLLBAR_WIDTH, Me.Height - SCROLLBAR_WIDTH, SCROLLBAR_WIDTH, SCROLLBAR_WIDTH)
-            End Using
-        End If
+            If Me._FocusPageIndex >= 0 AndAlso Me.PageCount - 1 = Me._FocusPageIndex Then
+                Dim r As Rectangle = _ToRect(0, Me._FocusRegion)
+                Using p As New Pen(Color.FromArgb(128, Color.OrangeRed), (1 + Me.Zoom) * 2)
+                    g.DrawRectangle(p, r.Left - Me.HScrollBar.Value, r.Top - Me.VScrollBar.Value, r.Width, r.Height)
+                End Using
+            End If
+            If Me.VScrollBar.Visible AndAlso Me.HScrollBar.Visible Then
+                Using b As New SolidBrush(System.Drawing.SystemColors.Control)
+                    g.FillRectangle(b, Me.Width - SCROLLBAR_WIDTH, Me.Height - SCROLLBAR_WIDTH, SCROLLBAR_WIDTH, SCROLLBAR_WIDTH)
+                End Using
+            End If
+        Next
     End Sub
 
-    Private Sub PrintPreview_Paint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles Me.Paint
-        If Not Me.DesignMode Then
-            Me.viewUpdate(e.Graphics)
-            RaiseEvent UpdateReportPage()
-            RaiseEvent UpdateReportZoom()
-        End If
-    End Sub
+    Private Function _EntireBufferSize(fillWidth As Boolean) As Size
+        Dim w As Integer = MARGIN_VIEW * 2
+        Dim h As Integer = 0
+        For i As Integer = 0 To IIf(Me.MultiPage, MULTI_PAGE_COUNT, 1) - 1
+            Dim buf As Bitmap
+            If i < Me.PageBuffers.Count Then
+                buf = Me.PageBuffers(i)
+            ElseIf fillWidth Then
+                buf = Me.PageBuffers(0)
+            Else
+                Exit For
+            End If
+            If i > 0 Then
+                w += BORDER_VIEW
+            End If
+            w += buf.Width
+            h = Math.Max(buf.Height + MARGIN_VIEW * 2, h)
+        Next
+        Return New Size(w, h)
+    End Function
 
-    Public Function PaperMargin() As Size
-        Dim x As Integer = (Me.Width - Me.PageBuffer.Width) / 2
-        Dim y As Integer = (Me.Height - Me.PageBuffer.Height) / 2
+    Private Function _BaseLocation(i As Integer) As Point
+        Dim es As Size = Me._EntireBufferSize(True)
+        Dim x As Integer = (Me.Width - es.Width) / 2
+        Dim y As Integer = (Me.Height - es.Height) / 2
         If x < MARGIN_VIEW Then
             x = MARGIN_VIEW
         End If
         If y < MARGIN_VIEW Then
             y = MARGIN_VIEW
         End If
-        Return New Size(x, y)
+        For j As Integer = 0 To i - 1
+            Dim buf As Bitmap = Me.PageBuffers(j)
+            x += BORDER_VIEW + buf.Width
+        Next
+        Return New Point(x, y)
     End Function
+
+    Private Function _ToRect(i As Integer, region As component.Region) As Rectangle
+        Dim base As Point = Me._BaseLocation(i)
+        Return New Rectangle(
+          ToPixelX(Me._ReportMargin.Width + region.Left) * Me.Zoom + base.X,
+          ToPixelY(Me._ReportMargin.Height + region.Top) * Me.Zoom + base.Y,
+          ToPixelX(region.GetWidth) * Me.Zoom, ToPixelX(region.GetHeight) * Me.Zoom)
+    End Function
+
+    Private Sub PrintPreview_Paint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles Me.Paint
+        If Not Me.DesignMode Then
+            Me._ViewUpdate(e.Graphics)
+        End If
+    End Sub
 
     Public Function ToPixelX(ByVal v As Decimal) As Integer
         Return GdiRenderUtil.ToPixelX(Me.CreateGraphics, v)
@@ -555,26 +657,18 @@ Public Class PrintPreview
     Public Sub HandleKeyDownEvent(ByVal e As KeyEventArgs)
         Select Case e.KeyCode
             Case Keys.PageDown
-                Me.PageCount += 1
+                Me.NextPage()
             Case Keys.PageUp
-                Me.PageCount -= 1
+                Me.PrevPage()
             Case Keys.Home
-                Me.PageCount = 1
+                Me.FirstPage()
             Case Keys.End
-                Me.PageCount = Me.GetPageCountTotal
+                Me.LastPage()
         End Select
     End Sub
 
-    Public Function ToRect(region As component.Region) As Rectangle
-        Dim m As Size = Me.PaperMargin
-        Return New Rectangle(
-          ToPixelX(Me._ReportMargin.Width + region.Left) * Me.Zoom + m.Width,
-          ToPixelY(Me._ReportMargin.Height + region.Top) * Me.Zoom + m.Height,
-          ToPixelX(region.GetWidth) * Me.Zoom, ToPixelX(region.GetHeight) * Me.Zoom)
-    End Function
-
-    Public Sub ScrollTo(region As component.Region)
-        Me.ScrollTo(ToRect(region))
+    Public Sub ScrollTo(i As Integer, region As component.Region)
+        Me.ScrollTo(_ToRect(i, region))
     End Sub
 
     Public Sub ScrollTo(rect As Rectangle)
@@ -634,7 +728,7 @@ Public Class PrintPreview
             Me.SetFocusRegion(pageIndex, region)
             Me.PageCount = pageIndex + 1
         End Using
-        Me.ScrollTo(region)
+        Me.ScrollTo(0, region)
     End Sub
 
     Private Sub _SearchRelease() Implements IPrintPreviewSearch.Release

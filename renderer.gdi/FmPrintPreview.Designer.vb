@@ -30,6 +30,7 @@ Partial Class FmPrintPreview
         Me.PrintPreviewZoom = New jp.co.systembase.report.renderer.gdi.PrintPreviewZoom()
         Me.PrintPreviewPage = New jp.co.systembase.report.renderer.gdi.PrintPreviewPage()
         Me.PrintPreview = New jp.co.systembase.report.renderer.gdi.PrintPreview()
+        Me.PrintPreviewMultiPage = New jp.co.systembase.report.renderer.gdi.PrintPreviewMultiPage()
         Me.SuspendLayout()
         '
         'BtnPrint
@@ -43,35 +44,35 @@ Partial Class FmPrintPreview
         '
         'BtnClose
         '
-        Me.BtnClose.Location = New System.Drawing.Point(620, 5)
+        Me.BtnClose.Location = New System.Drawing.Point(662, 5)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(60, 32)
-        Me.BtnClose.TabIndex = 5
+        Me.BtnClose.TabIndex = 6
         Me.BtnClose.Text = "閉じる"
         Me.BtnClose.UseVisualStyleBackColor = True
         '
         'PrintPreviewSearch
         '
-        Me.PrintPreviewSearch.Location = New System.Drawing.Point(576, 5)
+        Me.PrintPreviewSearch.Location = New System.Drawing.Point(622, 5)
         Me.PrintPreviewSearch.Name = "PrintPreviewSearch"
         Me.PrintPreviewSearch.Size = New System.Drawing.Size(34, 32)
-        Me.PrintPreviewSearch.TabIndex = 3
+        Me.PrintPreviewSearch.TabIndex = 4
         '
         'PrintPreviewSearchPanel
         '
-        Me.PrintPreviewSearchPanel.Location = New System.Drawing.Point(479, 43)
+        Me.PrintPreviewSearchPanel.Location = New System.Drawing.Point(542, 43)
         Me.PrintPreviewSearchPanel.Name = "PrintPreviewSearchPanel"
         Me.PrintPreviewSearchPanel.Size = New System.Drawing.Size(180, 20)
-        Me.PrintPreviewSearchPanel.TabIndex = 4
+        Me.PrintPreviewSearchPanel.TabIndex = 5
         Me.PrintPreviewSearchPanel.Visible = False
         '
         'PrintPreviewZoom
         '
-        Me.PrintPreviewZoom.Location = New System.Drawing.Point(345, 5)
+        Me.PrintPreviewZoom.Location = New System.Drawing.Point(385, 5)
         Me.PrintPreviewZoom.Name = "PrintPreviewZoom"
         Me.PrintPreviewZoom.PrintPreview = Nothing
         Me.PrintPreviewZoom.Size = New System.Drawing.Size(231, 32)
-        Me.PrintPreviewZoom.TabIndex = 2
+        Me.PrintPreviewZoom.TabIndex = 3
         '
         'PrintPreviewPage
         '
@@ -90,14 +91,23 @@ Partial Class FmPrintPreview
         Me.PrintPreview.Location = New System.Drawing.Point(10, 43)
         Me.PrintPreview.Name = "PrintPreview"
         Me.PrintPreview.Size = New System.Drawing.Size(765, 510)
-        Me.PrintPreview.TabIndex = 6
+        Me.PrintPreview.TabIndex = 7
         Me.PrintPreview.TabStop = False
+        '
+        'PrintPreviewMultiPage
+        '
+        Me.PrintPreviewMultiPage.Location = New System.Drawing.Point(345, 5)
+        Me.PrintPreviewMultiPage.Name = "PrintPreviewMultiPage"
+        Me.PrintPreviewMultiPage.PrintPreview = Nothing
+        Me.PrintPreviewMultiPage.Size = New System.Drawing.Size(34, 32)
+        Me.PrintPreviewMultiPage.TabIndex = 2
         '
         'FmPrintPreview
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(784, 562)
+        Me.Controls.Add(Me.PrintPreviewMultiPage)
         Me.Controls.Add(Me.PrintPreviewSearch)
         Me.Controls.Add(Me.PrintPreviewSearchPanel)
         Me.Controls.Add(Me.PrintPreviewZoom)
@@ -121,5 +131,5 @@ Partial Class FmPrintPreview
     Public WithEvents PrintPreviewZoom As systembase.report.renderer.gdi.PrintPreviewZoom
     Friend WithEvents PrintPreviewSearchPanel As jp.co.systembase.report.renderer.gdi.PrintPreviewSearchPanel
     Friend WithEvents PrintPreviewSearch As jp.co.systembase.report.renderer.gdi.PrintPreviewSearch
-
+    Friend WithEvents PrintPreviewMultiPage As PrintPreviewMultiPage
 End Class

@@ -92,6 +92,13 @@
     <Compile Include="GdiRendererSetting.vb" />
     <Compile Include="IPrintPreviewSearch.vb" />
     <Compile Include="Printer.vb" />
+    <Compile Include="IPrintPreviewMultiPage.vb" />
+    <Compile Include="PrintPreviewMultiPage.Designer.vb">
+      <DependentUpon>PrintPreviewMultiPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PrintPreviewMultiPage.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="PrintPreviewSearch.Designer.vb">
       <DependentUpon>PrintPreviewSearch.vb</DependentUpon>
     </Compile>
@@ -172,6 +179,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintPreviewMultiPage.resx">
+      <DependentUpon>PrintPreviewMultiPage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrintPreviewPage.resx">
       <DependentUpon>PrintPreviewPage.vb</DependentUpon>

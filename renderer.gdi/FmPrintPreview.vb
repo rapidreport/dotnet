@@ -17,14 +17,18 @@
         End If
         Using Me.PrintPreview.RenderBlock
             Me.PrintPreviewPage.Init(Me.PrintPreview)
-            Me.PrintPreviewZoom.Init(Me.PrintPreview)
             Me.PrintPreviewSearch.Init(Me.PrintPreview, Me.PrintPreviewSearchPanel)
+            Me.PrintPreviewZoom.Init(Me.PrintPreview)
+            Me.PrintPreviewMultiPage.Init(Me.PrintPreview)
             If Me.StartUpZoomFit Then
                 Me.PrintPreview.AutoZoomFit = True
             ElseIf Me.StartUpZoomFitWidth Then
                 Me.PrintPreview.AutoZoomFitWidth = True
             End If
         End Using
+        If Report.Compatibility._4_32_PreviewMultiPageDisabled Then
+            Me.MultiPageEnabled = False
+        End If
         If Report.Compatibility._4_15_PreviewSearchDisabled Then
             Me.SearchEnabled = False
         End If
@@ -101,6 +105,22 @@
         End Get
     End Property
 
+    Private _MultiPageEnabled As Boolean = True
+    Public Property MultiPageEnabled As Boolean
+        Set(value As Boolean)
+            Me._MultiPageEnabled = value
+            If Me.MultiPageEnabled Then
+                Me.PrintPreviewMultiPage.Show()
+            Else
+                Me.PrintPreviewMultiPage.Hide()
+            End If
+            Me._ReLayout()
+        End Set
+        Get
+            Return Me._MultiPageEnabled
+        End Get
+    End Property
+
     Private _SearchEnabled As Boolean = True
     Public Property SearchEnabled As Boolean
         Set(value As Boolean)
@@ -119,13 +139,25 @@
     End Property
 
     Private Sub _ReLayout()
-        If Me.PrintPreviewSearch.Visible Then
+        If Me.MultiPageEnabled Then
+            With Me.PrintPreviewMultiPage
+                Me.PrintPreviewZoom.Location = New Point(.Left + .Width + 6, 5)
+            End With
+        Else
+            With Me.PrintPreviewPage
+                Me.PrintPreviewZoom.Location = New Point(.Left + .Width + 6, 5)
+            End With
+        End If
+        If Me.SearchEnabled Then
+            With Me.PrintPreviewZoom
+                Me.PrintPreviewSearch.Location = New Point(.Left + .Width + 6, 5)
+            End With
             With Me.PrintPreviewSearch
-                Me.BtnClose.Location = New Point(.Left + .Width, 5)
+                Me.BtnClose.Location = New Point(.Left + .Width + 6, 5)
             End With
         Else
             With Me.PrintPreviewZoom
-                Me.BtnClose.Location = New Point(.Left + .Width, 5)
+                Me.BtnClose.Location = New Point(.Left + .Width + 6, 5)
             End With
         End If
     End Sub

@@ -64,6 +64,7 @@ Public Class Report
         Public Shared _4_6_PdfFontBold As Boolean = False
         Public Shared _4_13_2_AverageZero As Boolean = False
         Public Shared _4_15_PreviewSearchDisabled As Boolean = False
+        Public Shared _4_32_PreviewMultiPageDisabled As Boolean = False
     End Class
 
     Public Class ContextClass

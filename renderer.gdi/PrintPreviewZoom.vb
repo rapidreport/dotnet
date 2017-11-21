@@ -11,16 +11,10 @@
     Private Sub _UpdateReport() Handles PrintPreview.UpdateReport
         Me.TxtZoom.Text = Fix(Me.PrintPreview.Zoom * 100)
         Me._zoomTextChanged = False
-        If Me.PrintPreview.AutoZoomFit Then
-            Me.BtnAutoZoomFit.BackColor = SystemColors.ControlDark
-        Else
-            Me.BtnAutoZoomFit.BackColor = SystemColors.Control
-        End If
-        If Me.PrintPreview.AutoZoomFitWidth Then
-            Me.BtnAutoZoomFitWidth.BackColor = SystemColors.ControlDark
-        Else
-            Me.BtnAutoZoomFitWidth.BackColor = SystemColors.Control
-        End If
+        Me.BtnAutoZoomFit.BackColor =
+            IIf(Me.PrintPreview.AutoZoomFit, SystemColors.ControlDark, SystemColors.Control)
+        Me.BtnAutoZoomFitWidth.BackColor =
+            IIf(Me.PrintPreview.AutoZoomFitWidth, SystemColors.ControlDark, SystemColors.Control)
     End Sub
 
     Private Sub _SetUpZoom()

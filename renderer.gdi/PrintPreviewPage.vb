@@ -11,10 +11,10 @@
     Private Sub _UpdateReport() Handles PrintPreview.UpdateReport
         Try
             Me._UpdateFlag = True
-            Me.TxtPageTotal.Text = Me.PrintPreview.GetPageCountTotal
+            Me.TxtPageTotal.Text = Me.PrintPreview.PageCountTotal
             Me.TxtPage.Text = Me.PrintPreview.PageCount
             Me.SlPage.MinValue = 1
-            Me.SlPage.MaxValue = Me.PrintPreview.GetPageCountTotal
+            Me.SlPage.MaxValue = Me.PrintPreview.PageCountTotal
             Me.SlPage.ChangeUnit = Math.Max(1, Me.SlPage.MaxValue / 10)
             Me.SlPage.Value = Me.PrintPreview.PageCount
         Finally
