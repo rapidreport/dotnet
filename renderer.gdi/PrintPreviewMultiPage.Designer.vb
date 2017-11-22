@@ -22,8 +22,10 @@ Partial Class PrintPreviewMultiPage
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PrintPreviewMultiPage))
         Me.BtnMultiPage = New System.Windows.Forms.Button()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.SuspendLayout()
         '
         'BtnMultiPage
@@ -35,6 +37,7 @@ Partial Class PrintPreviewMultiPage
         Me.BtnMultiPage.Name = "BtnMultiPage"
         Me.BtnMultiPage.Size = New System.Drawing.Size(34, 32)
         Me.BtnMultiPage.TabIndex = 1
+        Me.ToolTip.SetToolTip(Me.BtnMultiPage, "見開き表示")
         Me.BtnMultiPage.UseVisualStyleBackColor = True
         '
         'PrintPreviewMultiPage
@@ -49,4 +52,5 @@ Partial Class PrintPreviewMultiPage
     End Sub
 
     Friend WithEvents BtnMultiPage As Button
+    Friend WithEvents ToolTip As ToolTip
 End Class

@@ -121,10 +121,13 @@
   <data name="BtnMultiPage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAAACnSURBVFhH7ZBRCgMhDES9Xv+84+49W6YwSwmDTdwlivjg
+        YQUAAAAJcEhZcwAADr8AAA6/ATgFUyQAAACnSURBVFhH7ZBRCgMhDES9Xv+84+49W6YwSwmDTdwlivjg
         YUiIDpbjdQ5VNjOVzUxlM1PZzLTUWt8Ruahm//x9mH4v8mAv8u4Bu9sdgCf1YndvBQC8yIva7Qpg9aJ2
         wwEsvXtgB5ABcHokrO28JUE93w9EWS8ATo+EtZ23JKjn+4Eo6wXA6ZGwtvOWBPV8PxBlB3g0wAivACxG
         KZuZymamspmpbOZ5lg+DgM8Th1kczgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

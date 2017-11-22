@@ -297,16 +297,24 @@ Public Class PrintPreview
     End Sub
 
     Private Sub _UpdatePageZoomStatus()
+        Dim rendered As Boolean = False
         If Me.AutoZoomFit Then
             Me.ZoomFit()
+            rendered = True
         ElseIf Me.AutoZoomFitWidth Then
             Me.ZoomFitWidth()
+            rendered = True
         ElseIf Me.MultiPage Then
             Me.ZoomMultiPage()
+            rendered = True
         End If
-        If Me.ClientRectangle.Width > 0 And Me.ClientRectangle.Height > 0 Then
-            Me._ScrollBarUpdate()
+        Me._ScrollBarUpdate()
+        If Not rendered Then
+            Me._RaiseUpdateReport()
         End If
+    End Sub
+
+    Private Sub _RaiseUpdateReport()
         RaiseEvent UpdateReportPage()
         RaiseEvent UpdateReportZoom()
         RaiseEvent UpdateReportMultiPage()
@@ -422,7 +430,7 @@ Public Class PrintPreview
             End Using
             Me.PageBuffers.Add(buf)
         Next
-
+        Me._RaiseUpdateReport()
     End Sub
 
     Private Sub _ClearPageBuffer()
@@ -440,6 +448,11 @@ Public Class PrintPreview
         If Me.PageBuffers Is Nothing Then
             Return
         End If
+        With Me.ClientRectangle
+            If .Width = 0 Or .Height = 0 Then
+                Return
+            End If
+        End With
         Dim w As Integer
         Dim h As Integer
         With Me._EntireBufferSize(False)
@@ -529,8 +542,8 @@ Public Class PrintPreview
                 g.DrawRectangle(p, x - 1, y - 1, buf.Width + 1, buf.Height + 1)
                 g.DrawRectangle(p, 0, 0, Me.Width - 1, Me.Height - 1)
             End Using
-            If Me._FocusPageIndex >= 0 AndAlso Me.PageCount - 1 = Me._FocusPageIndex Then
-                Dim r As Rectangle = _ToRect(0, Me._FocusRegion)
+            If Me._FocusPageIndex >= 0 AndAlso Me.PageCount + i - 1 = Me._FocusPageIndex Then
+                Dim r As Rectangle = _ToRect(i, Me._FocusRegion)
                 Using p As New Pen(Color.FromArgb(128, Color.OrangeRed), (1 + Me.Zoom) * 2)
                     g.DrawRectangle(p, r.Left - Me.HScrollBar.Value, r.Top - Me.VScrollBar.Value, r.Width, r.Height)
                 End Using
@@ -724,11 +737,23 @@ Public Class PrintPreview
     End Function
 
     Private Sub _SearchFocus(pageIndex As Integer, region As component.Region) Implements IPrintPreviewSearch.Focus
-        Using Me.RenderBlock(Me.PageCount = pageIndex + 1)
+        Dim pi As Integer = pageIndex
+        Dim bi As Integer = 0
+        If Me.MultiPage Then
+            Dim _pi As Integer = Me.PageCount - 1
+            If pi >= _pi And pi < _pi + MULTI_PAGE_COUNT Then
+                pi = _pi
+                bi = _pi - pi
+            Else
+                pi = Fix(pageIndex / MULTI_PAGE_COUNT) * MULTI_PAGE_COUNT
+                bi = pageIndex - pi
+            End If
+        End If
+        Using Me.RenderBlock(Me.PageCount = pi + 1)
             Me.SetFocusRegion(pageIndex, region)
-            Me.PageCount = pageIndex + 1
+            Me.PageCount = pi + 1
         End Using
-        Me.ScrollTo(0, region)
+        Me.ScrollTo(bi, region)
     End Sub
 
     Private Sub _SearchRelease() Implements IPrintPreviewSearch.Release
