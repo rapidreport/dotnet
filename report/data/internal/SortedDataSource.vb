@@ -9,9 +9,6 @@ Namespace data.internal
         Private keys As List(Of String)
         Private order As List(Of Integer)
 
-        Private Sub New()
-        End Sub
-
         Public Sub New(ByVal reportData As ReportData, ByVal keys As List(Of String))
             Me.reportData = reportData
             Me.keys = keys

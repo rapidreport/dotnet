@@ -76,8 +76,10 @@
     <Compile Include="component\ElementDesigns.vb" />
     <Compile Include="component\FontDesign.vb" />
     <Compile Include="component\GroupDesign.vb" />
+    <Compile Include="component\GroupSplitStringDesign.vb" />
     <Compile Include="component\IndexRange.vb" />
     <Compile Include="component\SubContentLayoutDesign.vb" />
+    <Compile Include="data\internal\SplitStringDataSource.vb" />
     <Compile Include="data\UnknownFieldException.vb" />
     <Compile Include="customizer\DefaultCustomizer.vb" />
     <Compile Include="customizer\IReportCustomizer.vb" />

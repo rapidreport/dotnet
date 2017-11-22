@@ -707,8 +707,10 @@ Public Class PrintPreview
     End Sub
 
     Private Sub _SetScrollValue(scrollBar As ScrollBar, v As Integer)
-        Dim _v As Integer = Math.Max(Math.Min(v, scrollBar.Maximum), scrollBar.Minimum)
-        scrollBar.Value = v
+        If scrollBar.Visible Then
+            Dim _v As Integer = Math.Max(Math.Min(v, scrollBar.Maximum), scrollBar.Minimum)
+            scrollBar.Value = v
+        End If
     End Sub
 
     Public Sub SetFocusRegion(pageIndex As Integer, region As component.Region)

@@ -15,6 +15,7 @@ Namespace component
         Public PageBreak As Boolean = False
         Public ResetPageCount As Boolean = False
         Public SortKeys As List(Of String) = Nothing
+        Public SplitString As GroupSplitStringDesign = Nothing
         Public Layout As GroupLayoutDesign = Nothing
         Public CustomFields As Dictionary(Of String, String) = Nothing
         Public CustomFieldsKeyList As List(Of String) = Nothing
@@ -67,6 +68,12 @@ Namespace component
                 Next
             Else
                 Me.SortKeys = Nothing
+            End If
+            If Desc.ContainsKey("split_string") Then
+                Dim d As Hashtable = Desc("split_string")
+                If d.ContainsKey("key") Then
+                    Me.SplitString = New GroupSplitStringDesign(d)
+                End If
             End If
             If Desc.ContainsKey("layout") Then
                 Me.Layout = New GroupLayoutDesign(Me.Desc("layout"))
