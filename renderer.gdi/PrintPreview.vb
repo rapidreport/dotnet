@@ -422,14 +422,14 @@ Public Class PrintPreview
                 If Not cancel Then
                     Dim r As New GdiRenderer(New RenderingEnv(g, Me.Printer))
                     page.Render(r, Me.Printer.Pages)
-                    Me.VScrollBar.Value = 0
-                    Me.HScrollBar.Value = 0
-                    Me._ScrollBarUpdate()
                     RaiseEvent Rendered(Me, g)
                 End If
             End Using
             Me.PageBuffers.Add(buf)
         Next
+        Me.VScrollBar.Value = 0
+        Me.HScrollBar.Value = 0
+        Me._ScrollBarUpdate()
         Me._RaiseUpdateReport()
     End Sub
 
