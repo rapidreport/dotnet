@@ -73,7 +73,11 @@ Namespace component
                 Dim d As Hashtable = Desc("split_string")
                 If d.ContainsKey("key") Then
                     Me.SplitString = New GroupSplitStringDesign(d)
+                Else
+                    Me.SplitString = Nothing
                 End If
+            Else
+                Me.SplitString = Nothing
             End If
             If Desc.ContainsKey("layout") Then
                 Me.Layout = New GroupLayoutDesign(Me.Desc("layout"))
