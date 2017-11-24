@@ -50,13 +50,13 @@ Namespace component
                   _data.Group)
                 Me.DataOverridden = True
             End If
-            Dim index As Integer = 0
             Dim dataList As List(Of ReportData)
             If Me.Design.SplitString IsNot Nothing Then
                 dataList = Me.Design.SplitString.Split(_data)
             Else
                 dataList = Me.Design.DataSplit(_data)
             End If
+            Dim index As Integer = 0
             For Each d As ReportData In dataList
                 Dim g As New Group(Me, index)
                 Me.Groups.Add(g)
