@@ -7,8 +7,8 @@
         Private key As String
         Private value As String
 
-        Public Sub New(ByVal reportData As ReportData, key As String, value As String)
-            Me.reportData = reportData
+        Public Sub New(ByVal data As ReportData, key As String, value As String)
+            Me.reportData = data
             Me.key = key
             Me.value = value
         End Sub
