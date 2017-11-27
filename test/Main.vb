@@ -34,6 +34,7 @@
         Tests.Add(New Test_4_32_1_DateAdd)
         Tests.Add(New Test_4_33_BufferLimit)
         Tests.Add(New Test_4_33_SplitString)
+        Tests.Add(New Test_4_33_BlankGroup)
 
         Application.Run(New FmTest)
     End Sub

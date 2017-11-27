@@ -86,20 +86,23 @@ Namespace component
             Dim lastIndex As Integer
             Dim lastIndex2 As Integer
             Dim lastRegion As Region = Nothing
+            Dim filledCount As Integer = groupRange.GetGroupCount
             If layoutCount = 0 And Me.Design.Layout.Blank Then
                 layoutCount = Me.getInitialGroupCount(parentRegion)
             End If
             If layoutCount > 0 Then
+                lastIndex = Math.Min(groupRange.GetGroupCount, layoutCount)
                 If Me.Design.Layout.Blank Then
                     lastIndex2 = layoutCount
-                    lastIndex = Math.Min(lastIndex2, groupRange.GetGroupCount)
                 Else
-                    lastIndex = Math.Min(groupRange.GetGroupCount, layoutCount)
                     lastIndex2 = lastIndex
                 End If
             Else
                 lastIndex = groupRange.GetGroupCount
                 lastIndex2 = lastIndex
+            End If
+            If parentState IsNot Nothing AndAlso parentState.GroupState.Blank Then
+                filledCount = 0
             End If
             Do
                 If i = lastIndex2 Then
@@ -107,7 +110,8 @@ Namespace component
                 End If
                 Dim g As Group
                 Dim contentRange As ContentRange
-                If i < groupRange.GetGroupCount Then
+
+                If i < filledCount Then
                     g = groupRange.GetGroup(i)
                     contentRange = groupRange.GetSubRange(g)
                 Else
@@ -123,8 +127,8 @@ Namespace component
                 groupState.GroupLast = groupState.Last And groupRange.ContainsLast
                 groupState.GroupLast2 = groupState.Last2 And groupRange.ContainsLast
                 groupState.GroupIndex = g.Index
-                groupState.Blank = (i >= groupRange.GetGroupCount)
-                groupState.BlankFirst = (i = groupRange.GetGroupCount)
+                groupState.Blank = (i >= filledCount)
+                groupState.BlankFirst = (i = filledCount)
                 groupState.BlankLast = groupState.Blank And groupState.Last2
                 Dim groupRegion As Region = Me.Design.Layout.GetGroupRegion(parentRegion, lastRegion, i)
                 lastRegion = g.Scan(_scanner, contentRange, paperRegion, groupRegion, groupState)

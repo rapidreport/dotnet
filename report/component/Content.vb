@@ -55,7 +55,8 @@ Namespace component
             If Me.GetReport.Customizer IsNot Nothing Then
                 _region = Me.GetReport.Customizer.ContentRegion(Me, evaluator, _region)
             End If
-            If _region IsNot Nothing AndAlso Not contentState.GroupState.Blank Then
+            If _region IsNot Nothing AndAlso
+                Not (Report.Compatibility._4_32_BlankSubGroup AndAlso contentState.GroupState.Blank) Then
                 If Me.Groups IsNot Nothing AndAlso groupRange IsNot Nothing Then
                     _region = Me.Groups.Scan(_scanner, groupRange, paperRegion, _region, contentState)
                 End If
