@@ -24,15 +24,6 @@ Namespace component
         Public ReportDesign As ReportDesign
         Public ParentContentDesign As ContentDesign
 
-        Public Sub New()
-            Me.New(Nothing)
-        End Sub
-
-        Public Sub New(ByVal keys As List(Of String))
-            Me.Detail = False
-            Me.Keys = keys
-        End Sub
-
         Public Sub New(
           ByVal desc As Hashtable,
           ByVal reportDesign As ReportDesign,
