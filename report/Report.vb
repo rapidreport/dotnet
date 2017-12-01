@@ -2,12 +2,8 @@
 
 Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.customizer
-Imports jp.co.systembase.report.elementpreprocessor
-Imports jp.co.systembase.report.textformatter
 Imports jp.co.systembase.report.data
 Imports jp.co.systembase.report.data.internal
-Imports jp.co.systembase.report.method
-Imports jp.co.systembase.report.operator
 Imports jp.co.systembase.report.scanner
 Imports jp.co.systembase.report.renderer
 
@@ -60,6 +56,15 @@ Public Class Report
         NO_SPLIT
     End Enum
 
+    Public Enum ECrosstabPartType
+        NONE
+        ROOT
+        CAPTION
+        VDETAIL
+        HDETAIL
+        SUMMARY
+    End Enum
+
     Public Class Compatibility
         Public Shared _4_6_PdfFontBold As Boolean = False
         Public Shared _4_13_2_AverageZero As Boolean = False
@@ -95,6 +100,7 @@ Public Class Report
 
     Public InDesigner As Boolean = False
 
+    Private _CrosstabCaptionDataSourceMap As New Dictionary(Of String, IReportDataSource)
     Private _SubPageMap As New Dictionary(Of String, ReportPages)
 
     Public Sub New(ByVal desc As Hashtable)
@@ -203,8 +209,19 @@ Public Class Report
 
     Public Sub AddSubPages(ByVal key As String, ByVal pages As ReportPages)
         pages.SetUpCountingPages()
-        Me._SubPageMap.Add(key, pages)
+        If Me._SubPageMap.ContainsKey(key) Then
+            Me._SubPageMap(key) = pages
+        Else
+            Me._SubPageMap.Add(key, pages)
+        End If
     End Sub
+
+    Public Function GetSubPages(key As String) As ReportPages
+        If Me._SubPageMap.ContainsKey(key) Then
+            Return Me._SubPageMap(key)
+        End If
+        Return Nothing
+    End Function
 
     Public Sub RenderSubPage(ByVal renderer As IRenderer, ByVal region As Region, ByVal key As String, ByVal index As Integer)
         If Not Me._SubPageMap.ContainsKey(key) Then
@@ -213,6 +230,21 @@ Public Class Report
         Dim pages As ReportPages = Me._SubPageMap(key)
         pages(index).RenderSubPage(renderer, pages, region)
     End Sub
+
+    Public Sub AddCrosstabCaptionDataSource(groupId As String, dataSource As IReportDataSource)
+        If Me._CrosstabCaptionDataSourceMap.ContainsKey(groupId) Then
+            Me._CrosstabCaptionDataSourceMap(groupId) = dataSource
+        Else
+            Me._CrosstabCaptionDataSourceMap.Add(groupId, dataSource)
+        End If
+    End Sub
+
+    Public Function GetCrosstabCaptionDataSource(groupId As String) As IReportDataSource
+        If Me._CrosstabCaptionDataSourceMap.ContainsKey(groupId) Then
+            Return Me._CrosstabCaptionDataSourceMap(groupId)
+        End If
+        Return Nothing
+    End Function
 
     Public Shared Sub AddSharedContent(id As String, reportDesign As ReportDesign)
         Dim cd As ContentDesign = reportDesign.FindContentDesign(id)

@@ -1,0 +1,190 @@
+{
+  version: 0,
+  paper: {
+    landscape: true,
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        group: {
+          crosstab: "root",
+          page_break: true,
+          contents: [
+            {
+              size: {
+                initial: 30.0
+              },
+              sub: [
+                {
+                  layout: {rev_x2:true,rev_y2:true,x1:0.0,x2:0.0,y1:0.0,y2:0.0},
+                  group: {
+                    layout: {
+                      direction: "horizontal"
+                    },
+                    contents: [
+                      {
+                        size: {
+                          initial: 100.0
+                        }
+                      },
+                      {
+                        group: {
+                          crosstab: "caption",
+                          keys: ["period_cd"],
+                          layout: {
+                            max_count: 5,
+                            direction: "horizontal",
+                            blank: true
+                          },
+                          contents: [
+                            {
+                              size: {
+                                initial: 100.0
+                              },
+                              elements: [
+                                {type:"rect",background:true},
+                                {type:"field",exp:".period_nm",valign:"center"}
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        size: {
+                          initial: 100.0
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              group: {
+                crosstab: "vdetail",
+                keys: ["branch_cd"],
+                layout: {
+                  max_count: 5,
+                  blank: true
+                },
+                contents: [
+                  {
+                    size: {
+                      initial: 30.0
+                    },
+                    sub: [
+                      {
+                        group: {
+                          layout: {
+                            direction: "horizontal"
+                          },
+                          contents: [
+                            {
+                              size: {
+                                initial: 100.0
+                              },
+                              elements: [
+                                {type:"rect",background:true},
+                                {type:"field",exp:".branch_nm",valign:"center"}
+                              ]
+                            },
+                            {
+                              group: {
+                                crosstab: "hdetail",
+                                keys: ["period_cd"],
+                                layout: {
+                                  max_count: 5,
+                                  direction: "horizontal",
+                                  blank: true
+                                },
+                                contents: [
+                                  {
+                                    size: {
+                                      initial: 100.0
+                                    },
+                                    elements: [
+                                      {type:"rect",background:true},
+                                      {type:"field",exp:"sum.amount",formatter:{format:"#,##0",type:"default"},halign:"right",valign:"center"}
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              size: {
+                                initial: 100.0
+                              },
+                              elements: [
+                                {type:"rect",background:true},
+                                {type:"field",exp:"sum.amount",formatter:{format:"#,##0",type:"default"},halign:"right",valign:"center",visibility_cond:"crosstab.h_last"}
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              size: {
+                initial: 30.0
+              },
+              sub: [
+                {
+                  group: {
+                    layout: {
+                      direction: "horizontal"
+                    },
+                    contents: [
+                      {
+                        size: {
+                          initial: 100.0
+                        }
+                      },
+                      {
+                        group: {
+                          crosstab: "summary",
+                          keys: ["period_cd"],
+                          layout: {
+                            max_count: 5,
+                            direction: "horizontal",
+                            blank: true
+                          },
+                          contents: [
+                            {
+                              size: {
+                                initial: 100.0
+                              },
+                              elements: [
+                                {type:"rect",background:true},
+                                {type:"field",layout:{x1:0.0,y1:0.0,x2:0.0,y2:0.0,rev_x2:true,rev_y2:true},exp:"sum.amount",formatter:{format:"#,##0",type:"default"},halign:"right",valign:"center",visibility_cond:"crosstab.v_last"}
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        size: {
+                          initial: 100.0
+                        },
+                        elements: [
+                          {type:"rect",background:true},
+                          {type:"field",exp:"sum.amount",formatter:{format:"#,##0",type:"default"},halign:"right",valign:"center",visibility_cond:"(&& crosstab.v_last crosstab.h_last)"}
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

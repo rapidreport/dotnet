@@ -17,6 +17,7 @@ Namespace component
         Public SortKeys As List(Of String) = Nothing
         Public SplitString As GroupSplitStringDesign = Nothing
         Public Layout As GroupLayoutDesign = Nothing
+        Public CrosstabPartType As Report.ECrosstabPartType = Report.ECrosstabPartType.NONE
         Public CustomFields As Dictionary(Of String, String) = Nothing
         Public CustomFieldsKeyList As List(Of String) = Nothing
         Public ContentDesigns As List(Of ContentDesign) = Nothing
@@ -75,6 +76,20 @@ Namespace component
             Else
                 Me.Layout = New GroupLayoutDesign
             End If
+            Select Case Desc("crosstab")
+                Case "root"
+                    Me.CrosstabPartType = Report.ECrosstabPartType.ROOT
+                Case "caption"
+                    Me.CrosstabPartType = Report.ECrosstabPartType.CAPTION
+                Case "vdetail"
+                    Me.CrosstabPartType = Report.ECrosstabPartType.VDETAIL
+                Case "hdetail"
+                    Me.CrosstabPartType = Report.ECrosstabPartType.HDETAIL
+                Case "summary"
+                    Me.CrosstabPartType = Report.ECrosstabPartType.SUMMARY
+                Case Else
+                    Me.CrosstabPartType = Report.ECrosstabPartType.NONE
+            End Select
             If Me.Desc.ContainsKey("custom_fields") Then
                 Me.CustomFields = New Dictionary(Of String, String)
                 Me.CustomFieldsKeyList = New List(Of String)

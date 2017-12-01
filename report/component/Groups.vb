@@ -13,9 +13,9 @@ Namespace component
         Public DataOverridden As Boolean = False
         Public DataSourceGroup As Group = Nothing
 
-        Public Sub New( _
-          ByVal design As GroupDesign, _
-          ByVal report As Report, _
+        Public Sub New(
+          ByVal design As GroupDesign,
+          ByVal report As Report,
           ByVal parentContent As Content)
             Me.Design = design
             Me.Report = report
@@ -31,38 +31,43 @@ Namespace component
             Me.Groups = New List(Of Group)
             Dim _data As ReportData = data
             If Not Me.Report.InDesigner AndAlso Me.Design.BlankData Then
-                _data = New ReportData(BlankDataSource.GetInstance, _
-                                       _data.Report, _
+                _data = New ReportData(BlankDataSource.GetInstance,
+                                       _data.Report,
                                        _data.Group)
             End If
-            If Me.Report.GroupDataProvider IsNot Nothing Then
-                Dim dataSource As IReportDataSource = _
-                  Me.Report.GroupDataProvider.GetGroupDataSource(Me, data)
+            With Nothing
+                Dim dataSource As IReportDataSource = _data
+                If Me.Report.GroupDataProvider IsNot Nothing Then
+                    dataSource = Me.Report.GroupDataProvider.GetGroupDataSource(Me, data)
+                End If
+                If Me.Design.SortKeys IsNot Nothing Then
+                    dataSource = New SortedDataSource(_data, Me.Design.SortKeys, _data.Context.GetLogger)
+                End If
                 If dataSource IsNot data Then
                     _data = New ReportData(dataSource, data.Report, data.Group)
                     Me.DataOverridden = True
                 End If
+            End With
+            If Not Crosstab.Fill(Me, _data) Then
+                Dim dataList As List(Of ReportData)
+                If Me.Design.SplitString IsNot Nothing Then
+                    dataList = Me.Design.SplitString.Split(_data)
+                Else
+                    dataList = Me.Design.DataSplit(_data)
+                End If
+                For Each d As ReportData In dataList
+                    Me.AddGroup(d)
+                Next
             End If
-            If Me.Design.SortKeys IsNot Nothing Then
-                _data = New ReportData( _
-                  New SortedDataSource(_data, Me.Design.SortKeys), _
-                  _data.Report, _
-                  _data.Group)
-                Me.DataOverridden = True
-            End If
-            Dim dataList As List(Of ReportData)
-            If Me.Design.SplitString IsNot Nothing Then
-                dataList = Me.Design.SplitString.Split(_data)
-            Else
-                dataList = Me.Design.DataSplit(_data)
-            End If
-            Dim index As Integer = 0
-            For Each d As ReportData In dataList
-                Dim g As New Group(Me, index)
-                Me.Groups.Add(g)
-                g.Fill(d)
-                index += 1
-            Next
+        End Sub
+
+        Public Sub AddGroup(data As ReportData)
+            Me.AddGroup(data, Nothing)
+        End Sub
+        Public Sub AddGroup(data As ReportData, crosstabState As Crosstab.State)
+            Dim g As New Group(Me, Me.Groups.Count, crosstabState)
+            Me.Groups.Add(g)
+            g.Fill(data)
         End Sub
 
         Public Function Scan( _
@@ -183,7 +188,7 @@ Namespace component
         End Function
 
         Private Function createBlankGroup() As Group
-            Dim ret As New Group(Me, -1)
+            Dim ret As New Group(Me, -1, Nothing)
             Dim g As Group = Nothing
             If Me.ParentContent IsNot Nothing Then
                 g = Me.ParentContent.ParentGroup

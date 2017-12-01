@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="component\ContentDesign.vb" />
+    <Compile Include="component\Crosstab.vb" />
     <Compile Include="component\CustomField.vb" />
     <Compile Include="component\ElementDesigns.vb" />
     <Compile Include="component\FontDesign.vb" />
@@ -79,6 +80,8 @@
     <Compile Include="component\GroupSplitStringDesign.vb" />
     <Compile Include="component\IndexRange.vb" />
     <Compile Include="component\SubContentLayoutDesign.vb" />
+    <Compile Include="data\internal\CrosstabDataSource.vb" />
+    <Compile Include="data\internal\RecordComparer.vb" />
     <Compile Include="data\internal\SplitStringDataSource.vb" />
     <Compile Include="data\UnknownFieldException.vb" />
     <Compile Include="customizer\DefaultCustomizer.vb" />
@@ -93,6 +96,7 @@
     <Compile Include="elementpreprocessor\DefaultPreprocessor.vb" />
     <Compile Include="elementpreprocessor\SubPagePreprocessor.vb" />
     <Compile Include="elementpreprocessor\IElementPreprocessor.vb" />
+    <Compile Include="method\CrosstabMethod.vb" />
     <Compile Include="method\CurrentTimeMethod.vb" />
     <Compile Include="operator\DateAddOperator.vb" />
     <Compile Include="operator\TrimOperator.vb" />

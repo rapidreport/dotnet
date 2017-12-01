@@ -13,9 +13,18 @@ Namespace component
 
         Public DataIndexRangeMap As New Dictionary(Of GroupDesign, IndexRange)
 
-        Public Sub New(ByVal parentGroups As Groups, ByVal index As Integer)
+        Public CrosstabState As Crosstab.State = Nothing
+
+        Public Sub New(ByVal parentGroups As Groups, ByVal index As Integer, crosstabState As Crosstab.State)
             Me.ParentGroups = parentGroups
             Me.Index = index
+            If crosstabState IsNot Nothing Then
+                Me.CrosstabState = crosstabState
+            Else
+                If Me.ParentGroups.ParentContent IsNot Nothing Then
+                    Me.CrosstabState = Me.ParentGroups.ParentContent.ParentGroup.CrosstabState
+                End If
+            End If
         End Sub
 
         Public Sub Fill(ByVal data As ReportData)
@@ -41,11 +50,11 @@ Namespace component
             End If
         End Sub
 
-        Public Function Scan( _
-          ByVal scanner As IScanner, _
-          ByVal contentRange As ContentRange, _
-          ByVal paperRegion As Region, _
-          ByVal parentRegion As Region, _
+        Public Function Scan(
+          ByVal scanner As IScanner,
+          ByVal contentRange As ContentRange,
+          ByVal paperRegion As Region,
+          ByVal parentRegion As Region,
           ByVal groupState As GroupState) As Region
             Dim _scanner As IScanner = scanner.BeforeGroup(Me, contentRange, parentRegion, groupState)
             Dim contentsRegion As Region = Me.GetDesign.Layout.GetGroupInitialRegion(parentRegion)
@@ -53,13 +62,13 @@ Namespace component
             Dim firstPage As Boolean = False
             Dim lastPage As Boolean = False
             If contentRange.First IsNot Nothing Then
-                If contentRange.First.Content Is Me.Contents(0) And _
+                If contentRange.First.Content Is Me.Contents(0) And
                   contentRange.First.ContentFirst Then
                     firstPage = True
                 End If
                 If contentRange.Last Is Nothing Then
                     lastPage = True
-                ElseIf contentRange.Last.Content Is Me.Contents(Me.Contents.Count - 1) And _
+                ElseIf contentRange.Last.Content Is Me.Contents(Me.Contents.Count - 1) And
                       contentRange.Last.ContentLast Then
                     lastPage = True
                 End If

@@ -51,7 +51,7 @@ Public Class Test_4_33_SplitString
         End With
     End Sub
 
-    Public Function GetDataTable() As DataTable
+    Private Function GetDataTable() As DataTable
         Dim ret As New DataTable()
         ret.Columns.Add("text", GetType(String))
 

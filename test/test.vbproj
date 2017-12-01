@@ -158,6 +158,7 @@
     <Compile Include="Test_4_31_GroupDataProvider.vb" />
     <Compile Include="Test_4_31_ShrinkFontSizeStep.vb" />
     <Compile Include="Test_4_33_BlankGroup.vb" />
+    <Compile Include="Test_4_33_Crosstab.vb" />
     <Compile Include="Test_4_33_SplitString.vb" />
     <Compile Include="Test_4_33_BufferLimit.vb" />
   </ItemGroup>
@@ -277,6 +278,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_33_buffer_limit.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_33_crosstab.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_33_split_string.rrpt">
