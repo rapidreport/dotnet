@@ -113,7 +113,15 @@ Namespace component
                     If contentState.Intrinsic Then
                         groupRange = contentRange.GetSubRange(content)
                     ElseIf content.Groups IsNot Nothing Then
-                        groupRange = New GroupRange(content.Groups)
+                        If Report.Compatibility._4_33_EveryPageGroup Then
+                            groupRange = New GroupRange(content.Groups)
+                        Else
+                            If content.Design.EveryPageGroup Then
+                                groupRange = New GroupRange(content.Groups)
+                            Else
+                                groupRange = New GroupRange(content.Groups, Nothing, Nothing)
+                            End If
+                        End If
                     Else
                         groupRange = Nothing
                     End If

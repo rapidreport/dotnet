@@ -77,11 +77,11 @@ Namespace component
             Return Me.Scan(scanner, groupRange, paperRegion, paperRegion, Nothing)
         End Function
 
-        Public Function Scan( _
-          ByVal scanner As IScanner, _
-          ByVal groupRange As GroupRange, _
-          ByVal paperRegion As Region, _
-          ByVal parentRegion As Region, _
+        Public Function Scan(
+          ByVal scanner As IScanner,
+          ByVal groupRange As GroupRange,
+          ByVal paperRegion As Region,
+          ByVal parentRegion As Region,
           ByVal parentState As ContentState) As Region
             Dim _scanner As IScanner = scanner.BeforeGroups(Me, groupRange, parentRegion)
             Dim region As Region = parentRegion
@@ -92,22 +92,29 @@ Namespace component
             Dim lastIndex2 As Integer
             Dim lastRegion As Region = Nothing
             Dim filledCount As Integer = groupRange.GetGroupCount
-            If layoutCount = 0 And Me.Design.Layout.Blank Then
-                layoutCount = Me.getInitialGroupCount(parentRegion)
+            If parentState IsNot Nothing AndAlso parentState.GroupState.Blank Then
+                filledCount = 0
+            End If
+            If Me.Design.Layout.Blank AndAlso layoutCount = 0 Then
+                Dim gc As Integer = Me.getDefaultGroupCount(parentRegion)
+                If Report.Compatibility._4_33_BlankFill Then
+                    layoutCount = gc
+                Else
+                    If filledCount < gc Then
+                        layoutCount = gc
+                    End If
+                End If
             End If
             If layoutCount > 0 Then
-                lastIndex = Math.Min(groupRange.GetGroupCount, layoutCount)
+                lastIndex = Math.Min(filledCount, layoutCount)
                 If Me.Design.Layout.Blank Then
                     lastIndex2 = layoutCount
                 Else
                     lastIndex2 = lastIndex
                 End If
             Else
-                lastIndex = groupRange.GetGroupCount
+                lastIndex = filledCount
                 lastIndex2 = lastIndex
-            End If
-            If parentState IsNot Nothing AndAlso parentState.GroupState.Blank Then
-                filledCount = 0
             End If
             Do
                 If i = lastIndex2 Then
@@ -157,7 +164,7 @@ Namespace component
             Return ret
         End Function
 
-        Private Function getInitialGroupCount(ByVal parentRegion As Region) As Integer
+        Private Function getDefaultGroupCount(ByVal parentRegion As Region) As Integer
             Dim ret As Integer = 0
             Dim u As Single = 0
             If Me.Design.ContentDesigns.Count = 1 Then
@@ -169,12 +176,21 @@ Namespace component
             If u > 0 Then
                 Dim t As Single = 0
                 Dim _t As Single = 0
-                Select Case Me.Design.Layout.Direction
-                    Case Report.EDirection.VERTICAL
-                        t = parentRegion.GetMaxHeight
-                    Case Report.EDirection.HORIZONTAL
-                        t = parentRegion.GetMaxWidth
-                End Select
+                If Report.Compatibility._4_33_BlankFill Then
+                    Select Case Me.Design.Layout.Direction
+                        Case Report.EDirection.VERTICAL
+                            t = parentRegion.GetMaxHeight
+                        Case Report.EDirection.HORIZONTAL
+                            t = parentRegion.GetMaxWidth
+                    End Select
+                Else
+                    Select Case Me.Design.Layout.Direction
+                        Case Report.EDirection.VERTICAL
+                            t = parentRegion.GetHeight
+                        Case Report.EDirection.HORIZONTAL
+                            t = parentRegion.GetWidth
+                    End Select
+                End If
                 Do
                     _t += u
                     If _t <= t Then
