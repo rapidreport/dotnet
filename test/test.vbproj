@@ -161,6 +161,8 @@
     <Compile Include="Test_4_33_Crosstab.vb" />
     <Compile Include="Test_4_33_SplitString.vb" />
     <Compile Include="Test_4_33_BufferLimit.vb" />
+    <Compile Include="Test_4_34_DynamicContentSize.vb" />
+    <Compile Include="Test_4_34_FooterIfSpace.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -284,6 +286,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_33_split_string.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_34_dynamic_content_size.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_34_footer_if_space.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

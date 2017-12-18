@@ -113,19 +113,16 @@ Namespace component
                     If contentState.Intrinsic Then
                         groupRange = contentRange.GetSubRange(content)
                     ElseIf content.Groups IsNot Nothing Then
-                        If Report.Compatibility._4_33_EveryPageGroup Then
-                            groupRange = New GroupRange(content.Groups)
+                        If content.Design.EveryPageBlankGroup Then
+                            groupRange = New GroupRange(content.Groups, Nothing, Nothing)
                         Else
-                            If content.Design.EveryPageGroup Then
-                                groupRange = New GroupRange(content.Groups)
-                            Else
-                                groupRange = New GroupRange(content.Groups, Nothing, Nothing)
-                            End If
+                            groupRange = New GroupRange(content.Groups)
                         End If
                     Else
                         groupRange = Nothing
                     End If
-                    Dim contentRegion As Region = Me.GetDesign.Layout.GetContentRegion(content.Design.Size, contentsRegion, lastRegion)
+                    Dim contentRegion As Region = Me.GetDesign.Layout.GetContentRegion(content.Design.Size, contentsRegion, lastRegion,
+                                                                                       IIf(Me.GetReport.InDesigner, Nothing, evaluator))
                     lastRegion = content.Scan(_scanner, groupRange, paperRegion, contentsRegion, contentRegion, contentState, evaluator)
                     If lastRegion IsNot Nothing Then
                         region = lastRegion.GetMergedRegion(region)

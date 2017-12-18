@@ -36,6 +36,8 @@
         Tests.Add(New Test_4_33_SplitString)
         Tests.Add(New Test_4_33_BlankGroup)
         Tests.Add(New Test_4_33_Crosstab)
+        Tests.Add(New Test_4_34_FooterIfSpace)
+        Tests.Add(New Test_4_34_DynamicContentSize)
 
         Application.Run(New FmTest)
     End Sub

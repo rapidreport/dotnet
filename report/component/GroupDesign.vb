@@ -186,9 +186,19 @@ Namespace component
                 Return Me
             ElseIf Me.ContentDesigns IsNot Nothing Then
                 For Each cd As ContentDesign In Me.ContentDesigns
-                    Dim ret As GroupDesign = cd.FindGroupDesign(id)
-                    If ret IsNot Nothing Then
-                        Return ret
+                    With Nothing
+                        Dim ret As GroupDesign = cd.FindGroupDesign(id)
+                        If ret IsNot Nothing Then
+                            Return ret
+                        End If
+                    End With
+                    If cd.SubContentDesigns IsNot Nothing Then
+                        For Each _cd As ContentDesign In cd.SubContentDesigns
+                            Dim ret As GroupDesign = _cd.FindGroupDesign(id)
+                            If ret IsNot Nothing Then
+                                Return ret
+                            End If
+                        Next
                     End If
                 Next
             End If

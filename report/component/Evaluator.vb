@@ -38,6 +38,10 @@ Namespace component
             Me.TraverseMode = True
         End Sub
 
+        Public Sub New(ByVal data As ReportData)
+            Me.New(data.Report, data, data.GetRecord)
+        End Sub
+
         Public Sub New(ByVal report As Report, ByVal data As ReportData, ByVal dataRecord As ReportDataRecord)
             Me.BasicContext = New BasicContextClass
             Me.BasicContext.Report = report

@@ -58,7 +58,7 @@ Namespace component
             If _region IsNot Nothing AndAlso
                 Not (Report.Compatibility._4_32_BlankSubGroup AndAlso contentState.GroupState.Blank) Then
                 If Me.Groups IsNot Nothing AndAlso groupRange IsNot Nothing Then
-                    _region = Me.Groups.Scan(_scanner, groupRange, paperRegion, _region, contentState)
+                    _region = Me.Groups.Scan(_scanner, groupRange, paperRegion, _region, contentState, evaluator)
                 End If
             End If
             scanner.AfterContent(Me, groupRange, parentRegion, contentState, _region, _scanner)

@@ -9,7 +9,7 @@
         Public Layout As SubContentLayoutDesign = Nothing
         Public AggregateSrc As Boolean = False
         Public EveryPage As Boolean = False
-        Public EveryPageGroup As Boolean = False
+        Public EveryPageBlankGroup As Boolean = False
         Public ExistenceCond As String = Nothing
         Public VisibilityCond As String = Nothing
         Public Unbreakable As Boolean = False
@@ -55,7 +55,7 @@
             End If
             Me.AggregateSrc = Me.Desc("aggregate_src")
             Me.EveryPage = Me.Desc("every_page")
-            Me.EveryPageGroup = Me.Desc("every_page_group")
+            Me.EveryPageBlankGroup = Me.Desc("every_page_blank_group")
             Me.ExistenceCond = Me.Desc("existence_cond")
             Me.VisibilityCond = Me.Desc("visibility_cond")
             Me.Unbreakable = Me.Desc("unbreakable")

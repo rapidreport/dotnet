@@ -4,6 +4,8 @@
 
         Public Initial As Single
         Public Max As Single
+        Public InitialExp As String
+        Public MaxExp As String
         Public SpecInitial As Boolean
         Public SpecMax As Boolean
         Public RevInitial As Boolean
@@ -29,6 +31,8 @@
                 Me.Max = 0
                 Me.RevMax = False
             End If
+            Me.InitialExp = desc("initial_exp")
+            Me.MaxExp = desc("max_exp")
             Me.RevInitial = desc("rev_initial")
             Me.RevMax = desc("rev_max")
             Me.NotExtendable = desc("not_extendable")

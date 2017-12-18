@@ -71,8 +71,6 @@ Public Class Report
         Public Shared _4_15_PreviewSearchDisabled As Boolean = False
         Public Shared _4_32_PreviewMultiPageDisabled As Boolean = False
         Public Shared _4_32_BlankSubGroup As Boolean = False
-        Public Shared _4_33_EveryPageGroup As Boolean = False
-        Public Shared _4_33_BlankFill As Boolean = False
     End Class
 
     Public Class ContextClass

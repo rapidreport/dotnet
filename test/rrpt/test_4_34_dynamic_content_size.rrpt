@@ -1,0 +1,99 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        aggregate_src: true,
+        group: {
+          detail: true,
+          contents: [
+            {
+              size: {
+                initial_exp: "(* (max count#T1 count#T2) 20)"
+              },
+              aggregate_src: true,
+              elements: [
+                {type:"line",layout:{x1:0.0,y1:0.0,x2:555.0,y2:0.0,rev_y1:true,rev_y2:true}}
+              ],
+              group: {
+                id: "T1",
+                detail: true,
+                split_string: {key:"text1"},
+                contents: [
+                  {
+                    size: {
+                      initial: 20.0
+                    },
+                    aggregate_src: true,
+                    elements: [
+                      {type:"field",layout:{x1:0.0,y1:0.0,x2:150.0,y2:20.0},exp:".text1",halign:"left",valign:"center"}
+                    ]
+                  }
+                ]
+              },
+              sub: [
+                {
+                  group: {
+                    id: "T2",
+                    detail: true,
+                    split_string: {key:"text2"},
+                    contents: [
+                      {
+                        size: {
+                          initial: 20.0
+                        },
+                        aggregate_src: true,
+                        elements: [
+                          {type:"field",layout:{x1:150.0,y1:0.0,x2:300.0,y2:20.0},exp:".text2",halign:"left",valign:"center"}
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        group: {
+          detail: true,
+          contents: [
+            {
+              size: {
+                initial: 20.0
+              }
+            },
+            {
+              size: {
+                max_exp: ".h"
+              },
+              aggregate_src: true,
+              group: {
+                blank_data: true,
+                layout: {
+                  blank: true
+                },
+                contents: [
+                  {
+                    size: {
+                      initial: 20.0
+                    },
+                    elements: [
+                      {type:"rect"}
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

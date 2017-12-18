@@ -1,0 +1,66 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  font: {size:30.0},
+  group: {
+    keys: ["k"],
+    contents: [
+      {
+        size: {
+          initial: 100.0
+        },
+        every_page: true,
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:555.0,y2:100.0},halign:"left",text:"k:#{.k}",valign:"center"}
+        ]
+      },
+      {
+        every_page: true,
+        every_page_blank_group: true,
+        group: {
+          max_count: 7.0,
+          layout: {
+            max_count: 1.0,
+            blank: true
+          },
+          contents: [
+            {
+              aggregate_src: true,
+              group: {
+                detail: true,
+                layout: {
+                  max_count: 5.0,
+                  max_count_exp: "(if (<= count 5) 5 7)",
+                  blank: true
+                },
+                contents: [
+                  {
+                    size: {
+                      initial: 100.0
+                    },
+                    aggregate_src: true,
+                    elements: [
+                      {type:"field",exp:".v",halign:"left",rect:{},valign:"center"}
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        size: {
+          initial: 200.0
+        },
+        elements: [
+          {type:"text",halign:"left",rect:{},text:"合計：#{sum.v}",valign:"center"}
+        ]
+      }
+    ]
+  }
+}

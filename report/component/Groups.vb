@@ -31,9 +31,7 @@ Namespace component
             Me.Groups = New List(Of Group)
             Dim _data As ReportData = data
             If Not Me.Report.InDesigner AndAlso Me.Design.BlankData Then
-                _data = New ReportData(BlankDataSource.GetInstance,
-                                       _data.Report,
-                                       _data.Group)
+                _data = New ReportData(BlankDataSource.GetInstance, _data.Report, _data.Group)
             End If
             With Nothing
                 Dim dataSource As IReportDataSource = _data
@@ -70,11 +68,11 @@ Namespace component
             g.Fill(data)
         End Sub
 
-        Public Function Scan( _
-          ByVal scanner As IScanner, _
-          ByVal groupRange As GroupRange, _
+        Public Function Scan(
+          ByVal scanner As IScanner,
+          ByVal groupRange As GroupRange,
           ByVal paperRegion As Region) As Region
-            Return Me.Scan(scanner, groupRange, paperRegion, paperRegion, Nothing)
+            Return Me.Scan(scanner, groupRange, paperRegion, paperRegion, Nothing, New Evaluator(Me.Report.Data))
         End Function
 
         Public Function Scan(
@@ -82,12 +80,13 @@ Namespace component
           ByVal groupRange As GroupRange,
           ByVal paperRegion As Region,
           ByVal parentRegion As Region,
-          ByVal parentState As ContentState) As Region
+          ByVal parentState As ContentState,
+          ByVal evaluator As Evaluator) As Region
             Dim _scanner As IScanner = scanner.BeforeGroups(Me, groupRange, parentRegion)
             Dim region As Region = parentRegion
             Dim i As Integer = 0
             Dim isFirst As Boolean = True
-            Dim layoutCount As Integer = Me.Design.Layout.GetCount
+            Dim layoutCount As Integer = Me.Design.Layout.GetCount(IIf(Me.Report.InDesigner, Nothing, evaluator))
             Dim lastIndex As Integer
             Dim lastIndex2 As Integer
             Dim lastRegion As Region = Nothing
@@ -96,14 +95,7 @@ Namespace component
                 filledCount = 0
             End If
             If Me.Design.Layout.Blank AndAlso layoutCount = 0 Then
-                Dim gc As Integer = Me.getDefaultGroupCount(parentRegion)
-                If Report.Compatibility._4_33_BlankFill Then
-                    layoutCount = gc
-                Else
-                    If filledCount < gc Then
-                        layoutCount = gc
-                    End If
-                End If
+                layoutCount = Me.getDefaultGroupCount(parentRegion)
             End If
             If layoutCount > 0 Then
                 lastIndex = Math.Min(filledCount, layoutCount)
@@ -122,7 +114,6 @@ Namespace component
                 End If
                 Dim g As Group
                 Dim contentRange As ContentRange
-
                 If i < filledCount Then
                     g = groupRange.GetGroup(i)
                     contentRange = groupRange.GetSubRange(g)
@@ -176,21 +167,12 @@ Namespace component
             If u > 0 Then
                 Dim t As Single = 0
                 Dim _t As Single = 0
-                If Report.Compatibility._4_33_BlankFill Then
-                    Select Case Me.Design.Layout.Direction
-                        Case Report.EDirection.VERTICAL
-                            t = parentRegion.GetMaxHeight
-                        Case Report.EDirection.HORIZONTAL
-                            t = parentRegion.GetMaxWidth
-                    End Select
-                Else
-                    Select Case Me.Design.Layout.Direction
-                        Case Report.EDirection.VERTICAL
-                            t = parentRegion.GetHeight
-                        Case Report.EDirection.HORIZONTAL
-                            t = parentRegion.GetWidth
-                    End Select
-                End If
+                Select Case Me.Design.Layout.Direction
+                    Case Report.EDirection.VERTICAL
+                        t = parentRegion.GetMaxHeight
+                    Case Report.EDirection.HORIZONTAL
+                        t = parentRegion.GetMaxWidth
+                End Select
                 Do
                     _t += u
                     If _t <= t Then

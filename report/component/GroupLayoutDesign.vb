@@ -8,6 +8,7 @@
         Public X As Single = 0
         Public Y As Single = 0
         Public MaxCount As Integer = 0
+        Public MaxCountExp As String = Nothing
         Public Blank As Boolean = False
         Public ClipOverflow As Boolean = False
         Public Locates As List(Of GroupLocateDesign) = Nothing
@@ -32,6 +33,7 @@
             Me.X = desc("x")
             Me.Y = desc("y")
             Me.MaxCount = desc("max_count")
+            Me.MaxCountExp = desc("max_count_exp")
             Me.Blank = desc("blank")
             Me.ClipOverflow = desc("clip_overflow")
             If desc.ContainsKey("locates") Then
@@ -44,16 +46,21 @@
             End If
         End Sub
 
-        Public Function GetCount() As Integer
+        Public Function GetCount(evaluator As Evaluator) As Integer
             If Me.IsLocateEnabled Then
                 Dim ret As Integer = 0
                 For Each l As GroupLocateDesign In Me.Locates
                     ret += Math.Max(1, l.Count)
                 Next
                 Return ret
-            Else
-                Return Me.MaxCount
+            ElseIf evaluator IsNot Nothing AndAlso Me.MaxCountExp IsNot Nothing Then
+                Try
+                    Return evaluator.EvalTry(Me.MaxCountExp)
+                Catch ex As Exception
+                    Return 0
+                End Try
             End If
+            Return Me.MaxCount
         End Function
 
         Public Function IsLocateEnabled() As Boolean
@@ -137,8 +144,30 @@
             Return ret
         End Function
 
-        Public Function GetContentRegion(ByVal sizeDesign As ContentSizeDesign, ByVal contentsRegion As Region, ByVal lastRegion As Region) As Region
+        Public Function GetContentRegion(sizeDesign As ContentSizeDesign, contentsRegion As Region, lastRegion As Region, evaluator As Evaluator) As Region
             Dim ret As New Region
+            Dim init As Single = sizeDesign.Initial
+            Dim max As Single = sizeDesign.Max
+            Dim specInit As Single = sizeDesign.SpecInitial
+            Dim specMax As Single = sizeDesign.SpecMax
+            If evaluator IsNot Nothing Then
+                If sizeDesign.InitialExp IsNot Nothing Then
+                    Try
+                        init = evaluator.EvalTry(sizeDesign.InitialExp)
+                    Catch ex As Exception
+                        init = 0
+                    End Try
+                    specInit = True
+                End If
+                If sizeDesign.MaxExp IsNot Nothing Then
+                    Try
+                        max = evaluator.EvalTry(sizeDesign.MaxExp)
+                    Catch ex As Exception
+                        max = 0
+                    End Try
+                    specMax = True
+                End If
+            End If
             Select Case Me.Direction
                 Case Report.EDirection.VERTICAL
                     If lastRegion Is Nothing Then
@@ -148,11 +177,11 @@
                         ret.Top = lastRegion.Bottom
                         ret.Left = lastRegion.Left
                     End If
-                    If sizeDesign.SpecInitial Then
+                    If specInit Then
                         If Not sizeDesign.RevInitial Then
-                            ret.Bottom = ret.Top + sizeDesign.Initial
+                            ret.Bottom = ret.Top + init
                         Else
-                            ret.Bottom = contentsRegion.MaxBottom - sizeDesign.Initial
+                            ret.Bottom = contentsRegion.MaxBottom - init
                         End If
                     Else
                         ret.Bottom = ret.Top
@@ -160,11 +189,11 @@
                     ret.Right = contentsRegion.Right
                     If sizeDesign.NotExtendable Then
                         ret.MaxBottom = ret.Bottom
-                    ElseIf sizeDesign.SpecMax Then
+                    ElseIf specMax Then
                         If Not sizeDesign.RevMax Then
-                            ret.MaxBottom = ret.Top + sizeDesign.Max
+                            ret.MaxBottom = ret.Top + max
                         Else
-                            ret.MaxBottom = contentsRegion.MaxBottom - sizeDesign.Max
+                            ret.MaxBottom = contentsRegion.MaxBottom - max
                         End If
                     Else
                         ret.MaxBottom = contentsRegion.MaxBottom
@@ -182,11 +211,11 @@
                         ret.Left = lastRegion.Right
                     End If
                     ret.Bottom = contentsRegion.Bottom
-                    If sizeDesign.SpecInitial Then
+                    If specInit Then
                         If Not sizeDesign.RevInitial Then
-                            ret.Right = ret.Left + sizeDesign.Initial
+                            ret.Right = ret.Left + init
                         Else
-                            ret.Right = contentsRegion.MaxRight - sizeDesign.Initial
+                            ret.Right = contentsRegion.MaxRight - init
                         End If
                     Else
                         ret.Right = ret.Left
@@ -194,11 +223,11 @@
                     ret.MaxBottom = ret.Bottom
                     If sizeDesign.NotExtendable Then
                         ret.MaxRight = ret.Right
-                    ElseIf sizeDesign.SpecMax Then
+                    ElseIf specMax Then
                         If Not sizeDesign.RevMax Then
-                            ret.MaxRight = ret.Left + sizeDesign.Max
+                            ret.MaxRight = ret.Left + max
                         Else
-                            ret.MaxRight = contentsRegion.MaxRight - sizeDesign.Max
+                            ret.MaxRight = contentsRegion.MaxRight - max
                         End If
                     Else
                         ret.MaxRight = contentsRegion.MaxRight

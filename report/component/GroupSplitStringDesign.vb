@@ -24,7 +24,7 @@ Public Class GroupSplitStringDesign
 
     Public Function Split(data As ReportData) As List(Of ReportData)
         Dim ret As New List(Of ReportData)
-        Dim t As String = (New Evaluator(data.Report, data, data.GetRecord)).EvalTry(Me.Exp)
+        Dim t As String = (New Evaluator(data)).EvalTry(Me.Exp)
 
         If t Is Nothing Then
             ret.Add(New ReportData(New SplitStringDataSource(data, Me.Key, Nothing), data.Report, data.Group))
