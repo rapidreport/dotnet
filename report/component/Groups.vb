@@ -82,6 +82,9 @@ Namespace component
           ByVal parentRegion As Region,
           ByVal parentState As ContentState,
           ByVal evaluator As Evaluator) As Region
+            If Me.Design.Id = "tt" And TypeOf scanner Is RenderingScanner Then
+                Debug.Print("t")
+            End If
             Dim _scanner As IScanner = scanner.BeforeGroups(Me, groupRange, parentRegion)
             Dim region As Region = parentRegion
             Dim i As Integer = 0
@@ -91,22 +94,25 @@ Namespace component
             Dim lastIndex2 As Integer
             Dim lastRegion As Region = Nothing
             Dim filledCount As Integer = groupRange.GetGroupCount
-            If parentState IsNot Nothing AndAlso parentState.GroupState.Blank Then
-                filledCount = 0
-            End If
             If Me.Design.Layout.Blank AndAlso layoutCount = 0 Then
                 layoutCount = Me.getDefaultGroupCount(parentRegion)
             End If
-            If layoutCount > 0 Then
-                lastIndex = Math.Min(filledCount, layoutCount)
-                If Me.Design.Layout.Blank Then
-                    lastIndex2 = layoutCount
+            If parentState IsNot Nothing AndAlso parentState.GroupState.Blank Then
+                If layoutCount > 0 Then
+                    lastIndex = 0
+                    lastIndex2 = IIf(Me.Design.Layout.Blank, layoutCount, 1)
                 Else
-                    lastIndex2 = lastIndex
+                    lastIndex = 0
+                    lastIndex2 = 1
                 End If
             Else
-                lastIndex = filledCount
-                lastIndex2 = lastIndex
+                If layoutCount > 0 Then
+                    lastIndex = Math.Min(filledCount, layoutCount)
+                    lastIndex2 = IIf(Me.Design.Layout.Blank, layoutCount, lastIndex)
+                Else
+                    lastIndex = filledCount
+                    lastIndex2 = lastIndex
+                End If
             End If
             Do
                 If i = lastIndex2 Then
@@ -114,7 +120,7 @@ Namespace component
                 End If
                 Dim g As Group
                 Dim contentRange As ContentRange
-                If i < filledCount Then
+                If i < lastIndex Then
                     g = groupRange.GetGroup(i)
                     contentRange = groupRange.GetSubRange(g)
                 Else
@@ -130,8 +136,8 @@ Namespace component
                 groupState.GroupLast = groupState.Last And groupRange.ContainsLast
                 groupState.GroupLast2 = groupState.Last2 And groupRange.ContainsLast
                 groupState.GroupIndex = g.Index
-                groupState.Blank = (i >= filledCount)
-                groupState.BlankFirst = (i = filledCount)
+                groupState.Blank = (i >= lastIndex)
+                groupState.BlankFirst = (i = lastIndex)
                 groupState.BlankLast = groupState.Blank And groupState.Last2
                 Dim groupRegion As Region = Me.Design.Layout.GetGroupRegion(parentRegion, lastRegion, i)
                 lastRegion = g.Scan(_scanner, contentRange, paperRegion, groupRegion, groupState)
@@ -139,7 +145,7 @@ Namespace component
                 isFirst = False
                 i += 1
             Loop
-            Dim broken As Boolean = (layoutCount > 0 And layoutCount < groupRange.GetGroupCount)
+            Dim broken As Boolean = (layoutCount > 0 And layoutCount < filledCount)
             scanner.AfterGroups(Me, groupRange, parentRegion, region, broken, _scanner)
             Return region
         End Function
