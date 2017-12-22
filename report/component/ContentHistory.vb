@@ -14,7 +14,7 @@
         Private Sub New()
         End Sub
 
-        Public Shared Function GetInstance(ByVal content As Content, ByVal rootGroups As Groups) As ContentHistory
+        Public Shared Function GetInstance(content As Content, rootGroups As Groups) As ContentHistory
             Dim ret As ContentHistory = Nothing
             Dim c As Content = content
             Do While c IsNot Nothing

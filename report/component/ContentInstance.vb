@@ -6,15 +6,15 @@
         Public ContentState As ContentState
 
         Public Sub New( _
-           ByVal content As Content, _
-           ByVal region As Region, _
-           ByVal contentState As ContentState)
+           content As Content, _
+           region As Region, _
+           contentState As ContentState)
             Me.Region = region
             Me.Content = content
             Me.ContentState = contentState
         End Sub
 
-        Public Function GetElementDesigns(ByVal evaluator As Evaluator) As ElementDesigns
+        Public Function GetElementDesigns(evaluator As Evaluator) As ElementDesigns
             Dim ret As New ElementDesigns(Me.Content.Design)
             Dim report As Report = evaluator.BasicContext.Report
             _customizeElements(ret, evaluator)

@@ -49,7 +49,7 @@ Public Class PdfRendererSetting
         Me.UnderlineWidthCoefficient = 1.0F
     End Sub
 
-    Private Sub New(ByVal setting As PdfRendererSetting)
+    Private Sub New(setting As PdfRendererSetting)
         Me.DummyElementRenderer = setting.DummyElementRenderer
         For Each k As String In setting.ElementRendererMap.Keys
             Me.ElementRendererMap.Add(k, setting.ElementRendererMap(k))
@@ -63,7 +63,7 @@ Public Class PdfRendererSetting
         Me.ShrinkFontSizeStep = setting.ShrinkFontSizeStep
     End Sub
 
-    Public Function GetElementRenderer(ByVal key As String) As IElementRenderer
+    Public Function GetElementRenderer(key As String) As IElementRenderer
         If Not String.IsNullOrEmpty(key) AndAlso Me.ElementRendererMap.ContainsKey(key) Then
             Return Me.ElementRendererMap(key)
         Else
@@ -71,7 +71,7 @@ Public Class PdfRendererSetting
         End If
     End Function
 
-    Public Function GetFont(ByVal key As String) As BaseFont
+    Public Function GetFont(key As String) As BaseFont
         If Not String.IsNullOrEmpty(key) AndAlso Me.FontMap.ContainsKey(key) Then
             Return Me.FontMap(key)
         Else
@@ -79,7 +79,7 @@ Public Class PdfRendererSetting
         End If
     End Function
 
-    Public Function GetGaijiFont(ByVal key As String) As BaseFont
+    Public Function GetGaijiFont(key As String) As BaseFont
         If Not String.IsNullOrEmpty(key) AndAlso Me.GaijiFontMap.ContainsKey(key) Then
             Return Me.GaijiFontMap(key)
         Else

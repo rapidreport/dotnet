@@ -19,7 +19,7 @@
             Me.new(New Hashtable)
         End Sub
 
-        Public Sub New(ByVal desc As Hashtable)
+        Public Sub New(desc As Hashtable)
             If desc.ContainsKey("x1") Then
                 Me.X1 = desc("x1")
                 Me.SpecX1 = True
@@ -54,7 +54,7 @@
             Me.RevY2 = desc("rev_y2")
         End Sub
 
-        Public Function GetRegion(ByVal parentRegion As Region) As Region
+        Public Function GetRegion(parentRegion As Region) As Region
             Dim ret As New Region
             If Me.SpecY1 Then
                 If Not Me.RevY1 Then

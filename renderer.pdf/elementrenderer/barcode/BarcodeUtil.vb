@@ -5,7 +5,7 @@ Namespace barcode
 
     Public Module BarcodeUtil
 
-        Public Sub RenderText(ByVal tmp As PdfTemplate, ByVal text As String)
+        Public Sub RenderText(tmp As PdfTemplate, text As String)
             tmp.BeginText()
             Dim fs As Single = GetFontSize(tmp, text)
             SetFont(tmp, fs)
@@ -14,12 +14,12 @@ Namespace barcode
             tmp.EndText()
         End Sub
 
-        Public Function GetFontSize(ByVal tmp As PdfTemplate, ByVal text As String) As Single
+        Public Function GetFontSize(tmp As PdfTemplate, text As String) As Single
             Dim ret As Single = tmp.Height * 0.3
             Return Math.Min(ret, ((tmp.Width * 0.9) / text.Length) * 2)
         End Function
 
-        Public Sub SetFont(ByVal tmp As PdfTemplate, ByVal fontSize As Single)
+        Public Sub SetFont(tmp As PdfTemplate, fontSize As Single)
             Dim f As BaseFont = BaseFont.CreateFont("Helvetica", "winansi", False)
             tmp.SetFontAndSize(f, fontSize)
         End Sub

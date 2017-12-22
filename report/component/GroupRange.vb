@@ -6,22 +6,22 @@
         Public First As ContentHistory = Nothing
         Public Last As ContentHistory = Nothing
 
-        Public Sub New(ByVal groups As Groups)
+        Public Sub New(groups As Groups)
             Me.New(groups, _
                    groups.GetNextContentHistory(Nothing), _
                    Nothing)
         End Sub
 
         Public Sub New( _
-          ByVal groups As Groups, _
-          ByVal first As ContentHistory, _
-          ByVal last As ContentHistory)
+          groups As Groups, _
+          first As ContentHistory, _
+          last As ContentHistory)
             Me.Groups = groups
             Me.First = first
             Me.Last = last
         End Sub
 
-        Public Function GetSubRange(ByVal g As Group) As ContentRange
+        Public Function GetSubRange(g As Group) As ContentRange
             Dim _first As ContentHistory = Nothing
             Dim _last As ContentHistory = Nothing
             If Me.First Is Nothing Then
@@ -52,7 +52,7 @@
             End If
         End Function
 
-        Public Function GetGroup(ByVal i As Integer) As Group
+        Public Function GetGroup(i As Integer) As Group
             Return Me.Groups.Groups(Me.First.Group.Index + i)
         End Function
 

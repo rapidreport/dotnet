@@ -8,7 +8,7 @@ Imports jp.co.systembase.report.method
 Namespace expression
     Public Class Parser
 
-        Public Event CreateMethod(ByVal method As IMethod, ByVal methodKey As String, ByVal param As String, ByVal scope As String, ByVal unit As String)
+        Public Event CreateMethod(method As IMethod, methodKey As String, param As String, scope As String, unit As String)
 
         Private Const LITERAL_NULL As String = "null"
         Private Const LITERAL_TRUE As String = "true"
@@ -22,11 +22,11 @@ Namespace expression
         Private index As Integer
         Private setting As ReportSetting
 
-        Public Sub New(ByVal setting As ReportSetting)
+        Public Sub New(setting As ReportSetting)
             Me.setting = setting
         End Sub
 
-        Public Function Parse(ByVal source As String) As IExpression
+        Public Function Parse(source As String) As IExpression
             If source Is Nothing Then
                 Return Nothing
             End If
@@ -42,7 +42,7 @@ Namespace expression
             Return ret
         End Function
 
-        Private Function _Parse_aux(ByVal source As String) As IExpression
+        Private Function _Parse_aux(source As String) As IExpression
             If source(Me.index) = "("c Then
                 Return Me._Parse_operator(source)
             Else
@@ -122,7 +122,7 @@ Namespace expression
             End If
         End Function
 
-        Private Function _Parse_operator(ByVal source As String) As IExpression
+        Private Function _Parse_operator(source As String) As IExpression
             Me.index += 1
             Me.skipSpace(source)
             Dim operatorKey As String = nextToken(source)
@@ -148,13 +148,13 @@ Namespace expression
             Loop
         End Function
 
-        Private Sub skipSpace(ByVal source As String)
+        Private Sub skipSpace(source As String)
             Do While Me.index < source.Length AndAlso source(Me.index) = " "c
                 Me.index += 1
             Loop
         End Sub
 
-        Private Function nextToken(ByVal source As String) As String
+        Private Function nextToken(source As String) As String
             Dim i As Integer = Me.index
             Dim escaped As Boolean = False
             Dim quoted As Boolean = False
@@ -192,7 +192,7 @@ Namespace expression
             Return ret
         End Function
 
-        Private Function evalString(ByVal token As String) As String
+        Private Function evalString(token As String) As String
             Dim i As Integer = 1
             Dim j As Integer = 1
             Dim sb As New StringBuilder

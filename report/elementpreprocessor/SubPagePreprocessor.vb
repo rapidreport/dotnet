@@ -5,10 +5,10 @@ Namespace elementpreprocessor
     Public Class SubPagePreprocessor
         Implements IElementPreprocessor
         Public Function DoProcess( _
-          ByVal renderer As IRenderer, _
-          ByVal region As Region, _
-          ByVal evaluator As Evaluator, _
-          ByVal design As ElementDesign) As Object Implements IElementPreprocessor.DoProcess
+          renderer As IRenderer, _
+          region As Region, _
+          evaluator As Evaluator, _
+          design As ElementDesign) As Object Implements IElementPreprocessor.DoProcess
             Dim k As String
             Dim i As Object
             If design.IsNull("key") OrElse design.IsNull("exp") Then

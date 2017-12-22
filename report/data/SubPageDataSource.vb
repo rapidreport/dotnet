@@ -14,7 +14,7 @@ Namespace data
         Private currentPageIndex As Dictionary(Of String, Integer) = Nothing
         Private currentSubPageIndex As Integer = 0
 
-        Public Sub New(ByVal pages As ReportPages, ByVal pageGroupId As String, ByVal ParamArray subPageKeys() As String)
+        Public Sub New(pages As ReportPages, pageGroupId As String, ParamArray subPageKeys() As String)
             Me.SubPageKeys = New List(Of String)(subPageKeys)
             For i As Integer = 0 To pages.Count - 1
                 Dim page As ReportPage = pages(i)
@@ -31,7 +31,7 @@ Namespace data
             Next
         End Sub
 
-        Private Sub addSubPage(ByVal pageIndex As Integer)
+        Private Sub addSubPage(pageIndex As Integer)
             If Me.currentSubPageIndex = 0 Then
                 Me.recordList.Add(Me.currentRecord)
                 Me.pageIndexList.Add(Me.currentPageIndex)
@@ -43,13 +43,13 @@ Namespace data
             End If
         End Sub
 
-        Private Sub addBreak(ByVal record As data.ReportDataRecord)
+        Private Sub addBreak(record As data.ReportDataRecord)
             Me.currentRecord = record
             Me.currentPageIndex = New Dictionary(Of String, Integer)
             Me.currentSubPageIndex = 0
         End Sub
 
-        Public Function [Get](ByVal i As Integer, ByVal key As String) As Object Implements data.IReportDataSource.[Get]
+        Public Function [Get](i As Integer, key As String) As Object Implements data.IReportDataSource.[Get]
             If Me.SubPageKeys.Contains(key) Then
                 If Me.pageIndexList(i).ContainsKey(key) Then
                     Return Me.pageIndexList(i)(key)

@@ -5,8 +5,8 @@ Namespace [operator]
     Public Class MinOperator
         Implements IOperator
         Public Function Exec( _
-          ByVal evaluator As Evaluator, _
-          ByVal params As List(Of IExpression)) As Object Implements IOperator.Exec
+          evaluator As Evaluator, _
+          params As List(Of IExpression)) As Object Implements IOperator.Exec
             evaluator.ValidateParamCount(params, 1)
             Dim min As Object = Nothing
             For i As Integer = 0 To params.Count - 1

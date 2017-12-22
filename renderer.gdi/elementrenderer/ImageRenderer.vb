@@ -6,11 +6,11 @@ Namespace elementrenderer
         Implements IElementRenderer
 
         Public Sub Render( _
-          ByVal env As RenderingEnv, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) Implements IElementRenderer.Render
+          env As RenderingEnv, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object) Implements IElementRenderer.Render
             Dim img As Image = Nothing
             If Not env.InDesigner Then
                 If Not design.IsNull("key") And data IsNot Nothing Then

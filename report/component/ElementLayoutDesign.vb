@@ -15,7 +15,7 @@
         Public RevX2 As Boolean
         Public RevY2 As Boolean
 
-        Public Sub New(ByVal desc As ElementDesign)
+        Public Sub New(desc As ElementDesign)
             If Not desc.IsNull("x1") Then
                 Me.X1 = desc.Get("x1")
                 Me.SpecX1 = True
@@ -50,7 +50,7 @@
             Me.RevY2 = desc.Get("rev_y2")
         End Sub
 
-        Public Function GetRegion(ByVal parentRegion As Region) As Region
+        Public Function GetRegion(parentRegion As Region) As Region
             Dim ret As New Region
             If Me.SpecY1 Then
                 If Not Me.RevY1 Then

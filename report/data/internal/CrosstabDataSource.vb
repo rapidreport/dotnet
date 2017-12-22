@@ -8,7 +8,7 @@
         Private _Keys As List(Of String) = Nothing
         Private _Mask As Boolean = False
 
-        Public Sub New(ByVal dataSource As IReportDataSource)
+        Public Sub New(dataSource As IReportDataSource)
             Me._DataSource = dataSource
             Me._Indexes = New List(Of Integer)
             For i As Integer = 0 To Me._DataSource.Size - 1
@@ -16,7 +16,7 @@
             Next
         End Sub
 
-        Public Sub New(ByVal dataSource As IReportDataSource, ByVal keys As List(Of String))
+        Public Sub New(dataSource As IReportDataSource, keys As List(Of String))
             Me.New(dataSource)
             Me._Indexes.Sort(New RecordComparer(Me._DataSource, keys, Nothing))
         End Sub
@@ -49,7 +49,7 @@
             Return Me._Indexes.Count
         End Function
 
-        Public Function [Get](ByVal i As Integer, ByVal key As String) As Object Implements IReportDataSource.[Get]
+        Public Function [Get](i As Integer, key As String) As Object Implements IReportDataSource.[Get]
             If Me._Mask Then
                 If Not Me._Keys.Contains(key) Then
                     Return Nothing

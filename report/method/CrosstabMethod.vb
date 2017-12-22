@@ -10,10 +10,10 @@ Namespace method
         End Function
 
         Public Function Exec(
-          ByVal evaluator As Evaluator,
-          ByVal param As String,
-          ByVal scope As String,
-          ByVal unit As String) As Object Implements IMethod.Exec
+          evaluator As Evaluator,
+          param As String,
+          scope As String,
+          unit As String) As Object Implements IMethod.Exec
             If param Is Nothing Then
                 Return Nothing
             End If

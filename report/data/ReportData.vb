@@ -13,53 +13,53 @@ Namespace data
         Public EndIndex As Integer = -1
         Public Context As Report.ContextClass
 
-        Public Sub New(ByVal dataSource As IReportDataSource, ByVal context As Report.ContextClass)
+        Public Sub New(dataSource As IReportDataSource, context As Report.ContextClass)
             Me.initialize(dataSource, 0, dataSource.Size, Nothing, Nothing, context)
         End Sub
 
-        Public Sub New(ByVal dataSource As IReportDataSource, ByVal beginIndex As Integer, ByVal endIndex As Integer, ByVal context As Report.ContextClass)
+        Public Sub New(dataSource As IReportDataSource, beginIndex As Integer, endIndex As Integer, context As Report.ContextClass)
             Me.initialize(dataSource, beginIndex, endIndex, Nothing, Nothing, context)
         End Sub
 
-        Public Sub New(ByVal dataSource As IReportDataSource, ByVal group As Group)
+        Public Sub New(dataSource As IReportDataSource, group As Group)
             Me.initialize(dataSource, 0, dataSource.Size, group.GetReport, group, group.GetReport.Context)
         End Sub
 
-        Public Sub New(ByVal dataSource As IReportDataSource, ByVal report As Report, ByVal group As Group)
+        Public Sub New(dataSource As IReportDataSource, report As Report, group As Group)
             Me.initialize(dataSource, 0, dataSource.Size, report, group, report.Context)
         End Sub
 
-        Public Sub New(ByVal dataSource As IReportDataSource, ByVal beginIndex As Integer, ByVal endIndex As Integer, ByVal report As Report, ByVal group As Group)
+        Public Sub New(dataSource As IReportDataSource, beginIndex As Integer, endIndex As Integer, report As Report, group As Group)
             Me.initialize(dataSource, beginIndex, endIndex, report, group, report.Context)
         End Sub
 
-        Public Sub New(ByVal data As ReportData)
+        Public Sub New(data As ReportData)
             Me.initialize(data.DataSource, data.BeginIndex, data.EndIndex, data.Report, data.Group, data.Context)
         End Sub
 
-        Public Sub New(ByVal data As ReportData, ByVal beginIndex As Integer, ByVal endIndex As Integer)
+        Public Sub New(data As ReportData, beginIndex As Integer, endIndex As Integer)
             Me.initialize(data.DataSource, beginIndex, endIndex, data.Report, data.Group, data.Context)
         End Sub
 
-        Public Shared Function GetPartialData(ByVal data As ReportData, ByVal beginIndex As Integer, ByVal endIndex As Integer)
+        Public Shared Function GetPartialData(data As ReportData, beginIndex As Integer, endIndex As Integer)
             Return New ReportData(data, data.BeginIndex + beginIndex, data.BeginIndex + endIndex)
         End Function
 
-        Public Shared Function GetEmptyData(ByVal data As ReportData) As ReportData
+        Public Shared Function GetEmptyData(data As ReportData) As ReportData
             Return GetEmptyData(data.DataSource, data.Report, data.Group)
         End Function
 
-        Public Shared Function GetEmptyData(ByVal dataSource As IReportDataSource, ByVal report As Report, ByVal group As Group) As ReportData
+        Public Shared Function GetEmptyData(dataSource As IReportDataSource, report As Report, group As Group) As ReportData
             Return New ReportData(dataSource, -1, -1, report, group)
         End Function
 
         Private Sub initialize( _
-          ByVal dataSource As IReportDataSource, _
-          ByVal beginIndex As Integer, _
-          ByVal endIndex As Integer, _
-          ByVal report As Report, _
-          ByVal group As Group, _
-          ByVal context As Report.ContextClass)
+          dataSource As IReportDataSource, _
+          beginIndex As Integer, _
+          endIndex As Integer, _
+          report As Report, _
+          group As Group, _
+          context As Report.ContextClass)
             Me.DataSource = dataSource
             Me.Report = report
             Me.Group = group
@@ -73,7 +73,7 @@ Namespace data
             End If
         End Sub
 
-        Public Sub SetGroup(ByVal group As Group)
+        Public Sub SetGroup(group As Group)
             Me.Group = group
             Dim groupDesign As GroupDesign = group.GetDesign
             If Not Me.Context.WrapperDataSourceMap.ContainsKey(groupDesign) Then
@@ -102,7 +102,7 @@ Namespace data
             wrapperDataSource.DataList.Add(Me)
         End Sub
 
-        Public Function HasSameSource(ByVal data As ReportData) As Boolean
+        Public Function HasSameSource(data As ReportData) As Boolean
             Return Me.DataSource Is data.DataSource
         End Function
 
@@ -110,7 +110,7 @@ Namespace data
             Return Not (Me.BeginIndex < Me.EndIndex)
         End Function
 
-        Public Function Merge(ByVal data As ReportData) As ReportData
+        Public Function Merge(data As ReportData) As ReportData
             If Not Me.HasSameSource(data) Then
                 Return Me
             End If
@@ -129,7 +129,7 @@ Namespace data
             Return New ReportData(Me.DataSource, bi, ei, Me.Report, Me.Group)
         End Function
 
-        Public Function [Get](ByVal i As Integer, ByVal key As String) As Object Implements IReportDataSource.[Get]
+        Public Function [Get](i As Integer, key As String) As Object Implements IReportDataSource.[Get]
             If Me.BeginIndex < 0 OrElse i < 0 OrElse i >= Me.Size Then
                 Throw New ArgumentOutOfRangeException
             End If
@@ -149,7 +149,7 @@ Namespace data
             End If
         End Function
 
-        Private Function getTry(ByVal i As Integer, ByVal key As String) As Object
+        Private Function getTry(i As Integer, key As String) As Object
             Try
                 Return Me.DataSource.Get(i, key)
             Catch ex As UnknownFieldException
@@ -161,7 +161,7 @@ Namespace data
             End Try
         End Function
 
-        Private Function findCustomField(ByVal key As String) As CustomField
+        Private Function findCustomField(key As String) As CustomField
             Dim g As Group = Me.Group
             Do While g IsNot Nothing AndAlso Me.HasSameSource(g.Data)
                 Dim gd As GroupDesign = g.GetDesign
@@ -193,11 +193,11 @@ Namespace data
             Return Nothing
         End Function
 
-        Public Function TransIndex(ByVal data As ReportData, ByVal i As Integer) As Integer
+        Public Function TransIndex(data As ReportData, i As Integer) As Integer
             Return i + (data.BeginIndex - Me.BeginIndex)
         End Function
 
-        Public Function FindScope(ByVal scope As String) As ReportData
+        Public Function FindScope(scope As String) As ReportData
             If scope Is Nothing Then
                 Return Me
             ElseIf scope.Equals("") Then
@@ -214,7 +214,7 @@ Namespace data
             End If
         End Function
 
-        Public Function FindUnit(ByVal unit As String) As GroupDesign
+        Public Function FindUnit(unit As String) As GroupDesign
             If unit.Equals("") Then
                 If Me.Group IsNot Nothing Then
                     Dim cd As ContentDesign = Me.Group.GetDesign.GetAggregateSrcContentDesign
@@ -253,17 +253,17 @@ Namespace data
         Private Class _SummaryResult
             Public Summary As Decimal
             Public Count As Integer
-            Public Sub New(ByVal summary As Decimal, ByVal count As Integer)
+            Public Sub New(summary As Decimal, count As Integer)
                 Me.Summary = summary
                 Me.Count = count
             End Sub
         End Class
 
-        Public Function GetCount(ByVal key As String) As Object
+        Public Function GetCount(key As String) As Object
             Return Me.getSummary_Aux(key).Count
         End Function
 
-        Public Function GetSummary(ByVal key As String) As Object
+        Public Function GetSummary(key As String) As Object
             With Me.getSummary_Aux(key)
                 If .Count > 0 Then
                     Return .Summary
@@ -273,7 +273,7 @@ Namespace data
             End With
         End Function
 
-        Public Function GetAverage(ByVal key As String) As Object
+        Public Function GetAverage(key As String) As Object
             With Me.getSummary_Aux(key)
                 If .Count > 0 Then
                     Return .Summary / .Count
@@ -285,7 +285,7 @@ Namespace data
             End With
         End Function
 
-        Private Function getSummary_Aux(ByVal key As String) As _SummaryResult
+        Private Function getSummary_Aux(key As String) As _SummaryResult
             If Not TypeOf Me.DataSource Is INoCache AndAlso _
               Me.DataSource.Size > &HFF AndAlso Me.Size > &HFF Then
                 Return Me.getSummary_Cache(key)
@@ -294,7 +294,7 @@ Namespace data
             End If
         End Function
 
-        Private Function getSummary_Cache(ByVal key As String) As _SummaryResult
+        Private Function getSummary_Cache(key As String) As _SummaryResult
             Dim summary As Decimal = 0
             Dim count As Integer = 0
             Dim summaryCache As Dictionary(Of Integer, Decimal)
@@ -357,7 +357,7 @@ Namespace data
             Return New _SummaryResult(summary, count)
         End Function
 
-        Private Function getSummary_NoCache(ByVal key As String) As _SummaryResult
+        Private Function getSummary_NoCache(key As String) As _SummaryResult
             Dim summary As Decimal = 0
             Dim count As Integer = 0
             Dim customField As CustomField = Me.findCustomField(key)
@@ -440,7 +440,7 @@ Namespace data
 
             Private Data As ReportData
 
-            Public Sub New(ByVal reportData As ReportData)
+            Public Sub New(reportData As ReportData)
                 Me.Data = reportData
             End Sub
 
@@ -456,7 +456,7 @@ Namespace data
             Private Data As ReportData
             Private i As Integer
 
-            Public Sub New(ByVal reportData As ReportData)
+            Public Sub New(reportData As ReportData)
                 Me.Data = reportData
                 Me.i = -1
             End Sub
@@ -479,7 +479,7 @@ Namespace data
         End Class
 
         Private _emptyIndexRange As New IndexRange
-        Public Function GetDataIndexRange(ByVal groupDesign As GroupDesign) As IndexRange
+        Public Function GetDataIndexRange(groupDesign As GroupDesign) As IndexRange
             If Me.Group IsNot Nothing Then
                 If Me.Group.DataIndexRangeMap.ContainsKey(groupDesign) Then
                     Return Me.Group.DataIndexRangeMap(groupDesign)
@@ -491,7 +491,7 @@ Namespace data
             End If
         End Function
 
-        Public Function GetWrapperDataSource(ByVal groupDesign As GroupDesign) As WrapperDataSource
+        Public Function GetWrapperDataSource(groupDesign As GroupDesign) As WrapperDataSource
             Return Me.Context.WrapperDataSourceMap(groupDesign)
         End Function
 

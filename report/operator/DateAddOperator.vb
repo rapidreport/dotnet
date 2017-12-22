@@ -5,8 +5,8 @@ Namespace [operator]
     Public Class DateAddOperator
         Implements IOperator
         Public Function Exec(
-          ByVal evaluator As Evaluator,
-          ByVal params As List(Of IExpression)) As Object Implements IOperator.Exec
+          evaluator As Evaluator,
+          params As List(Of IExpression)) As Object Implements IOperator.Exec
             evaluator.ValidateParamCount(params, 3)
             Dim o As Object = evaluator.Eval(params(0))
             Dim u As String = evaluator.Eval(params(1))

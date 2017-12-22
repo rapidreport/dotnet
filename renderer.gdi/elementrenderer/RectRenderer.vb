@@ -6,11 +6,11 @@ Namespace elementrenderer
         Implements IElementRenderer
 
         Public Sub Render( _
-          ByVal env As RenderingEnv, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) Implements IElementRenderer.Render
+          env As RenderingEnv, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object) Implements IElementRenderer.Render
             Dim _region As Region = region.ToPointScale(reportDesign)
             If _region.GetWidth < 0 Or _region.GetHeight < 0 Then
                 Exit Sub

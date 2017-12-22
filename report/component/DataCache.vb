@@ -25,8 +25,8 @@ Namespace component
               Dictionary(Of Integer, Integer)))
         Public Expression As New Dictionary(Of String, IExpression)
         Public Function CustomField( _
-          ByVal data As ReportData, _
-          ByVal key As String) As Dictionary(Of Integer, Object)
+          data As ReportData, _
+          key As String) As Dictionary(Of Integer, Object)
             If Not Me._CustomField.ContainsKey(data) Then
                 Me._CustomField.Add(data, _
                   New Dictionary(Of String,  _
@@ -39,8 +39,8 @@ Namespace component
             Return Me._CustomField(data)(key)
         End Function
         Public Function Summary( _
-          ByVal dataSource As IReportDataSource, _
-          ByVal key As String) As Dictionary(Of Integer, Decimal)
+          dataSource As IReportDataSource, _
+          key As String) As Dictionary(Of Integer, Decimal)
             If Not Me._Summary.ContainsKey(dataSource) Then
                 Me._Summary.Add(dataSource, _
                   New Dictionary(Of String,  _
@@ -53,8 +53,8 @@ Namespace component
             Return Me._Summary(dataSource)(key)
         End Function
         Public Function Count( _
-          ByVal dataSource As IReportDataSource, _
-          ByVal key As String) As Dictionary(Of Integer, Integer)
+          dataSource As IReportDataSource, _
+          key As String) As Dictionary(Of Integer, Integer)
             If Not Me._Count.ContainsKey(dataSource) Then
                 Me._Count.Add(dataSource, _
                   New Dictionary(Of String,  _
@@ -67,8 +67,8 @@ Namespace component
             Return Me._Count(dataSource)(key)
         End Function
         Public Function CustomFieldSummary( _
-          ByVal data As ReportData, _
-          ByVal key As String) As Dictionary(Of Integer, Decimal)
+          data As ReportData, _
+          key As String) As Dictionary(Of Integer, Decimal)
             If Not Me._CustomFieldSummary.ContainsKey(data) Then
                 Me._CustomFieldSummary.Add(data, _
                   New Dictionary(Of String,  _
@@ -81,8 +81,8 @@ Namespace component
             Return Me._CustomFieldSummary(data)(key)
         End Function
         Public Function CustomFieldCount( _
-          ByVal data As ReportData, _
-          ByVal key As String) As Dictionary(Of Integer, Integer)
+          data As ReportData, _
+          key As String) As Dictionary(Of Integer, Integer)
             If Not Me._CustomFieldCount.ContainsKey(data) Then
                 Me._CustomFieldCount.Add(data, _
                   New Dictionary(Of String,  _

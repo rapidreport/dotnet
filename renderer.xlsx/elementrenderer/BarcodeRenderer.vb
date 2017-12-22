@@ -17,11 +17,11 @@ Namespace elementrenderer
         Implements IElementRenderer
 
         Public Sub Collect( _
-          ByVal renderer As XlsxRenderer, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) Implements IElementRenderer.Collect
+          renderer As XlsxRenderer, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object) Implements IElementRenderer.Collect
             Dim _region As Region = region.ToPointScale(reportDesign)
             Dim code As String = RenderUtil.Format(reportDesign, design.Child("formatter"), data)
             Dim shape As New Shape
@@ -34,11 +34,11 @@ Namespace elementrenderer
             Implements IShapeRenderer
             Public Code As String
             Public Design As ElementDesign
-            Public Sub New(ByVal design As ElementDesign, ByVal code As String)
+            Public Sub New(design As ElementDesign, code As String)
                 Me.Code = code
                 Me.Design = design
             End Sub
-            Public Sub Render(ByVal page As Page, ByVal shape As Shape) Implements IShapeRenderer.Render
+            Public Sub Render(page As Page, shape As Shape) Implements IShapeRenderer.Render
                 If Me.Code Is Nothing Then
                     Exit Sub
                 End If

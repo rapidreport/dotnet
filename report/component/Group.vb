@@ -15,7 +15,7 @@ Namespace component
 
         Public CrosstabState As Crosstab.State = Nothing
 
-        Public Sub New(ByVal parentGroups As Groups, ByVal index As Integer, crosstabState As Crosstab.State)
+        Public Sub New(parentGroups As Groups, index As Integer, crosstabState As Crosstab.State)
             Me.ParentGroups = parentGroups
             Me.Index = index
             If crosstabState IsNot Nothing Then
@@ -27,7 +27,7 @@ Namespace component
             End If
         End Sub
 
-        Public Sub Fill(ByVal data As ReportData)
+        Public Sub Fill(data As ReportData)
             Me.Data = data
             Me.Data.SetGroup(Me)
             Me.Contents = New List(Of Content)
@@ -51,11 +51,11 @@ Namespace component
         End Sub
 
         Public Function Scan(
-          ByVal scanner As IScanner,
-          ByVal contentRange As ContentRange,
-          ByVal paperRegion As Region,
-          ByVal parentRegion As Region,
-          ByVal groupState As GroupState) As Region
+          scanner As IScanner,
+          contentRange As ContentRange,
+          paperRegion As Region,
+          parentRegion As Region,
+          groupState As GroupState) As Region
             Dim _scanner As IScanner = scanner.BeforeGroup(Me, contentRange, parentRegion, groupState)
             Dim contentsRegion As Region = Me.GetDesign.Layout.GetGroupInitialRegion(parentRegion)
             Dim region As Region = contentsRegion
@@ -142,7 +142,7 @@ Namespace component
             Return Nothing
         End Function
 
-        Public Function GetNextContent(ByVal ch As ContentHistory) As Content
+        Public Function GetNextContent(ch As ContentHistory) As Content
             If ch Is Nothing Then
                 Return Me.Contents(0).GetNextContent(Nothing)
             Else

@@ -3,8 +3,8 @@
 Namespace search.searchobject
     Public Interface ISearchObject
         Function GetText( _
-          ByVal reportDesign As ReportDesign, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) As String
+          reportDesign As ReportDesign, _
+          design As ElementDesign, _
+          data As Object) As String
     End Interface
 End Namespace

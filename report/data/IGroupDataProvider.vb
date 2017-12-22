@@ -3,7 +3,7 @@
 Namespace data
 
     Public Interface IGroupDataProvider
-        Function GetGroupDataSource(ByVal groups As Groups, ByVal data As ReportData) As IReportDataSource
+        Function GetGroupDataSource(groups As Groups, data As ReportData) As IReportDataSource
     End Interface
 
 End Namespace

@@ -10,7 +10,7 @@ Namespace component
         Public Region As Region = Nothing
         Public CellRange As New CellRange
 
-        Public Function GetHSSFClientAnchor(ByVal topRow As Integer) As HSSFClientAnchor
+        Public Function GetHSSFClientAnchor(topRow As Integer) As HSSFClientAnchor
             Return New HSSFClientAnchor(0, 0, 0, 0, _
                                         Me.CellRange.Col1, _
                                         Me.CellRange.Row1 + topRow, _

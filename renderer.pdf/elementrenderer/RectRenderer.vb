@@ -9,11 +9,11 @@ Namespace elementrenderer
         Implements IElementRenderer
 
         Public Sub Render( _
-          ByVal renderer As PdfRenderer, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) Implements IElementRenderer.Render
+          renderer As PdfRenderer, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object) Implements IElementRenderer.Render
             Dim _region As Region = region.ToPointScale(reportDesign)
             Dim cb As PdfContentByte = renderer.Writer.DirectContent
             Dim x1 As Single = renderer.Trans.X(_region.Left)
@@ -128,9 +128,9 @@ Namespace elementrenderer
         End Sub
 
         Private Function setupStroke( _
-          ByVal cb As PdfContentByte, _
-          ByVal design As ElementDesign, _
-          ByVal reportDesign As ReportDesign) As Boolean
+          cb As PdfContentByte, _
+          design As ElementDesign, _
+          reportDesign As ReportDesign) As Boolean
             Dim lw As Single = reportDesign.DefaultLineWidth
             If Not design.IsNull("line_width") Then
                 lw = design.Get("line_width")
@@ -172,7 +172,7 @@ Namespace elementrenderer
             Return True
         End Function
 
-        Private Function setupFill(ByVal cb As PdfContentByte, ByVal d As ElementDesign) As Boolean
+        Private Function setupFill(cb As PdfContentByte, d As ElementDesign) As Boolean
             If Not d.IsNull("fill_color") Then
                 Dim c As Color = PdfRenderUtil.GetColor(d.Get("fill_color"))
                 If c IsNot Nothing Then

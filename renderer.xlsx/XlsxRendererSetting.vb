@@ -37,7 +37,7 @@ Public Class XlsxRendererSetting
         Me.RowHeightCoefficent = 1.0F
     End Sub
 
-    Private Sub New(ByVal setting As XlsxRendererSetting)
+    Private Sub New(setting As XlsxRendererSetting)
         Me.DummyElementRenderer = setting.DummyElementRenderer
         For Each k As String In setting.ElementRendererMap.Keys
             Me.ElementRendererMap.Add(k, setting.ElementRendererMap(k))
@@ -55,7 +55,7 @@ Public Class XlsxRendererSetting
         Me.RowHeightCoefficent = setting.RowHeightCoefficent
     End Sub
 
-    Public Function GetElementRenderer(ByVal key As String) As IElementRenderer
+    Public Function GetElementRenderer(key As String) As IElementRenderer
         If key IsNot Nothing AndAlso Me.ElementRendererMap.ContainsKey(key) Then
             Return Me.ElementRendererMap(key)
         Else
@@ -63,7 +63,7 @@ Public Class XlsxRendererSetting
         End If
     End Function
 
-    Public Function GetFont(ByVal key As String) As String
+    Public Function GetFont(key As String) As String
         If key IsNot Nothing AndAlso Me.FontMap.ContainsKey(key) Then
             Return Me.FontMap(key)
         Else

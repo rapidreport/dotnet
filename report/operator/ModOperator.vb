@@ -5,8 +5,8 @@ Namespace [operator]
     Public Class ModOperator
         Implements IOperator
         Public Function Exec( _
-          ByVal evaluator As Evaluator, _
-          ByVal params As List(Of IExpression)) As Object Implements IOperator.Exec
+          evaluator As Evaluator, _
+          params As List(Of IExpression)) As Object Implements IOperator.Exec
             evaluator.ValidateParamCount(params, 2)
             Dim v1 As Object = evaluator.Eval(params(0))
             Dim v2 As Object = evaluator.Eval(params(1))

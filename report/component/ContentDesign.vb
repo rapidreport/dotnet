@@ -24,15 +24,15 @@
         Public BaseContentDesign As ContentDesign
 
         Public Sub New( _
-          ByVal desc As Hashtable, _
-          ByVal parentGroupDesign As GroupDesign)
+          desc As Hashtable, _
+          parentGroupDesign As GroupDesign)
             Me.New(desc, parentGroupDesign, Nothing)
         End Sub
 
         Public Sub New( _
-          ByVal desc As Hashtable, _
-          ByVal parentGroupDesign As GroupDesign, _
-          ByVal baseContentDesign As ContentDesign)
+          desc As Hashtable, _
+          parentGroupDesign As GroupDesign, _
+          baseContentDesign As ContentDesign)
             Me.Desc = desc
             Me.ParentGroupDesign = parentGroupDesign
             Me.BaseContentDesign = baseContentDesign
@@ -114,7 +114,7 @@
             Return Me.ParentGroupDesign.ReportDesign
         End Function
 
-        Public Function FindContentDesign(ByVal id As String) As ContentDesign
+        Public Function FindContentDesign(id As String) As ContentDesign
             If id.Equals(Me.Id) Then
                 Return Me
             ElseIf Me.GroupDesign IsNot Nothing Then
@@ -133,7 +133,7 @@
             Return Nothing
         End Function
 
-        Public Function FindGroupDesign(ByVal id As String) As GroupDesign
+        Public Function FindGroupDesign(id As String) As GroupDesign
             If Me.GroupDesign IsNot Nothing Then
                 Dim ret As GroupDesign = Me.GroupDesign.FindGroupDesign(id)
                 If ret IsNot Nothing Then

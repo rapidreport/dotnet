@@ -6,7 +6,7 @@ Namespace component
         Public GridStyle As New GridStyle
         Public FieldStyle As FieldStyle = Nothing
 
-        Public Sub Fill(ByVal cellStyle As XSSFCellStyle, ByVal renderer As XlsxRenderer)
+        Public Sub Fill(cellStyle As XSSFCellStyle, renderer As XlsxRenderer)
             Me.GridStyle.Fill(cellStyle, renderer)
             If Me.FieldStyle IsNot Nothing Then
                 Me.FieldStyle.Fill(cellStyle, renderer)
@@ -21,7 +21,7 @@ Namespace component
             Return ret
         End Function
 
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             If Me Is obj Then
                 Return True
             End If

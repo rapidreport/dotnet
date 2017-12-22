@@ -13,21 +13,21 @@ Namespace component
         Public BaseContent As Content
 
         Public Sub New( _
-          ByVal design As ContentDesign, _
-          ByVal parentGroup As Group)
+          design As ContentDesign, _
+          parentGroup As Group)
             Me.New(design, parentGroup, Nothing)
         End Sub
 
         Public Sub New( _
-          ByVal design As ContentDesign, _
-          ByVal parentGroup As Group, _
-          ByVal baseContent As Content)
+          design As ContentDesign, _
+          parentGroup As Group, _
+          baseContent As Content)
             Me.Design = design
             Me.ParentGroup = parentGroup
             Me.BaseContent = baseContent
         End Sub
 
-        Public Sub Fill(ByVal data As ReportData)
+        Public Sub Fill(data As ReportData)
             If Me.Design.GroupDesign IsNot Nothing Then
                 Me.Groups = New Groups(Me.Design.GroupDesign, Me.GetReport, Me)
                 Me.Groups.Fill(data)
@@ -43,13 +43,13 @@ Namespace component
         End Sub
 
         Public Function Scan( _
-          ByVal scanner As IScanner, _
-          ByVal groupRange As GroupRange, _
-          ByVal paperRegion As Region, _
-          ByVal parentRegion As Region, _
-          ByVal region As Region, _
-          ByVal contentState As ContentState, _
-          ByVal evaluator As Evaluator) As Region
+          scanner As IScanner, _
+          groupRange As GroupRange, _
+          paperRegion As Region, _
+          parentRegion As Region, _
+          region As Region, _
+          contentState As ContentState, _
+          evaluator As Evaluator) As Region
             Dim _scanner As IScanner = scanner.BeforeContent(Me, groupRange, parentRegion, contentState)
             Dim _region As Region = region
             If Me.GetReport.Customizer IsNot Nothing Then
@@ -66,7 +66,7 @@ Namespace component
             Return _region
         End Function
 
-        Public Function GetNextContent(ByVal ch As ContentHistory) As Content
+        Public Function GetNextContent(ch As ContentHistory) As Content
             If ch Is Nothing Then
                 If Me.Groups Is Nothing OrElse Me.Groups.Groups.Count = 0 Then
                     Return Me

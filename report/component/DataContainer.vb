@@ -10,7 +10,7 @@ Namespace component
             Public EndIndex As Integer = -1
             Public PastIndex As Integer = -1
 
-            Public Sub UpdateRange(ByVal data As ReportData)
+            Public Sub UpdateRange(data As ReportData)
                 If Me.BeginIndex = -1 Then
                     Me.BeginIndex = data.BeginIndex
                 End If
@@ -18,11 +18,11 @@ Namespace component
                 Me.PastIndex = Me.EndIndex
             End Sub
 
-            Public Sub UpdatePast(ByVal index As Integer)
+            Public Sub UpdatePast(index As Integer)
                 Me.PastIndex = index
             End Sub
 
-            Public Function GetPresentIndex(ByVal prior As Boolean) As Integer
+            Public Function GetPresentIndex(prior As Boolean) As Integer
                 If prior And Me.BeginIndex > -1 Then
                     Return Me.BeginIndex
                 Else
@@ -34,14 +34,14 @@ Namespace component
 
         Public PageRangeMap As New Dictionary(Of ReportData, PageRange)
 
-        Public Sub InitializeData(ByVal g As Group)
+        Public Sub InitializeData(g As Group)
             If Not Me.PageRangeMap.ContainsKey(g.GetReport.Data) Then
                 Me.PageRangeMap.Add(g.GetReport.Data, New PageRange)
             End If
             Me.PageRangeMap.Add(g.Data, New PageRange)
         End Sub
 
-        Public Sub UpdateData(ByVal c As Content)
+        Public Sub UpdateData(c As Content)
             Dim leaf As Boolean = isLeafContent(c)
             Dim pre As Boolean = isPriorContent(c)
             Dim past As Boolean = isPosteriorContent(c)
@@ -68,7 +68,7 @@ Namespace component
             Loop
         End Sub
 
-        Private Shared Function isLeafContent(ByVal c As Content) As Boolean
+        Private Shared Function isLeafContent(c As Content) As Boolean
             If Not c.Design.AggregateSrc Then
                 Return False
             End If
@@ -85,17 +85,17 @@ Namespace component
             Return False
         End Function
 
-        Private Shared Function isPriorContent(ByVal c As Content) As Boolean
+        Private Shared Function isPriorContent(c As Content) As Boolean
             Dim ac As Content = c.ParentGroup.GetAggregateSrcContent
             Return ac IsNot Nothing AndAlso c.GetIndex < ac.GetIndex
         End Function
 
-        Private Shared Function isPosteriorContent(ByVal c As Content) As Boolean
+        Private Shared Function isPosteriorContent(c As Content) As Boolean
             Dim ac As Content = c.ParentGroup.GetAggregateSrcContent
             Return ac IsNot Nothing AndAlso c.GetIndex > ac.GetIndex
         End Function
 
-        Public Function GetPresentData(ByVal content As Content, ByVal scope As String) As ReportData
+        Public Function GetPresentData(content As Content, scope As String) As ReportData
             Dim scopeData As ReportData = content.GetData.FindScope(scope)
             If scopeData Is Nothing Then
                 Throw New ArgumentException("invalid scope" & IIf(Not scope.Equals(""), ": " & scope, ""))
@@ -110,7 +110,7 @@ Namespace component
               Me.PageRangeMap(content.GetData).GetPresentIndex(isPriorContent(content)))
         End Function
 
-        Public Function GetPageData(ByVal content As Content, ByVal scope As String) As ReportData
+        Public Function GetPageData(content As Content, scope As String) As ReportData
             Dim scopeData As ReportData = content.GetData.FindScope(scope)
             If scopeData Is Nothing Then
                 Throw New ArgumentException("invalid scope" & IIf(Not scope.Equals(""), ": " & scope, ""))

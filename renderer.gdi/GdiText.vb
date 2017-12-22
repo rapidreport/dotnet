@@ -14,11 +14,11 @@ Public Class GdiText
     Protected Const VERTICAL_ROTATE_CHARS As String = "～…‥｜ーｰ(){}[]<>（）｛｝「」＜＞。、"
 
     Public Overridable Sub Initialize( _
-      ByVal env As RenderingEnv, _
-      ByVal reportDesign As ReportDesign, _
-      ByVal region As Region, _
-      ByVal design As ElementDesign, _
-      ByVal text As String)
+      env As RenderingEnv, _
+      reportDesign As ReportDesign, _
+      region As Region, _
+      design As ElementDesign, _
+      text As String)
         Me.Graphics = env.Graphics
         Me.Region = region.ToPointScale(reportDesign)
         Me.Setting = env.Setting
@@ -234,8 +234,8 @@ Public Class GdiText
     End Sub
 
     Protected Overridable Sub _Draw_Vertical_Aux( _
-      ByVal texts As List(Of String), _
-      ByVal font As Font)
+      texts As List(Of String), _
+      font As Font)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
         Dim mx As Single = font.Size / 6
         Dim x As Single = 0
@@ -315,9 +315,9 @@ Public Class GdiText
     End Function
 
     Protected Shared Function _GetFont( _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal ignoreUnderline As Boolean) As Font
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      ignoreUnderline As Boolean) As Font
         Dim style As FontStyle = FontStyle.Regular
         If textDesign.Font.Bold Then
             style = style Or FontStyle.Bold
@@ -337,7 +337,7 @@ Public Class GdiText
     End Function
 
     Protected Shared Function _ToStringAlignment( _
-      ByVal align As Report.EHAlign) As StringAlignment
+      align As Report.EHAlign) As StringAlignment
         Select Case align
             Case Report.EHAlign.LEFT
                 Return StringAlignment.Near
@@ -349,7 +349,7 @@ Public Class GdiText
     End Function
 
     Protected Shared Function _ToStringAlignment( _
-      ByVal align As Report.EVAlign) As StringAlignment
+      align As Report.EVAlign) As StringAlignment
         Select Case align
             Case Report.EVAlign.TOP
                 Return StringAlignment.Near
@@ -361,12 +361,12 @@ Public Class GdiText
     End Function
 
     Protected Shared Function _GetFitFont( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal text As String, _
-      ByVal baseFont As Font, _
-      ByVal stringFormat As StringFormat) As Font
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      text As String, _
+      baseFont As Font, _
+      stringFormat As StringFormat) As Font
         If g.MeasureString(text, baseFont, 100000, stringFormat).Width <= region.GetWidth Then
             Return baseFont
         End If
@@ -384,7 +384,7 @@ Public Class GdiText
         Return New Font(baseFont.Name, setting.ShrinkFontSizeMin, baseFont.Style)
     End Function
 
-    Protected Shared Function _GetDistributeMap(ByVal w As Single, ByVal c As Integer, ByVal font As Font) As List(Of Single)
+    Protected Shared Function _GetDistributeMap(w As Single, c As Integer, font As Font) As List(Of Single)
         Dim ret As New List(Of Single)
         If c = 1 Then
             ret.Add(w / 2)
@@ -399,10 +399,10 @@ Public Class GdiText
     End Function
 
     Protected Shared Function _SplitByCr( _
-      ByVal region As Region, _
-      ByVal font As Font, _
-      ByVal text As String, _
-      ByVal wrap As Boolean) As List(Of String)
+      region As Region, _
+      font As Font, _
+      text As String, _
+      wrap As Boolean) As List(Of String)
         Dim h As Single = region.GetHeight
         Dim yc As Integer = Fix((h + TOLERANCE) / font.Size)
         Dim ret As New List(Of String)
@@ -432,7 +432,7 @@ Public Class GdiText
         Public Text2 As String
         Public Text3 As String
 
-        Public Sub New(ByVal gdiText As GdiText)
+        Public Sub New(gdiText As GdiText)
             Me.GdiText = gdiText
             Dim t As String = Me.GdiText.Text
             With Regex.Match(t, "([^0-9]*)$")
@@ -445,7 +445,7 @@ Public Class GdiText
             End With
         End Sub
 
-        Public Function GetFullText2(ByVal width As Integer) As String
+        Public Function GetFullText2(width As Integer) As String
             Dim ret As String = Me.Text2
             If ret.Length = 0 Then
                 ret = "."
@@ -453,11 +453,11 @@ Public Class GdiText
             Return ret.PadRight(width + 1, "0")
         End Function
 
-        Public Function GetFullText(ByVal width As Integer) As String
+        Public Function GetFullText(width As Integer) As String
             Return Me.Text1 & Me.GetFullText2(width) & Me.Text3
         End Function
 
-        Public Sub DrawText(ByVal font As Font)
+        Public Sub DrawText(font As Font)
             Dim color As Color = GdiRenderUtil.GetColor(GdiText.TextDesign.Color, Drawing.Color.Black)
             Dim ls As New SizeF(10000, 10000)
             Dim y As Single = 0

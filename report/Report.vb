@@ -103,36 +103,36 @@ Public Class Report
     Private _CrosstabCaptionDataSourceMap As New Dictionary(Of String, IReportDataSource)
     Private _SubPageMap As New Dictionary(Of String, ReportPages)
 
-    Public Sub New(ByVal desc As Hashtable)
+    Public Sub New(desc As Hashtable)
         Me.New(desc, CType(Nothing, IReportCustomizer))
     End Sub
 
-    Public Sub New(ByVal desc As Hashtable, ByVal setting As ReportSetting)
+    Public Sub New(desc As Hashtable, setting As ReportSetting)
         Me.New(desc, setting, Nothing)
     End Sub
 
-    Public Sub New(ByVal design As ReportDesign)
+    Public Sub New(design As ReportDesign)
         Me.New(design, Nothing)
     End Sub
 
-    Public Sub New(ByVal desc As Hashtable, ByVal customizer As IReportCustomizer)
+    Public Sub New(desc As Hashtable, customizer As IReportCustomizer)
         Me.New(New ReportDesign(desc), customizer)
     End Sub
 
-    Public Sub New(ByVal desc As Hashtable, ByVal setting As ReportSetting, ByVal customizer As IReportCustomizer)
+    Public Sub New(desc As Hashtable, setting As ReportSetting, customizer As IReportCustomizer)
         Me.New(New ReportDesign(desc, setting), customizer)
     End Sub
 
-    Public Sub New(ByVal design As ReportDesign, ByVal customizer As IReportCustomizer)
+    Public Sub New(design As ReportDesign, customizer As IReportCustomizer)
         Me.Design = design
         Me.Customizer = customizer
     End Sub
 
-    Public Sub Fill(ByVal dataSource As IReportDataSource)
+    Public Sub Fill(dataSource As IReportDataSource)
         Me.Fill(dataSource, Nothing)
     End Sub
 
-    Public Sub Fill(ByVal dataSource As IReportDataSource, ByVal groupDataProvider As IGroupDataProvider)
+    Public Sub Fill(dataSource As IReportDataSource, groupDataProvider As IGroupDataProvider)
         Me.GroupDataProvider = groupDataProvider
         Me.Data = New ReportData(dataSource, Me, Nothing)
         Me.Groups = New Groups(Me.Design.GroupDesign, Me, Nothing)
@@ -207,7 +207,7 @@ Public Class Report
         End If
     End Function
 
-    Public Sub AddSubPages(ByVal key As String, ByVal pages As ReportPages)
+    Public Sub AddSubPages(key As String, pages As ReportPages)
         pages.SetUpCountingPages()
         If Me._SubPageMap.ContainsKey(key) Then
             Me._SubPageMap(key) = pages
@@ -223,7 +223,7 @@ Public Class Report
         Return Nothing
     End Function
 
-    Public Sub RenderSubPage(ByVal renderer As IRenderer, ByVal region As Region, ByVal key As String, ByVal index As Integer)
+    Public Sub RenderSubPage(renderer As IRenderer, region As Region, key As String, index As Integer)
         If Not Me._SubPageMap.ContainsKey(key) Then
             Exit Sub
         End If

@@ -7,7 +7,7 @@ Namespace data
 
         Private Class _KeyList
             Inherits List(Of Object)
-            Public Overrides Function Equals(ByVal obj As Object) As Boolean
+            Public Overrides Function Equals(obj As Object) As Boolean
                 If Not TypeOf obj Is _KeyList Then
                     Return False
                 End If
@@ -51,11 +51,11 @@ Namespace data
             Me.new(New GroupDataMap)
         End Sub
 
-        Public Sub New(ByVal groupDataMap As GroupDataMap)
+        Public Sub New(groupDataMap As GroupDataMap)
             Me.GroupDataMap = groupDataMap
         End Sub
 
-        Public Function GetGroupDataSource(ByVal groups As Groups, ByVal data As ReportData) As IReportDataSource Implements IGroupDataProvider.GetGroupDataSource
+        Public Function GetGroupDataSource(groups As Groups, data As ReportData) As IReportDataSource Implements IGroupDataProvider.GetGroupDataSource
             Dim groupId As String = groups.Design.Id
             If groupId IsNot Nothing AndAlso Me.GroupDataMap.ContainsKey(groupId) Then
                 Select Case Me.GroupDataMap.GetDataMode(groupId)
@@ -91,7 +91,7 @@ Namespace data
             End If
         End Function
 
-        Private Function getKeyNames(ByVal groupDesign As GroupDesign) As List(Of String)
+        Private Function getKeyNames(groupDesign As GroupDesign) As List(Of String)
             If Not Me.keyNamesCache.ContainsKey(groupDesign) Then
                 Dim keyNames As New List(Of String)
                 If groupDesign.ParentContentDesign IsNot Nothing Then
@@ -102,7 +102,7 @@ Namespace data
             Return Me.keyNamesCache(groupDesign)
         End Function
 
-        Private Shared Sub getKeyNames_aux(ByVal groupDesign As GroupDesign, ByVal keyNames As List(Of String))
+        Private Shared Sub getKeyNames_aux(groupDesign As GroupDesign, keyNames As List(Of String))
             If groupDesign.ParentContentDesign IsNot Nothing Then
                 getKeyNames_aux(groupDesign.ParentContentDesign.ParentGroupDesign, keyNames)
             End If
@@ -112,8 +112,8 @@ Namespace data
         End Sub
 
         Private Shared Function getKeys( _
-          ByVal keyNames As List(Of String), _
-          ByVal data As ReportData) As _KeyList
+          keyNames As List(Of String), _
+          data As ReportData) As _KeyList
             Dim ret As New _KeyList
             Dim r As ReportDataRecord = data.GetRecord
             For Each k As String In keyNames
@@ -123,10 +123,10 @@ Namespace data
         End Function
 
         Private Shared Function getKeys(
-          ByVal keyNames As List(Of String),
-          ByVal dataSource As IReportDataSource,
-          ByVal index As Integer,
-          ByVal logger As IReportLogger) As _KeyList
+          keyNames As List(Of String),
+          dataSource As IReportDataSource,
+          index As Integer,
+          logger As IReportLogger) As _KeyList
             Dim ret As New _KeyList
             For Each k As String In keyNames
                 Try
@@ -142,9 +142,9 @@ Namespace data
         End Function
 
         Private Shared Function splitData(
-          ByVal keyNames As List(Of String),
-          ByVal dataSource As IReportDataSource,
-          ByVal logger As IReportLogger) As Dictionary(Of _KeyList, IReportDataSource)
+          keyNames As List(Of String),
+          dataSource As IReportDataSource,
+          logger As IReportLogger) As Dictionary(Of _KeyList, IReportDataSource)
             Dim ret As New Dictionary(Of _KeyList, IReportDataSource)
             Dim keys As _KeyList = Nothing
             Dim beginIndex As Integer = 0

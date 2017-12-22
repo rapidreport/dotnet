@@ -14,20 +14,20 @@ Namespace component
         Public DataSourceGroup As Group = Nothing
 
         Public Sub New(
-          ByVal design As GroupDesign,
-          ByVal report As Report,
-          ByVal parentContent As Content)
+          design As GroupDesign,
+          report As Report,
+          parentContent As Content)
             Me.Design = design
             Me.Report = report
             Me.ParentContent = parentContent
         End Sub
 
-        Public Sub Fill(ByVal dataSourceGroup As Group)
+        Public Sub Fill(dataSourceGroup As Group)
             Me.DataSourceGroup = dataSourceGroup
             Me.Fill(New ReportData(Me.DataSourceGroup.Data))
         End Sub
 
-        Public Sub Fill(ByVal data As ReportData)
+        Public Sub Fill(data As ReportData)
             Me.Groups = New List(Of Group)
             Dim _data As ReportData = data
             If Not Me.Report.InDesigner AndAlso Me.Design.BlankData Then
@@ -69,19 +69,19 @@ Namespace component
         End Sub
 
         Public Function Scan(
-          ByVal scanner As IScanner,
-          ByVal groupRange As GroupRange,
-          ByVal paperRegion As Region) As Region
+          scanner As IScanner,
+          groupRange As GroupRange,
+          paperRegion As Region) As Region
             Return Me.Scan(scanner, groupRange, paperRegion, paperRegion, Nothing, New Evaluator(Me.Report.Data))
         End Function
 
         Public Function Scan(
-          ByVal scanner As IScanner,
-          ByVal groupRange As GroupRange,
-          ByVal paperRegion As Region,
-          ByVal parentRegion As Region,
-          ByVal parentState As ContentState,
-          ByVal evaluator As Evaluator) As Region
+          scanner As IScanner,
+          groupRange As GroupRange,
+          paperRegion As Region,
+          parentRegion As Region,
+          parentState As ContentState,
+          evaluator As Evaluator) As Region
             If Me.Design.Id = "tt" And TypeOf scanner Is RenderingScanner Then
                 Debug.Print("t")
             End If
@@ -150,7 +150,7 @@ Namespace component
             Return region
         End Function
 
-        Private Function extendRegion(ByVal region As Region, ByVal groupRegion As Region) As Region
+        Private Function extendRegion(region As Region, groupRegion As Region) As Region
             Dim ret As New Region
             ret.Top = region.Top
             ret.Left = region.Left
@@ -161,7 +161,7 @@ Namespace component
             Return ret
         End Function
 
-        Private Function getDefaultGroupCount(ByVal parentRegion As Region) As Integer
+        Private Function getDefaultGroupCount(parentRegion As Region) As Integer
             Dim ret As Integer = 0
             Dim u As Single = 0
             If Me.Design.ContentDesigns.Count = 1 Then
@@ -201,7 +201,7 @@ Namespace component
             Return ret
         End Function
 
-        Public Function GetNextContent(ByVal ch As ContentHistory) As Content
+        Public Function GetNextContent(ch As ContentHistory) As Content
             If Me.Groups.Count = 0 Then
                 Return Nothing
             End If
@@ -222,7 +222,7 @@ Namespace component
             End If
         End Function
 
-        Public Function GetNextContentHistory(ByVal ch As ContentHistory) As ContentHistory
+        Public Function GetNextContentHistory(ch As ContentHistory) As ContentHistory
             Dim c As Content = Me.GetNextContent(ch)
             If c IsNot Nothing Then
                 Return ContentHistory.GetInstance(c, Me)

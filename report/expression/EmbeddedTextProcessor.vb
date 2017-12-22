@@ -9,7 +9,7 @@ Namespace expression
 
         Private index As Integer
 
-        Public Function ExtractExpressions(ByVal source As String) As List(Of String)
+        Public Function ExtractExpressions(source As String) As List(Of String)
             If source Is Nothing Then
                 Return Nothing
             End If
@@ -29,10 +29,10 @@ Namespace expression
         End Function
 
         Public Function EmbedData( _
-          ByVal reportDesign As ReportDesign, _
-          ByVal formatterDesign As ElementDesign, _
-          ByVal source As String, _
-          ByVal data As ArrayList) As String
+          reportDesign As ReportDesign, _
+          formatterDesign As ElementDesign, _
+          source As String, _
+          data As ArrayList) As String
             If source Is Nothing Then
                 Return Nothing
             End If
@@ -59,7 +59,7 @@ Namespace expression
             Return sb.ToString
         End Function
 
-        Private Function nextText(ByVal source As String) As String
+        Private Function nextText(source As String) As String
             If Me.index = source.Length Then
                 Return Nothing
             End If
@@ -80,7 +80,7 @@ Namespace expression
             Loop
         End Function
 
-        Private Function nextExpression(ByVal source As String) As String
+        Private Function nextExpression(source As String) As String
             Dim i As Integer = Me.index
             Dim quoted As Boolean = False
             Dim escaped As Boolean = False

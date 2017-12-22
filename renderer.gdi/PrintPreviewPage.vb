@@ -2,7 +2,7 @@
 
     Public WithEvents PrintPreview As IPrintPreviewPage
 
-    Public Sub Init(ByVal printPreview As IPrintPreviewPage)
+    Public Sub Init(printPreview As IPrintPreviewPage)
         Me.PrintPreview = printPreview
         Me._UpdateReport()
     End Sub
@@ -28,33 +28,33 @@
         End If
     End Sub
 
-    Private Sub TxtPage_Validated(ByVal sender As Object, ByVal e As System.EventArgs) Handles TxtPage.Validated
+    Private Sub TxtPage_Validated(sender As Object, e As System.EventArgs) Handles TxtPage.Validated
         Me._SetUpPageCount()
     End Sub
 
-    Private Sub TxtPage_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TxtPage.KeyDown
+    Private Sub TxtPage_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtPage.KeyDown
         If e.KeyCode.Equals(Windows.Forms.Keys.Enter) Then
             Me._SetUpPageCount()
         End If
     End Sub
 
-    Private Sub BtnPrev_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnPrev.Click
+    Private Sub BtnPrev_Click(sender As System.Object, e As System.EventArgs) Handles BtnPrev.Click
         Me.PrintPreview.PrevPage()
     End Sub
 
-    Private Sub BtnNext_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnNext.Click
+    Private Sub BtnNext_Click(sender As System.Object, e As System.EventArgs) Handles BtnNext.Click
         Me.PrintPreview.NextPage()
     End Sub
 
-    Private Sub BtnFirst_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnFirst.Click
+    Private Sub BtnFirst_Click(sender As System.Object, e As System.EventArgs) Handles BtnFirst.Click
         Me.PrintPreview.FirstPage()
     End Sub
 
-    Private Sub BtnLast_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnLast.Click
+    Private Sub BtnLast_Click(sender As System.Object, e As System.EventArgs) Handles BtnLast.Click
         Me.PrintPreview.LastPage()
     End Sub
 
-    Private Sub SlPage_ValueChanged(ByVal sender As Object) Handles SlPage.ValueChanged
+    Private Sub SlPage_ValueChanged(sender As Object) Handles SlPage.ValueChanged
         If Me._UpdateFlag Then
             Exit Sub
         End If
@@ -62,7 +62,7 @@
         Me._SetUpPageCount()
     End Sub
 
-    Public Function HandleMouseWheelEvent(ByVal e As MouseEventArgs) As Boolean
+    Public Function HandleMouseWheelEvent(e As MouseEventArgs) As Boolean
         If Me.TxtPage.Focused Then
             If e.Delta > 0 Then
                 Me.PrintPreview.NextPage()

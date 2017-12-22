@@ -11,12 +11,12 @@ Namespace component
         Private palette As HSSFPalette
         Private index As Short
 
-        Public Sub New(ByVal renderer As XlsRenderer)
+        Public Sub New(renderer As XlsRenderer)
             Me.Renderer = renderer
             Me.palette = CType(Me.Renderer.Workbook, HSSFWorkbook).GetCustomPalette
         End Sub
 
-        Public Function GetIndex(ByVal v As String) As Short
+        Public Function GetIndex(v As String) As Short
             Dim c As Color = ColorUtil.GetColor(v)
             If Not c.Equals(Color.Empty) Then
                 Return Me.GetIndex(c)
@@ -24,7 +24,7 @@ Namespace component
             Return -1
         End Function
 
-        Public Function GetIndex(ByVal v As Color) As Short
+        Public Function GetIndex(v As Color) As Short
             If Me.Renderer.Setting.CustomPalette Then
                 Dim key As String = Me.colorToStr(v)
                 If Not Me.Pool.ContainsKey(key) Then
@@ -41,7 +41,7 @@ Namespace component
             End If
         End Function
 
-        Private Function colorToStr(ByVal v As Color) As String
+        Private Function colorToStr(v As Color) As String
             Return v.R & ":" & v.G & ":" & v.B
         End Function
 

@@ -9,11 +9,11 @@ Namespace elementrenderer
             DASHDOT = 8
         End Enum
         Sub Collect( _
-          ByVal renderer As XlsxRenderer, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object)
+          renderer As XlsxRenderer, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object)
     End Interface
 
 End Namespace

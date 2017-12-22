@@ -21,11 +21,11 @@ Public Class XlsRenderer
     Public FontPool As FontPool
     Public ColorPool As ColorPool
 
-    Public Sub New(ByVal workbook As HSSFWorkbook)
+    Public Sub New(workbook As HSSFWorkbook)
         Me.New(workbook, New XlsRendererSetting)
     End Sub
 
-    Public Sub New(ByVal workbook As HSSFWorkbook, ByVal setting As XlsRendererSetting)
+    Public Sub New(workbook As HSSFWorkbook, setting As XlsRendererSetting)
         Me.Workbook = workbook
         Me.Setting = setting
         Me.CellStylePool = New CellStylePool(Me)
@@ -33,7 +33,7 @@ Public Class XlsRenderer
         Me.ColorPool = New ColorPool(Me)
     End Sub
 
-    Public Sub NewSheet(ByVal sheetName As String)
+    Public Sub NewSheet(sheetName As String)
         Me.Sheet = Me.Workbook.CreateSheet(sheetName)
         Me.Pages = New List(Of Page)
         Me.CurrentPage = Nothing
@@ -42,7 +42,7 @@ Public Class XlsRenderer
         Me.ImagePool = New Dictionary(Of Image, Integer)
     End Sub
 
-    Public Sub BeginReport(ByVal reportDesign As ReportDesign) Implements IRenderer.BeginReport
+    Public Sub BeginReport(reportDesign As ReportDesign) Implements IRenderer.BeginReport
         Dim ps As HSSFPrintSetup = Me.Sheet.PrintSetup
         Select Case reportDesign.PaperDesign.PaperType
             Case Report.EPaperType.A3
@@ -70,7 +70,7 @@ Public Class XlsRenderer
         End With
     End Sub
 
-    Public Sub EndReport(ByVal reportDesign As ReportDesign) Implements IRenderer.EndReport
+    Public Sub EndReport(reportDesign As ReportDesign) Implements IRenderer.EndReport
         Dim cols As List(Of Single) = RowColUtil.CreateCols(reportDesign, Me)
         Dim colWidths As List(Of Integer) = RowColUtil.CreateColWidths(cols, 1.26F * Me.Setting.ColWidthCoefficent)
         For i As Integer = 0 To colWidths.Count - 1
@@ -105,24 +105,24 @@ Public Class XlsRenderer
         End With
     End Sub
 
-    Public Sub BeginPage(ByVal reportDesign As ReportDesign, ByVal pageIndex As Integer, ByVal paperRegion As Region) Implements IRenderer.BeginPage
+    Public Sub BeginPage(reportDesign As ReportDesign, pageIndex As Integer, paperRegion As Region) Implements IRenderer.BeginPage
         Me.CurrentPage = New Page(Me, reportDesign, paperRegion)
         Me.Pages.Add(Me.CurrentPage)
     End Sub
 
-    Public Sub EndPage(ByVal reportDesign As ReportDesign) Implements IRenderer.EndPage
+    Public Sub EndPage(reportDesign As ReportDesign) Implements IRenderer.EndPage
     End Sub
 
     Public Sub RenderElement( _
-      ByVal reportDesign As ReportDesign, _
-      ByVal region As Region, _
-      ByVal design As ElementDesign, _
-      ByVal data As Object) Implements IRenderer.RenderElement
+      reportDesign As ReportDesign, _
+      region As Region, _
+      design As ElementDesign, _
+      data As Object) Implements IRenderer.RenderElement
         Me.Setting.GetElementRenderer(design.Get("type")) _
           .Collect(Me, reportDesign, region, design, data)
     End Sub
 
-    Public Function GetImageIndex(ByVal image As Image) As Integer
+    Public Function GetImageIndex(image As Image) As Integer
         If image Is Nothing Then
             Return 0
         End If

@@ -1,7 +1,7 @@
 ﻿Namespace data
 
     Public Interface IReportDataSource
-        Function [Get](ByVal i As Integer, ByVal key As String) As Object
+        Function [Get](i As Integer, key As String) As Object
         Function Size() As Integer
     End Interface
 

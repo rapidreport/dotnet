@@ -13,7 +13,7 @@
             Me.new(New Hashtable)
         End Sub
 
-        Public Sub New(ByVal desc As Hashtable)
+        Public Sub New(desc As Hashtable)
             Select Case desc("scale_unit")
                 Case "mm"
                     Me.ScaleUnit = Report.EScaleUnit.MM
@@ -80,7 +80,7 @@
             Return ret
         End Function
 
-        Public Function ToPoint(ByVal v As Single) As Single
+        Public Function ToPoint(v As Single) As Single
             Return ReportUtil.ToPoint(Me.ScaleUnit, v)
         End Function
 

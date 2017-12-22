@@ -38,7 +38,7 @@ Namespace renderer
           "darkorchid", "darkviolet", "darkmagenta", "purple", "indigo", _
           "darkslateblue", "blueviolet", "mediumpurple", "slateblue", "mediumslateblue"}
 
-        Public Function Format(ByVal reportDesign As ReportDesign, ByVal formatterDesign As ElementDesign, ByVal value As Object) As String
+        Public Function Format(reportDesign As ReportDesign, formatterDesign As ElementDesign, value As Object) As String
             Return reportDesign.Setting.GetTextFormatter(formatterDesign.Get("type")).Format(value, formatterDesign)
         End Function
 

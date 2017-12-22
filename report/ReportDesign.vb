@@ -25,11 +25,11 @@ Public Class ReportDesign
 
     Private imageCache As New Dictionary(Of Hashtable, Dictionary(Of String, Image))
 
-    Public Sub New(ByVal desc As Hashtable)
+    Public Sub New(desc As Hashtable)
         Me.New(desc, New ReportSetting)
     End Sub
 
-    Public Sub New(ByVal desc As Hashtable, ByVal setting As ReportSetting)
+    Public Sub New(desc As Hashtable, setting As ReportSetting)
         Me.Desc = desc
         Me.Setting = setting
         Me.LoadDesc()
@@ -80,7 +80,7 @@ Public Class ReportDesign
         Me.GroupDesign = New GroupDesign(Desc("group"), Me, Nothing)
     End Sub
 
-    Public Function FindContentDesign(ByVal id As String) As ContentDesign
+    Public Function FindContentDesign(id As String) As ContentDesign
         If Me.GroupDesign IsNot Nothing Then
             Dim ret As ContentDesign = Me.GroupDesign.FindContentDesign(id)
             If ret IsNot Nothing Then
@@ -90,7 +90,7 @@ Public Class ReportDesign
         Return Nothing
     End Function
 
-    Public Function FindGroupDesign(ByVal id As String) As GroupDesign
+    Public Function FindGroupDesign(id As String) As GroupDesign
         If Me.GroupDesign IsNot Nothing Then
             Dim ret As GroupDesign = Me.GroupDesign.FindGroupDesign(id)
             If ret IsNot Nothing Then
@@ -100,14 +100,14 @@ Public Class ReportDesign
         Return Nothing
     End Function
 
-    Public Function GetImage(ByVal desc As Hashtable, ByVal key As String) As Image
+    Public Function GetImage(desc As Hashtable, key As String) As Image
         If Not Me.ImageCache.ContainsKey(desc) OrElse Not Me.ImageCache(desc).ContainsKey(key) Then
             Me.CreateImageCache(desc, key)
         End If
         Return Me.ImageCache(desc)(key)
     End Function
 
-    Public Sub CreateImageCache(ByVal desc As Hashtable, ByVal key As String)
+    Public Sub CreateImageCache(desc As Hashtable, key As String)
         Dim img As Image = Nothing
         If desc.ContainsKey(key) Then
             Try
@@ -119,7 +119,7 @@ Public Class ReportDesign
         Me.CreateImageCache(desc, key, img)
     End Sub
 
-    Public Sub CreateImageCache(ByVal desc As Hashtable, ByVal key As String, ByVal image As Image)
+    Public Sub CreateImageCache(desc As Hashtable, key As String, image As Image)
         If Not Me.imageCache.ContainsKey(desc) Then
             Me.imageCache.Add(desc, New Dictionary(Of String, Image))
         End If
@@ -129,7 +129,7 @@ Public Class ReportDesign
         Me.imageCache(desc).Add(key, image)
     End Sub
 
-    Public Sub RemoveImageCache(ByVal desc As Hashtable, ByVal key As String)
+    Public Sub RemoveImageCache(desc As Hashtable, key As String)
         If Not Me.imageCache.ContainsKey(desc) Then
             Exit Sub
         End If
@@ -138,7 +138,7 @@ Public Class ReportDesign
         End If
     End Sub
 
-    Public Sub RemoveImageCache(ByVal desc As Hashtable)
+    Public Sub RemoveImageCache(desc As Hashtable)
         If Me.imageCache.ContainsKey(desc) Then
             Me.imageCache.Remove(desc)
         End If

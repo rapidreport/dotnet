@@ -5,11 +5,11 @@
 
         Public Data As DataTable = Nothing
 
-        Public Sub New(ByVal dataTable As DataTable)
+        Public Sub New(dataTable As DataTable)
             Me.Data = dataTable
         End Sub
 
-        Public Overridable Function [Get](ByVal i As Integer, ByVal key As String) As Object Implements IReportDataSource.[Get]
+        Public Overridable Function [Get](i As Integer, key As String) As Object Implements IReportDataSource.[Get]
             If Me.Data.Columns.Contains(key) Then
                 Dim v As Object = Me.Data.Rows(i).Item(key)
                 If TypeOf v Is DBNull Then

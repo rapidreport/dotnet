@@ -98,7 +98,7 @@ Public Class ReportSetting
         Me.TextFormatterMap.Add("default", Me.DefaultTextFormatter)
     End Sub
 
-    Private Sub New(ByVal setting As ReportSetting)
+    Private Sub New(setting As ReportSetting)
         For Each k As String In setting.MethodMap.Keys
             Me.MethodMap.Add(k, setting.MethodMap(k))
         Next
@@ -120,7 +120,7 @@ Public Class ReportSetting
         Me.Logger = setting.Logger
     End Sub
 
-    Public Function GetMethod(ByVal key As String) As IMethod
+    Public Function GetMethod(key As String) As IMethod
         If key Is Nothing Then
             Return Me.MethodMap("field")
         ElseIf Me.MethodMap.ContainsKey(key) Then
@@ -130,7 +130,7 @@ Public Class ReportSetting
         End If
     End Function
 
-    Public Function GetOperator(ByVal key As String) As IOperator
+    Public Function GetOperator(key As String) As IOperator
         If key IsNot Nothing AndAlso Me.OperatorMap.ContainsKey(key) Then
             Return Me.OperatorMap(key)
         Else
@@ -138,7 +138,7 @@ Public Class ReportSetting
         End If
     End Function
 
-    Public Function GetElementPreprocessor(ByVal key As String) As IElementPreprocessor
+    Public Function GetElementPreprocessor(key As String) As IElementPreprocessor
         If key IsNot Nothing AndAlso Me.ElementPreprocessorMap.ContainsKey(key) Then
             Return Me.ElementPreprocessorMap(key)
         Else
@@ -154,7 +154,7 @@ Public Class ReportSetting
         End If
     End Function
 
-    Public Function GetTextFormatter(ByVal key As String) As ITextFormatter
+    Public Function GetTextFormatter(key As String) As ITextFormatter
         If key IsNot Nothing AndAlso Me.TextFormatterMap.ContainsKey(key) Then
             Return Me.TextFormatterMap(key)
         Else

@@ -13,7 +13,7 @@
         Private Sub New()
         End Sub
 
-        Public Function [Get](ByVal i As Integer, ByVal key As String) As Object Implements IReportDataSource.[Get]
+        Public Function [Get](i As Integer, key As String) As Object Implements IReportDataSource.[Get]
             Return Nothing
         End Function
 

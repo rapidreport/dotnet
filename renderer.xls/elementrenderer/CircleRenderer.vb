@@ -8,11 +8,11 @@ Namespace elementrenderer
         Implements IElementRenderer
 
         Public Sub Collect( _
-          ByVal renderer As XlsRenderer, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) Implements IElementRenderer.Collect
+          renderer As XlsRenderer, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object) Implements IElementRenderer.Collect
             Dim _region As Region = region.ToPointScale(reportDesign)
             Dim shape As New Shape
             shape.Renderer = New CircleShapeRenderer(design, reportDesign)
@@ -24,12 +24,12 @@ Namespace elementrenderer
             Implements IShapeRenderer
             Public Design As ElementDesign
             Public ReportDesign As ReportDesign
-            Public Sub New(ByVal design As ElementDesign, _
-                           ByVal reportDesign As ReportDesign)
+            Public Sub New(design As ElementDesign, _
+                           reportDesign As ReportDesign)
                 Me.Design = design
                 Me.ReportDesign = reportDesign
             End Sub
-            Public Sub Render(ByVal Page As Page, ByVal Shape As Shape) Implements IShapeRenderer.Render
+            Public Sub Render(Page As Page, Shape As Shape) Implements IShapeRenderer.Render
                 Dim lineWidth As Single = Me.ReportDesign.DefaultLineWidth
                 If Not Design.IsNull("line_width") Then
                     lineWidth = Design.Get("line_width")

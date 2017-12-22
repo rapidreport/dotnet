@@ -7,19 +7,19 @@
       "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｯｬｭｮ" & _
       "ﾞﾟｰ｢｣･､｡ !@#$%^&*()_+|~-=\`{}[]:"";'<>?,./" & vbCrLf & vbTab
 
-    Public Function RoundDown(ByVal v As Decimal, ByVal digit As Integer) As Decimal
+    Public Function RoundDown(v As Decimal, digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
         Dim tmp As Decimal = Decimal.Truncate(Math.Abs(v) * d)
         Return Math.Sign(v) * tmp / d
     End Function
 
-    Public Function RoundUp(ByVal v As Decimal, ByVal digit As Integer) As Decimal
+    Public Function RoundUp(v As Decimal, digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
         Dim tmp As Decimal = Decimal.Truncate(Math.Abs(v) * d + 0.9D)
         Return Math.Sign(v) * tmp / d
     End Function
 
-    Public Function RoundUp2(ByVal v As Decimal, ByVal digit As Integer) As Decimal
+    Public Function RoundUp2(v As Decimal, digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
         Dim _v As Decimal = Math.Abs(v) * d
         Dim tmp As Decimal = Decimal.Truncate(_v)
@@ -29,13 +29,13 @@
         Return Math.Sign(v) * tmp / d
     End Function
 
-    Public Function Round5(ByVal v As Decimal, ByVal digit As Integer) As Decimal
+    Public Function Round5(v As Decimal, digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
         Dim tmp As Decimal = Decimal.Truncate(Math.Abs(v) * d + 0.5D)
         Return Math.Sign(v) * tmp / d
     End Function
 
-    Public Function Round5E(ByVal v As Decimal, ByVal digit As Integer) As Decimal
+    Public Function Round5E(v As Decimal, digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
         Dim _v As Decimal = Math.Abs(v) * d
         Dim _tv As Decimal = Decimal.Truncate(_v)
@@ -51,13 +51,13 @@
         Return Math.Sign(v) * tmp / d
     End Function
 
-    Public Function Round6(ByVal v As Decimal, ByVal digit As Integer) As Decimal
+    Public Function Round6(v As Decimal, digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
         Dim tmp As Decimal = Decimal.Truncate(Math.Abs(v) * d + 0.4D)
         Return Math.Sign(v) * tmp / d
     End Function
 
-    Public Function Eq(ByVal v1 As Object, ByVal v2 As Object) As Boolean
+    Public Function Eq(v1 As Object, v2 As Object) As Boolean
         If v1 Is Nothing Then
             Return v2 Is Nothing
         Else
@@ -65,7 +65,7 @@
         End If
     End Function
 
-    Public Function Condition(ByVal v As Object) As Boolean
+    Public Function Condition(v As Object) As Boolean
         If TypeOf v Is Boolean Then
             Return v
         Else
@@ -77,7 +77,7 @@
         Return False
     End Function
 
-    Public Function Regularize(ByVal v As Object) As Object
+    Public Function Regularize(v As Object) As Object
         If TypeOf v Is Integer OrElse _
            TypeOf v Is Long OrElse _
            TypeOf v Is Short OrElse _
@@ -89,7 +89,7 @@
         Return v
     End Function
 
-    Public Function ToPoint(ByVal scaleUnit As Report.EScaleUnit, ByVal v As Single) As Single
+    Public Function ToPoint(scaleUnit As Report.EScaleUnit, v As Single) As Single
         Select Case scaleUnit
             Case Report.EScaleUnit.MM
                 Return v * 2.835
@@ -99,7 +99,7 @@
         Return v
     End Function
 
-    Public Function PointTo(ByVal scaleUnit As Report.EScaleUnit, ByVal v As Single) As Single
+    Public Function PointTo(scaleUnit As Report.EScaleUnit, v As Single) As Single
         Select Case scaleUnit
             Case Report.EScaleUnit.MM
                 Return v * 0.3528
@@ -109,7 +109,7 @@
         Return v
     End Function
 
-    Public Function SubString(ByVal str As String, ByVal begin As Integer) As String
+    Public Function SubString(str As String, begin As Integer) As String
         Dim b As Integer = begin
         If b < 0 Then
             b = str.Length + b
@@ -124,7 +124,7 @@
         End If
     End Function
 
-    Public Function SubString(ByVal str As String, ByVal begin As Integer, ByVal len As Integer) As String
+    Public Function SubString(str As String, begin As Integer, len As Integer) As String
         Dim b As Integer = begin
         Dim l As Integer = len
         If b < 0 Then
@@ -143,7 +143,7 @@
         End If
     End Function
 
-    Public Function WStrinLen(ByVal str As String) As Integer
+    Public Function WStrinLen(str As String) As Integer
         Dim ret As Integer = 0
         For i As Integer = 0 To str.Length - 1
             Dim c As Char = str.Chars(i)
@@ -156,7 +156,7 @@
         Return ret
     End Function
 
-    Public Function WSubString(ByVal str As String, ByVal begin As Integer) As String
+    Public Function WSubString(str As String, begin As Integer) As String
         Dim b As Integer
         If begin >= 0 Then
             b = GetWIndex(str, 0, begin)
@@ -170,7 +170,7 @@
         End If
     End Function
 
-    Public Function WSubString(ByVal str As String, ByVal begin As Integer, ByVal len As Integer) As String
+    Public Function WSubString(str As String, begin As Integer, len As Integer) As String
         Dim b As Integer
         Dim e As Integer
         If begin >= 0 Then
@@ -190,7 +190,7 @@
         End If
     End Function
 
-    Public Function GetWIndex(ByVal str As String, ByVal base As Integer, ByVal w As Integer) As Integer
+    Public Function GetWIndex(str As String, base As Integer, w As Integer) As Integer
         Dim _w As Integer = 0
         For i As Integer = base To str.Length - 1
             Dim c As Char = str.Chars(i)
@@ -206,7 +206,7 @@
         Return str.Length
     End Function
 
-    Public Function GetWRevIndex(ByVal str As String, ByVal base As Integer, ByVal w As Integer) As Integer
+    Public Function GetWRevIndex(str As String, base As Integer, w As Integer) As Integer
         Dim _w As Integer = 0
         For i As Integer = base - 1 To 0 Step -1
             Dim c As Char = str.Chars(i)
@@ -222,7 +222,7 @@
         Return 0
     End Function
 
-    Public Function ObjectToString(ByVal o As Object) As String
+    Public Function ObjectToString(o As Object) As String
         If TypeOf o Is String Then
             Return o
         Else

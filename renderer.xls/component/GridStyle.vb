@@ -11,7 +11,7 @@ Namespace component
 
         Public FillColor As String = Nothing
 
-        Public Sub Fill(ByVal cellStyle As HSSFCellStyle, ByVal renderer As XlsRenderer)
+        Public Sub Fill(cellStyle As HSSFCellStyle, renderer As XlsRenderer)
             If Me.LeftBorder IsNot Nothing Then
                 Dim bs As BorderStyle = Me.LeftBorder
                 cellStyle.BorderLeft = toHSSFBorderStyle(bs.lineStyle)
@@ -61,7 +61,7 @@ Namespace component
             End If
         End Sub
 
-        Private Shared Function toHSSFBorderStyle(ByVal ls As BorderStyle.ELineStyle) As NPOI.SS.UserModel.BorderStyle
+        Private Shared Function toHSSFBorderStyle(ls As BorderStyle.ELineStyle) As NPOI.SS.UserModel.BorderStyle
             Select Case ls
                 Case BorderStyle.ELineStyle.THIN
                     Return NPOI.SS.UserModel.BorderStyle.THIN
@@ -107,7 +107,7 @@ Namespace component
             Return ret
         End Function
 
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             If Me Is obj Then
                 Return True
             End If

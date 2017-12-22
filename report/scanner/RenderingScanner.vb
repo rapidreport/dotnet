@@ -14,16 +14,16 @@ Namespace scanner
             Me.DisplayedGroups = New Dictionary(Of String, Group)
         End Sub
 
-        Public Sub New(ByVal parent As RenderingScanner)
+        Public Sub New(parent As RenderingScanner)
             Me.DataContainer = parent.DataContainer
             Me.DisplayedGroups = parent.DisplayedGroups
         End Sub
 
         Public Overrides Function BeforeGroup( _
-          ByVal group As component.Group, _
-          ByVal contentRange As ContentRange, _
-          ByVal parentRegion As Region, _
-          ByVal groupState As GroupState) As IScanner
+          group As component.Group, _
+          contentRange As ContentRange, _
+          parentRegion As Region, _
+          groupState As GroupState) As IScanner
             Me.DataContainer.InitializeData(group)
             With Nothing
                 Dim id As String = group.GetDesign.Id
@@ -35,20 +35,20 @@ Namespace scanner
         End Function
 
         Public Overrides Function BeforeContent( _
-          ByVal content As Content, _
-          ByVal groupRange As GroupRange, _
-          ByVal parentRegion As Region, _
-          ByVal contentState As ContentState) As IScanner
+          content As Content, _
+          groupRange As GroupRange, _
+          parentRegion As Region, _
+          contentState As ContentState) As IScanner
             Return New RenderingScanner(Me)
         End Function
 
         Public Overrides Sub AfterContent( _
-          ByVal content As Content, _
-          ByVal groupRange As GroupRange, _
-          ByVal parentRegion As Region, _
-          ByVal contentState As ContentState, _
-          ByVal region As Region, _
-          ByVal scanner As IScanner)
+          content As Content, _
+          groupRange As GroupRange, _
+          parentRegion As Region, _
+          contentState As ContentState, _
+          region As Region, _
+          scanner As IScanner)
             If region IsNot Nothing Then
                 Me.ContentInstances.Add(New ContentInstance(content, region, contentState))
                 Me.ContentInstances.AddRange(CType(scanner, RenderingScanner).ContentInstances)
@@ -59,11 +59,11 @@ Namespace scanner
         End Sub
 
         Public Overrides Sub ScanSubContent( _
-          ByVal content As Content, _
-          ByVal parentRegion As Region, _
-          ByVal contentState As ContentState, _
-          ByVal region As Region, _
-          ByVal paperRegion As Region)
+          content As Content, _
+          parentRegion As Region, _
+          contentState As ContentState, _
+          region As Region, _
+          paperRegion As Region)
             If region IsNot Nothing AndAlso content.SubContents IsNot Nothing Then
                 Dim _region As New Region(region)
                 _region.MaxBottom = _region.Bottom

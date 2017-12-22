@@ -9,7 +9,7 @@ Namespace component
         Public Range As New CellRange
         Public MergedCell As Cell = Nothing
 
-        Public Sub New(ByVal row As Integer, ByVal col As Integer)
+        Public Sub New(row As Integer, col As Integer)
             Me.Range.Row1 = row
             Me.Range.Col1 = col
             Me.Reset()
@@ -22,7 +22,7 @@ Namespace component
             Me.MergedCell = Me
         End Sub
 
-        Public Sub Render(ByVal page As Page)
+        Public Sub Render(page As Page)
             Dim s As HSSFSheet = page.Renderer.Sheet
             Dim hssfCell As HSSFCell = Nothing
             If Me.Style IsNot Nothing Then

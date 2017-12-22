@@ -17,7 +17,7 @@
             Me.new(New Hashtable)
         End Sub
 
-        Public Sub New(ByVal desc As Hashtable)
+        Public Sub New(desc As Hashtable)
             If desc("direction") = "horizontal" Then
                 Me.Direction = Report.EDirection.HORIZONTAL
             Else
@@ -68,9 +68,9 @@
         End Function
 
         Public Function GetGroupRegion( _
-          ByVal parentRegion As Region, _
-          ByVal lastRegion As Region, _
-          ByVal i As Integer) As Region
+          parentRegion As Region, _
+          lastRegion As Region, _
+          i As Integer) As Region
             If Me.IsLocateEnabled Then
                 Dim _i As Integer = i
                 For Each l As GroupLocateDesign In Me.Locates
@@ -117,7 +117,7 @@
             End With
         End Function
 
-        Public Function GetGroupInitialRegion(ByVal parentRegion As Region) As Region
+        Public Function GetGroupInitialRegion(parentRegion As Region) As Region
             Dim ret As New Region
             ret.Top = parentRegion.Top
             ret.Left = parentRegion.Left

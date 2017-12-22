@@ -8,10 +8,10 @@ Namespace barcode
     Public Module Gs1_128
 
         Public Function GetImage( _
-          ByVal cb As PdfContentByte, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal code As String) As Image
+          cb As PdfContentByte, _
+          region As Region, _
+          design As ElementDesign, _
+          code As String) As Image
 
             Dim barcode As New jp.co.systembase.barcode.Gs1_128
             If design.Get("without_text") Then

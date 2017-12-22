@@ -11,14 +11,14 @@
             Me.new(New Hashtable)
         End Sub
 
-        Public Sub New(ByVal desc As Hashtable)
+        Public Sub New(desc As Hashtable)
             Me.Top = desc("top")
             Me.Left = desc("left")
             Me.Bottom = desc("bottom")
             Me.Right = desc("right")
         End Sub
 
-        Public Function GetRegion(ByVal region As Region) As Region
+        Public Function GetRegion(region As Region) As Region
             Dim ret As New Region
             ret.Top = region.Top + Me.Top
             ret.Left = region.Left + Me.Left
@@ -30,8 +30,8 @@
         End Function
 
         Public Function GetExtendedRegion( _
-          ByVal region As Region, _
-          ByVal subRegion As Region) As Region
+          region As Region, _
+          subRegion As Region) As Region
             Dim ret As New Region
             ret.Top = region.Top
             ret.Left = region.Left

@@ -9,12 +9,12 @@ Namespace component
         Public FontStyle As FontStyle
         Public TextDesign As TextDesign
 
-        Public Sub New(ByVal textDesign As TextDesign)
+        Public Sub New(textDesign As TextDesign)
             Me.FontStyle = New FontStyle(textDesign)
             Me.TextDesign = textDesign
         End Sub
 
-        Public Sub Fill(ByVal cellStyle As HSSFCellStyle, ByVal renderer As XlsRenderer)
+        Public Sub Fill(cellStyle As HSSFCellStyle, renderer As XlsRenderer)
             cellStyle.SetFont(renderer.FontPool.Get(Me.FontStyle))
             If Not Me.TextDesign.Vertical And Me.TextDesign.Distribute Then
                 cellStyle.Alignment = HorizontalAlignment.DISTRIBUTED
@@ -71,7 +71,7 @@ Namespace component
             Return ret
         End Function
 
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             If Me Is obj Then
                 Return True
             End If

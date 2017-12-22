@@ -7,7 +7,7 @@
         InitializeComponent()
     End Sub
 
-    Public Sub New(ByVal panel As PrintPreviewSearchPanel, ByVal forward As Boolean, defaultClose As Boolean)
+    Public Sub New(panel As PrintPreviewSearchPanel, forward As Boolean, defaultClose As Boolean)
         InitializeComponent()
         Me.Forward = forward
         If Me.Forward Then

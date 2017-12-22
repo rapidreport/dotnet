@@ -15,10 +15,10 @@ Public Module PdfRenderUtil
 
     <Obsolete("PdfTextクラスを利用して下さい。")> _
     Public Sub DrawText( _
-      ByVal renderer As PdfRenderer, _
-      ByVal region As Region, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      renderer As PdfRenderer, _
+      region As Region, _
+      textDesign As TextDesign, _
+      text As String)
         If String.IsNullOrEmpty(text) Then
             Exit Sub
         End If
@@ -77,13 +77,13 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub _drawText_distribute( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String)
         Dim fontSize As Single = textDesign.Font.Size
         Dim texts As List(Of String) = splitByCr(region, textDesign, text, False)
         Dim y As Single = 0
@@ -119,13 +119,13 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub _drawText_distribute_vertical( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String)
         Dim fontSize As Single = textDesign.Font.Size
         Dim texts As List(Of String) = splitByCr(region, textDesign, text, False)
         Dim x As Single = 0
@@ -161,25 +161,25 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub _drawText_vertical( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String)
         Dim texts As List(Of String) = splitByCr(region, textDesign, text, False)
         _drawText_vertical_aux(cb, region, setting, trans, textDesign, font, textDesign.Font.Size, texts)
     End Sub
 
     Private Sub _drawText_vertical_shrink( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String)
         Dim fontSize As Single = textDesign.Font.Size
         Dim texts As List(Of String) = splitByCr(region, textDesign, text, False)
         With Nothing
@@ -198,37 +198,37 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub _drawText_vertical_wrap( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String)
         Dim texts As List(Of String) = splitByCr(region, textDesign, text, True)
         _drawText_vertical_aux(cb, region, setting, trans, textDesign, font, textDesign.Font.Size, texts)
     End Sub
 
     Private Sub _drawText_fixdec( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String)
         Dim fd As New _FixDec(text)
         fd.DrawText(cb, region, setting, trans, textDesign, font, textDesign.Font.Size)
     End Sub
 
     Private Sub _drawText_fixdec_shrink( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String)
         Dim fd As New _FixDec(text)
         Dim texts As New List(Of String)
         texts.Add(fd.GetFullText(textDesign.DecimalPlace))
@@ -237,51 +237,51 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub _drawText_shrink( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String)
         Dim texts As List(Of String) = splitText(region, setting, textDesign, font, text, False)
         Dim fontSize As Single = getFitFontSize(region, setting, font, textDesign, textDesign.Font.Size, texts)
         _drawText_aux(cb, region, setting, trans, textDesign, font, fontSize, texts)
     End Sub
 
     Private Sub _drawText_wrap( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String)
         Dim texts As List(Of String) = splitText(region, setting, textDesign, font, text, True)
         _drawText_aux(cb, region, setting, trans, textDesign, font, textDesign.Font.Size, texts)
     End Sub
 
     Private Sub _drawText( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String)
         Dim texts As List(Of String) = splitText(region, setting, textDesign, font, text, False)
         _drawText_aux(cb, region, setting, trans, textDesign, font, textDesign.Font.Size, texts)
     End Sub
 
     Private Sub _drawText_aux( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal fontSize As Single, _
-      ByVal texts As List(Of String))
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      fontSize As Single, _
+      texts As List(Of String))
         Dim y As Single = 0
         Select Case textDesign.VAlign
             Case Report.EVAlign.TOP
@@ -341,14 +341,14 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub _drawText_vertical_aux( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal fontSize As Single, _
-      ByVal texts As List(Of String))
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      fontSize As Single, _
+      texts As List(Of String))
         Dim x As Single = 0
         Select Case textDesign.HAlign
             Case Report.EHAlign.LEFT
@@ -398,7 +398,7 @@ Public Module PdfRenderUtil
         Public Text2 As String = ""
         Public Text3 As String = ""
 
-        Public Sub New(ByVal text As String)
+        Public Sub New(text As String)
             Dim t As String = text
             With Regex.Match(t, "([^0-9]*)$")
                 Me.Text3 = .Groups(0).Value
@@ -410,7 +410,7 @@ Public Module PdfRenderUtil
             End With
         End Sub
 
-        Public Function GetFullText2(ByVal width As Integer) As String
+        Public Function GetFullText2(width As Integer) As String
             Dim ret As String = Me.Text2
             If ret.Length = 0 Then
                 ret = "."
@@ -418,18 +418,18 @@ Public Module PdfRenderUtil
             Return ret.PadRight(width + 1, "0")
         End Function
 
-        Public Function GetFullText(ByVal width As Integer) As String
+        Public Function GetFullText(width As Integer) As String
             Return Me.Text1 & Me.GetFullText2(width) & Me.Text3
         End Function
 
         Public Sub DrawText( _
-          ByVal cb As PdfContentByte, _
-          ByVal region As Region, _
-          ByVal setting As PdfRendererSetting, _
-          ByVal trans As PdfRenderer.TransClass, _
-          ByVal textDesign As TextDesign, _
-          ByVal font As BaseFont, _
-          ByVal fontSize As Single)
+          cb As PdfContentByte, _
+          region As Region, _
+          setting As PdfRendererSetting, _
+          trans As PdfRenderer.TransClass, _
+          textDesign As TextDesign, _
+          font As BaseFont, _
+          fontSize As Single)
             Dim y As Single = 0
             Select Case textDesign.VAlign
                 Case Report.EVAlign.TOP
@@ -471,16 +471,16 @@ Public Module PdfRenderUtil
         End Sub
 
         Private Sub drawText_aux( _
-          ByVal cb As PdfContentByte, _
-          ByVal region As Region, _
-          ByVal setting As PdfRendererSetting, _
-          ByVal trans As PdfRenderer.TransClass, _
-          ByVal textDesign As TextDesign, _
-          ByVal font As BaseFont, _
-          ByVal fontSize As Single, _
-          ByVal x As Single, _
-          ByVal y As Single, _
-          ByVal text As String)
+          cb As PdfContentByte, _
+          region As Region, _
+          setting As PdfRendererSetting, _
+          trans As PdfRenderer.TransClass, _
+          textDesign As TextDesign, _
+          font As BaseFont, _
+          fontSize As Single, _
+          x As Single, _
+          y As Single, _
+          text As String)
             Dim _x As Single = Math.Max(x, MARGIN_X)
             Dim w As Single = region.GetWidth - _x - MARGIN_X
             Dim t As String = text
@@ -507,7 +507,7 @@ Public Module PdfRenderUtil
 
     End Class
 
-    Private Function getDistributeMap(ByVal w As Single, ByVal c As Integer, ByVal fontSize As Single) As List(Of Single)
+    Private Function getDistributeMap(w As Single, c As Integer, fontSize As Single) As List(Of Single)
         Dim ret As New List(Of Single)
         If c = 1 Then
             ret.Add(w / 2)
@@ -522,12 +522,12 @@ Public Module PdfRenderUtil
     End Function
 
     Private Function getFitFontSize( _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal font As BaseFont, _
-      ByVal textDesign As TextDesign, _
-      ByVal fontSize As Single, _
-      ByVal texts As List(Of String)) As Single
+      region As Region, _
+      setting As PdfRendererSetting, _
+      font As BaseFont, _
+      textDesign As TextDesign, _
+      fontSize As Single, _
+      texts As List(Of String)) As Single
         Dim t As String = Nothing
         Dim w As Single = 0
         Dim rw As Single = region.GetWidth - MARGIN_X * 2
@@ -555,12 +555,12 @@ Public Module PdfRenderUtil
     End Function
 
     Private Function splitText( _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal text As String, _
-      ByVal wrap As Boolean) As List(Of String)
+      region As Region, _
+      setting As PdfRendererSetting, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      text As String, _
+      wrap As Boolean) As List(Of String)
         Dim fontSize As Single = textDesign.Font.Size
         Dim cw As Single = region.GetWidth - MARGIN_X * 2
         Dim ret As New List(Of String)
@@ -586,10 +586,10 @@ Public Module PdfRenderUtil
     End Function
 
     Private Function splitByCr( _
-      ByVal region As Region, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String, _
-      ByVal wrap As Boolean) As List(Of String)
+      region As Region, _
+      textDesign As TextDesign, _
+      text As String, _
+      wrap As Boolean) As List(Of String)
         Dim fontSize As Single = textDesign.Font.Size
         Dim ch As Single = region.GetHeight
         Dim yc As Integer = Fix((ch + TOLERANCE) / fontSize)
@@ -614,11 +614,11 @@ Public Module PdfRenderUtil
     End Function
 
     Private Function getTextWidth( _
-      ByVal setting As PdfRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal fontSize As Single, _
-      ByVal text As String) As Single
+      setting As PdfRendererSetting, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      fontSize As Single, _
+      text As String) As Single
         Dim _texts As List(Of String) = Nothing
         If setting.GaijiFont IsNot Nothing Then
             _texts = detectGaiji(text)
@@ -646,13 +646,13 @@ Public Module PdfRenderUtil
     End Function
 
     Private Sub setTextMatrix( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal fontSize As Single, _
-      ByVal x As Single, _
-      ByVal y As Single)
+      cb As PdfContentByte, _
+      region As Region, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      fontSize As Single, _
+      x As Single, _
+      y As Single)
         Dim _x As Single = region.Left + x
         Dim _y As Single = (region.Top + y + fontSize) - (fontSize / 13.4)
         If textDesign.Font.Italic Then
@@ -663,13 +663,13 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub setRotateTextMatrix( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal fontSize As Single, _
-      ByVal x As Single, _
-      ByVal y As Single)
+      cb As PdfContentByte, _
+      region As Region, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      fontSize As Single, _
+      x As Single, _
+      y As Single)
         Dim _x As Single = region.Left + x
         Dim _y As Single = (region.Top + y + fontSize) - (fontSize / 13.4)
         If textDesign.Font.Italic Then
@@ -680,16 +680,16 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub showText( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal fontSize As Single, _
-      ByVal text As String, _
-      ByVal x As Single, _
-      ByVal y As Single)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      fontSize As Single, _
+      text As String, _
+      x As Single, _
+      y As Single)
         Dim _texts As List(Of String) = Nothing
         If setting.GaijiFont IsNot Nothing Then
             _texts = detectGaiji(text)
@@ -722,16 +722,16 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub showVerticalChar( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal setting As PdfRendererSetting, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal textDesign As TextDesign, _
-      ByVal font As BaseFont, _
-      ByVal fontSize As Single, _
-      ByVal c As String, _
-      ByVal x As Single, _
-      ByVal y As Single)
+      cb As PdfContentByte, _
+      region As Region, _
+      setting As PdfRendererSetting, _
+      trans As PdfRenderer.TransClass, _
+      textDesign As TextDesign, _
+      font As BaseFont, _
+      fontSize As Single, _
+      c As String, _
+      x As Single, _
+      y As Single)
         Dim gaiji As Boolean = False
         If setting.GaijiFont IsNot Nothing AndAlso isGaiji(c) Then
             cb.SetFontAndSize(setting.GaijiFont, fontSize)
@@ -755,14 +755,14 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub drawUnderline( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal fontSize As Single, _
-      ByVal x As Single, _
-      ByVal y As Single, _
-      ByVal width As Single, _
-      ByVal lineWidth As Single)
+      cb As PdfContentByte, _
+      region As Region, _
+      trans As PdfRenderer.TransClass, _
+      fontSize As Single, _
+      x As Single, _
+      y As Single, _
+      width As Single, _
+      lineWidth As Single)
         Dim lw As Single = fontSize / 13.4
         Dim _x1 As Single = region.Left + x
         Dim _x2 As Single = _x1 + width
@@ -778,14 +778,14 @@ Public Module PdfRenderUtil
     End Sub
 
     Private Sub drawVerticalUnderLine( _
-      ByVal cb As PdfContentByte, _
-      ByVal region As Region, _
-      ByVal trans As PdfRenderer.TransClass, _
-      ByVal fontSize As Single, _
-      ByVal x As Single, _
-      ByVal y As Single, _
-      ByVal h As Single, _
-      ByVal lineWidth As Single)
+      cb As PdfContentByte, _
+      region As Region, _
+      trans As PdfRenderer.TransClass, _
+      fontSize As Single, _
+      x As Single, _
+      y As Single, _
+      h As Single, _
+      lineWidth As Single)
         Dim _x As Single = region.Left + x
         Dim _y As Single = (region.Top + y) - OFFSET_Y
         cb.SetLineWidth(lineWidth)
@@ -794,7 +794,7 @@ Public Module PdfRenderUtil
         cb.Stroke()
     End Sub
 
-    Private Function detectGaiji(ByVal text As String) As List(Of String)
+    Private Function detectGaiji(text As String) As List(Of String)
         Dim ret As List(Of String) = Nothing
         Dim g As Boolean = False
         Dim last As Integer = 0
@@ -822,12 +822,12 @@ Public Module PdfRenderUtil
         Return ret
     End Function
 
-    Private Function isGaiji(ByVal c As Char) As Boolean
+    Private Function isGaiji(c As Char) As Boolean
         Dim a As Integer = AscW(c)
         Return a >= &HE000 And a <= &HF8FF
     End Function
 
-    Public Function GetColor(ByVal v As String) As Color
+    Public Function GetColor(v As String) As Color
         If Not String.IsNullOrEmpty(v) Then
             If v.StartsWith("#") Then
                 Dim _v As String = v.Substring(1).ToLower

@@ -11,11 +11,11 @@ Namespace imageloader
             Me.new(New ImageMap)
         End Sub
 
-        Public Sub New(ByVal imageMap As ImageMap)
+        Public Sub New(imageMap As ImageMap)
             Me.ImageMap = imageMap
         End Sub
 
-        Public Function GetImage(ByVal param As Object) As Image Implements IGdiImageLoader.GetImage
+        Public Function GetImage(param As Object) As Image Implements IGdiImageLoader.GetImage
             Return Me.ImageMap(param)
         End Function
 

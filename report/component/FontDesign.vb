@@ -7,11 +7,11 @@
         Public Italic As Boolean = False
         Public Underline As Boolean = False
 
-        Public Sub New(ByVal desc As Hashtable)
+        Public Sub New(desc As Hashtable)
             Me.new(New ElementDesign(desc))
         End Sub
 
-        Public Sub New(ByVal desc As ElementDesign)
+        Public Sub New(desc As ElementDesign)
             If Not desc.IsNull("name") Then
                 Me.Name = desc.Get("name")
             End If

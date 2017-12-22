@@ -10,7 +10,7 @@ Namespace component
         Public Region As Region = Nothing
         Public CellRange As New CellRange
 
-        Public Function GetXSSFClientAnchor(ByVal topRow As Integer) As XSSFClientAnchor
+        Public Function GetXSSFClientAnchor(topRow As Integer) As XSSFClientAnchor
             Return New XSSFClientAnchor(0, 0, 0, 0, _
                                         Math.Min(Me.CellRange.Col1, Me.CellRange.Col2), _
                                         Math.Min(Me.CellRange.Row1, Me.CellRange.Row2) + topRow, _

@@ -7,26 +7,26 @@
         Public RootDesign As ElementDesign
         Public Modified As Boolean = False
 
-        Public Sub New(ByVal type As String)
+        Public Sub New(type As String)
             Me.Base = New Hashtable
             Me.Modify = New Hashtable
             Me.RootDesign = Me
             Me.Base.Add("type", type)
         End Sub
 
-        Public Sub New(ByVal base As Hashtable)
+        Public Sub New(base As Hashtable)
             Me.Base = base
             Me.Modify = New Hashtable
             Me.RootDesign = Me
         End Sub
 
-        Private Sub New(ByVal base As Hashtable, ByVal modify As Hashtable, ByVal rootDesign As ElementDesign)
+        Private Sub New(base As Hashtable, modify As Hashtable, rootDesign As ElementDesign)
             Me.Base = base
             Me.Modify = modify
             Me.RootDesign = rootDesign
         End Sub
 
-        Public Function IsNull(ByVal key As String) As Boolean
+        Public Function IsNull(key As String) As Boolean
             If Me.Modify.ContainsKey(key) Then
                 Return Me.Modify(key) Is Nothing
             End If
@@ -36,7 +36,7 @@
             Return True
         End Function
 
-        Public Function [Get](ByVal key As String) As Object
+        Public Function [Get](key As String) As Object
             If Me.Modify.ContainsKey(key) Then
                 Return Me.Modify(key)
             End If
@@ -46,23 +46,23 @@
             Return Nothing
         End Function
 
-        Public Sub Put(ByVal key As String, ByVal value As Object)
+        Public Sub Put(key As String, value As Object)
             Me.Modify(key) = value
             Me.RootDesign.Modified = True
         End Sub
 
-        Public Function Child(ByVal key As String) As ElementDesign
+        Public Function Child(key As String) As ElementDesign
             If Not Me.Modify.ContainsKey(key) Then
                 Me.Modify(key) = New Hashtable
             End If
             Return New ElementDesign(Me.Base(key), Me.Modify(key), Me.RootDesign)
         End Function
 
-        Public Function GetRegion(ByVal contentRegion As Region) As Region
+        Public Function GetRegion(contentRegion As Region) As Region
             Return New ElementLayoutDesign(Me.Child("layout")).GetRegion(contentRegion)
         End Function
 
-        Public Function IsVisible(ByVal evaluator As Evaluator) As Boolean
+        Public Function IsVisible(evaluator As Evaluator) As Boolean
             If Not Me.IsNull("visibility_cond") Then
                 If Not ReportUtil.Condition(evaluator.EvalTry(Me.Get("visibility_cond"))) Then
                     Return False

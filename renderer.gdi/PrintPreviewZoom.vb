@@ -3,7 +3,7 @@
     Public WithEvents PrintPreview As IPrintPreviewZoom
     Private _zoomTextChanged As Boolean = False
 
-    Public Sub Init(ByVal printPreview As IPrintPreviewZoom)
+    Public Sub Init(printPreview As IPrintPreviewZoom)
         Me.PrintPreview = printPreview
         Me._UpdateReport()
     End Sub
@@ -32,27 +32,27 @@
         Me._zoomTextChanged = True
     End Sub
 
-    Private Sub TxtZoom_Validated(ByVal sender As Object, ByVal e As EventArgs) Handles TxtZoom.Validated
+    Private Sub TxtZoom_Validated(sender As Object, e As EventArgs) Handles TxtZoom.Validated
         If Me._zoomTextChanged Then
             Me._SetUpZoom()
         End If
     End Sub
 
-    Private Sub TxtZoom_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TxtZoom.KeyDown
+    Private Sub TxtZoom_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtZoom.KeyDown
         If e.KeyCode.Equals(System.Windows.Forms.Keys.Enter) Then
             Me._SetUpZoom()
         End If
     End Sub
 
-    Private Sub BtnZoomIn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnZoomIn.Click
+    Private Sub BtnZoomIn_Click(sender As System.Object, e As System.EventArgs) Handles BtnZoomIn.Click
         Me.PrintPreview.ZoomIn()
     End Sub
 
-    Private Sub BtnZoomOut_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnZoomOut.Click
+    Private Sub BtnZoomOut_Click(sender As System.Object, e As System.EventArgs) Handles BtnZoomOut.Click
         Me.PrintPreview.ZoomOut()
     End Sub
 
-    Private Sub BtnAutoZoomFit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAutoZoomFit.Click
+    Private Sub BtnAutoZoomFit_Click(sender As System.Object, e As System.EventArgs) Handles BtnAutoZoomFit.Click
         Me.PrintPreview.AutoZoomFit = Not Me.PrintPreview.AutoZoomFit
     End Sub
 
@@ -60,7 +60,7 @@
         Me.PrintPreview.AutoZoomFitWidth = Not Me.PrintPreview.AutoZoomFitWidth
     End Sub
 
-    Public Function HandleMouseWheelEvent(ByVal e As MouseEventArgs) As Boolean
+    Public Function HandleMouseWheelEvent(e As MouseEventArgs) As Boolean
         If Me.TxtZoom.Focused Then
             If e.Delta > 0 Then
                 Me.PrintPreview.ZoomIn()

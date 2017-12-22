@@ -38,18 +38,18 @@ Namespace component
             Me.TraverseMode = True
         End Sub
 
-        Public Sub New(ByVal data As ReportData)
+        Public Sub New(data As ReportData)
             Me.New(data.Report, data, data.GetRecord)
         End Sub
 
-        Public Sub New(ByVal report As Report, ByVal data As ReportData, ByVal dataRecord As ReportDataRecord)
+        Public Sub New(report As Report, data As ReportData, dataRecord As ReportDataRecord)
             Me.BasicContext = New BasicContextClass
             Me.BasicContext.Report = report
             Me.BasicContext.Data = data
             Me.BasicContext.DataRecord = dataRecord
         End Sub
 
-        Public Sub New(ByVal content As Content, ByVal contentState As ContentState)
+        Public Sub New(content As Content, contentState As ContentState)
             Me.BasicContext = New BasicContextClass
             Me.BasicContext.Report = content.GetReport
             Me.BasicContext.Data = content.GetData
@@ -60,19 +60,19 @@ Namespace component
         End Sub
 
         Public Sub New( _
-          ByVal page As ReportPage, _
-          ByVal pages As ReportPages, _
-          ByVal contentInstance As ContentInstance, _
-          ByVal scanner As RenderingScanner)
+          page As ReportPage, _
+          pages As ReportPages, _
+          contentInstance As ContentInstance, _
+          scanner As RenderingScanner)
             Me.New(page, pages, contentInstance.Content, contentInstance.ContentState, scanner.DataContainer)
         End Sub
 
         Public Sub New( _
-          ByVal page As ReportPage, _
-          ByVal pages As ReportPages, _
-          ByVal content As Content, _
-          ByVal contentState As ContentState, _
-          ByVal dataContainer As DataContainer)
+          page As ReportPage, _
+          pages As ReportPages, _
+          content As Content, _
+          contentState As ContentState, _
+          dataContainer As DataContainer)
             Me.BasicContext = New BasicContextClass
             Me.BasicContext.Report = content.GetReport
             Me.BasicContext.Data = content.GetData
@@ -93,7 +93,7 @@ Namespace component
             End With
         End Sub
 
-        Public Function EvalTry(ByVal exp As String) As Object
+        Public Function EvalTry(exp As String) As Object
             Try
                 Return Me.Eval(exp)
             Catch ex As Exception
@@ -101,7 +101,7 @@ Namespace component
             End Try
         End Function
 
-        Public Function Eval(ByVal exp As String) As Object
+        Public Function Eval(exp As String) As Object
             Try
                 If exp Is Nothing Then
                     Return Nothing
@@ -130,11 +130,11 @@ Namespace component
             End Try
         End Function
 
-        Public Function Eval(ByVal exp As IExpression) As Object
+        Public Function Eval(exp As IExpression) As Object
             Return exp.Eval(Me)
         End Function
 
-        Public Function GetData(ByVal scope As String, ByVal unit As String) As ReportData
+        Public Function GetData(scope As String, unit As String) As ReportData
             Dim scopeData As ReportData = Me.BasicContext.Data.FindScope(scope)
             If scopeData Is Nothing Then
                 Throw New ArgumentException("集計範囲が不正です" & IIf(Not scope.Equals(""), ": " & scope, ""))
@@ -157,11 +157,11 @@ Namespace component
             End If
         End Function
 
-        Public Function GetPageData(ByVal scope As String, ByVal unit As String) As ReportData
+        Public Function GetPageData(scope As String, unit As String) As ReportData
             Return Me.PageContext.DataContainer.GetPageData(Me.ContentContext.Content, scope)
         End Function
 
-        Public Function GetPresentData(ByVal scope As String, ByVal unit As String) As ReportData
+        Public Function GetPresentData(scope As String, unit As String) As ReportData
             Return Me.PageContext.DataContainer.GetPresentData(Me.ContentContext.Content, scope)
         End Function
 

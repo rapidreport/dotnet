@@ -10,9 +10,9 @@ Namespace component
         Public TopRow As Integer = 0
 
         Public Sub New( _
-          ByVal renderer As XlsRenderer, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal paperRegion As Region)
+          renderer As XlsRenderer, _
+          reportDesign As ReportDesign, _
+          paperRegion As Region)
             Me.Renderer = renderer
             Dim grid As New Grid
             grid.Region = paperRegion.ToPointScale(reportDesign)

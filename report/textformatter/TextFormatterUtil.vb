@@ -6,7 +6,7 @@ Namespace textformatter
 
     Public Module TextFormatterUtil
 
-        Public Function Format(ByVal v As Object, ByVal design As ElementDesign) As String
+        Public Function Format(v As Object, design As ElementDesign) As String
             Dim _v As Object = ReportUtil.Regularize(v)
             If _v Is Nothing Then
                 Return Nothing
@@ -32,7 +32,7 @@ Namespace textformatter
             Return _v.ToString
         End Function
 
-        Public Function FormatList(ByVal list As List(Of Object), ByVal separator As String, ByVal desc As ElementDesign) As String
+        Public Function FormatList(list As List(Of Object), separator As String, desc As ElementDesign) As String
             Dim result As New List(Of String)
             For Each o As Object In list
                 result.Add(TextFormatterUtil.Format(o, desc))
@@ -40,7 +40,7 @@ Namespace textformatter
             Return String.Join(separator, result.ToArray)
         End Function
 
-        Public Function FormatDate(ByVal d As Date, ByVal formatString As String) As String
+        Public Function FormatDate(d As Date, formatString As String) As String
             If formatString Is Nothing Then
                 Return FormatDate(d, "yyyy/MM/dd")
             End If
@@ -146,7 +146,7 @@ Namespace textformatter
             Return ret
         End Function
 
-        Private Function getDayOfWeek(ByVal d As DayOfWeek) As String
+        Private Function getDayOfWeek(d As DayOfWeek) As String
             Select Case d
                 Case DayOfWeek.Sunday
                     Return "Sun"
@@ -166,7 +166,7 @@ Namespace textformatter
             Return Nothing
         End Function
 
-        Private Function getDayOfWeekL(ByVal d As DayOfWeek) As String
+        Private Function getDayOfWeekL(d As DayOfWeek) As String
             Select Case d
                 Case DayOfWeek.Sunday
                     Return "Sunday"
@@ -186,7 +186,7 @@ Namespace textformatter
             Return Nothing
         End Function
 
-        Private Function getDayOfWeekJ(ByVal d As DayOfWeek) As String
+        Private Function getDayOfWeekJ(d As DayOfWeek) As String
             Select Case d
                 Case DayOfWeek.Sunday
                     Return "日"
@@ -206,7 +206,7 @@ Namespace textformatter
             Return Nothing
         End Function
 
-        Private Function getMonthEn(ByVal m As Integer) As String
+        Private Function getMonthEn(m As Integer) As String
             Select Case m
                 Case 1
                     Return "Jan"
@@ -236,7 +236,7 @@ Namespace textformatter
             Return Nothing
         End Function
 
-        Private Function getMonthEnL(ByVal m As Integer) As String
+        Private Function getMonthEnL(m As Integer) As String
             Select Case m
                 Case 1
                     Return "January"
@@ -266,7 +266,7 @@ Namespace textformatter
             Return Nothing
         End Function
 
-        Public Function FormatNumber(ByVal v As Decimal, ByVal formatString As String) As String
+        Public Function FormatNumber(v As Decimal, formatString As String) As String
             If String.IsNullOrEmpty(formatString) Then
                 Return v.ToString
             End If
@@ -284,7 +284,7 @@ Namespace textformatter
             End With
         End Function
 
-        Private Function _FormatNumber(ByVal v As Decimal, ByVal formatString As String) As String
+        Private Function _FormatNumber(v As Decimal, formatString As String) As String
             If String.IsNullOrEmpty(formatString) Then
                 Return v.ToString
             End If
@@ -316,7 +316,7 @@ Namespace textformatter
             Return ret
         End Function
 
-        Private Function _FormatNumber_Aux(ByVal v As Decimal, ByVal formatString As String) As String
+        Private Function _FormatNumber_Aux(v As Decimal, formatString As String) As String
             Dim zeroLength As Integer = 0
             Dim decZeroLength As Integer = 0
             Dim decLength As Integer = 0

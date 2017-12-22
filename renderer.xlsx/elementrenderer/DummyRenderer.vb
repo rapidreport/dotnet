@@ -4,11 +4,11 @@ Namespace elementrenderer
     Public Class DummyRenderer
         Implements IElementRenderer
         Public Sub Collect( _
-          ByVal renderer As XlsxRenderer, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) Implements IElementRenderer.Collect
+          renderer As XlsxRenderer, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object) Implements IElementRenderer.Collect
         End Sub
     End Class
 End Namespace

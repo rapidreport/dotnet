@@ -27,11 +27,11 @@ Public Class Printer
         Public Alpha As Decimal = 0.5
     End Class
 
-    Public Sub New(ByVal pages As ReportPages)
+    Public Sub New(pages As ReportPages)
         Me.New(pages, New GdiRendererSetting)
     End Sub
 
-    Public Sub New(ByVal pages As ReportPages, ByVal setting As GdiRendererSetting)
+    Public Sub New(pages As ReportPages, setting As GdiRendererSetting)
         With Me.PrintDialog
             .Document = Me.PrintDocument
             .AllowSomePages = True
@@ -48,7 +48,7 @@ Public Class Printer
         Get
             Return Me._Pages
         End Get
-        Set(ByVal value As ReportPages)
+        Set(value As ReportPages)
             If value.Count = 0 Then
                 Throw New RenderException("ページがありません")
             End If
@@ -80,12 +80,12 @@ Public Class Printer
         End Set
     End Property
 
-    Private Sub PrintDocument_BeginPrint(ByVal sender As Object, ByVal e As PrintEventArgs) Handles PrintDocument.BeginPrint
+    Private Sub PrintDocument_BeginPrint(sender As Object, e As PrintEventArgs) Handles PrintDocument.BeginPrint
         Me.PageIndex = 0
         Me._HardMarginMap = New Dictionary(Of ReportDesign, PointF)
     End Sub
 
-    Private Sub PrintDocument_QueryPageSettings(ByVal sender As Object, ByVal e As QueryPageSettingsEventArgs) Handles PrintDocument.QueryPageSettings
+    Private Sub PrintDocument_QueryPageSettings(sender As Object, e As QueryPageSettingsEventArgs) Handles PrintDocument.QueryPageSettings
         Select Case e.PageSettings.PrinterSettings.PrintRange
             Case PrintRange.SomePages
                 Do While Me.PageIndex < e.PageSettings.PrinterSettings.FromPage - 1
@@ -100,7 +100,7 @@ Public Class Printer
         End If
     End Sub
 
-    Private Sub PrintDocument_PrintPage(ByVal sender As Object, ByVal e As PrintPageEventArgs) Handles PrintDocument.PrintPage
+    Private Sub PrintDocument_PrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintDocument.PrintPage
         Dim page As ReportPage = Me.Pages(PageIndex)
         If Not Me._HardMarginMap.ContainsKey(page.Report.Design) Then
             Me._HardMarginMap.Add(
@@ -132,7 +132,7 @@ Public Class Printer
         End If
     End Sub
 
-    Private Sub _Render(ByVal graphics As Graphics, ByVal page As ReportPage)
+    Private Sub _Render(graphics As Graphics, page As ReportPage)
         Dim renderer As IRenderer = New GdiRenderer(New RenderingEnv(graphics, Me))
         page.Render(renderer, Me.Pages)
     End Sub
@@ -149,7 +149,7 @@ Public Class Printer
         End With
     End Function
 
-    Public Function GetImage(ByVal pageIndex As Integer, scaleX As Single, scaleY As Single) As Image
+    Public Function GetImage(pageIndex As Integer, scaleX As Single, scaleY As Single) As Image
         Dim size As Size = GetPixelSize(pageIndex)
         Dim ret As New Bitmap(CType(size.Width * scaleX, Integer),
                               CType(size.Height * scaleY, Integer))
@@ -167,11 +167,11 @@ Public Class Printer
         Me._Render(graphics, page)
     End Sub
 
-    Public Function GetImage(ByVal pageIndex As Integer) As Image
+    Public Function GetImage(pageIndex As Integer) As Image
         Return GetImage(pageIndex, 1.0, 1.0)
     End Function
 
-    Public Shared Sub DrawBackgroundImage(ByVal graphics As Graphics, ByVal image As Image, ByVal setting As PreviewBackgroundSettingClass, ByVal paperDesign As PaperDesign)
+    Public Shared Sub DrawBackgroundImage(graphics As Graphics, image As Image, setting As PreviewBackgroundSettingClass, paperDesign As PaperDesign)
         Dim pageSize As PaperSizeDesign = paperDesign.GetActualSize.ToPoint(paperDesign)
         Dim scale As Single = Math.Min((pageSize.Width / image.Width),
                                        (pageSize.Height / image.Height)) * setting.Scale

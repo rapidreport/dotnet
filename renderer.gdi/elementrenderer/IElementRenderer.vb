@@ -4,11 +4,11 @@ Namespace elementrenderer
 
     Public Interface IElementRenderer
         Sub Render( _
-          ByVal env As RenderingEnv, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object)
+          env As RenderingEnv, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object)
     End Interface
 
 End Namespace

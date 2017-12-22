@@ -8,12 +8,12 @@
         Public Header As Boolean = False
         Public Footer As Boolean = False
 
-        Public Sub New(ByVal groupState As GroupState, ByVal content As Content)
+        Public Sub New(groupState As GroupState, content As Content)
             Me.GroupState = groupState
             Me.Content = content
         End Sub
 
-        Public Function FindScope(ByVal id As String) As ContentState
+        Public Function FindScope(id As String) As ContentState
             If id Is Nothing Then
                 Return Me
             ElseIf id.Equals("") Then

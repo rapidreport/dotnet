@@ -9,11 +9,11 @@ Namespace elementrenderer
         Implements IElementRenderer
 
         Public Sub Render( _
-          ByVal renderer As PdfRenderer, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) Implements IElementRenderer.Render
+          renderer As PdfRenderer, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object) Implements IElementRenderer.Render
             Dim img As Image = Nothing
             If Not design.IsNull("key") AndAlso data IsNot Nothing Then
                 Dim key As String = design.Get("key")

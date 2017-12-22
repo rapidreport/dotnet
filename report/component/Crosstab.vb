@@ -247,7 +247,7 @@ Namespace component
             Return True
         End Function
 
-        Private Function _DataSplit(ByVal data As CrosstabDataSource, keys As List(Of String)) As List(Of CrosstabDataSource)
+        Private Function _DataSplit(data As CrosstabDataSource, keys As List(Of String)) As List(Of CrosstabDataSource)
             Dim ret As New List(Of CrosstabDataSource)
             Dim i As Integer = 0
             Do While (i < data.Size)

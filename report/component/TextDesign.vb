@@ -15,7 +15,7 @@ Namespace component
         Public DecimalPlace As Integer = 0
         Public XlsFormat As String = Nothing
 
-        Public Sub New(ByVal reportDesign As ReportDesign, ByVal design As ElementDesign)
+        Public Sub New(reportDesign As ReportDesign, design As ElementDesign)
             If design.IsNull("font") Then
                 Me.Font = reportDesign.DefaultFontDesign
             Else

@@ -8,11 +8,11 @@ Namespace component
 
         Public Setting As TextDesign
 
-        Public Sub New(ByVal setting As TextDesign)
+        Public Sub New(setting As TextDesign)
             Me.Setting = setting
         End Sub
 
-        Public Sub Fill(ByVal font As XSSFFont, ByVal renderer As XlsxRenderer)
+        Public Sub Fill(font As XSSFFont, renderer As XlsxRenderer)
             font.FontName = renderer.Setting.GetFont(Me.Setting.Font.Name)
             font.FontHeightInPoints = Me.Setting.Font.Size
             If Me.Setting.Font.Bold Then
@@ -41,7 +41,7 @@ Namespace component
             Return ret
         End Function
 
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             If Me Is obj Then
                 Return True
             End If

@@ -3,7 +3,7 @@
 Namespace textformatter
 
     Public Interface ITextFormatter
-        Function Format(ByVal v As Object, ByVal design As ElementDesign) As String
+        Function Format(v As Object, design As ElementDesign) As String
     End Interface
 
 End Namespace

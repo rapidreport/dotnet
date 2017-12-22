@@ -12,7 +12,7 @@
             Me.New(New Hashtable)
         End Sub
 
-        Public Sub New(ByVal desc As Hashtable)
+        Public Sub New(desc As Hashtable)
             If desc("direction") = "horizontal" Then
                 Me.Direction = Report.EDirection.HORIZONTAL
             Else
@@ -29,7 +29,7 @@
             Me.Y = desc("y")
         End Sub
 
-        Public Function GetRegion(ByVal parentRegion As Region) As Region
+        Public Function GetRegion(parentRegion As Region) As Region
             Dim ret As New Region
             ret.Top = parentRegion.Top + Me.Y
             ret.Left = parentRegion.Left + Me.X
@@ -56,7 +56,7 @@
             Return ret
         End Function
 
-        Public Function GetContentRegion(ByVal sizeDesign As ContentSizeDesign, ByVal region As Region, ByVal lastRegion As Region) As Region
+        Public Function GetContentRegion(sizeDesign As ContentSizeDesign, region As Region, lastRegion As Region) As Region
             Dim ret As New Region
             Select Case Me.Direction
                 Case Report.EDirection.VERTICAL

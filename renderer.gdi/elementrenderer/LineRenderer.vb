@@ -6,11 +6,11 @@ Namespace elementrenderer
         Implements IElementRenderer
 
         Public Sub Render( _
-          ByVal env As RenderingEnv, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) Implements IElementRenderer.Render
+          env As RenderingEnv, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object) Implements IElementRenderer.Render
             Dim _region As Region = region.ToPointScale(reportDesign)
             Dim g As Graphics = env.Graphics
             Dim c As Color = Color.Black
@@ -82,7 +82,7 @@ Namespace elementrenderer
             End If
         End Sub
 
-        Private Function tx(ByVal r As Single, ByVal x As Single, ByVal y As Single) As Single
+        Private Function tx(r As Single, x As Single, y As Single) As Single
             If x <> 0 Or y <> 0 Then
                 Return x * Math.Cos(r) - y * Math.Sin(r)
             Else
@@ -90,7 +90,7 @@ Namespace elementrenderer
             End If
         End Function
 
-        Private Function ty(ByVal r As Single, ByVal x As Single, ByVal y As Single) As Single
+        Private Function ty(r As Single, x As Single, y As Single) As Single
             If x <> 0 Or y <> 0 Then
                 Return x * Math.Sin(r) + y * Math.Cos(r)
             Else

@@ -2,7 +2,7 @@
 
     Public WithEvents PrintPreview As IPrintPreviewMultiPage
 
-    Public Sub Init(ByVal printPreview As IPrintPreviewZoom)
+    Public Sub Init(printPreview As IPrintPreviewZoom)
         Me.PrintPreview = printPreview
         Me._UpdateReport()
     End Sub

@@ -8,14 +8,14 @@
         Public Sub New()
         End Sub
 
-        Public Sub New(ByVal desc As Hashtable)
+        Public Sub New(desc As Hashtable)
             Me.Width = CType(desc("width"), Single)
             Me.Height = CType(desc("height"), Single)
         End Sub
 
         Public Sub New( _
-          ByVal scaleUnit As Report.EScaleUnit, _
-          ByVal paperType As Report.EPaperType)
+          scaleUnit As Report.EScaleUnit, _
+          paperType As Report.EPaperType)
             Select Case scaleUnit
                 Case Report.EScaleUnit.POINT
                     Me.initialize_point(paperType)
@@ -26,7 +26,7 @@
             End Select
         End Sub
 
-        Private Sub initialize_point(ByVal paperType As Report.EPaperType)
+        Private Sub initialize_point(paperType As Report.EPaperType)
             Select Case paperType
                 Case Report.EPaperType.A3
                     Me.Width = 842
@@ -46,7 +46,7 @@
             End Select
         End Sub
 
-        Private Sub initialize_mm(ByVal paperType As Report.EPaperType)
+        Private Sub initialize_mm(paperType As Report.EPaperType)
             Select Case paperType
                 Case Report.EPaperType.A3
                     Me.Width = 297
@@ -66,7 +66,7 @@
             End Select
         End Sub
 
-        Private Sub initialize_inch(ByVal paperType As Report.EPaperType)
+        Private Sub initialize_inch(paperType As Report.EPaperType)
             Select Case paperType
                 Case Report.EPaperType.A3
                     Me.Width = 11.69
@@ -86,11 +86,11 @@
             End Select
         End Sub
 
-        Public Function ToPoint(ByVal paperDesign As PaperDesign) As PaperSizeDesign
+        Public Function ToPoint(paperDesign As PaperDesign) As PaperSizeDesign
             Return Me.ToPoint(paperDesign.ScaleUnit)
         End Function
 
-        Public Function ToPoint(ByVal scaleUnit As Report.EScaleUnit) As PaperSizeDesign
+        Public Function ToPoint(scaleUnit As Report.EScaleUnit) As PaperSizeDesign
             Dim ret As New PaperSizeDesign
             ret.Width = ReportUtil.ToPoint(scaleUnit, Me.Width)
             ret.Height = ReportUtil.ToPoint(scaleUnit, Me.Height)

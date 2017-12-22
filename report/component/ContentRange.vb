@@ -9,7 +9,7 @@ Namespace component
         Public Last As ContentHistory = Nothing
 
         Public Sub New( _
-          ByVal group As Group)
+          group As Group)
             Me.New( _
               group, _
               ContentHistory.GetInstance(group.GetNextContent(Nothing), group.ParentGroups), _
@@ -17,23 +17,23 @@ Namespace component
         End Sub
 
         Public Sub New( _
-          ByVal group As Group, _
-          ByVal first As ContentHistory, _
-          ByVal last As ContentHistory)
+          group As Group, _
+          first As ContentHistory, _
+          last As ContentHistory)
             Me.Group = group
             Me.First = first
             Me.Last = last
         End Sub
 
-        Public Function IsFirst(ByVal c As Content) As Boolean
+        Public Function IsFirst(c As Content) As Boolean
             Return (Me.First IsNot Nothing) AndAlso (c Is Me.First.Content)
         End Function
 
-        Public Function IsLast(ByVal c As Content) As Boolean
+        Public Function IsLast(c As Content) As Boolean
             Return (Me.Last IsNot Nothing) AndAlso (c Is Me.Last.Content)
         End Function
 
-        Public Function GetSubRange(ByVal c As Content) As GroupRange
+        Public Function GetSubRange(c As Content) As GroupRange
             If c.Groups Is Nothing Then
                 Return Nothing
             End If

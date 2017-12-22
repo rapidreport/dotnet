@@ -16,8 +16,8 @@ Public Class PrintPreview
     Public Event UpdateReportPage() Implements IPrintPreviewPage.UpdateReport
     Public Event UpdateReportZoom() Implements IPrintPreviewZoom.UpdateReport
     Public Event UpdateReportMultiPage() Implements IPrintPreviewMultiPage.UpdateReport
-    Public Event Rendering(ByVal sender As Object, ByVal g As Graphics, ByRef cancel As Boolean)
-    Public Event Rendered(ByVal sender As Object, ByVal g As Graphics)
+    Public Event Rendering(sender As Object, g As Graphics, ByRef cancel As Boolean)
+    Public Event Rendered(sender As Object, g As Graphics)
     Public PageBuffers As List(Of Bitmap) = Nothing
     Public WithEvents VScrollBar As New VScrollBar
     Public WithEvents HScrollBar As New HScrollBar
@@ -52,7 +52,7 @@ Public Class PrintPreview
         Private _ScrollV As Integer
         Private _ScrollH As Integer
 
-        Public Sub New(ByVal printPreview As PrintPreview, scrollPreserve As Boolean)
+        Public Sub New(printPreview As PrintPreview, scrollPreserve As Boolean)
             Me.PrintPreview = printPreview
             Me.ScrollPreserve = scrollPreserve
             If Me.ScrollPreserve Then
@@ -62,7 +62,7 @@ Public Class PrintPreview
         End Sub
 
         Private disposedValue As Boolean = False
-        Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+        Protected Overridable Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 Me.PrintPreview._RenderBlock = Nothing
                 Me.PrintPreview.Render()
@@ -77,7 +77,7 @@ Public Class PrintPreview
 #Region " IDisposable Support "
         ' このコードは、破棄可能なパターンを正しく実装できるように Visual Basic によって追加されました。
         Public Sub Dispose() Implements IDisposable.Dispose
-            ' このコードを変更しないでください。クリーンアップ コードを上の Dispose(ByVal disposing As Boolean) に記述します。
+            ' このコードを変更しないでください。クリーンアップ コードを上の Dispose(disposing As Boolean) に記述します。
             Dispose(True)
             GC.SuppressFinalize(Me)
         End Sub
@@ -107,7 +107,7 @@ Public Class PrintPreview
         Get
             Return Me._Printer
         End Get
-        Set(ByVal value As Printer)
+        Set(value As Printer)
             Me._Printer = value
             If Me.PageCount > Me.PageCountTotal Then
                 Me.PageCount = Me.PageCountTotal
@@ -120,7 +120,7 @@ Public Class PrintPreview
         Get
             Return Me._PageCount
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             Using Me.RenderBlock
                 Me._PageCount = value
                 If Me._PageCount < 1 Then
@@ -158,7 +158,7 @@ Public Class PrintPreview
         Get
             Return Me._Zoom
         End Get
-        Set(ByVal value As Decimal)
+        Set(value As Decimal)
             Me.AutoZoomFit = False
             Me.AutoZoomFitWidth = False
             Me.MultiPage = False
@@ -288,11 +288,11 @@ Public Class PrintPreview
         Return Me.Printer.Pages.Count
     End Function
 
-    Private Sub PrintPreview_MouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseClick
+    Private Sub PrintPreview_MouseClick(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseClick
         Me.Focus()
     End Sub
 
-    Private Sub PrintPreview_Resize(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Resize
+    Private Sub PrintPreview_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         Me._UpdatePageZoomStatus()
     End Sub
 
@@ -320,7 +320,7 @@ Public Class PrintPreview
         RaiseEvent UpdateReportMultiPage()
     End Sub
 
-    Public Sub ScrollOrPageChange(ByVal delta As Integer)
+    Public Sub ScrollOrPageChange(delta As Integer)
         If delta > 0 Then
             If Not Me.VScrollBar.Visible OrElse Me.VScrollBar.Value = 0 Then
                 Me.PrevPage()
@@ -359,7 +359,7 @@ Public Class PrintPreview
         End If
     End Function
 
-    Private Sub scrollBar_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles VScrollBar.ValueChanged, HScrollBar.ValueChanged
+    Private Sub scrollBar_ValueChanged(sender As Object, e As System.EventArgs) Handles VScrollBar.ValueChanged, HScrollBar.ValueChanged
         Me.Invalidate()
     End Sub
 
@@ -520,7 +520,7 @@ Public Class PrintPreview
         Me.Invalidate()
     End Sub
 
-    Private Sub _ViewUpdate(ByVal g As Graphics)
+    Private Sub _ViewUpdate(g As Graphics)
         If Me.PageBuffers Is Nothing Then
             Exit Sub
         End If
@@ -602,29 +602,29 @@ Public Class PrintPreview
           ToPixelX(region.GetWidth) * Me.Zoom, ToPixelX(region.GetHeight) * Me.Zoom)
     End Function
 
-    Private Sub PrintPreview_Paint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles Me.Paint
+    Private Sub PrintPreview_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         If Not Me.DesignMode Then
             Me._ViewUpdate(e.Graphics)
         End If
     End Sub
 
-    Public Function ToPixelX(ByVal v As Decimal) As Integer
+    Public Function ToPixelX(v As Decimal) As Integer
         Return GdiRenderUtil.ToPixelX(Me.CreateGraphics, v)
     End Function
 
-    Public Function ToPixelY(ByVal v As Decimal) As Integer
+    Public Function ToPixelY(v As Decimal) As Integer
         Return GdiRenderUtil.ToPixelY(Me.CreateGraphics, v)
     End Function
 
-    Public Function ToPointX(ByVal v As Integer) As Decimal
+    Public Function ToPointX(v As Integer) As Decimal
         Return GdiRenderUtil.ToPointX(Me.CreateGraphics, v)
     End Function
 
-    Public Function ToPointY(ByVal v As Integer) As Decimal
+    Public Function ToPointY(v As Integer) As Decimal
         Return GdiRenderUtil.ToPointY(Me.CreateGraphics, v)
     End Function
 
-    Private Sub PrintPreview_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
+    Private Sub PrintPreview_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
         If Me.HScrollBar.Visible Or Me.VScrollBar.Visible Then
             Me._Gripping = True
             Me.Cursor = New Cursor(My.Resources.hand_grip.Handle)
@@ -632,14 +632,14 @@ Public Class PrintPreview
         End If
     End Sub
 
-    Private Sub PrintPreview_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
+    Private Sub PrintPreview_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
         If Me._Gripping Then
             Me._Gripping = False
             Me.Cursor = New Cursor(My.Resources.hand.Handle)
         End If
     End Sub
 
-    Private Sub PrintPreview_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseMove
+    Private Sub PrintPreview_MouseMove(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseMove
         If Me._Gripping Then
             Dim dx As Integer = Me._GripLocation.X - e.Location.X
             Dim dy As Integer = Me._GripLocation.Y - e.Location.Y
@@ -655,7 +655,7 @@ Public Class PrintPreview
         End If
     End Sub
 
-    Public Sub HandleMouseWheelEvent(ByVal e As MouseEventArgs)
+    Public Sub HandleMouseWheelEvent(e As MouseEventArgs)
         If ModifierKeys = Keys.Control Then
             If e.Delta > 0 Then
                 Me.ZoomIn()
@@ -667,7 +667,7 @@ Public Class PrintPreview
         End If
     End Sub
 
-    Public Sub HandleKeyDownEvent(ByVal e As KeyEventArgs)
+    Public Sub HandleKeyDownEvent(e As KeyEventArgs)
         Select Case e.KeyCode
             Case Keys.PageDown
                 Me.NextPage()

@@ -1,7 +1,7 @@
 ﻿Public Class Slider
     Inherits Control
 
-    Public Event ValueChanged(ByVal sender As Object)
+    Public Event ValueChanged(sender As Object)
 
     Public ChangeUnit As Integer = 1
     Private _MinValue As Integer = 0
@@ -19,7 +19,7 @@
         Me.SetStyle(ControlStyles.Selectable, False)
     End Sub
 
-    Private Sub USlider_HandleDestroyed(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.HandleDestroyed
+    Private Sub USlider_HandleDestroyed(sender As Object, e As System.EventArgs) Handles Me.HandleDestroyed
         Me.timer.Enabled = False
         Me.timer.Dispose()
         Me.timer = Nothing
@@ -29,7 +29,7 @@
         Get
             Return Me._MaxValue
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value >= Me.MinValue Then
                 Me._MaxValue = value
             End If
@@ -43,7 +43,7 @@
         Get
             Return Me._MinValue
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value <= Me.MaxValue Then
                 Me._MinValue = value
             End If
@@ -57,7 +57,7 @@
         Get
             Return Me._Value
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             Dim bak As Integer = Me.Value
             Me._Value = value
             If Me._Value > Me.MaxValue Then
@@ -73,7 +73,7 @@
         End Set
     End Property
 
-    Private Sub USlider_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
+    Private Sub USlider_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
         Dim g As Graphics = e.Graphics
         Dim w As Integer = Me.Width - 10
         With Nothing
@@ -106,7 +106,7 @@
         End With
     End Sub
 
-    Private Sub USlider_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
+    Private Sub USlider_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left Then
             Me._mouseDown = True
             Me._pointedValue = xToValue(e.Location.X)
@@ -116,7 +116,7 @@
         End If
     End Sub
 
-    Private Sub USlider_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
+    Private Sub USlider_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
         If e.Button = Windows.Forms.MouseButtons.Left Then
             Me._mouseDown = False
             Me._gripped = False
@@ -125,7 +125,7 @@
         End If
     End Sub
 
-    Private Sub USlider_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseMove
+    Private Sub USlider_MouseMove(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseMove
         If Me._mouseDown Then
             Me._pointedValue = xToValue(e.Location.X)
             If Me._gripped Then
@@ -134,7 +134,7 @@
         End If
     End Sub
 
-    Private Sub timer_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles timer.Tick
+    Private Sub timer_Tick(sender As Object, e As System.EventArgs) Handles timer.Tick
         Me.moveValue()
         If Me._gripped Then
             Me.timer.Enabled = False
@@ -143,7 +143,7 @@
         End If
     End Sub
 
-    Private Function xToValue(ByVal x As Integer)
+    Private Function xToValue(x As Integer)
         Return ((Me.MaxValue - Me.MinValue) * (x - 5)) / (Me.Width - 10) + Me.MinValue
     End Function
 

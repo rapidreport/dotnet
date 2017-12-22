@@ -4,18 +4,18 @@ Imports jp.co.systembase.report.renderer
 Namespace customizer
     Public Interface IReportCustomizer
         Function ContentRegion( _
-          ByVal content As Content, _
-          ByVal evaluator As Evaluator, _
-          ByVal region As Region) As Region
+          content As Content, _
+          evaluator As Evaluator, _
+          region As Region) As Region
         Sub PageAdded( _
-          ByVal report As Report, _
-          ByVal pages As ReportPages, _
-          ByVal page As ReportPage)
+          report As Report, _
+          pages As ReportPages, _
+          page As ReportPage)
         Sub RenderContent( _
-          ByVal content As Content, _
-          ByVal evaluator As Evaluator, _
-          ByVal region As Region, _
-          ByVal elementDesigns As ElementDesigns)
+          content As Content, _
+          evaluator As Evaluator, _
+          region As Region, _
+          elementDesigns As ElementDesigns)
     End Interface
 End Namespace
 

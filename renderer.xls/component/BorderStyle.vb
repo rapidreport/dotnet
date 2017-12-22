@@ -23,7 +23,7 @@ Namespace component
         Private Sub New()
         End Sub
 
-        Public Shared Function GetInstance(ByVal design As ElementDesign, ByVal reportDesign As ReportDesign) As BorderStyle
+        Public Shared Function GetInstance(design As ElementDesign, reportDesign As ReportDesign) As BorderStyle
             Dim lw As Single = reportDesign.DefaultLineWidth
             If Not design.IsNull("line_width") Then
                 lw = design.Get("line_width")
@@ -82,7 +82,7 @@ Namespace component
             Return ret
         End Function
 
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             If Me Is obj Then
                 Return True
             End If

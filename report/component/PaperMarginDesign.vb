@@ -11,7 +11,7 @@
         Public Sub New()
         End Sub
 
-        Public Sub New(ByVal desc As Hashtable)
+        Public Sub New(desc As Hashtable)
             Me.Top = desc("top")
             Me.Left = desc("left")
             Me.Bottom = desc("bottom")
@@ -19,11 +19,11 @@
             Me.OddReverse = desc("odd_reverse")
         End Sub
 
-        Public Function ToPoint(ByVal paperDesign As PaperDesign) As PaperMarginDesign
+        Public Function ToPoint(paperDesign As PaperDesign) As PaperMarginDesign
             Return Me.ToPoint(paperDesign.ScaleUnit)
         End Function
 
-        Public Function ToPoint(ByVal scaleUnit As Report.EScaleUnit) As PaperMarginDesign
+        Public Function ToPoint(scaleUnit As Report.EScaleUnit) As PaperMarginDesign
             Dim ret As New PaperMarginDesign
             ret.Top = ReportUtil.ToPoint(scaleUnit, Me.Top)
             ret.Left = ReportUtil.ToPoint(scaleUnit, Me.Left)

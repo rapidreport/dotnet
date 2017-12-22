@@ -9,11 +9,11 @@ Namespace elementrenderer
         Implements IElementRenderer
 
         Public Sub Collect( _
-          ByVal renderer As XlsxRenderer, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) Implements IElementRenderer.Collect
+          renderer As XlsxRenderer, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object) Implements IElementRenderer.Collect
             Dim _region As Region = region.ToPointScale(reportDesign)
             Dim image As Image = Nothing
             If Not design.IsNull("key") AndAlso data IsNot Nothing Then
@@ -34,10 +34,10 @@ Namespace elementrenderer
         Public Class ImageShapeRenderer
             Implements IShapeRenderer
             Public Image As Image
-            Public Sub New(ByVal image As Image)
+            Public Sub New(image As Image)
                 Me.Image = image
             End Sub
-            Public Sub Render(ByVal page As Page, ByVal shape As Shape) Implements IShapeRenderer.Render
+            Public Sub Render(page As Page, shape As Shape) Implements IShapeRenderer.Render
                 Dim index As Integer = page.Renderer.GetImageIndex(Me.Image)
                 If index >= 0 Then
                     Dim p As IDrawing = page.Renderer.Sheet.CreateDrawingPatriarch

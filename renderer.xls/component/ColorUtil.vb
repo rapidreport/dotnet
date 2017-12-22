@@ -4,7 +4,7 @@ Imports NPOI.HSSF.Util
 Namespace component
     Module ColorUtil
 
-        Public Function GetColor(ByVal v As String) As Color
+        Public Function GetColor(v As String) As Color
             If Not String.IsNullOrEmpty(v) Then
                 If v.StartsWith("#") AndAlso v.Length = 7 Then
                     Dim _v As String = v.Substring(1).ToLower
@@ -26,11 +26,11 @@ Namespace component
             Return Color.Empty
         End Function
 
-        Public Function GetIndex(ByVal v As String) As Short
+        Public Function GetIndex(v As String) As Short
             Return GetIndex(GetColor(v))
         End Function
 
-        Public Function GetIndex(ByVal color As Color) As Short
+        Public Function GetIndex(color As Color) As Short
             Dim ret As Short = 0
             Dim diff As Integer = &HFFFFFF
             For Each c As _ColorData In getColorTable()
@@ -46,11 +46,11 @@ Namespace component
         Private Class _ColorData
             Public Index As Short
             Public Triplet As Byte()
-            Public Sub New(ByVal index As Short, ByVal triplet As Byte())
+            Public Sub New(index As Short, triplet As Byte())
                 Me.Index = index
                 Me.Triplet = triplet
             End Sub
-            Public Function GetDiff(ByVal color As Color) As Integer
+            Public Function GetDiff(color As Color) As Integer
                 Dim r As Integer = CType(Me.Triplet(0), Integer) - color.R
                 Dim g As Integer = CType(Me.Triplet(1), Integer) - color.G
                 Dim b As Integer = CType(Me.Triplet(2), Integer) - color.B

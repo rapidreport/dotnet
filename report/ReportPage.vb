@@ -19,9 +19,9 @@ Public Class ReportPage
     Public CountingPages As List(Of ReportPage) = Nothing
 
     Public Sub New( _
-      ByVal report As Report, _
-      ByVal range As GroupRange, _
-      ByVal scanner As PagingScanner)
+      report As Report, _
+      range As GroupRange, _
+      scanner As PagingScanner)
         Me.Report = report
         Me.Range = range
         Me.PageScope = New Dictionary(Of String, Object)
@@ -30,7 +30,7 @@ Public Class ReportPage
         Me.FinishedGroups = scanner.FinishedGroups
     End Sub
 
-    Public Sub New(ByVal page As ReportPage)
+    Public Sub New(page As ReportPage)
         Me.Report = page.Report
         Me.Range = page.Range
         Me.PageScope = New Dictionary(Of String, Object)(page.PageScope)
@@ -39,7 +39,7 @@ Public Class ReportPage
         Me.FinishedGroups = page.FinishedGroups
     End Sub
 
-    Public Sub Render(ByVal renderer As IRenderer, ByVal pages As ReportPages)
+    Public Sub Render(renderer As IRenderer, pages As ReportPages)
         Dim paperRegion As Region = Me.Report.Design.PaperDesign.GetRegion
         Try
             renderer.BeginPage(Me.Report.Design, pages.IndexOf(Me), paperRegion)
@@ -57,17 +57,17 @@ Public Class ReportPage
         End Try
     End Sub
 
-    Public Sub RenderSubPage(ByVal renderer As IRenderer, ByVal pages As ReportPages, ByVal paperRegion As Region)
+    Public Sub RenderSubPage(renderer As IRenderer, pages As ReportPages, paperRegion As Region)
         Dim scanner As New RenderingScanner
         Me.Report.Groups.Scan(scanner, Me.Range, paperRegion)
         Me._Render_aux(renderer, pages, scanner, True)
     End Sub
 
     Private Sub _Render_aux( _
-      ByVal renderer As IRenderer, _
-      ByVal pages As ReportPages, _
-      ByVal scanner As RenderingScanner, _
-      ByVal subPage As Boolean)
+      renderer As IRenderer, _
+      pages As ReportPages, _
+      scanner As RenderingScanner, _
+      subPage As Boolean)
         Me.ToggleValue = False
         Dim elementsMap As New Dictionary(Of ContentInstance, ElementDesigns)
         Dim evaluatorMap As New Dictionary(Of ContentInstance, Evaluator)
@@ -86,12 +86,12 @@ Public Class ReportPage
     End Sub
 
     Private Sub _RenderContent( _
-      ByVal renderer As IRenderer, _
-      ByVal instance As ContentInstance, _
-      ByVal elements As ElementDesigns, _
-      ByVal evaluator As Evaluator, _
-      ByVal subPage As Boolean, _
-      ByVal background As Boolean)
+      renderer As IRenderer, _
+      instance As ContentInstance, _
+      elements As ElementDesigns, _
+      evaluator As Evaluator, _
+      subPage As Boolean, _
+      background As Boolean)
         For Each design As ElementDesign In elements
             If subPage AndAlso design.Get("id") = "__trial__" Then
                 Continue For
@@ -121,21 +121,21 @@ Public Class ReportPage
         Next
     End Sub
 
-    Public Function FindAppearedGroup(ByVal id As String) As Group
+    Public Function FindAppearedGroup(id As String) As Group
         Return findGroup(id, Me.AppearedGroups)
     End Function
 
-    Public Function FindStartedGroup(ByVal id As String) As Group
+    Public Function FindStartedGroup(id As String) As Group
         Return findGroup(id, Me.StartedGroups)
     End Function
 
-    Public Function FindFinishedGroup(ByVal id As String) As Group
+    Public Function FindFinishedGroup(id As String) As Group
         Return findGroup(id, Me.FinishedGroups)
     End Function
 
     Private Shared Function findGroup( _
-      ByVal id As String, _
-      ByVal groups As Dictionary(Of GroupDesign, Group)) As Group
+      id As String, _
+      groups As Dictionary(Of GroupDesign, Group)) As Group
         For Each gd As GroupDesign In groups.Keys
             If id.Equals(gd.Id) Then
                 Return groups(gd)

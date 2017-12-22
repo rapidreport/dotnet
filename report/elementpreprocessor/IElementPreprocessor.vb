@@ -4,9 +4,9 @@ Imports jp.co.systembase.report.renderer
 Namespace elementpreprocessor
     Public Interface IElementPreprocessor
         Function DoProcess( _
-          ByVal renderer As IRenderer, _
-          ByVal region As Region, _
-          ByVal evaluator As Evaluator, _
-          ByVal design As ElementDesign) As Object
+          renderer As IRenderer, _
+          region As Region, _
+          evaluator As Evaluator, _
+          design As ElementDesign) As Object
     End Interface
 End Namespace

@@ -12,7 +12,7 @@
         Public Sub New()
         End Sub
 
-        Public Sub New(ByVal region As Region)
+        Public Sub New(region As Region)
             Me.Top = region.Top
             Me.Left = region.Left
             Me.Bottom = region.Bottom
@@ -21,7 +21,7 @@
             Me.MaxRight = region.MaxRight
         End Sub
 
-        Public Function GetMergedRegion(ByVal region As Region) As Region
+        Public Function GetMergedRegion(region As Region) As Region
             Dim ret As New Region
             If Me.Top < region.Top Then
                 ret.Top = Me.Top
@@ -72,19 +72,19 @@
             Return Me.MaxBottom - Me.Top
         End Function
 
-        Public Sub SetWidth(ByVal w As Single)
+        Public Sub SetWidth(w As Single)
             Me.Right = Me.Left + w
         End Sub
 
-        Public Sub SetHeight(ByVal h As Single)
+        Public Sub SetHeight(h As Single)
             Me.Bottom = Me.Top + h
         End Sub
 
-        Public Function ToPointScale(ByVal reportDesign As ReportDesign) As Region
+        Public Function ToPointScale(reportDesign As ReportDesign) As Region
             Return Me.ToPointScale(reportDesign.PaperDesign.ScaleUnit)
         End Function
 
-        Public Function ToPointScale(ByVal scaleUnit As Report.EScaleUnit) As Region
+        Public Function ToPointScale(scaleUnit As Report.EScaleUnit) As Region
             Dim ret As New Region
             ret.Top = ReportUtil.ToPoint(scaleUnit, Me.Top)
             ret.Left = ReportUtil.ToPoint(scaleUnit, Me.Left)

@@ -9,16 +9,16 @@ Namespace expression
         Public Scope As String
         Public Unit As String
         Public Sub New( _
-          ByVal method As IMethod, _
-          ByVal param As String, _
-          ByVal scope As String, _
-          ByVal unit As String)
+          method As IMethod, _
+          param As String, _
+          scope As String, _
+          unit As String)
             Me.Method = method
             Me.Param = param
             Me.Scope = scope
             Me.Unit = unit
         End Sub
-        Public Function Eval(ByVal evaluator As Evaluator) As Object Implements IExpression.Eval
+        Public Function Eval(evaluator As Evaluator) As Object Implements IExpression.Eval
             If Not evaluator.TraverseMode Then
                 If Me.Unit IsNot Nothing AndAlso Not evaluator.BasicContext.Data.IsFilled Then
                     Throw New EvalException("'#'付きのメソッドは report.fill() の実行後にのみ呼び出すことができます")

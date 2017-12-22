@@ -8,10 +8,10 @@ Namespace barcode
     Public Module Yubin
 
         Public Function GetImage( _
-          ByVal cb As PdfContentByte, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal code As String) As Image
+          cb As PdfContentByte, _
+          region As Region, _
+          design As ElementDesign, _
+          code As String) As Image
             Dim bc As New jp.co.systembase.barcode.Yubin
             Dim codes As List(Of Byte) = bc.Encode(code)
             If codes Is Nothing Then

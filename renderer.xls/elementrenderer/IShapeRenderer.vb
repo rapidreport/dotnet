@@ -2,6 +2,6 @@
 
 Namespace elementrenderer
     Public Interface IShapeRenderer
-        Sub Render(ByVal Page As Page, ByVal Shape As Shape)
+        Sub Render(Page As Page, Shape As Shape)
     End Interface
 End Namespace

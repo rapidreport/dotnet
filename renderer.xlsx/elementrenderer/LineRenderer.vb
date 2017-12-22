@@ -8,11 +8,11 @@ Namespace elementrenderer
         Implements IElementRenderer
 
         Public Sub Collect( _
-          ByVal renderer As XlsxRenderer, _
-          ByVal reportDesign As ReportDesign, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal data As Object) Implements IElementRenderer.Collect
+          renderer As XlsxRenderer, _
+          reportDesign As ReportDesign, _
+          region As Region, _
+          design As ElementDesign, _
+          data As Object) Implements IElementRenderer.Collect
             Dim _region As Region = region.ToPointScale(reportDesign)
             If Math.Abs(_region.GetWidth) < RowColUtil.TOLERANCE Then
                 Dim bs As BorderStyle = BorderStyle.GetInstance(design, reportDesign)
@@ -58,12 +58,12 @@ Namespace elementrenderer
             Implements IShapeRenderer
             Public Design As ElementDesign
             Public ReportDesign As ReportDesign
-            Public Sub New(ByVal design As ElementDesign, _
-                           ByVal reportDesign As ReportDesign)
+            Public Sub New(design As ElementDesign, _
+                           reportDesign As ReportDesign)
                 Me.Design = design
                 Me.ReportDesign = reportDesign
             End Sub
-            Public Sub Render(ByVal page As Page, ByVal shape As Shape) Implements IShapeRenderer.Render
+            Public Sub Render(page As Page, shape As Shape) Implements IShapeRenderer.Render
                 Dim lineWidth As Single = Me.ReportDesign.DefaultLineWidth
                 If Not Design.IsNull("line_width") Then
                     lineWidth = Design.Get("line_width")

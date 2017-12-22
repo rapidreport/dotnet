@@ -6,11 +6,11 @@ Public Class ReportPages
 
     Public Report As Report
 
-    Public Sub New(ByVal report As Report)
+    Public Sub New(report As Report)
         Me.Report = report
     End Sub
 
-    Public Sub Render(ByVal renderer As IRenderer)
+    Public Sub Render(renderer As IRenderer)
         If Me.Count = 0 Then
             Throw New RenderException("ページがありません")
         End If

@@ -26,9 +26,9 @@ Namespace component
         Public ParentContentDesign As ContentDesign
 
         Public Sub New(
-          ByVal desc As Hashtable,
-          ByVal reportDesign As ReportDesign,
-          ByVal parentContentDesign As ContentDesign)
+          desc As Hashtable,
+          reportDesign As ReportDesign,
+          parentContentDesign As ContentDesign)
             Me.Desc = desc
             Me.ReportDesign = reportDesign
             Me.ParentContentDesign = parentContentDesign
@@ -117,7 +117,7 @@ Namespace component
             Next
         End Sub
 
-        Public Function DataSplit(ByVal data As ReportData) As List(Of ReportData)
+        Public Function DataSplit(data As ReportData) As List(Of ReportData)
             Dim ret As New List(Of ReportData)
             If Me.unbreakable Then
                 If data.Size > 0 Then
@@ -153,7 +153,7 @@ Namespace component
             Return True
         End Function
 
-        Private Function isBreak(ByVal data As ReportData, ByVal i As Integer, ByVal j As Integer) As Boolean
+        Private Function isBreak(data As ReportData, i As Integer, j As Integer) As Boolean
             If Me.Detail Then
                 Return True
             ElseIf Me.Keys IsNot Nothing Then
@@ -169,7 +169,7 @@ Namespace component
             Return False
         End Function
 
-        Public Function FindContentDesign(ByVal id As String) As ContentDesign
+        Public Function FindContentDesign(id As String) As ContentDesign
             If Me.ContentDesigns IsNot Nothing Then
                 For Each cd As ContentDesign In Me.ContentDesigns
                     Dim ret As ContentDesign = cd.FindContentDesign(id)
@@ -181,7 +181,7 @@ Namespace component
             Return Nothing
         End Function
 
-        Public Function FindGroupDesign(ByVal id As String) As GroupDesign
+        Public Function FindGroupDesign(id As String) As GroupDesign
             If id.Equals(Me.Id) Then
                 Return Me
             ElseIf Me.ContentDesigns IsNot Nothing Then

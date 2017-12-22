@@ -11,11 +11,11 @@ Public Module GdiRenderUtil
 
     <Obsolete("GdiTextクラスを利用して下さい。")> _
     Public Sub DrawText( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         If String.IsNullOrEmpty(text) Then
             Exit Sub
         End If
@@ -52,11 +52,11 @@ Public Module GdiRenderUtil
     End Sub
 
     Private Sub _drawText_distribute( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         Dim font As Font = getFont(setting, textDesign, True)
         Dim texts As List(Of String) = splitByCr(region, font, text, False)
         Dim color As Color = GetColor(textDesign.Color, Drawing.Color.Black)
@@ -100,11 +100,11 @@ Public Module GdiRenderUtil
     End Sub
 
     Private Sub _drawText_distribute_vertical( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         Dim font As Font = getFont(setting, textDesign, True)
         Dim texts As List(Of String) = splitByCr(region, font, text, False)
         Dim color As Color = GetColor(textDesign.Color, Drawing.Color.Black)
@@ -157,22 +157,22 @@ Public Module GdiRenderUtil
     End Sub
 
     Private Sub _drawText_vertical( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         Dim font As Font = getFont(setting, textDesign, True)
         Dim texts As List(Of String) = splitByCr(region, font, text, False)
         _drawText_vertical_aux(g, region, textDesign, texts, font)
     End Sub
 
     Private Sub _drawText_vertical_shrink( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         Dim font As Font = getFont(setting, textDesign, True)
         Dim texts As List(Of String) = splitByCr(region, font, text, False)
         With Nothing
@@ -193,33 +193,33 @@ Public Module GdiRenderUtil
     End Sub
 
     Private Sub _drawText_vertical_wrap( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         Dim font As Font = getFont(setting, textDesign, True)
         Dim texts As List(Of String) = splitByCr(region, font, text, True)
         _drawText_vertical_aux(g, region, textDesign, texts, font)
     End Sub
 
     Private Sub _drawText_fixdec( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         Dim fd As New _FixDec(text)
         Dim font As Font = getFont(setting, textDesign, True)
         fd.DrawText(g, region, setting, textDesign, font)
     End Sub
 
     Private Sub _drawText_fixdec_shrink( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         Dim fd As New _FixDec(text)
         Dim font As Font = getFont(setting, textDesign, True)
         font = getFitFont(g, region, setting, fd.GetFullText(textDesign.DecimalPlace), font)
@@ -227,11 +227,11 @@ Public Module GdiRenderUtil
     End Sub
 
     Private Sub _drawText_wrap( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         Dim font As Font = getFont(setting, textDesign, False)
         Dim color As Color = GetColor(textDesign.Color, Drawing.Color.Black)
         Dim r As New RectangleF(region.Left, region.Top, region.GetWidth, region.GetHeight)
@@ -244,11 +244,11 @@ Public Module GdiRenderUtil
     End Sub
 
     Private Sub _drawText_shrink( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         Dim font As Font = getFont(setting, textDesign, False)
         font = getFitFont(g, region, setting, text, font)
         Dim color As Color = GetColor(textDesign.Color, Drawing.Color.Black)
@@ -263,11 +263,11 @@ Public Module GdiRenderUtil
     End Sub
 
     Private Sub _drawText( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal text As String)
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      text As String)
         Dim font As Font = getFont(setting, textDesign, False)
         Dim color As Color = GetColor(textDesign.Color, Drawing.Color.Black)
         Dim r As New RectangleF(region.Left, region.Top, region.GetWidth, region.GetHeight)
@@ -281,11 +281,11 @@ Public Module GdiRenderUtil
     End Sub
 
     Private Sub _drawText_vertical_aux( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal textDesign As TextDesign, _
-      ByVal texts As List(Of String), _
-      ByVal font As Font)
+      g As Graphics, _
+      region As Region, _
+      textDesign As TextDesign, _
+      texts As List(Of String), _
+      font As Font)
         Dim color As Color = GetColor(textDesign.Color, Drawing.Color.Black)
         Dim mx As Single = font.Size / 6
         Dim x As Single = 0
@@ -350,7 +350,7 @@ Public Module GdiRenderUtil
         End Using
     End Sub
 
-    Private Function getDistributeMap(ByVal w As Single, ByVal c As Integer, ByVal font As Font) As List(Of Single)
+    Private Function getDistributeMap(w As Single, c As Integer, font As Font) As List(Of Single)
         Dim ret As New List(Of Single)
         If c = 1 Then
             ret.Add(w / 2)
@@ -365,10 +365,10 @@ Public Module GdiRenderUtil
     End Function
 
     Private Function splitByCr( _
-      ByVal region As Region, _
-      ByVal font As Font, _
-      ByVal text As String, _
-      ByVal wrap As Boolean) As List(Of String)
+      region As Region, _
+      font As Font, _
+      text As String, _
+      wrap As Boolean) As List(Of String)
         Dim h As Single = region.GetHeight
         Dim yc As Integer = Fix((h + TOLERANCE) / font.Size)
         Dim ret As New List(Of String)
@@ -397,7 +397,7 @@ Public Module GdiRenderUtil
         Public Text2 As String
         Public Text3 As String
 
-        Public Sub New(ByVal text As String)
+        Public Sub New(text As String)
             Dim t As String = text
             With Regex.Match(t, "([^0-9]*)$")
                 Me.Text3 = .Groups(0).Value
@@ -409,7 +409,7 @@ Public Module GdiRenderUtil
             End With
         End Sub
 
-        Public Function GetFullText2(ByVal width As Integer) As String
+        Public Function GetFullText2(width As Integer) As String
             Dim ret As String = Me.Text2
             If ret.Length = 0 Then
                 ret = "."
@@ -417,16 +417,16 @@ Public Module GdiRenderUtil
             Return ret.PadRight(width + 1, "0")
         End Function
 
-        Public Function GetFullText(ByVal width As Integer) As String
+        Public Function GetFullText(width As Integer) As String
             Return Me.Text1 & Me.GetFullText2(width) & Me.Text3
         End Function
 
         Public Sub DrawText( _
-          ByVal g As Graphics, _
-          ByVal region As Region, _
-          ByVal setting As GdiRendererSetting, _
-          ByVal textDesign As TextDesign, _
-          ByVal font As Font)
+          g As Graphics, _
+          region As Region, _
+          setting As GdiRendererSetting, _
+          textDesign As TextDesign, _
+          font As Font)
             Dim color As Color = GetColor(textDesign.Color, Drawing.Color.Black)
             Dim ls As New SizeF(10000, 10000)
             Dim y As Single = 0
@@ -497,9 +497,9 @@ Public Module GdiRenderUtil
     End Class
 
     Private Function getFont( _
-      ByVal setting As GdiRendererSetting, _
-      ByVal textDesign As TextDesign, _
-      ByVal ignoreUnderline As Boolean) As Font
+      setting As GdiRendererSetting, _
+      textDesign As TextDesign, _
+      ignoreUnderline As Boolean) As Font
         Dim style As FontStyle = FontStyle.Regular
         If textDesign.Font.Bold Then
             style = style Or FontStyle.Bold
@@ -519,7 +519,7 @@ Public Module GdiRenderUtil
     End Function
 
     Private Function toStringAlignment( _
-      ByVal align As Report.EHAlign) As StringAlignment
+      align As Report.EHAlign) As StringAlignment
         Select Case align
             Case Report.EHAlign.LEFT
                 Return StringAlignment.Near
@@ -531,7 +531,7 @@ Public Module GdiRenderUtil
     End Function
 
     Private Function toStringAlignment( _
-      ByVal align As Report.EVAlign) As StringAlignment
+      align As Report.EVAlign) As StringAlignment
         Select Case align
             Case Report.EVAlign.TOP
                 Return StringAlignment.Near
@@ -543,11 +543,11 @@ Public Module GdiRenderUtil
     End Function
 
     Private Function getFitFont( _
-      ByVal g As Graphics, _
-      ByVal region As Region, _
-      ByVal setting As GdiRendererSetting, _
-      ByVal text As String, _
-      ByVal baseFont As Font) As Font
+      g As Graphics, _
+      region As Region, _
+      setting As GdiRendererSetting, _
+      text As String, _
+      baseFont As Font) As Font
         Dim ls As New SizeF(10000, 10000)
         If g.MeasureString(text, baseFont, ls).Width <= region.GetWidth Then
             Return baseFont
@@ -566,11 +566,11 @@ Public Module GdiRenderUtil
         Return New Font(baseFont.Name, setting.ShrinkFontSizeMin, baseFont.Style)
     End Function
 
-    Public Function GetColor(ByVal v As String) As Color
+    Public Function GetColor(v As String) As Color
         Return GetColor(v, Color.Empty)
     End Function
 
-    Public Function GetColor(ByVal v As String, ByVal defaultColor As Color) As Color
+    Public Function GetColor(v As String, defaultColor As Color) As Color
         If Not String.IsNullOrEmpty(v) Then
             If v.StartsWith("#") AndAlso v.Length = 7 Then
                 Dim _v As String = v.Substring(1).ToLower
@@ -592,7 +592,7 @@ Public Module GdiRenderUtil
         Return defaultColor
     End Function
 
-    Public Function GetMockData(ByVal desc As String) As Object
+    Public Function GetMockData(desc As String) As Object
         Try
             Dim m As Match = Regex.Match(desc.ToUpper, "([SWDT])(-?[0-9]+)?(\.([0-9]+))?")
             If m.Success Then
@@ -647,13 +647,13 @@ Public Module GdiRenderUtil
         Return desc
     End Function
 
-    Public Sub SetUpPrinterSetting(ByVal pageSettings As PageSettings, ByVal reportDesign As ReportDesign)
+    Public Sub SetUpPrinterSetting(pageSettings As PageSettings, reportDesign As ReportDesign)
         If reportDesign.PrinterName IsNot Nothing Then
             pageSettings.PrinterSettings.PrinterName = reportDesign.PrinterName
         End If
     End Sub
 
-    Public Sub SetUpPageSettings(ByVal pageSettings As PageSettings, ByVal reportDesign As ReportDesign)
+    Public Sub SetUpPageSettings(pageSettings As PageSettings, reportDesign As ReportDesign)
         Dim kind As PaperKind = PaperKind.Custom
         Select Case reportDesign.PaperDesign.PaperType
             Case Report.EPaperType.A3
@@ -707,10 +707,10 @@ Public Module GdiRenderUtil
     End Sub
 
     Public Sub SetUpGraphics( _
-      ByVal g As Graphics, _
-      ByVal reportDesign As ReportDesign, _
-      ByVal pageIndex As Integer, _
-      ByVal hardMargin As PointF)
+      g As Graphics, _
+      reportDesign As ReportDesign, _
+      pageIndex As Integer, _
+      hardMargin As PointF)
         g.PageUnit = GraphicsUnit.Point
         Dim m As PaperMarginDesign = reportDesign.PaperDesign.Margin.ToPoint(reportDesign.PaperDesign)
         If (pageIndex Mod 2) And m.OddReverse Then
@@ -720,19 +720,19 @@ Public Module GdiRenderUtil
         End If
     End Sub
 
-    Public Function ToPixelX(ByVal g As Graphics, ByVal v As Decimal) As Integer
+    Public Function ToPixelX(g As Graphics, v As Decimal) As Integer
         Return (v * g.DpiX) / 72
     End Function
 
-    Public Function ToPixelY(ByVal g As Graphics, ByVal v As Decimal) As Integer
+    Public Function ToPixelY(g As Graphics, v As Decimal) As Integer
         Return (v * g.DpiY) / 72
     End Function
 
-    Public Function ToPointX(ByVal g As Graphics, ByVal v As Integer) As Decimal
+    Public Function ToPointX(g As Graphics, v As Integer) As Decimal
         Return (72 * v) / g.DpiY
     End Function
 
-    Public Function ToPointY(ByVal g As Graphics, ByVal v As Integer) As Decimal
+    Public Function ToPointY(g As Graphics, v As Integer) As Decimal
         Return (72 * v) / g.DpiY
     End Function
 

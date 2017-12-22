@@ -10,10 +10,10 @@ Namespace method
         End Function
 
         Public Function Exec( _
-          ByVal evaluator As Evaluator, _
-          ByVal param As String, _
-          ByVal scope As String, _
-          ByVal unit As String) As Object Implements IMethod.Exec
+          evaluator As Evaluator, _
+          param As String, _
+          scope As String, _
+          unit As String) As Object Implements IMethod.Exec
             With evaluator.PageContext.Page
                 If .PageScope.ContainsKey(param) Then
                     Return .PageScope(param)

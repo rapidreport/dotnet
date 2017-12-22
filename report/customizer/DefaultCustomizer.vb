@@ -5,21 +5,21 @@ Namespace customizer
     Public Class DefaultCustomizer
         Implements IReportCustomizer
         Public Overridable Function ContentRegion( _
-          ByVal content As Content, _
-          ByVal evaluator As Evaluator, _
-          ByVal region As Region) As Region Implements IReportCustomizer.ContentRegion
+          content As Content, _
+          evaluator As Evaluator, _
+          region As Region) As Region Implements IReportCustomizer.ContentRegion
             Return region
         End Function
         Public Overridable Sub PageAdded( _
-          ByVal report As Report, _
-          ByVal pages As ReportPages, _
-          ByVal page As ReportPage) Implements IReportCustomizer.PageAdded
+          report As Report, _
+          pages As ReportPages, _
+          page As ReportPage) Implements IReportCustomizer.PageAdded
         End Sub
         Public Overridable Sub RenderContent( _
-          ByVal content As Content, _
-          ByVal evaluator As Evaluator, _
-          ByVal region As Region, _
-          ByVal elementDesigns As ElementDesigns) Implements IReportCustomizer.RenderContent
+          content As Content, _
+          evaluator As Evaluator, _
+          region As Region, _
+          elementDesigns As ElementDesigns) Implements IReportCustomizer.RenderContent
         End Sub
     End Class
 End Namespace

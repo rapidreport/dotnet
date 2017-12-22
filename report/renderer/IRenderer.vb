@@ -3,11 +3,11 @@
 Namespace renderer
 
     Public Interface IRenderer
-        Sub BeginReport(ByVal reportDesign As ReportDesign)
-        Sub EndReport(ByVal reportDesign As ReportDesign)
-        Sub BeginPage(ByVal reportDesign As ReportDesign, ByVal pageIndex As Integer, ByVal paperRegion As Region)
-        Sub EndPage(ByVal reportDesign As ReportDesign)
-        Sub RenderElement(ByVal reportDesign As ReportDesign, ByVal region As Region, ByVal design As ElementDesign, ByVal data As Object)
+        Sub BeginReport(reportDesign As ReportDesign)
+        Sub EndReport(reportDesign As ReportDesign)
+        Sub BeginPage(reportDesign As ReportDesign, pageIndex As Integer, paperRegion As Region)
+        Sub EndPage(reportDesign As ReportDesign)
+        Sub RenderElement(reportDesign As ReportDesign, region As Region, design As ElementDesign, data As Object)
     End Interface
 
 End Namespace

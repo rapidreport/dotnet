@@ -6,12 +6,12 @@
         Me.InitializeComponent()
     End Sub
 
-    Public Sub New(ByVal printer As Printer)
+    Public Sub New(printer As Printer)
         Me.InitializeComponent()
         Me.PrintPreview.Printer = printer
     End Sub
 
-    Private Sub FmPrintPreview_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+    Private Sub FmPrintPreview_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If Me.PrintPreview.Printer Is Nothing Then
             Exit Sub
         End If
@@ -34,7 +34,7 @@
         End If
     End Sub
 
-    Private Sub FmPrintPreview_MouseWheel(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseWheel
+    Private Sub FmPrintPreview_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
         Dim handled As Boolean = False
         If Me.ActiveControl Is Me.PrintPreviewPage Then
             handled = Me.PrintPreviewPage.HandleMouseWheelEvent(e)
@@ -46,7 +46,7 @@
         End If
     End Sub
 
-    Private Sub FmPrintPreview_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub FmPrintPreview_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         Select Case e.KeyCode
             Case Keys.P
                 If e.Modifiers = Keys.Control Then
@@ -63,11 +63,11 @@
         End Select
     End Sub
 
-    Private Sub BtnPrint_Click(ByVal sender As Object, ByVal e As EventArgs) Handles BtnPrint.Click
+    Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
         Me.Print()
     End Sub
 
-    Private Sub BtnClose_Click(ByVal sender As Object, ByVal e As EventArgs) Handles BtnClose.Click
+    Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
         Me.Close()
     End Sub
 

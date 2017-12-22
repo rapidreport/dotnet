@@ -3,33 +3,33 @@ Imports System.IO
 
 Public Module Json
 
-    Public Sub Write(ByVal data As Hashtable, ByVal path As String)
+    Public Sub Write(data As Hashtable, path As String)
         Using w As New StreamWriter(path)
             Write(data, w)
         End Using
     End Sub
 
-    Public Sub Write(ByVal data As Hashtable, ByVal writer As TextWriter)
+    Public Sub Write(data As Hashtable, writer As TextWriter)
         Using w As New JsonTextWriter(writer)
             Write(data, w)
         End Using
     End Sub
 
-    Public Sub Write(ByVal data As Hashtable, ByVal writer As JsonWriter)
+    Public Sub Write(data As Hashtable, writer As JsonWriter)
         writeHash(data, writer)
     End Sub
 
-    Public Function Read(ByVal path As String) As Hashtable
+    Public Function Read(path As String) As Hashtable
         Using reader As New StreamReader(path)
             Return Read(reader)
         End Using
     End Function
 
-    Public Function Read(ByVal reader As TextReader) As Hashtable
+    Public Function Read(reader As TextReader) As Hashtable
         Return Read(New JsonTextReader(reader))
     End Function
 
-    Public Function Read(ByVal reader As JsonReader) As Hashtable
+    Public Function Read(reader As JsonReader) As Hashtable
         If reader.Read Then
             Return readHash(reader)
         Else
@@ -37,7 +37,7 @@ Public Module Json
         End If
     End Function
 
-    Private Sub writeNode(ByVal data As Object, ByVal writer As JsonWriter)
+    Private Sub writeNode(data As Object, writer As JsonWriter)
         If TypeOf data Is Hashtable Then
             writeHash(data, writer)
         ElseIf TypeOf data Is ArrayList Then
@@ -49,7 +49,7 @@ Public Module Json
         End If
     End Sub
 
-    Private Sub writeHash(ByVal data As Hashtable, ByVal writer As JsonWriter)
+    Private Sub writeHash(data As Hashtable, writer As JsonWriter)
         writer.WriteStartObject()
         For Each k As String In data.Keys
             writer.WritePropertyName(k)
@@ -58,7 +58,7 @@ Public Module Json
         writer.WriteEndObject()
     End Sub
 
-    Private Sub writeArray(ByVal data As ArrayList, ByVal writer As JsonWriter)
+    Private Sub writeArray(data As ArrayList, writer As JsonWriter)
         writer.WriteStartArray()
         For Each v As Object In data
             writeNode(v, writer)
@@ -66,7 +66,7 @@ Public Module Json
         writer.WriteEndArray()
     End Sub
 
-    Private Function readNode(ByVal reader As JsonReader) As Object
+    Private Function readNode(reader As JsonReader) As Object
         Select Case reader.TokenType
             Case JsonToken.StartArray
                 Return readArray(reader)
@@ -77,7 +77,7 @@ Public Module Json
         End Select
     End Function
 
-    Private Function readArray(ByVal reader As JsonReader) As ArrayList
+    Private Function readArray(reader As JsonReader) As ArrayList
         Dim ret As New ArrayList
         Do While reader.Read
             If reader.TokenType = JsonToken.EndArray Then
@@ -88,7 +88,7 @@ Public Module Json
         Return ret
     End Function
 
-    Private Function readHash(ByVal reader As JsonReader) As Hashtable
+    Private Function readHash(reader As JsonReader) As Hashtable
         Dim ret As New Hashtable
         Do While reader.Read
             Dim key As Object = Nothing

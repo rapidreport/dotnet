@@ -6,10 +6,10 @@ Namespace elementpreprocessor
     Public Class DefaultPreprocessor
         Implements IElementPreprocessor
         Public Function DoProcess( _
-          ByVal renderer As IRenderer, _
-          ByVal region As Region, _
-          ByVal evaluator As Evaluator, _
-          ByVal design As ElementDesign) As Object Implements IElementPreprocessor.DoProcess
+          renderer As IRenderer, _
+          region As Region, _
+          evaluator As Evaluator, _
+          design As ElementDesign) As Object Implements IElementPreprocessor.DoProcess
             If Not design.IsNull("exp") Then
                 Return evaluator.EvalTry(design.Get("exp"))
             ElseIf Not design.IsNull("text") Then

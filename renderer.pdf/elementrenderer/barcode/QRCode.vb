@@ -13,10 +13,10 @@ Namespace barcode
     Public Module QRCode
 
         Public Function GetImage( _
-          ByVal cb As PdfContentByte, _
-          ByVal region As Region, _
-          ByVal design As ElementDesign, _
-          ByVal code As String) As Image
+          cb As PdfContentByte, _
+          region As Region, _
+          design As ElementDesign, _
+          code As String) As Image
             Dim w As New QRCodeWriter
             Dim h As New Dictionary(Of EncodeHintType, Object)
             If Not design.IsNull("qr_charset") Then

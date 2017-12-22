@@ -16,7 +16,7 @@
             Me.new(New Hashtable)
         End Sub
 
-        Public Sub New(ByVal desc As Hashtable)
+        Public Sub New(desc As Hashtable)
             If desc.ContainsKey("initial") Then
                 Me.Initial = desc("initial")
                 Me.SpecInitial = True

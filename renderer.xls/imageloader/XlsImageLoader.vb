@@ -16,11 +16,11 @@ Namespace imageloader
             Me.New(New ImageMap)
         End Sub
 
-        Public Sub New(ByVal imageMap As ImageMap)
+        Public Sub New(imageMap As ImageMap)
             Me.ImageMap = imageMap
         End Sub
 
-        Public Overridable Function GetImage(ByVal param As Object) As Image Implements IXlsImageLoader.GetImage
+        Public Overridable Function GetImage(param As Object) As Image Implements IXlsImageLoader.GetImage
             Return Me.ImageMap(param)
         End Function
 

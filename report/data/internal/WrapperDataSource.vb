@@ -7,7 +7,7 @@ Namespace data.internal
 
         Public DataList As New List(Of ReportData)
 
-        Public Function [Get](ByVal i As Integer, ByVal key As String) As Object Implements IReportDataSource.Get
+        Public Function [Get](i As Integer, key As String) As Object Implements IReportDataSource.Get
             Return Me.DataList(i).GetRecord.Get(key)
         End Function
 

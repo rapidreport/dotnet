@@ -3,7 +3,7 @@
 
         Public Const TOLERANCE As Single = 1.0F
 
-        Public Function CreateColWidths(ByVal cols As List(Of Single), ByVal coefficient As Single) As List(Of Integer)
+        Public Function CreateColWidths(cols As List(Of Single), coefficient As Single) As List(Of Integer)
             Dim ret As New List(Of Integer)
             Dim last As Integer = 0
             For i As Integer = 1 To cols.Count - 1
@@ -14,7 +14,7 @@
             Return ret
         End Function
 
-        Public Function CreateRowHeights(ByVal rows As List(Of Single), ByVal coefficient As Single) As List(Of Integer)
+        Public Function CreateRowHeights(rows As List(Of Single), coefficient As Single) As List(Of Integer)
             Dim ret As New List(Of Integer)
             Dim last As Integer = 0
             For i As Integer = 1 To rows.Count - 1
@@ -25,7 +25,7 @@
             Return ret
         End Function
 
-        Public Function CreateCols(ByVal reportDesign As ReportDesign, ByVal renderer As XlsxRenderer)
+        Public Function CreateCols(reportDesign As ReportDesign, renderer As XlsxRenderer)
             Dim l As New List(Of _IContainer)
             For Each page As Page In renderer.Pages
                 For Each grid As Grid In page.Grids
@@ -44,7 +44,7 @@
             Return createRowCols_aux(l, renderer.Setting.ColWidthMax)
         End Function
 
-        Public Function CreateRows(ByVal reportDesign As ReportDesign, ByVal page As Page)
+        Public Function CreateRows(reportDesign As ReportDesign, page As Page)
             Dim l As New List(Of _IContainer)
             For Each grid As Grid In page.Grids
                 l.Add(New TopGridContainer(grid))
@@ -61,7 +61,7 @@
             Return createRowCols_aux(l, page.Renderer.Setting.RowHeightMax)
         End Function
 
-        Private Function createRowCols_aux(ByVal l As List(Of _IContainer), ByVal max As Single)
+        Private Function createRowCols_aux(l As List(Of _IContainer), max As Single)
             Dim ret As New List(Of Single)
             l.Sort(New _ContainerComparator)
             Dim pointPos As Single = 0
@@ -88,12 +88,12 @@
 
         Private Interface _IContainer
             Function GetPointPos() As Single
-            Sub SetPos(ByVal pos As Integer)
+            Sub SetPos(pos As Integer)
         End Interface
 
         Private Class _ContainerComparator
             Implements IComparer(Of _IContainer)
-            Public Function Compare(ByVal o1 As _IContainer, ByVal o2 As _IContainer) As Integer Implements IComparer(Of _IContainer).Compare
+            Public Function Compare(o1 As _IContainer, o2 As _IContainer) As Integer Implements IComparer(Of _IContainer).Compare
                 Dim v As Single = o1.GetPointPos - o2.GetPointPos
                 If v < 0 Then
                     Return -1
@@ -108,13 +108,13 @@
         Private Class LeftGridContainer
             Implements _IContainer
             Private grid As Grid
-            Public Sub New(ByVal grid As Grid)
+            Public Sub New(grid As Grid)
                 Me.grid = grid
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.grid.Region.Left
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.grid.CellRange.Col1 = pos
             End Sub
         End Class
@@ -122,13 +122,13 @@
         Private Class RightGridContainer
             Implements _IContainer
             Private grid As Grid
-            Public Sub New(ByVal grid As Grid)
+            Public Sub New(grid As Grid)
                 Me.grid = grid
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.grid.Region.Right
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.grid.CellRange.Col2 = pos
             End Sub
         End Class
@@ -136,13 +136,13 @@
         Private Class TopGridContainer
             Implements _IContainer
             Private grid As Grid
-            Public Sub New(ByVal grid As Grid)
+            Public Sub New(grid As Grid)
                 Me.grid = grid
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.grid.Region.Top
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.grid.CellRange.Row1 = pos
             End Sub
         End Class
@@ -150,13 +150,13 @@
         Private Class BottomGridContainer
             Implements _IContainer
             Private grid As Grid
-            Public Sub New(ByVal grid As Grid)
+            Public Sub New(grid As Grid)
                 Me.grid = grid
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.grid.Region.Bottom
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.grid.CellRange.Row2 = pos
             End Sub
         End Class
@@ -164,13 +164,13 @@
         Private Class LeftFieldContainer
             Implements _IContainer
             Private field As Field
-            Public Sub New(ByVal field As Field)
+            Public Sub New(field As Field)
                 Me.field = field
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.field.Region.Left
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.field.CellRange.Col1 = pos
             End Sub
         End Class
@@ -178,13 +178,13 @@
         Private Class RightFieldContainer
             Implements _IContainer
             Private field As Field
-            Public Sub New(ByVal field As Field)
+            Public Sub New(field As Field)
                 Me.field = field
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.field.Region.Right
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.field.CellRange.Col2 = pos
             End Sub
         End Class
@@ -192,13 +192,13 @@
         Private Class TopFieldContainer
             Implements _IContainer
             Private field As Field
-            Public Sub New(ByVal field As Field)
+            Public Sub New(field As Field)
                 Me.field = field
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.field.Region.Top
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.field.CellRange.Row1 = pos
             End Sub
         End Class
@@ -206,13 +206,13 @@
         Private Class BottomFieldContainer
             Implements _IContainer
             Private field As Field
-            Public Sub New(ByVal field As Field)
+            Public Sub New(field As Field)
                 Me.field = field
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.field.Region.Bottom
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.field.CellRange.Row2 = pos
             End Sub
         End Class
@@ -220,13 +220,13 @@
         Private Class LeftShapeContainer
             Implements _IContainer
             Private shape As Shape
-            Public Sub New(ByVal shape As Shape)
+            Public Sub New(shape As Shape)
                 Me.shape = shape
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.shape.Region.Left
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.shape.CellRange.Col1 = pos
             End Sub
         End Class
@@ -234,13 +234,13 @@
         Private Class RightShapeContainer
             Implements _IContainer
             Private shape As Shape
-            Public Sub New(ByVal shape As Shape)
+            Public Sub New(shape As Shape)
                 Me.shape = shape
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.shape.Region.Right
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.shape.CellRange.Col2 = pos
             End Sub
         End Class
@@ -248,13 +248,13 @@
         Private Class TopShapeContainer
             Implements _IContainer
             Private shape As Shape
-            Public Sub New(ByVal shape As Shape)
+            Public Sub New(shape As Shape)
                 Me.shape = shape
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.shape.Region.Top
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.shape.CellRange.Row1 = pos
             End Sub
         End Class
@@ -262,13 +262,13 @@
         Private Class BottomShapeContainer
             Implements _IContainer
             Private shape As Shape
-            Public Sub New(ByVal shape As Shape)
+            Public Sub New(shape As Shape)
                 Me.shape = shape
             End Sub
             Public Function GetPointPos() As Single Implements _IContainer.GetPointPos
                 Return Me.shape.Region.Bottom
             End Function
-            Public Sub SetPos(ByVal pos As Integer) Implements _IContainer.SetPos
+            Public Sub SetPos(pos As Integer) Implements _IContainer.SetPos
                 Me.shape.CellRange.Row2 = pos
             End Sub
         End Class

@@ -3,7 +3,7 @@
 
         Public Map As List(Of List(Of Cell))
 
-        Public Sub New(ByVal rows As Integer, ByVal cols As Integer, ByVal page As Page)
+        Public Sub New(rows As Integer, cols As Integer, page As Page)
             Me.Map = New List(Of List(Of Cell))
             For i As Integer = 0 To rows
                 Me.Map.Add(New List(Of Cell))
@@ -15,7 +15,7 @@
             Me.fillFields(page.Fields)
         End Sub
 
-        Private Function createOrGetCell(ByVal row As Integer, ByVal col As Integer) As Cell
+        Private Function createOrGetCell(row As Integer, col As Integer) As Cell
             Dim ret As Cell = Me.Map(row)(col)
             If ret Is Nothing Then
                 ret = New Cell(row, col)
@@ -24,7 +24,7 @@
             Return ret
         End Function
 
-        Private Function createOrGetCellStyle(ByVal row As Integer, ByVal col As Integer) As CellStyle
+        Private Function createOrGetCellStyle(row As Integer, col As Integer) As CellStyle
             Dim cell As Cell = Me.createOrGetCell(row, col)
             If cell.Style Is Nothing Then
                 cell.Style = New CellStyle
@@ -32,7 +32,7 @@
             Return cell.Style
         End Function
 
-        Private Sub fillGrids(ByVal grids As List(Of Grid))
+        Private Sub fillGrids(grids As List(Of Grid))
             For Each grid As Grid In grids
                 If grid.Style.LeftBorder IsNot Nothing Then
                     For r As Integer = grid.CellRange.Row1 To grid.CellRange.Row2 - 1
@@ -64,7 +64,7 @@
             Next
         End Sub
 
-        Private Sub fillFields(ByVal fields As List(Of Field))
+        Private Sub fillFields(fields As List(Of Field))
             For Each field As Field In fields
                 Me.createOrGetCellStyle(field.CellRange.Row1, field.CellRange.Col1).FieldStyle = field.Style
                 Dim cell As Cell = Me.createOrGetCell(field.CellRange.Row1, field.CellRange.Col1)
@@ -87,7 +87,7 @@
             Next
         End Sub
 
-        Private Sub relocate(ByVal cell As Cell)
+        Private Sub relocate(cell As Cell)
             If cell.MergedCell Is cell Then
                 Dim r2 As Integer = cell.Range.Row2
                 Dim c2 As Integer = cell.Range.Col2

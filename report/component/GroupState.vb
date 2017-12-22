@@ -14,7 +14,7 @@ Namespace component
         Public Blank As Boolean = False
         Public BlankFirst As Boolean = False
         Public BlankLast As Boolean = False
-        Public Sub New(ByVal parentState As ContentState)
+        Public Sub New(parentState As ContentState)
             Me.ParentState = parentState
         End Sub
     End Class

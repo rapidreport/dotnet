@@ -8,7 +8,7 @@ Namespace component
             Public Class Node
                 Public Caller As Node
                 Public Field As CustomField
-                Public Sub New(ByVal caller As Node, ByVal field As CustomField)
+                Public Sub New(caller As Node, field As CustomField)
                     Me.Caller = caller
                     Me.Field = field
                 End Sub
@@ -16,7 +16,7 @@ Namespace component
 
             Public Top As Node = Nothing
 
-            Private Sub detectCircularReference(ByVal field As CustomField)
+            Private Sub detectCircularReference(field As CustomField)
                 Dim n As Node = Me.Top
                 Do While n IsNot Nothing
                     If n.Field.Key.Equals(field.Key) And n.Field.Data Is field.Data Then
@@ -26,7 +26,7 @@ Namespace component
                 Loop
             End Sub
 
-            Public Sub Push(ByVal field As CustomField)
+            Public Sub Push(field As CustomField)
                 Me.detectCircularReference(field)
                 Me.Top = New Node(Me.Top, field)
             End Sub
@@ -43,17 +43,17 @@ Namespace component
         Public Data As ReportData
 
         Public Sub New( _
-          ByVal key As String, _
-          ByVal exp As String, _
-          ByVal report As Report, _
-          ByVal data As ReportData)
+          key As String, _
+          exp As String, _
+          report As Report, _
+          data As ReportData)
             Me.Key = key
             Me.Exp = exp
             Me.Report = report
             Me.Data = data
         End Sub
 
-        Public Function [Get](ByVal i As Integer) As Object
+        Public Function [Get](i As Integer) As Object
             Try
                 Me.Report.CustomFieldStack.Push(Me)
                 If Not TypeOf Me.Data.DataSource Is INoCache Then
@@ -80,7 +80,7 @@ Namespace component
             End Try
         End Function
 
-        Private Function eval(ByVal i As Integer) As Object
+        Private Function eval(i As Integer) As Object
             Dim r As New ReportDataRecord(Me.Data, i)
             Return New Evaluator(Me.Report, Me.Data, r).Eval(Me.Exp)
         End Function
