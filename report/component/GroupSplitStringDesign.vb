@@ -29,8 +29,7 @@ Public Class GroupSplitStringDesign
         If t Is Nothing Then
             ret.Add(New ReportData(New SplitStringDataSource(data, Me.Key, Nothing), data.Report, data.Group))
         Else
-            For Each _t As String In t.Split(vbCr)
-                _t = _t.Replace(vbLf, "")
+            For Each _t As String In ReportUtil.SplitLines(t)
                 If Me.Width = 0 Then
                     ret.Add(New ReportData(New SplitStringDataSource(data, Me.Key, _t), data.Report, data.Group))
                 Else

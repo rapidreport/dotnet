@@ -15,8 +15,7 @@ Namespace [operator]
             Dim w As Integer = evaluator.Eval(params(1))
             Dim i As Integer = evaluator.Eval(params(2))
             Dim j As Integer = 0
-            For Each t As String In str.Split(vbCr)
-                t = t.Replace(vbLf, "")
+            For Each t As String In ReportUtil.SplitLines(str)
                 Dim b As Integer = 0
                 Dim e As Integer = 0
                 Do

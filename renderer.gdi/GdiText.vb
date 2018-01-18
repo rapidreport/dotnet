@@ -61,7 +61,7 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_Distribute()
         Dim font As Font = _GetFont(Me.Setting, Me.TextDesign, True)
-        Dim texts As List(Of String) = _SplitByCr(Me.Region, font, Me.Text, False)
+        Dim texts As List(Of String) = _SplitText(Me.Region, font, Me.Text, False)
         Dim color As Color = GdiRenderUtil.GetColor(Me.TextDesign.Color, Drawing.Color.Black)
         Dim sf As StringFormat = _GetStringFormat(
             _ToStringAlignment(Report.EHAlign.CENTER),
@@ -90,11 +90,11 @@ Public Class GdiText
             If TextDesign.Font.Underline Then
                 Using p As New Pen(color)
                     p.Width = TextDesign.Font.Size / 13.4F
-                    Graphics.DrawLine( _
-                      p, _
-                      Region.Left + font.Size / 6, _
-                      Region.Top + y + (font.Size - p.Width), _
-                      Region.Right - font.Size / 6, _
+                    Graphics.DrawLine(
+                      p,
+                      Region.Left + font.Size / 6,
+                      Region.Top + y + (font.Size - p.Width),
+                      Region.Right - font.Size / 6,
                       Region.Top + y + (font.Size - p.Width))
                 End Using
             End If
@@ -104,7 +104,7 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_DistributeVertical()
         Dim font As Font = _GetFont(Setting, TextDesign, True)
-        Dim texts As List(Of String) = _SplitByCr(Region, font, Text, False)
+        Dim texts As List(Of String) = _SplitText(Region, font, Text, False)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
         Dim sf As StringFormat = _GetStringFormat(
             _ToStringAlignment(Report.EHAlign.CENTER),
@@ -135,11 +135,11 @@ Public Class GdiText
             If TextDesign.Font.Underline Then
                 Using p As New Pen(color)
                     p.Width = TextDesign.Font.Size / 13.4F
-                    Me.Graphics.DrawLine( _
-                      p, _
-                      Region.Left + x + font.Size / 2 + p.Width, _
-                      Region.Top, _
-                      Region.Left + x + font.Size / 2 + p.Width, _
+                    Me.Graphics.DrawLine(
+                      p,
+                      Region.Left + x + font.Size / 2 + p.Width,
+                      Region.Top,
+                      Region.Left + x + font.Size / 2 + p.Width,
                       Region.Bottom)
                 End Using
             End If
@@ -149,13 +149,13 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_Vertical()
         Dim font As Font = _GetFont(Setting, TextDesign, True)
-        Dim texts As List(Of String) = _SplitByCr(Region, font, Text, False)
+        Dim texts As List(Of String) = _SplitText(Region, font, Text, False)
         _Draw_Vertical_Aux(texts, font)
     End Sub
 
     Protected Overridable Sub _Draw_VerticalShrink()
         Dim font As Font = _GetFont(Setting, TextDesign, True)
-        Dim texts As List(Of String) = _SplitByCr(Region, font, Text, False)
+        Dim texts As List(Of String) = _SplitText(Region, font, Text, False)
         With Nothing
             Dim m As Integer = 0
             For Each t As String In texts
@@ -175,7 +175,7 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_VerticalWrap()
         Dim font As Font = _GetFont(Setting, TextDesign, True)
-        Dim texts As List(Of String) = _SplitByCr(Region, font, Text, True)
+        Dim texts As List(Of String) = _SplitText(Region, font, Text, True)
         _Draw_Vertical_Aux(texts, font)
     End Sub
 
@@ -233,8 +233,8 @@ Public Class GdiText
         End Using
     End Sub
 
-    Protected Overridable Sub _Draw_Vertical_Aux( _
-      texts As List(Of String), _
+    Protected Overridable Sub _Draw_Vertical_Aux(
+      texts As List(Of String),
       font As Font)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
         Dim mx As Single = font.Size / 6
@@ -301,6 +301,9 @@ Public Class GdiText
         ret.Alignment = alignment
         ret.LineAlignment = lineAlignment
         ret.FormatFlags = formatFlags
+        If Not Report.Compatibility._4_34_GdiTextNotMeasureTrailingSpaces Then
+            ret.FormatFlags = ret.FormatFlags Or StringFormatFlags.MeasureTrailingSpaces
+        End If
         Return ret
     End Function
 
@@ -314,9 +317,9 @@ Public Class GdiText
         Return False
     End Function
 
-    Protected Shared Function _GetFont( _
-      setting As GdiRendererSetting, _
-      textDesign As TextDesign, _
+    Protected Shared Function _GetFont(
+      setting As GdiRendererSetting,
+      textDesign As TextDesign,
       ignoreUnderline As Boolean) As Font
         Dim style As FontStyle = FontStyle.Regular
         If textDesign.Font.Bold Then
@@ -330,13 +333,13 @@ Public Class GdiText
                 style = style Or FontStyle.Underline
             End If
         End If
-        Return New Font( _
-          setting.GetFont(textDesign.Font.Name), _
-          textDesign.Font.Size, _
+        Return New Font(
+          setting.GetFont(textDesign.Font.Name),
+          textDesign.Font.Size,
           style)
     End Function
 
-    Protected Shared Function _ToStringAlignment( _
+    Protected Shared Function _ToStringAlignment(
       align As Report.EHAlign) As StringAlignment
         Select Case align
             Case Report.EHAlign.LEFT
@@ -348,7 +351,7 @@ Public Class GdiText
         End Select
     End Function
 
-    Protected Shared Function _ToStringAlignment( _
+    Protected Shared Function _ToStringAlignment(
       align As Report.EVAlign) As StringAlignment
         Select Case align
             Case Report.EVAlign.TOP
@@ -360,12 +363,12 @@ Public Class GdiText
         End Select
     End Function
 
-    Protected Shared Function _GetFitFont( _
-      g As Graphics, _
-      region As Region, _
-      setting As GdiRendererSetting, _
-      text As String, _
-      baseFont As Font, _
+    Protected Shared Function _GetFitFont(
+      g As Graphics,
+      region As Region,
+      setting As GdiRendererSetting,
+      text As String,
+      baseFont As Font,
       stringFormat As StringFormat) As Font
         If g.MeasureString(text, baseFont, 100000, stringFormat).Width <= region.GetWidth Then
             Return baseFont
@@ -398,16 +401,15 @@ Public Class GdiText
         Return ret
     End Function
 
-    Protected Shared Function _SplitByCr( _
-      region As Region, _
-      font As Font, _
-      text As String, _
+    Protected Shared Function _SplitText(
+      region As Region,
+      font As Font,
+      text As String,
       wrap As Boolean) As List(Of String)
         Dim h As Single = region.GetHeight
         Dim yc As Integer = Fix((h + TOLERANCE) / font.Size)
         Dim ret As New List(Of String)
-        For Each t As String In text.Split(vbCr)
-            t = t.Replace(vbLf, "")
+        For Each t As String In ReportUtil.SplitLines(text)
             If wrap Then
                 Do
                     If t.Length > yc Then

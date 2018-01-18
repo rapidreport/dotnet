@@ -518,8 +518,7 @@ Public Class PdfText
         Dim fontSize As Single = TextDesign.Font.Size
         Dim cw As Single = Region.GetWidth - MARGIN_X * 2
         Dim ret As New List(Of String)
-        For Each t As String In Text.Split(vbCr)
-            t = t.Replace(vbLf, "")
+        For Each t As String In ReportUtil.SplitLines(Me.Text)
             If wrap AndAlso _GetTextWidth(fontSize, t) > cw + TOLERANCE Then
                 Dim _t As String = t
                 Do While Not String.IsNullOrEmpty(_t)
@@ -544,8 +543,7 @@ Public Class PdfText
         Dim ch As Single = Region.GetHeight
         Dim yc As Integer = Fix((ch + TOLERANCE) / fontSize)
         Dim ret As New List(Of String)
-        For Each t As String In Text.Split(vbCr)
-            t = t.Replace(vbLf, "")
+        For Each t As String In ReportUtil.SplitLines(Me.Text)
             If wrap Then
                 Do
                     If t.Length > yc Then
