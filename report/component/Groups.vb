@@ -30,32 +30,36 @@ Namespace component
         Public Sub Fill(data As ReportData)
             Me.Groups = New List(Of Group)
             Dim _data As ReportData = data
-            If Not Me.Report.InDesigner AndAlso Me.Design.BlankData Then
-                _data = New ReportData(BlankDataSource.GetInstance, _data.Report, _data.Group)
-            End If
-            With Nothing
-                Dim dataSource As IReportDataSource = _data
-                If Me.Report.GroupDataProvider IsNot Nothing Then
-                    dataSource = Me.Report.GroupDataProvider.GetGroupDataSource(Me, data)
+            If Me.Report.InDesigner Then
+                Me.AddGroup(New ReportData(_data))
+            Else
+                If Me.Design.BlankData Then
+                    _data = New ReportData(BlankDataSource.GetInstance, _data.Report, _data.Group)
                 End If
-                If Me.Design.SortKeys IsNot Nothing Then
-                    dataSource = New SortedDataSource(_data, Me.Design.SortKeys, _data.Context.GetLogger)
+                With Nothing
+                    Dim dataSource As IReportDataSource = _data
+                    If Me.Report.GroupDataProvider IsNot Nothing Then
+                        dataSource = Me.Report.GroupDataProvider.GetGroupDataSource(Me, data)
+                    End If
+                    If Me.Design.SortKeys IsNot Nothing Then
+                        dataSource = New SortedDataSource(_data, Me.Design.SortKeys, _data.Context.GetLogger)
+                    End If
+                    If dataSource IsNot data Then
+                        _data = New ReportData(dataSource, data.Report, data.Group)
+                        Me.DataOverridden = True
+                    End If
+                End With
+                If Not Crosstab.Fill(Me, _data) Then
+                    Dim dataList As List(Of ReportData)
+                    If Me.Design.SplitString IsNot Nothing Then
+                        dataList = Me.Design.SplitString.Split(_data)
+                    Else
+                        dataList = Me.Design.DataSplit(_data)
+                    End If
+                    For Each d As ReportData In dataList
+                        Me.AddGroup(d)
+                    Next
                 End If
-                If dataSource IsNot data Then
-                    _data = New ReportData(dataSource, data.Report, data.Group)
-                    Me.DataOverridden = True
-                End If
-            End With
-            If Not Crosstab.Fill(Me, _data) Then
-                Dim dataList As List(Of ReportData)
-                If Me.Design.SplitString IsNot Nothing Then
-                    dataList = Me.Design.SplitString.Split(_data)
-                Else
-                    dataList = Me.Design.DataSplit(_data)
-                End If
-                For Each d As ReportData In dataList
-                    Me.AddGroup(d)
-                Next
             End If
         End Sub
 
