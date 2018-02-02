@@ -14,20 +14,12 @@ Namespace [operator]
             End If
             Dim w As Integer = evaluator.Eval(params(1))
             Dim i As Integer = evaluator.Eval(params(2))
-            Dim j As Integer = 0
-            For Each t As String In ReportUtil.SplitLines(str)
-                Dim b As Integer = 0
-                Dim e As Integer = 0
-                Do
-                    b = e
-                    e = ReportUtil.GetWIndex(t, b, w)
-                    If j = i Then
-                        Return ReportUtil.SubString(t, b, e - b)
-                    End If
-                    j += 1
-                Loop While e < t.Length
-            Next
-            Return Nothing
+            Dim rule As Boolean = False
+            If params.Count >= 4 Then
+                rule = evaluator.Eval(params(3))
+            End If
+            Dim sp As New TextSplitterByWidth(w, rule)
+            Return sp.GetLine(str, i)
         End Function
     End Class
 End Namespace

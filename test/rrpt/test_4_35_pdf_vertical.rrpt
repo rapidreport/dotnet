@@ -1,0 +1,34 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 0.0,
+          rev_initial: true
+        },
+        elements: [
+          {type:"text",layout:{x1:5.0,y1:0.0,x2:20.0,y2:802.0},font:{name:"mincho"},halign:"center",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:25.0,y1:0.0,x2:40.0,y2:802.0},font:{name:"mincho",italic:true},halign:"center",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:340.0,y1:0.0,x2:360.0,y2:802.0},font:{name:"mincho",size:15.0},halign:"center",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:365.0,y1:0.0,x2:385.0,y2:802.0},font:{name:"mincho",italic:true,size:15.0},halign:"center",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:395.0,y1:0.0,x2:425.0,y2:802.0},font:{name:"mincho",size:20.0},halign:"center",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:430.0,y1:0.0,x2:460.0,y2:802.0},font:{name:"mincho",italic:true,size:20.0},halign:"center",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:470.0,y1:0.0,x2:510.0,y2:802.0},font:{name:"mincho",size:25.0},halign:"center",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:515.0,y1:0.0,x2:555.0,y2:802.0},font:{name:"mincho",italic:true,size:25.0},halign:"center",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:55.0,y1:0.0,x2:105.0,y2:802.0},font:{name:"mincho"},halign:"center",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:110.0,y1:0.0,x2:160.0,y2:802.0},font:{name:"mincho",italic:true},halign:"center",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:175.0,y1:0.0,x2:205.0,y2:802.0},font:{name:"mincho"},halign:"left",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:210.0,y1:0.0,x2:240.0,y2:802.0},font:{name:"mincho",italic:true},halign:"left",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:255.0,y1:0.0,x2:285.0,y2:802.0},font:{name:"mincho"},halign:"right",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true},
+          {type:"text",layout:{x1:290.0,y1:0.0,x2:320.0,y2:802.0},font:{name:"mincho",italic:true},halign:"right",rect:{},text:"～←→↓⇒⇔↑＝≒「あいうえお。」｛、｝[，]…‥｜ーｰ",vertical:true}
+        ]
+      }
+    ]
+  }
+}

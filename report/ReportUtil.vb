@@ -222,32 +222,6 @@
         Return 0
     End Function
 
-    Public Function SplitLines(str As String) As IEnumerable(Of String)
-        Return New _Lines(str)
-    End Function
-
-    Private Class _Lines
-        Implements IEnumerable(Of String)
-        Private _Str As String
-        Public Sub New(str As String)
-            Me._Str = str
-        End Sub
-        Public Iterator Function GetEnumerator() As IEnumerator(Of String) Implements IEnumerable(Of String).GetEnumerator
-            Dim lf As String = vbLf
-            Dim cr As String = vbCr
-            If Report.Compatibility._4_34_TextSplitByCr Then
-                lf = vbCr
-                cr = vbLf
-            End If
-            For Each t As String In Me._Str.Split(lf)
-                Yield t.Replace(cr, "")
-            Next
-        End Function
-        Private Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Return Me.GetEnumerator
-        End Function
-    End Class
-
     Public Function ObjectToString(o As Object) As String
         If TypeOf o Is String Then
             Return o

@@ -7,6 +7,7 @@ Public Class GroupSplitStringDesign
     Public Key As String
     Public Exp As String
     Public Width As Integer
+    Public BreakRule As Boolean
 
     Public Sub New()
         Me.New(New Hashtable)
@@ -20,32 +21,16 @@ Public Class GroupSplitStringDesign
             Me.Exp = "." & Me.Key
         End If
         Me.Width = desc("width")
+        Me.BreakRule = desc("break_rule")
     End Sub
 
     Public Function Split(data As ReportData) As List(Of ReportData)
         Dim ret As New List(Of ReportData)
         Dim t As String = (New Evaluator(data)).EvalTry(Me.Exp)
-
-        If t Is Nothing Then
-            ret.Add(New ReportData(New SplitStringDataSource(data, Me.Key, Nothing), data.Report, data.Group))
-        Else
-            For Each _t As String In ReportUtil.SplitLines(t)
-                If Me.Width = 0 Then
-                    ret.Add(New ReportData(New SplitStringDataSource(data, Me.Key, _t), data.Report, data.Group))
-                Else
-                    Dim b As Integer = 0
-                    Dim e As Integer = 0
-                    Do
-                        b = e
-                        e = ReportUtil.GetWIndex(_t, b, Me.Width)
-                        ret.Add(New ReportData(
-                                New SplitStringDataSource(data, Me.Key, ReportUtil.SubString(_t, b, e - b)),
-                                data.Report, data.Group))
-                    Loop While e < _t.Length
-                End If
-            Next
-        End If
-
+        Dim sp As New TextSplitterByWidth(Me.Width, Me.BreakRule)
+        For Each _t As String In sp.GetLines(t)
+            ret.Add(New ReportData(New SplitStringDataSource(data, Me.Key, _t), data.Report, data.Group))
+        Next
         Return ret
     End Function
 

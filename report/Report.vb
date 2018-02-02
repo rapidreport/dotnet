@@ -73,6 +73,7 @@ Public Class Report
         Public Shared _4_32_BlankSubGroup As Boolean = False
         Public Shared _4_34_GdiTextNotMeasureTrailingSpaces As Boolean = False
         Public Shared _4_34_TextSplitByCr As Boolean = False
+        Public Shared _4_34_PdfWrapNoRule As Boolean = False
     End Class
 
     Public Class ContextClass

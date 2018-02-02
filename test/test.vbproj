@@ -163,6 +163,8 @@
     <Compile Include="Test_4_33_BufferLimit.vb" />
     <Compile Include="Test_4_34_DynamicContentSize.vb" />
     <Compile Include="Test_4_34_FooterIfSpace.vb" />
+    <Compile Include="Test_4_34_Wrap.vb" />
+    <Compile Include="Test_4_35_PdfVertical.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -292,6 +294,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_34_footer_if_space.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_35_pdf_vertical.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_35_wrap.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

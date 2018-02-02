@@ -11,7 +11,6 @@ Public Class GdiText
     Public Text As String
 
     Protected Const TOLERANCE As Single = 0.1F
-    Protected Const VERTICAL_ROTATE_CHARS As String = "～…‥｜ーｰ(){}[]<>（）｛｝「」＜＞。、"
 
     Public Overridable Sub Initialize( _
       env As RenderingEnv, _
@@ -61,7 +60,7 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_Distribute()
         Dim font As Font = _GetFont(Me.Setting, Me.TextDesign, True)
-        Dim texts As List(Of String) = _SplitText(Me.Region, font, Me.Text, False)
+        Dim texts As List(Of String) = (New TextSplitter()).GetLines(Me.Text)
         Dim color As Color = GdiRenderUtil.GetColor(Me.TextDesign.Color, Drawing.Color.Black)
         Dim sf As StringFormat = _GetStringFormat(
             _ToStringAlignment(Report.EHAlign.CENTER),
@@ -104,7 +103,7 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_DistributeVertical()
         Dim font As Font = _GetFont(Setting, TextDesign, True)
-        Dim texts As List(Of String) = _SplitText(Region, font, Text, False)
+        Dim texts As List(Of String) = (New TextSplitter()).GetLines(Me.Text)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
         Dim sf As StringFormat = _GetStringFormat(
             _ToStringAlignment(Report.EHAlign.CENTER),
@@ -149,13 +148,13 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_Vertical()
         Dim font As Font = _GetFont(Setting, TextDesign, True)
-        Dim texts As List(Of String) = _SplitText(Region, font, Text, False)
+        Dim texts As List(Of String) = (New TextSplitter()).GetLines(Me.Text)
         _Draw_Vertical_Aux(texts, font)
     End Sub
 
     Protected Overridable Sub _Draw_VerticalShrink()
         Dim font As Font = _GetFont(Setting, TextDesign, True)
-        Dim texts As List(Of String) = _SplitText(Region, font, Text, False)
+        Dim texts As List(Of String) = (New TextSplitter()).GetLines(Me.Text)
         With Nothing
             Dim m As Integer = 0
             For Each t As String In texts
@@ -175,8 +174,8 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_VerticalWrap()
         Dim font As Font = _GetFont(Setting, TextDesign, True)
-        Dim texts As List(Of String) = _SplitText(Region, font, Text, True)
-        _Draw_Vertical_Aux(texts, font)
+        Dim l As Integer = Fix((Region.GetHeight + TOLERANCE) / font.Size)
+        _Draw_Vertical_Aux((New TextSplitterByLen(l)).GetLines(Me.Text), font)
     End Sub
 
     Protected Overridable Sub _Draw_Fixdec()
@@ -398,32 +397,6 @@ Public Class GdiText
                 t += (w - font.Size - 2) / (c - 1)
             Loop While t < w And ret.Count < c
         End If
-        Return ret
-    End Function
-
-    Protected Shared Function _SplitText(
-      region As Region,
-      font As Font,
-      text As String,
-      wrap As Boolean) As List(Of String)
-        Dim h As Single = region.GetHeight
-        Dim yc As Integer = Fix((h + TOLERANCE) / font.Size)
-        Dim ret As New List(Of String)
-        For Each t As String In ReportUtil.SplitLines(text)
-            If wrap Then
-                Do
-                    If t.Length > yc Then
-                        ret.Add(t.Substring(0, yc))
-                        t = t.Substring(yc)
-                    Else
-                        ret.Add(t)
-                        Exit Do
-                    End If
-                Loop
-            Else
-                ret.Add(t)
-            End If
-        Next
         Return ret
     End Function
 

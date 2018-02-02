@@ -1,0 +1,76 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    custom_fields: [
+      {key:"t",exp:"'1234567890\\nABCDE ABCDEFG\\nあいうえお。\\nあいうえ「お」\\n「あいうえ」お'"}
+    ],
+    contents: [
+      {
+        size: {
+          initial: 200.0
+        },
+        elements: [
+          {type:"text",layout:{x1:20.0,y1:25.0,x2:125.0,y2:70.0},rect:{},text:"aiueo aiueo aiueo aiueo",wrap:true},
+          {type:"text",layout:{x1:130.0,y1:25.0,x2:200.0,y2:70.0},rect:{},text:"あいうえお「あいうえお\r\nあああ",wrap:true},
+          {type:"text",layout:{x1:130.0,y1:80.0,x2:200.0,y2:125.0},rect:{},text:"ああいうえお」あいうえお\r\nあああ",wrap:true},
+          {type:"text",layout:{x1:20.0,y1:80.0,x2:125.0,y2:125.0},rect:{},text:"あいうえお あいうえお あいうえお あいうえお",wrap:true},
+          {type:"field",layout:{x1:240.0,y1:25.0,x2:345.0,y2:70.0},exp:"'aiueo aiueo aiueo aiueo'",rect:{},wrap:true},
+          {type:"field",layout:{x1:350.0,y1:25.0,x2:420.0,y2:70.0},exp:"'あいうえお「あいうえお\\nあああ'",rect:{},wrap:true},
+          {type:"field",layout:{x1:350.0,y1:80.0,x2:420.0,y2:125.0},exp:"'ああいうえお」あいうえお\\nあああ'",rect:{},wrap:true},
+          {type:"field",layout:{x1:240.0,y1:80.0,x2:345.0,y2:125.0},exp:"'あいうえお あいうえお あいうえお あいうえお'",rect:{},wrap:true},
+          {type:"text",layout:{x1:20.0,y1:135.0,x2:90.0,y2:180.0},rect:{},text:"aiueo aiueo aiueo aiueo",vertical:true,wrap:true},
+          {type:"field",layout:{x1:240.0,y1:135.0,x2:310.0,y2:180.0},exp:"'aiueo aiueo aiueo aiueo'",rect:{},vertical:true,wrap:true},
+          {type:"text",layout:{x1:95.0,y1:135.0,x2:200.0,y2:180.0},rect:{},text:"あいうえお あいうえお あいうえお あいうえお",vertical:true,wrap:true},
+          {type:"field",layout:{x1:315.0,y1:135.0,x2:420.0,y2:180.0},exp:"'あいうえお あいうえお あいうえお あいうえお'",rect:{},vertical:true,wrap:true},
+          {type:"field",layout:{x1:435.0,y1:25.0,x2:540.0,y2:40.0},exp:"(wsplit '12345 123456789\\naiueo' 10 0)",rect:{},wrap:true},
+          {type:"field",layout:{x1:435.0,y1:45.0,x2:540.0,y2:60.0},exp:"(wsplit '12345 123456789\\naiueo' 10 1)",rect:{},wrap:true},
+          {type:"field",layout:{x1:435.0,y1:65.0,x2:540.0,y2:80.0},exp:"(wsplit '12345 123456789\\naiueo' 10 2)",rect:{},wrap:true},
+          {type:"field",layout:{x1:435.0,y1:100.0,x2:540.0,y2:115.0},exp:"(wsplit '12345 123456789\\naiueo' 10 0 true)",rect:{},wrap:true},
+          {type:"field",layout:{x1:435.0,y1:120.0,x2:540.0,y2:135.0},exp:"(wsplit '12345 123456789\\naiueo' 10 1 true)",rect:{},wrap:true},
+          {type:"field",layout:{x1:435.0,y1:140.0,x2:540.0,y2:155.0},exp:"(wsplit '12345 123456789\\naiueo' 10 2 true)",rect:{},wrap:true}
+        ]
+      },
+      {
+        elements: [
+          {type:"line",layout:{x1:0.0,y1:0.0,x2:555.0,y2:0.0}}
+        ],
+        group: {
+          split_string: {key:"t",width:10.0},
+          contents: [
+            {
+              size: {
+                initial: 20.0
+              },
+              elements: [
+                {type:"field",layout:{x1:0.0,y1:0.0,x2:555.0,y2:20.0},exp:".t",halign:"left",valign:"center"}
+              ]
+            }
+          ]
+        }
+      },
+      {
+        elements: [
+          {type:"line",layout:{x1:0.0,y1:0.0,x2:555.0,y2:0.0}}
+        ],
+        group: {
+          split_string: {key:"t",break_rule:true,width:10.0},
+          contents: [
+            {
+              size: {
+                initial: 20.0
+              },
+              elements: [
+                {type:"field",layout:{x1:0.0,y1:0.0,x2:555.0,y2:20.0},exp:".t",halign:"left",valign:"center"}
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
