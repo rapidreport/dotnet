@@ -31,8 +31,19 @@ Namespace component
         Public Function GetColor(v As String) As XSSFColor
             Dim t() As Byte = GetTriplet(v)
             If t IsNot Nothing Then
+                Return New XSSFColor(t)
+            Else
+                Return Nothing
+            End If
+        End Function
+
+        Public Function GetFontColor(v As String) As XSSFColor
+            Dim t() As Byte = GetTriplet(v)
+            If t IsNot Nothing Then
                 If t(0) = 255 AndAlso t(1) = 255 AndAlso t(2) = 255 Then
                     Return New XSSFColor(New Byte() {254, 254, 254})
+                ElseIf t(0) = 0 AndAlso t(1) = 0 AndAlso t(2) = 0 Then
+                    Return Nothing
                 Else
                     Return New XSSFColor(t)
                 End If

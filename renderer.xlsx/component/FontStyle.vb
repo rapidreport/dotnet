@@ -25,7 +25,7 @@ Namespace component
                 font.Underline = FontUnderlineType.Single
             End If
             If Me.Setting.Color IsNot Nothing Then
-                font.SetColor(ColorUtil.GetColor(Me.Setting.Color))
+                font.SetColor(ColorUtil.GetFontColor(Me.Setting.Color))
             End If
         End Sub
 

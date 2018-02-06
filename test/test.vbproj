@@ -165,6 +165,7 @@
     <Compile Include="Test_4_34_FooterIfSpace.vb" />
     <Compile Include="Test_4_34_Wrap.vb" />
     <Compile Include="Test_4_35_PdfVertical.vb" />
+    <Compile Include="Test_4_35_xlsx_color.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -300,6 +301,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_35_wrap.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_35_xlsx_color.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

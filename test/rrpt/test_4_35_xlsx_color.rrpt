@@ -1,0 +1,35 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 802.0
+        },
+        elements: [
+          {type:"rect",layout:{x1:0.0,y1:0.0,x2:555.0,y2:165.0},background:true,fill_color:"seagreen",line_width:0.0},
+          {type:"text",layout:{x1:35.0,y1:10.0,x2:90.0,y2:25.0},rect:{},text:"ＸＸＸＸ"},
+          {type:"text",layout:{x1:35.0,y1:60.0,x2:90.0,y2:75.0},color:"white",rect:{color:"white",fill_color:"black"},text:"ＸＸＸＸ"},
+          {type:"text",layout:{x1:35.0,y1:85.0,x2:90.0,y2:100.0},color:"aqua",rect:{color:"aqua",fill_color:"coral"},text:"ＸＸＸＸ"},
+          {type:"text",layout:{x1:35.0,y1:110.0,x2:90.0,y2:125.0},color:"coral",rect:{color:"coral",fill_color:"aqua"},text:"ＸＸＸＸ"},
+          {type:"field",layout:{x1:180.0,y1:10.0,x2:235.0,y2:25.0},exp:"'ＸＸＸＸ'",rect:{}},
+          {type:"field",layout:{x1:180.0,y1:60.0,x2:235.0,y2:75.0},color:"white",exp:"'ＸＸＸＸ'",rect:{color:"white",fill_color:"black"}},
+          {type:"field",layout:{x1:180.0,y1:85.0,x2:235.0,y2:100.0},color:"aqua",exp:"'ＸＸＸＸ'",rect:{color:"aqua",fill_color:"coral"}},
+          {type:"field",layout:{x1:180.0,y1:110.0,x2:235.0,y2:125.0},color:"coral",exp:"'ＸＸＸＸ'",rect:{color:"coral",fill_color:"aqua"}},
+          {type:"text",layout:{x1:35.0,y1:35.0,x2:90.0,y2:50.0},color:"black",rect:{color:"black",fill_color:"white"},text:"ＸＸＸＸ"},
+          {type:"field",layout:{x1:180.0,y1:35.0,x2:235.0,y2:50.0},color:"black",exp:"'ＸＸＸＸ'",rect:{color:"black",fill_color:"white"}},
+          {type:"circle",layout:{x1:310.0,y1:10.0,x2:365.0,y2:25.0}},
+          {type:"circle",layout:{x1:310.0,y1:60.0,x2:365.0,y2:75.0},color:"white",fill_color:"black"},
+          {type:"circle",layout:{x1:310.0,y1:85.0,x2:365.0,y2:100.0},color:"aqua",fill_color:"coral"},
+          {type:"circle",layout:{x1:310.0,y1:110.0,x2:365.0,y2:125.0},color:"coral",fill_color:"aqua"},
+          {type:"circle",layout:{x1:310.0,y1:35.0,x2:365.0,y2:50.0},color:"black",fill_color:"white"}
+        ]
+      }
+    ]
+  }
+}

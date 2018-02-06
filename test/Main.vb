@@ -40,6 +40,7 @@
         Tests.Add(New Test_4_34_DynamicContentSize)
         Tests.Add(New Test_4_35_PdfVertical)
         Tests.Add(New Test_4_35_Wrap)
+        Tests.Add(New Test_4_35_XlsxColor)
 
         Application.Run(New FmTest)
     End Sub
