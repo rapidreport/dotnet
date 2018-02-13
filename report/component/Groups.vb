@@ -86,9 +86,6 @@ Namespace component
           parentRegion As Region,
           parentState As ContentState,
           evaluator As Evaluator) As Region
-            If Me.Design.Id = "tt" And TypeOf scanner Is RenderingScanner Then
-                Debug.Print("t")
-            End If
             Dim _scanner As IScanner = scanner.BeforeGroups(Me, groupRange, parentRegion)
             Dim region As Region = parentRegion
             Dim i As Integer = 0
