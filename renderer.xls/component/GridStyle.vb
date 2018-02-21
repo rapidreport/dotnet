@@ -14,7 +14,7 @@ Namespace component
         Public Sub Fill(cellStyle As HSSFCellStyle, renderer As XlsRenderer)
             If Me.LeftBorder IsNot Nothing Then
                 Dim bs As BorderStyle = Me.LeftBorder
-                cellStyle.BorderLeft = toHSSFBorderStyle(bs.lineStyle)
+                cellStyle.BorderLeft = toNPOIBorderStyle(bs.LineStyle)
                 If bs.LineColor IsNot Nothing Then
                     Dim i As Short = renderer.ColorPool.GetIndex(bs.LineColor)
                     If i >= 0 Then
@@ -24,7 +24,7 @@ Namespace component
             End If
             If Me.RightBorder IsNot Nothing Then
                 Dim bs As BorderStyle = Me.RightBorder
-                cellStyle.BorderRight = toHSSFBorderStyle(bs.LineStyle)
+                cellStyle.BorderRight = toNPOIBorderStyle(bs.LineStyle)
                 If bs.LineColor IsNot Nothing Then
                     Dim i As Short = renderer.ColorPool.GetIndex(bs.LineColor)
                     If i >= 0 Then
@@ -34,7 +34,7 @@ Namespace component
             End If
             If Me.TopBorder IsNot Nothing Then
                 Dim bs As BorderStyle = Me.TopBorder
-                cellStyle.BorderTop = toHSSFBorderStyle(bs.LineStyle)
+                cellStyle.BorderTop = toNPOIBorderStyle(bs.LineStyle)
                 If bs.LineColor IsNot Nothing Then
                     Dim i As Short = renderer.ColorPool.GetIndex(bs.LineColor)
                     If i >= 0 Then
@@ -44,7 +44,7 @@ Namespace component
             End If
             If Me.BottomBorder IsNot Nothing Then
                 Dim bs As BorderStyle = Me.BottomBorder
-                cellStyle.BorderBottom = toHSSFBorderStyle(bs.LineStyle)
+                cellStyle.BorderBottom = toNPOIBorderStyle(bs.LineStyle)
                 If bs.LineColor IsNot Nothing Then
                     Dim i As Short = renderer.ColorPool.GetIndex(bs.LineColor)
                     If i >= 0 Then
@@ -61,30 +61,36 @@ Namespace component
             End If
         End Sub
 
-        Private Shared Function toHSSFBorderStyle(ls As BorderStyle.ELineStyle) As NPOI.SS.UserModel.BorderStyle
+        Private Shared Function toNPOIBorderStyle(ls As BorderStyle.ELineStyle) As NPOI.SS.UserModel.BorderStyle
             Select Case ls
                 Case BorderStyle.ELineStyle.THIN
-                    Return NPOI.SS.UserModel.BorderStyle.THIN
-                Case BorderStyle.ELineStyle.THICK
-                    Return NPOI.SS.UserModel.BorderStyle.THICK
-                Case BorderStyle.ELineStyle.MEDIUM
-                    Return NPOI.SS.UserModel.BorderStyle.MEDIUM
+                    Return NPOI.SS.UserModel.BorderStyle.Thin
+                Case BorderStyle.ELineStyle.HAIR
+                    Return NPOI.SS.UserModel.BorderStyle.Hair
                 Case BorderStyle.ELineStyle.DOT
-                    Return NPOI.SS.UserModel.BorderStyle.DOTTED
+                    Return NPOI.SS.UserModel.BorderStyle.Dotted
                 Case BorderStyle.ELineStyle.DASH
-                    Return NPOI.SS.UserModel.BorderStyle.DASHED
+                    Return NPOI.SS.UserModel.BorderStyle.Dashed
                 Case BorderStyle.ELineStyle.DASHDOT
                     Return NPOI.SS.UserModel.BorderStyle.DashDot
-                Case BorderStyle.ELineStyle.DOUBLE
-                    Return NPOI.SS.UserModel.BorderStyle.DOUBLE
-                Case BorderStyle.ELineStyle.MEDIUM_DOT
-                    Return NPOI.SS.UserModel.BorderStyle.MediumDashed
+                Case BorderStyle.ELineStyle.DASHDOTDOT
+                    Return NPOI.SS.UserModel.BorderStyle.DashDotDot
+                Case BorderStyle.ELineStyle.MEDIUM
+                    Return NPOI.SS.UserModel.BorderStyle.Medium
                 Case BorderStyle.ELineStyle.MEDIUM_DASH
                     Return NPOI.SS.UserModel.BorderStyle.MediumDashed
                 Case BorderStyle.ELineStyle.MEDIUM_DASHDOT
                     Return NPOI.SS.UserModel.BorderStyle.MediumDashDot
+                Case BorderStyle.ELineStyle.MEDIUM_DASHDOTDOT
+                    Return NPOI.SS.UserModel.BorderStyle.MediumDashDotDot
+                Case BorderStyle.ELineStyle.SLANTED_DASHDOT
+                    Return NPOI.SS.UserModel.BorderStyle.SlantedDashDot
+                Case BorderStyle.ELineStyle.THICK
+                    Return NPOI.SS.UserModel.BorderStyle.Thick
+                Case BorderStyle.ELineStyle.DOUBLE
+                    Return NPOI.SS.UserModel.BorderStyle.Double
             End Select
-            Return NPOI.SS.UserModel.BorderStyle.NONE
+            Return NPOI.SS.UserModel.BorderStyle.None
         End Function
 
         Public Overrides Function GetHashCode() As Integer
