@@ -28,7 +28,6 @@ Public Class XlsxRendererSetting
         Me.DefaultFont = "ＭＳ ゴシック"
         Me.FontMap.Add("gothic", "ＭＳ ゴシック")
         Me.FontMap.Add("mincho", "ＭＳ 明朝")
-        Me.CustomPalette = False
         Me.ColWidthMax = 800.0F
         Me.RowHeightMax = 350.0F
         Me.VResolution = 600
@@ -46,7 +45,6 @@ Public Class XlsxRendererSetting
         For Each k As String In setting.FontMap.Keys
             Me.FontMap.Add(k, setting.FontMap(k))
         Next
-        Me.CustomPalette = setting.CustomPalette
         Me.ColWidthMax = setting.ColWidthMax
         Me.RowHeightMax = setting.RowHeightMax
         Me.VResolution = setting.VResolution
