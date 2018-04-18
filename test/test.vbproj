@@ -165,7 +165,6 @@
     <Compile Include="Test_4_34_FooterIfSpace.vb" />
     <Compile Include="Test_4_34_Wrap.vb" />
     <Compile Include="Test_4_35_PdfVertical.vb" />
-    <Compile Include="Test_4_35_XlsxColor.vb" />
     <Compile Include="Test_4_36_XlsLineStyle.vb" />
   </ItemGroup>
   <ItemGroup>
