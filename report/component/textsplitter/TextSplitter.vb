@@ -1,4 +1,6 @@
-﻿Public Class TextSplitter
+﻿Imports System.Globalization
+
+Public Class TextSplitter
 
     Private Const WORD_CHARS As String =
         "0123456789" &
@@ -55,32 +57,38 @@
     End Function
 
     Private Sub _Split(l As List(Of String), text As String, limit As Integer)
-        Dim t As String = text
+        Dim si As StringInfo = New StringInfo(text)
         Do
-            Dim w As Integer = Me._GetNextWidth(t)
+            Dim w As Integer = Me._GetNextWidth(si.String)
             If Me._BreakRule Then
-                w = _GetNextOnRule(t, w)
+                w = _GetNextOnRule(si.String, w)
             End If
-            l.Add(t.Substring(0, w))
+            l.Add(si.SubstringByTextElements(0, w))
             If limit >= 0 AndAlso l.Count > limit Then
                 Exit Do
             End If
-            t = t.Substring(w)
-        Loop While t.Length > 0
+            If si.LengthInTextElements > w Then
+                si.String = si.SubstringByTextElements(w)
+            Else
+                si.String = ""
+            End If
+        Loop While si.LengthInTextElements > 0
     End Sub
 
     Protected Overridable Function _GetNextWidth(text As String) As Integer
-        Return text.Length
+        Dim si As StringInfo = New StringInfo(text)
+        Return si.LengthInTextElements
     End Function
 
     Private Function _GetNextOnRule(text As String, w As Integer) As Integer
-        If w = text.Length Then
+        Dim si As StringInfo = New StringInfo(text)
+        If w = si.LengthInTextElements Then
             Return w
         End If
         Dim _w As Integer = w
         Do While _w > 0
-            Dim cp As Char = text(_w - 1)
-            Dim cn As Char = text(_w)
+            Dim cp As Char = si.SubstringByTextElements(_w - 1)
+            Dim cn As Char = si.SubstringByTextElements(_w)
             If WORD_CHARS.Contains(cp) And WORD_CHARS.Contains(cn) Then
             ElseIf OPEN_CHARS.Contains(cp) Then
             ElseIf CLOSE_CHARS.Contains(cn) Then

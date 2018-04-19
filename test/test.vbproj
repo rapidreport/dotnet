@@ -164,6 +164,7 @@
     <Compile Include="Test_4_34_DynamicContentSize.vb" />
     <Compile Include="Test_4_34_FooterIfSpace.vb" />
     <Compile Include="Test_4_34_Wrap.vb" />
+    <Compile Include="Test_4_36_IpaFont.vb" />
     <Compile Include="Test_4_35_PdfVertical.vb" />
     <Compile Include="Test_4_36_XlsLineStyle.vb" />
   </ItemGroup>
@@ -187,6 +188,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="rrpt\font\ipamjm.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_33_blank_group.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -304,6 +308,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_35_xlsx_color.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_36_ipa_font.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_36_xls_line_style.rrpt">

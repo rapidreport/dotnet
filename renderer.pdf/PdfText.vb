@@ -1,4 +1,5 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports System.Globalization
+Imports System.Text.RegularExpressions
 Imports iTextSharp.text
 Imports iTextSharp.text.pdf
 Imports jp.co.systembase.report.component
@@ -23,11 +24,11 @@ Public Class PdfText
     Protected Const VERTICAL_ROTATE2_CHARS As String = "～"
     Protected Const VERTICAL_SHIFT_CHARS As String = "。、，"
 
-    Public Overridable Sub Initialize( _
-      renderer As PdfRenderer, _
-      reportDesign As ReportDesign, _
-      region As Region, _
-      design As ElementDesign, _
+    Public Overridable Sub Initialize(
+      renderer As PdfRenderer,
+      reportDesign As ReportDesign,
+      region As Region,
+      design As ElementDesign,
       text As String)
         Me.Renderer = renderer
         Me.Region = region.ToPointScale(reportDesign)
@@ -112,12 +113,12 @@ Public Class PdfText
         y += OFFSET_Y
         Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / fontSize)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, rows) - 1, 0)
-            Dim t As String = texts(i)
-            Dim m As List(Of Single) = _GetDistributeMap(Region.GetWidth - MARGIN_X * 2, t.Length, fontSize)
+            Dim si As StringInfo = New StringInfo(texts(i))
+            Dim m As List(Of Single) = _GetDistributeMap(Region.GetWidth - MARGIN_X * 2, si.LengthInTextElements, fontSize)
             ContentByte.BeginText()
             ContentByte.SetFontAndSize(Font, fontSize)
-            For j As Integer = 0 To t.Length - 1
-                Dim c As String = t(j)
+            For j As Integer = 0 To si.LengthInTextElements - 1
+                Dim c As String = si.SubstringByTextElements(j, 1)
                 _DrawText(fontSize, c, m(j) - _GetTextWidth(fontSize, c) / 2 + MARGIN_X, y)
             Next
             ContentByte.EndText()
@@ -145,17 +146,17 @@ Public Class PdfText
         End Select
         Dim cols As Integer = Fix(((Region.GetWidth - MARGIN_X * 2) + TOLERANCE) / fontSize)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, cols) - 1, 0)
-            Dim t As String = texts(i)
+            Dim si As StringInfo = New StringInfo(texts(i))
             If TextDesign.Font.Underline Then
                 Dim lw As Single = (fontSize / 13.4) * Renderer.Setting.UnderlineWidthCoefficient
                 _DrawVerticalUnderLine(fontSize, x + fontSize / 2, 0, Region.GetHeight, lw)
             End If
             With Nothing
-                Dim m As List(Of Single) = _GetDistributeMap(Region.GetHeight - MARGIN_BOTTOM, t.Length, fontSize)
+                Dim m As List(Of Single) = _GetDistributeMap(Region.GetHeight - MARGIN_BOTTOM, si.LengthInTextElements, fontSize)
                 ContentByte.SetFontAndSize(Font, fontSize)
                 ContentByte.BeginText()
-                For j As Integer = 0 To t.Length - 1
-                    _DrawVerticalChar(fontSize, t(j), x, m(j) - fontSize / 2 + OFFSET_Y)
+                For j As Integer = 0 To si.LengthInTextElements - 1
+                    _DrawVerticalChar(fontSize, si.SubstringByTextElements(j, 1), x, m(j) - fontSize / 2 + OFFSET_Y)
                 Next
                 ContentByte.EndText()
             End With
@@ -173,8 +174,9 @@ Public Class PdfText
         With Nothing
             Dim m As Integer = 0
             For Each t As String In texts
-                If m < t.Length Then
-                    m = t.Length
+                Dim si As StringInfo = New StringInfo(t)
+                If m < si.LengthInTextElements Then
+                    m = si.LengthInTextElements
                 End If
             Next
             If m > 0 Then
@@ -234,15 +236,15 @@ Public Class PdfText
         y += OFFSET_Y
         Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / fontSize)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, rows) - 1, 0)
-            Dim t As String = texts(i)
-            Dim w As Single = _GetTextWidth(fontSize, t)
+            Dim si As StringInfo = New StringInfo(texts(i))
+            Dim w As Single = _GetTextWidth(fontSize, si.String)
             With Nothing
                 Dim rw As Single = Region.GetWidth - MARGIN_X * 2
                 If w > rw Then
                     Dim _t As String = ""
                     Dim _w As Single = 0
-                    For j As Integer = 1 To t.Length
-                        Dim __t As String = t.Substring(0, j)
+                    For j As Integer = 1 To si.LengthInTextElements
+                        Dim __t As String = si.SubstringByTextElements(0, j)
                         Dim __w As Single = _GetTextWidth(fontSize, __t)
                         If __w <= rw + TOLERANCE Then
                             _t = __t
@@ -251,7 +253,7 @@ Public Class PdfText
                             Exit For
                         End If
                     Next
-                    t = _t
+                    si.String = _t
                     w = _w
                 End If
             End With
@@ -268,7 +270,7 @@ Public Class PdfText
             End Select
             ContentByte.SetFontAndSize(Font, fontSize)
             ContentByte.BeginText()
-            _DrawText(fontSize, t, x, y)
+            _DrawText(fontSize, si.String, x, y)
             ContentByte.EndText()
             If TextDesign.Font.Underline Then
                 Dim lw As Single = (fontSize / 13.4) * Renderer.Setting.UnderlineWidthCoefficient
@@ -295,20 +297,20 @@ Public Class PdfText
         Dim cols As Integer = Fix(((Region.GetWidth - MARGIN_X * 2) + TOLERANCE) / fontSize)
         Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / fontSize)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, cols) - 1, 0)
-            Dim t As String = texts(i)
+            Dim si As StringInfo = New StringInfo(texts(i))
             Dim y As Single = 0
             Select Case TextDesign.VAlign
                 Case Report.EVAlign.TOP
                     y = 0
                 Case Report.EVAlign.CENTER
-                    y = (Region.GetHeight - fontSize * t.Length) / 2
+                    y = (Region.GetHeight - fontSize * si.LengthInTextElements) / 2
                     y = Math.Max(y, 0)
                 Case Report.EVAlign.BOTTOM
-                    y = Region.GetHeight - fontSize * t.Length - MARGIN_BOTTOM
+                    y = Region.GetHeight - fontSize * si.LengthInTextElements - MARGIN_BOTTOM
                     y = Math.Max(y, 0)
             End Select
             y += OFFSET_Y
-            Dim _yc As Integer = Math.Min(t.Length, rows)
+            Dim _yc As Integer = Math.Min(si.LengthInTextElements, rows)
             If TextDesign.Font.Underline Then
                 Dim lw As Single = (fontSize / 13.4) * Renderer.Setting.UnderlineWidthCoefficient
                 _DrawVerticalUnderLine(fontSize, x + fontSize / 2, y, _yc * fontSize, lw)
@@ -316,7 +318,7 @@ Public Class PdfText
             ContentByte.SetFontAndSize(Font, fontSize)
             ContentByte.BeginText()
             For j As Integer = 0 To _yc - 1
-                _DrawVerticalChar(fontSize, t(j), x, y)
+                _DrawVerticalChar(fontSize, si.SubstringByTextElements(j, 1), x, y)
                 y += fontSize
             Next
             ContentByte.EndText()
@@ -395,13 +397,14 @@ Public Class PdfText
             Dim gaiji As Boolean = False
             Dim _x As Single = x
             For Each t As String In _texts
-                If t.Length > 0 Then
+                Dim si As StringInfo = New StringInfo(t)
+                If si.LengthInTextElements > 0 Then
                     If Not gaiji Then
                         _SetTextMatrix(fontSize, _x, y)
-                        ContentByte.ShowText(t)
-                        _x += Font.GetWidthPoint(t, fontSize)
+                        ContentByte.ShowText(si.String)
+                        _x += Font.GetWidthPoint(si.String, fontSize)
                     Else
-                        For Each c As Char In t
+                        For Each c As Char In si.String
                             Dim f As BaseFont = Renderer.Setting.GaijiFont
                             If GaijiFont IsNot Nothing AndAlso GaijiFont.GetWidth(c) > 0 Then
                                 f = GaijiFont
@@ -552,11 +555,12 @@ Public Class PdfText
         Else
             Dim g As Boolean = False
             For Each t As String In _texts
-                If t.Length > 0 Then
+                Dim si As StringInfo = New StringInfo(t)
+                If si.LengthInTextElements > 0 Then
                     If Not g Then
-                        ret += Font.GetWidthPoint(t, fontSize)
+                        ret += Font.GetWidthPoint(si.String, fontSize)
                     Else
-                        ret += t.Length * fontSize
+                        ret += si.LengthInTextElements * fontSize
                     End If
                 End If
                 g = Not g
@@ -572,26 +576,27 @@ Public Class PdfText
         Dim ret As List(Of String) = Nothing
         Dim g As Boolean = False
         Dim last As Integer = 0
-        For i As Integer = 0 To text.Length - 1
-            If _IsGaiji(text.Chars(i)) Then
+        Dim si As StringInfo = New StringInfo(text)
+        For i As Integer = 0 To si.LengthInTextElements - 1
+            If _IsGaiji(si.SubstringByTextElements(i, 1)) Then
                 If Not g Then
                     If ret Is Nothing Then
                         ret = New List(Of String)
                     End If
-                    ret.Add(text.Substring(last, i - last))
+                    ret.Add(si.SubstringByTextElements(last, i - last))
                     last = i
                     g = True
                 End If
             Else
                 If g Then
-                    ret.Add(text.Substring(last, i - last))
+                    ret.Add(si.SubstringByTextElements(last, i - last))
                     last = i
                     g = False
                 End If
             End If
         Next
         If ret IsNot Nothing Then
-            ret.Add(text.Substring(last))
+            ret.Add(si.SubstringByTextElements(0, last))
         End If
         Return ret
     End Function
@@ -609,17 +614,18 @@ Public Class PdfText
             Me._PdfText = pdfText
         End Sub
         Protected Overrides Function _GetNextWidth(text As String) As Integer
+            Dim si As StringInfo = New StringInfo(text)
             Dim cw As Single = Me._PdfText.Region.GetWidth - MARGIN_X * 2
             Dim fontSize As Single = Me._PdfText.TextDesign.Font.Size
-            If Me._PdfText._GetTextWidth(fontSize, text) > cw + TOLERANCE Then
+            If Me._PdfText._GetTextWidth(fontSize, si.String) > cw + TOLERANCE Then
                 Dim i As Integer
-                For i = 2 To text.Length
-                    If Me._PdfText._GetTextWidth(fontSize, text.Substring(0, i)) > cw + TOLERANCE Then
+                For i = 2 To si.LengthInTextElements
+                    If Me._PdfText._GetTextWidth(fontSize, si.SubstringByTextElements(0, i)) > cw + TOLERANCE Then
                         Return i - 1
                     End If
                 Next
             End If
-            Return text.Length
+            Return si.LengthInTextElements
         End Function
     End Class
 
@@ -632,14 +638,14 @@ Public Class PdfText
 
         Public Sub New(pdfText As PdfText)
             Me.PdfText = pdfText
-            Dim t As String = Me.PdfText.Text
-            With Regex.Match(t, "([^0-9]*)$")
+            Dim si As StringInfo = New StringInfo(Me.PdfText.Text)
+            With Regex.Match(si.String, "([^0-9]*)$")
                 Me.Text3 = .Groups(0).Value
-                t = t.Substring(0, t.Length - Me.Text3.Length)
+                si.String = si.SubstringByTextElements(0, si.LengthInTextElements - Me.Text3.Length)
             End With
-            With Regex.Match(t, "(\.[0-9]*)?$")
+            With Regex.Match(si.String, "(\.[0-9]*)?$")
                 Me.Text2 = .Groups(0).Value
-                Me.Text1 = t.Substring(0, t.Length - Me.Text2.Length)
+                Me.Text1 = si.SubstringByTextElements(0, si.LengthInTextElements - Me.Text2.Length)
             End With
         End Sub
 
@@ -703,25 +709,25 @@ Public Class PdfText
           text As String)
             Dim _x As Single = Math.Max(x, MARGIN_X)
             Dim w As Single = PdfText.Region.GetWidth - _x - MARGIN_X
-            Dim t As String = text
+            Dim si As StringInfo = New StringInfo(text)
             If w < 0 Then
                 Exit Sub
             End If
-            If PdfText._GetTextWidth(fontSize, t) > w + TOLERANCE Then
+            If PdfText._GetTextWidth(fontSize, si.String) > w + TOLERANCE Then
                 Dim _t As String = ""
                 Dim __t As String = ""
-                For i As Integer = 1 To t.Length
-                    __t = t.Substring(0, i)
+                For i As Integer = 1 To si.LengthInTextElements
+                    __t = si.SubstringByTextElements(0, i)
                     If PdfText._GetTextWidth(fontSize, __t) <= w + TOLERANCE Then
                         _t = __t
                     Else
                         Exit For
                     End If
                 Next
-                t = _t
+                si.String = _t
             End If
-            If t.Length > 0 Then
-                PdfText._DrawText(fontSize, t, _x, y)
+            If si.LengthInTextElements > 0 Then
+                PdfText._DrawText(fontSize, si.String, _x, y)
             End If
         End Sub
 

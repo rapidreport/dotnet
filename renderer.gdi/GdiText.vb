@@ -1,4 +1,5 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports System.Globalization
+Imports System.Text.RegularExpressions
 
 Imports jp.co.systembase.report.component
 
@@ -12,11 +13,11 @@ Public Class GdiText
 
     Protected Const TOLERANCE As Single = 0.1F
 
-    Public Overridable Sub Initialize( _
-      env As RenderingEnv, _
-      reportDesign As ReportDesign, _
-      region As Region, _
-      design As ElementDesign, _
+    Public Overridable Sub Initialize(
+      env As RenderingEnv,
+      reportDesign As ReportDesign,
+      region As Region,
+      design As ElementDesign,
       text As String)
         Me.Graphics = env.Graphics
         Me.Region = region.ToPointScale(reportDesign)
@@ -78,12 +79,13 @@ Public Class GdiText
         End Select
         Dim yc As Integer = Fix((Me.Region.GetHeight + TOLERANCE) / font.Size)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, yc) - 1, 0)
+            Dim si As StringInfo = New StringInfo(texts(i))
             Dim t As String = texts(i)
             Using b As New SolidBrush(color)
                 Dim mx As Single = font.Size / 6
-                Dim m As List(Of Single) = _GetDistributeMap(Region.GetWidth - mx * 2, t.Length, font)
-                For j As Integer = 0 To t.Length - 1
-                    Graphics.DrawString(t(j), font, b, Region.Left + m(j) + mx, Region.Top + y, sf)
+                Dim m As List(Of Single) = _GetDistributeMap(Region.GetWidth - mx * 2, si.LengthInTextElements, font)
+                For j As Integer = 0 To si.LengthInTextElements - 1
+                    Graphics.DrawString(si.SubstringByTextElements(j, 1), font, b, Region.Left + m(j) + mx, Region.Top + y, sf)
                 Next
             End Using
             If TextDesign.Font.Underline Then
@@ -124,10 +126,11 @@ Public Class GdiText
         Dim xc As Integer = Fix((Region.GetWidth - mx * 2 + TOLERANCE) / font.Size)
         For i As Integer = 0 To Math.Max(Math.Min(xc, texts.Count) - 1, 0)
             Dim t As String = texts(i)
+            Dim si As StringInfo = New StringInfo(texts(i))
             Using b As New SolidBrush(color)
-                Dim m As List(Of Single) = _GetDistributeMap(Region.GetHeight, t.Length, font)
-                For j As Integer = 0 To t.Length - 1
-                    Dim c As String = t(j)
+                Dim m As List(Of Single) = _GetDistributeMap(Region.GetHeight, si.LengthInTextElements, font)
+                For j As Integer = 0 To si.LengthInTextElements - 1
+                    Dim c As String = si.SubstringByTextElements(j, 1)
                     Graphics.DrawString(c, font, b, Region.Left + x - font.Size / 6, Region.Top + m(j) + font.Size / 10, sf)
                 Next
             End Using
@@ -158,8 +161,9 @@ Public Class GdiText
         With Nothing
             Dim m As Integer = 0
             For Each t As String In texts
-                If m < t.Length Then
-                    m = t.Length
+                Dim si As StringInfo = New StringInfo(t)
+                If m < si.LengthInTextElements Then
+                    m = si.LengthInTextElements
                 End If
             Next
             If m > 0 Then
@@ -259,18 +263,19 @@ Public Class GdiText
         Using b As New SolidBrush(color)
             For i As Integer = 0 To Math.Min(texts.Count, xc) - 1
                 Dim t As String = texts(i)
+                Dim si As New StringInfo(t)
                 Dim y As Single = 0
                 Select Case TextDesign.VAlign
                     Case Report.EVAlign.TOP
                         y = 0
                     Case Report.EVAlign.CENTER
-                        y = (Region.GetHeight - font.Size * t.Length) / 2
+                        y = (Region.GetHeight - font.Size * si.LengthInTextElements) / 2
                         y = Math.Max(y, 0)
                     Case Report.EVAlign.BOTTOM
-                        y = Region.GetHeight - font.Size * t.Length
+                        y = Region.GetHeight - font.Size * si.LengthInTextElements
                         y = Math.Max(y, 0)
                 End Select
-                Dim _yc As Integer = Math.Min(t.Length, yc)
+                Dim _yc As Integer = Math.Min(si.LengthInTextElements, yc)
                 If TextDesign.Font.Underline Then
                     Using p As New Pen(color)
                         p.Width = TextDesign.Font.Size / 13.4F
@@ -283,7 +288,7 @@ Public Class GdiText
                     End Using
                 End If
                 For j As Integer = 0 To _yc - 1
-                    Dim c As String = t(j)
+                    Dim c As String = si.SubstringByTextElements(j, 1)
                     Graphics.DrawString(c, font, b, Region.Left + x - font.Size / 6, Region.Top + y - font.Size / 10, sf)
                     y += font.Size
                 Next
@@ -465,20 +470,20 @@ Public Class GdiText
                         x = Math.Max(x, 0)
                 End Select
                 With Nothing
-                    Dim r As New RectangleF( _
-                      GdiText.Region.Left + x, _
-                      GdiText.Region.Top + y, _
-                      GdiText.Region.GetWidth - x, _
+                    Dim r As New RectangleF(
+                      GdiText.Region.Left + x,
+                      GdiText.Region.Top + y,
+                      GdiText.Region.GetWidth - x,
                       GdiText.Region.GetHeight - y)
                     GdiText.Graphics.DrawString(Me.Text1 & Me.Text2, font, b, r, sf)
                 End With
                 If Me.Text3.Length > 0 Then
                     Dim _x As Single = x + w - font.Size / 3
                     If _x < GdiText.Region.GetWidth Then
-                        Dim r As New RectangleF( _
-                          GdiText.Region.Left + _x, _
-                          GdiText.Region.Top + y, _
-                          GdiText.Region.GetWidth - _x, _
+                        Dim r As New RectangleF(
+                          GdiText.Region.Left + _x,
+                          GdiText.Region.Top + y,
+                          GdiText.Region.GetWidth - _x,
                           GdiText.Region.GetHeight - y)
                         GdiText.Graphics.DrawString(Me.Text3, font, b, r, sf)
                     End If
@@ -489,11 +494,11 @@ Public Class GdiText
                     Dim m As Single = font.Size / 6
                     Using p As New Pen(color)
                         p.Width = font.Size / 13.4F
-                        GdiText.Graphics.DrawLine( _
-                          p, _
-                          GdiText.Region.Left + x + m, _
-                          GdiText.Region.Top + y + (font.Size - p.Width), _
-                          GdiText.Region.Left + _x - m, _
+                        GdiText.Graphics.DrawLine(
+                          p,
+                          GdiText.Region.Left + x + m,
+                          GdiText.Region.Top + y + (font.Size - p.Width),
+                          GdiText.Region.Left + _x - m,
                           GdiText.Region.Top + y + (font.Size - p.Width))
                     End Using
                 End If

@@ -1,10 +1,12 @@
-﻿Public Module ReportUtil
+﻿Imports System.Globalization
 
-    Private Const SINGLE_CHARS As String = _
-      "0123456789" & _
-      "abcdefghijklmnopqrstuvwxyz" & _
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ" & _
-      "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｯｬｭｮ" & _
+Public Module ReportUtil
+
+    Private Const SINGLE_CHARS As String =
+      "0123456789" &
+      "abcdefghijklmnopqrstuvwxyz" &
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ" &
+      "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｯｬｭｮ" &
       "ﾞﾟｰ｢｣･､｡ !@#$%^&*()_+|~-=\`{}[]:"";'<>?,./" & vbCrLf & vbTab
 
     Public Function RoundDown(v As Decimal, digit As Integer) As Decimal
@@ -78,11 +80,11 @@
     End Function
 
     Public Function Regularize(v As Object) As Object
-        If TypeOf v Is Integer OrElse _
-           TypeOf v Is Long OrElse _
-           TypeOf v Is Short OrElse _
-           TypeOf v Is Single OrElse _
-           TypeOf v Is Double OrElse _
+        If TypeOf v Is Integer OrElse
+           TypeOf v Is Long OrElse
+           TypeOf v Is Short OrElse
+           TypeOf v Is Single OrElse
+           TypeOf v Is Double OrElse
            TypeOf v Is Byte Then
             Return CType(v, Decimal)
         End If
@@ -110,14 +112,15 @@
     End Function
 
     Public Function SubString(str As String, begin As Integer) As String
+        Dim si As StringInfo = New StringInfo(str)
         Dim b As Integer = begin
         If b < 0 Then
-            b = str.Length + b
+            b = si.LengthInTextElements + b
             If b < 0 Then
                 b = 0
             End If
         End If
-        If b >= str.Length Then
+        If b >= si.LengthInTextElements Then
             Return Nothing
         Else
             Return str.Substring(b)
@@ -125,18 +128,19 @@
     End Function
 
     Public Function SubString(str As String, begin As Integer, len As Integer) As String
+        Dim si As StringInfo = New StringInfo(str)
         Dim b As Integer = begin
         Dim l As Integer = len
         If b < 0 Then
-            b = str.Length + b
+            b = si.LengthInTextElements + b
             If b < 0 Then
                 l += b
                 b = 0
             End If
         End If
-        If l <= 0 Or b >= str.Length Then
+        If l <= 0 Or b >= si.LengthInTextElements Then
             Return Nothing
-        ElseIf b + l > str.Length Then
+        ElseIf b + l > si.LengthInTextElements Then
             Return str.Substring(b)
         Else
             Return str.Substring(b, l)
@@ -144,9 +148,10 @@
     End Function
 
     Public Function WStrinLen(str As String) As Integer
+        Dim si As StringInfo = New StringInfo(str)
         Dim ret As Integer = 0
-        For i As Integer = 0 To str.Length - 1
-            Dim c As Char = str.Chars(i)
+        For i As Integer = 0 To si.LengthInTextElements - 1
+            Dim c As Char = si.SubstringByTextElements(i, 1)
             If SINGLE_CHARS.IndexOf(c) >= 0 Then
                 ret += 1
             Else
@@ -157,13 +162,14 @@
     End Function
 
     Public Function WSubString(str As String, begin As Integer) As String
+        Dim si As StringInfo = New StringInfo(str)
         Dim b As Integer
         If begin >= 0 Then
             b = GetWIndex(str, 0, begin)
         Else
-            b = GetWRevIndex(str, str.Length, -begin)
+            b = GetWRevIndex(str, si.LengthInTextElements, -begin)
         End If
-        If b >= str.Length Then
+        If b >= si.LengthInTextElements Then
             Return Nothing
         Else
             Return str.Substring(b)
@@ -171,6 +177,7 @@
     End Function
 
     Public Function WSubString(str As String, begin As Integer, len As Integer) As String
+        Dim si As StringInfo = New StringInfo(str)
         Dim b As Integer
         Dim e As Integer
         If begin >= 0 Then
@@ -178,12 +185,12 @@
             e = GetWIndex(str, b, len)
         Else
             Dim _len As Integer = Math.Min(-begin, len)
-            e = GetWRevIndex(str, str.Length, -(begin + _len))
+            e = GetWRevIndex(str, si.LengthInTextElements, -(begin + _len))
             b = GetWRevIndex(str, e, _len)
         End If
-        If e <= b Or b >= str.Length Then
+        If e <= b Or b >= si.LengthInTextElements Then
             Return Nothing
-        ElseIf e >= str.Length Then
+        ElseIf e >= si.LengthInTextElements Then
             Return str.Substring(b)
         Else
             Return str.Substring(b, e - b)
@@ -191,9 +198,10 @@
     End Function
 
     Public Function GetWIndex(str As String, base As Integer, w As Integer) As Integer
+        Dim si As StringInfo = New StringInfo(str)
         Dim _w As Integer = 0
-        For i As Integer = base To str.Length - 1
-            Dim c As Char = str.Chars(i)
+        For i As Integer = base To si.LengthInTextElements - 1
+            Dim c As Char = si.SubstringByTextElements(i, 1)
             If SINGLE_CHARS.IndexOf(c) >= 0 Then
                 _w += 1
             Else
@@ -203,13 +211,14 @@
                 Return i
             End If
         Next
-        Return str.Length
+        Return si.LengthInTextElements
     End Function
 
     Public Function GetWRevIndex(str As String, base As Integer, w As Integer) As Integer
+        Dim si As StringInfo = New StringInfo(str)
         Dim _w As Integer = 0
         For i As Integer = base - 1 To 0 Step -1
-            Dim c As Char = str.Chars(i)
+            Dim c As Char = si.SubstringByTextElements(i, 1)
             If SINGLE_CHARS.IndexOf(c) >= 0 Then
                 _w += 1
             Else
