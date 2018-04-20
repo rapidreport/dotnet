@@ -42,6 +42,7 @@
         Tests.Add(New Test_4_35_Wrap)
         Tests.Add(New Test_4_36_XlsLineStyle)
         Tests.Add(New Test_4_36_IpaFont)
+        Tests.Add(New Test_4_36_BoldUnderline)
 
         Application.Run(New FmTest)
     End Sub

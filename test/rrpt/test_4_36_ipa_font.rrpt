@@ -32,7 +32,7 @@
           {type:"text",layout:{x1:330.0,y1:115.0,x2:375.0,y2:130.0},text:"下線"},
           {type:"text",layout:{x1:0.0,y1:240.0,x2:250.0,y2:270.0},font:{name:"ipamjm",size:15.0},rect:{},text:"𠀋𠏹𠝏𠱇𠸻𧊵𠻄𡇬𡈽𡉕𡉻",wrap:true},
           {type:"text",layout:{x1:0.0,y1:225.0,x2:230.0,y2:240.0},text:"フォント１５"},
-          {type:"text",layout:{x1:0.0,y1:185.0,x2:615.0,y2:220.0},font:{name:"ipamjm",bold:true,italic:true,size:13.0,underline:true},rect:{},text:"𠀋𠏹𠝏𠱇𠸻𧊵𠻄𡇬𡈽𡉕𡉻𡋗𡋽𡠟𡴭𡵅𡵘𡵢𡶌𡶒𡶷𡷠𡺬𡽶𢉿𢭏𣇃𣑺𣔂𣔳𣕚𣖔𣖾𣗄𣘹𣜿𣟧𣱿𣲓𣳾𣷓𤚥𤭖𤲚𥐮𥒈𥒎𥓙𥔎𥔽𥥠𥧄",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:185.0,x2:615.0,y2:220.0},font:{name:"ipamjm",bold:true,italic:true,size:13.0,underline:true},rect:{},text:"𠀋𠏹𠝏𠱇𠸻𧊵𠻄𡇬𡈽𡉕𡉻𡋗𡋽𡠟𡴭𡵅𡵘𡵢𡶌𡶒𡶷𡷠𡺬𡽶𢉿𢭏𣇃𣑺𣔂𣔳𣕚𣖔𣖾𣗄𣘹𣜿𣟧𣱿𣲓𣳾𣷓𤚥𤭖𤲚𥐮𥒈𥒎𥓙𥔎𥔽𥥠𥧄𥮲𥸩𥸮𥹖𥼣𦫿𦹀𦹔𧃴𧍧𧒻𧙥𨕫𨦻𨫤𨵱𨸶𨺉𨿪𩍼𩖬𩗏𩛰𩢔𩣆𩥮",wrap:true},
           {type:"text",layout:{x1:0.0,y1:170.0,x2:230.0,y2:185.0},text:"太字、イタリック、下線"},
           {type:"text",layout:{x1:100.0,y1:320.0,x2:170.0,y2:530.0},font:{name:"ipamjm",size:13.0},rect:{},shrink_to_fit:true,text:"𠀋𠏹𠝏𠱇𠸻𧊵𠻄𡇬𡈽𡉕𡉻𡋗𡋽𡠟𡴭𡵅𡵘𡵢𡶌𡶒𡶷𡷠𡺬𡽶𢉿𢭏",vertical:true,wrap:true},
           {type:"text",layout:{x1:215.0,y1:305.0,x2:320.0,y2:320.0},text:"均等割付"},

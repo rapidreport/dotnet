@@ -115,6 +115,7 @@ Public Class PdfText
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, rows) - 1, 0)
             Dim si As StringInfo = New StringInfo(texts(i))
             Dim m As List(Of Single) = _GetDistributeMap(Region.GetWidth - MARGIN_X * 2, si.LengthInTextElements, fontSize)
+            _Draw_Preprocess()
             ContentByte.BeginText()
             ContentByte.SetFontAndSize(Font, fontSize)
             For j As Integer = 0 To si.LengthInTextElements - 1
@@ -153,6 +154,7 @@ Public Class PdfText
             End If
             With Nothing
                 Dim m As List(Of Single) = _GetDistributeMap(Region.GetHeight - MARGIN_BOTTOM, si.LengthInTextElements, fontSize)
+                _Draw_Preprocess()
                 ContentByte.SetFontAndSize(Font, fontSize)
                 ContentByte.BeginText()
                 For j As Integer = 0 To si.LengthInTextElements - 1
@@ -268,6 +270,7 @@ Public Class PdfText
                     x = Region.GetWidth - w - MARGIN_X
                     x = Math.Max(x, MARGIN_X)
             End Select
+            _Draw_Preprocess()
             ContentByte.SetFontAndSize(Font, fontSize)
             ContentByte.BeginText()
             _DrawText(fontSize, si.String, x, y)
@@ -315,6 +318,7 @@ Public Class PdfText
                 Dim lw As Single = (fontSize / 13.4) * Renderer.Setting.UnderlineWidthCoefficient
                 _DrawVerticalUnderLine(fontSize, x + fontSize / 2, y, _yc * fontSize, lw)
             End If
+            _Draw_Preprocess()
             ContentByte.SetFontAndSize(Font, fontSize)
             ContentByte.BeginText()
             For j As Integer = 0 To _yc - 1
@@ -688,6 +692,7 @@ Public Class PdfText
                         x = PdfText.Region.GetWidth - fw - MARGIN_X
                         x = Math.Max(x, MARGIN_X)
                 End Select
+                PdfText._Draw_Preprocess()
                 PdfText.ContentByte.SetFontAndSize(PdfText.Font, fontSize)
                 PdfText.ContentByte.BeginText()
                 _DrawText_Aux(fontSize, x, y, Me.Text1 & Me.Text2)

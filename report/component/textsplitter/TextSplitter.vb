@@ -63,7 +63,11 @@ Public Class TextSplitter
             If Me._BreakRule Then
                 w = _GetNextOnRule(si.String, w)
             End If
-            l.Add(si.SubstringByTextElements(0, w))
+            If si.LengthInTextElements <> 0 Then
+                l.Add(si.SubstringByTextElements(0, w))
+            Else
+                l.Add("")
+            End If
             If limit >= 0 AndAlso l.Count > limit Then
                 Exit Do
             End If
