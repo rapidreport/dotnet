@@ -3,6 +3,7 @@
 Public Class TextSplitterByLen
     Inherits TextSplitter
     Private _Length As Integer
+
     Public Sub New(length As Integer)
         MyBase.New(False)
         Me._Length = length
