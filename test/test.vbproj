@@ -153,6 +153,7 @@
     <Compile Include="Test_4_24_SubPage.vb" />
     <Compile Include="Test_4_25_Page.vb" />
     <Compile Include="Test_4_26_UnknownField.vb" />
+    <Compile Include="Test_4_36_GroupsSortKey.vb" />
     <Compile Include="Test_4_32_1_DateAdd.vb" />
     <Compile Include="Test_4_32_BackgroundSetting.vb" />
     <Compile Include="Test_4_31_GroupDataProvider.vb" />
@@ -312,6 +313,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_36_bold_underline.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_36_groups_sortkey.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_36_ipa_font.rrpt">

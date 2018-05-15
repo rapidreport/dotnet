@@ -42,7 +42,7 @@ Namespace component
                         dataSource = Me.Report.GroupDataProvider.GetGroupDataSource(Me, data)
                     End If
                     If Me.Design.SortKeys IsNot Nothing Then
-                        dataSource = New SortedDataSource(_data, Me.Design.SortKeys, _data.Context.GetLogger)
+                        dataSource = New SortedDataSource(dataSource, Me.Design.SortKeys, _data.Context.GetLogger)
                     End If
                     If dataSource IsNot data Then
                         _data = New ReportData(dataSource, data.Report, data.Group)
