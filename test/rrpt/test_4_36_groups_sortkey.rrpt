@@ -1,0 +1,41 @@
+{
+  version: 0,
+  paper: {
+    landscape: true,
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    keys: ["group_key"],
+    sort_keys: ["group_key"],
+    contents: [
+      {
+        size: {
+          initial: 50.0
+        },
+        aggregate_src: true,
+        every_page: true,
+        elements: [
+          {type:"field",layout:{x1:0.0,y1:0.0,x2:802.0,y2:50.0},exp:".group_key",halign:"left",valign:"center"}
+        ],
+        group: {
+          id: "group_id",
+          detail: true,
+          sort_keys: ["value"],
+          contents: [
+            {
+              size: {
+                initial: 50.0
+              },
+              aggregate_src: true,
+              elements: [
+                {type:"field",layout:{x1:200.0,y1:0.0,x2:802.0,y2:50.0},exp:".value",halign:"left",rect:{},valign:"center"}
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

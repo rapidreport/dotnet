@@ -600,7 +600,7 @@ Public Class PdfText
             End If
         Next
         If ret IsNot Nothing Then
-            ret.Add(si.SubstringByTextElements(0, last))
+            ret.Add(si.SubstringByTextElements(last))
         End If
         Return ret
     End Function
