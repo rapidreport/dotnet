@@ -101,6 +101,7 @@
     <Compile Include="elementpreprocessor\IElementPreprocessor.vb" />
     <Compile Include="method\CrosstabMethod.vb" />
     <Compile Include="method\CurrentTimeMethod.vb" />
+    <Compile Include="method\PageGroupCountMethod.vb" />
     <Compile Include="operator\DateAddOperator.vb" />
     <Compile Include="operator\TrimOperator.vb" />
     <Compile Include="search\searchobject\DefaultSearchObject.vb" />

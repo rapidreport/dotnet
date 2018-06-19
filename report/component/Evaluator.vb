@@ -16,6 +16,8 @@ Namespace component
         Public ContentContext As ContentContextClass = Nothing
         Public PageContext As PageContextClass = Nothing
 
+        Public GroupLayoutFilledCount As Integer = -1
+
         Public Class BasicContextClass
             Public Report As Report
             Public Data As ReportData

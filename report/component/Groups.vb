@@ -90,11 +90,12 @@ Namespace component
             Dim region As Region = parentRegion
             Dim i As Integer = 0
             Dim isFirst As Boolean = True
+            Dim filledCount As Integer = groupRange.GetGroupCount
+            evaluator.GroupLayoutFilledCount = filledCount
             Dim layoutCount As Integer = Me.Design.Layout.GetCount(IIf(Me.Report.InDesigner, Nothing, evaluator))
             Dim lastIndex As Integer
             Dim lastIndex2 As Integer
             Dim lastRegion As Region = Nothing
-            Dim filledCount As Integer = groupRange.GetGroupCount
             If Me.Design.Layout.Blank AndAlso layoutCount = 0 Then
                 layoutCount = Me.getDefaultGroupCount(parentRegion)
             End If

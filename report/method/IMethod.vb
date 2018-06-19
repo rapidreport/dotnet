@@ -3,10 +3,10 @@
 Namespace method
     Public Interface IMethod
         Function GetAvaliableContext() As Report.EEvalContext
-        Function Exec( _
-          evaluator As Evaluator, _
-          param As String, _
-          scope As String, _
+        Function Exec(
+          evaluator As Evaluator,
+          param As String,
+          scope As String,
           unit As String)
     End Interface
 End Namespace

@@ -40,6 +40,7 @@ Public Class ReportSetting
         Me.MethodMap.Add("var", New VariableMethod)
         Me.MethodMap.Add("current_time", New CurrentTimeMethod)
         Me.MethodMap.Add("crosstab", New CrosstabMethod)
+        Me.MethodMap.Add("page_group_count", New PageGroupCountMethod)
         Me.MethodMap.Add("debug", New DummyMethod)
         Me.OperatorMap.Add("+", New AddOperator)
         Me.OperatorMap.Add("-", New SubOperator)
