@@ -41,7 +41,7 @@
         Tests.Add(New Test_4_35_PdfVertical)
         Tests.Add(New Test_4_35_Wrap)
         Tests.Add(New Test_4_36_XlsLineStyle)
-        Tests.Add(New Test_4_36_IpaFont)
+        Tests.Add(New Test_4_36_SurrogatePair)
         Tests.Add(New Test_4_36_BoldUnderline)
         Tests.Add(New Test_4_36_GroupsSortKey)
         Tests.Add(New Test_4_36_FooterIfSpace)
