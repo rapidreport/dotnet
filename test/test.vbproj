@@ -163,7 +163,7 @@
     <Compile Include="Test_4_33_BufferLimit.vb" />
     <Compile Include="Test_4_34_DynamicContentSize.vb" />
     <Compile Include="Test_4_34_FooterIfSpace.vb" />
-    <Compile Include="Test_4_34_Wrap.vb" />
+    <Compile Include="Test_4_35_Wrap.vb" />
     <Compile Include="Test_4_36_BoldUnderline.vb" />
     <Compile Include="Test_4_36_FooterIfSpace.vb" />
     <Compile Include="Test_4_36_GroupsSortKey.vb" />
