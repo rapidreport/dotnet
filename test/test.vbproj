@@ -170,6 +170,8 @@
     <Compile Include="Test_4_36_SurrogatePair.vb" />
     <Compile Include="Test_4_35_PdfVertical.vb" />
     <Compile Include="Test_4_36_XlsLineStyle.vb" />
+    <Compile Include="Test_4_37_HashDataSource.vb" />
+    <Compile Include="Test_4_37_PocoDataSource.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -326,6 +328,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_36_xls_line_style.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_37_hash_datasource.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_37_poco_datasource.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

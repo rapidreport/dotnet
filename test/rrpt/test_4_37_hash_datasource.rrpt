@@ -1,0 +1,28 @@
+{
+  version: 0,
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    detail: true,
+    contents: [
+      {
+        size: {
+          initial: 20.0
+        },
+        aggregate_src: true,
+        elements: [
+          {type:"line",layout:{x1:0.0,y1:20.0,x2:555.0,y2:20.0}},
+          {type:"field",layout:{x1:0.0,y1:0.0,x2:60.0,y2:20.0},exp:".hoge",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:60.0,y1:0.0,x2:120.0,y2:20.0},exp:".fuga",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:120.0,y1:0.0,x2:180.0,y2:20.0},exp:".num1",halign:"right",valign:"center"},
+          {type:"field",layout:{x1:180.0,y1:0.0,x2:240.0,y2:20.0},exp:".num2",halign:"right",valign:"center"},
+          {type:"field",layout:{x1:240.0,y1:0.0,x2:300.0,y2:20.0},exp:".date1",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:300.0,y1:0.0,x2:360.0,y2:20.0},exp:".date2",halign:"left",valign:"center"}
+        ]
+      }
+    ]
+  }
+}

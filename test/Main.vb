@@ -45,6 +45,8 @@
         Tests.Add(New Test_4_36_BoldUnderline)
         Tests.Add(New Test_4_36_GroupsSortKey)
         Tests.Add(New Test_4_36_FooterIfSpace)
+        Tests.Add(New Test_4_37_PocoDataSource)
+        Tests.Add(New Test_4_37_HashDataSource)
 
         Application.Run(New FmTest)
     End Sub
