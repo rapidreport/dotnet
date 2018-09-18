@@ -191,7 +191,7 @@ Public Class GdiText
     Protected Overridable Sub _Draw_FixdecShrink()
         Dim fd As New _FixDec(Me)
         Dim font As Font = _GetFont(Setting, TextDesign, True)
-        font = _GetFitFont(Graphics, Region, Setting, fd.GetFullText(TextDesign.DecimalPlace), font,
+        font = _GetFitFont(Graphics, Region, Setting, fd.GetFullText(), font,
                            Me._GetStringFormat(StringAlignment.Near, StringAlignment.Near, 0))
         fd.DrawText(font)
     End Sub
@@ -425,16 +425,16 @@ Public Class GdiText
             End With
         End Sub
 
-        Public Function GetFullText2(width As Integer) As String
+        Public Function GetFullText2() As String
             Dim ret As String = Me.Text2
             If ret.Length = 0 Then
                 ret = "."
             End If
-            Return ret.PadRight(width + 1, "0")
+            Return ret.PadRight(Me.GdiText.TextDesign.DecimalPlace + 1, "0")
         End Function
 
-        Public Function GetFullText(width As Integer) As String
-            Return Me.Text1 & Me.GetFullText2(width) & Me.Text3
+        Public Function GetFullText() As String
+            Return Me.Text1 & Me.GetFullText2() & Me.Text3
         End Function
 
         Public Sub DrawText(font As Font)

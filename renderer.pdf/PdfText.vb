@@ -202,7 +202,7 @@ Public Class PdfText
     Protected Overridable Sub _Draw_FixdecShrink()
         Dim fd As New _FixDec(Me)
         Dim texts As New List(Of String)
-        texts.Add(fd.GetFullText(TextDesign.DecimalPlace))
+        texts.Add(fd.GetFullText())
         Dim fontSize As Single = _GetFitFontSize(texts)
         fd.DrawText(fontSize)
     End Sub
@@ -653,16 +653,16 @@ Public Class PdfText
             End With
         End Sub
 
-        Public Function GetFullText2(width As Integer) As String
+        Public Function GetFullText2() As String
             Dim ret As String = Me.Text2
             If ret.Length = 0 Then
                 ret = "."
             End If
-            Return ret.PadRight(width + 1, "0")
+            Return ret.PadRight(Me.PdfText.TextDesign.DecimalPlace + 1, "0")
         End Function
 
-        Public Function GetFullText(width As Integer) As String
-            Return Me.Text1 & Me.GetFullText2(width) & Me.Text3
+        Public Function GetFullText() As String
+            Return Me.Text1 & Me.GetFullText2() & Me.Text3
         End Function
 
         Public Sub DrawText(fontSize As Single)
@@ -677,7 +677,7 @@ Public Class PdfText
             End Select
             y += OFFSET_Y
             With Nothing
-                Dim t As String = Me.Text1 & Me.GetFullText2(PdfText.TextDesign.DecimalPlace)
+                Dim t As String = Me.Text1 & Me.GetFullText2()
                 Dim ft As String = t & Me.Text3
                 Dim w As Single = PdfText._GetTextWidth(fontSize, t)
                 Dim fw As Single = PdfText._GetTextWidth(fontSize, ft)
