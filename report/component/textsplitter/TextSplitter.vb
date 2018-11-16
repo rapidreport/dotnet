@@ -30,7 +30,7 @@ Public Class TextSplitter
         Return _GetLines(text, -1)
     End Function
 
-    Private Function _GetLines(text As String, limit As Integer)
+    Private Function _GetLines(text As String, limit As Integer) As List(Of String)
         Dim lf As String = vbLf
         Dim cr As String = vbCr
         Dim ret As New List(Of String)

@@ -194,8 +194,8 @@ Namespace component
             Dim keys As New List(Of String)
             keys.AddRange(setting.VKeys)
             keys.AddRange(setting.HKeys)
-            Dim vSorted As CrosstabDataSource = New CrosstabDataSource(data, keys)
-            Dim hSorted As CrosstabDataSource = New CrosstabDataSource(data, setting.HKeys)
+            Dim vSorted As New CrosstabDataSource(data, keys)
+            Dim hSorted As New CrosstabDataSource(data, setting.HKeys)
             Dim hMasterList As New List(Of CrosstabDataSource)
             Dim hMasterMap As New Dictionary(Of CrosstabDataSource, Integer)
             ret.OrgData = data
@@ -234,7 +234,6 @@ Namespace component
                     ret.Summaries(hMasterMap(d)) = d
                 End If
             Next
-
             Return ret
         End Function
 

@@ -172,6 +172,7 @@
     <Compile Include="Test_4_36_XlsLineStyle.vb" />
     <Compile Include="Test_4_37_HashDataSource.vb" />
     <Compile Include="Test_4_37_PocoDataSource.vb" />
+    <Compile Include="Test_4_38_Wlines.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -334,6 +335,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_37_poco_datasource.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_4_38_wlines.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

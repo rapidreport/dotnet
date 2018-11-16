@@ -103,6 +103,7 @@
     <Compile Include="method\CurrentTimeMethod.vb" />
     <Compile Include="method\PageGroupCountMethod.vb" />
     <Compile Include="operator\DateAddOperator.vb" />
+    <Compile Include="operator\WLinesOperator.vb" />
     <Compile Include="operator\TrimOperator.vb" />
     <Compile Include="search\searchobject\DefaultSearchObject.vb" />
     <Compile Include="search\searchobject\FieldSearchObject.vb" />

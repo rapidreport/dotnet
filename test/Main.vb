@@ -47,6 +47,7 @@
         Tests.Add(New Test_4_36_FooterIfSpace)
         Tests.Add(New Test_4_37_PocoDataSource)
         Tests.Add(New Test_4_37_HashDataSource)
+        Tests.Add(New Test_4_38_Wlines)
 
         Application.Run(New FmTest)
     End Sub
