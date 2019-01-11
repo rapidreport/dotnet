@@ -147,7 +147,7 @@ Public Module ReportUtil
         End If
     End Function
 
-    Public Function WStrinLen(str As String) As Integer
+    Public Function WStringLen(str As String) As Integer
         Dim si As StringInfo = New StringInfo(str)
         Dim ret As Integer = 0
         For i As Integer = 0 To si.LengthInTextElements - 1
@@ -162,47 +162,30 @@ Public Module ReportUtil
     End Function
 
     Public Function WSubString(str As String, begin As Integer) As String
-        Dim si As StringInfo = New StringInfo(str)
-        Dim b As Integer
         If begin >= 0 Then
-            b = GetWIndex(str, 0, begin)
+            Return str.Substring(GetWIndex(str, begin))
         Else
-            b = GetWRevIndex(str, si.LengthInTextElements, -begin)
-        End If
-        If b >= si.LengthInTextElements Then
-            Return Nothing
-        Else
-            Return str.Substring(b)
+            Return str.Substring(GetWRevIndex(str, -begin))
         End If
     End Function
 
     Public Function WSubString(str As String, begin As Integer, len As Integer) As String
-        Dim si As StringInfo = New StringInfo(str)
-        Dim b As Integer
-        Dim e As Integer
         If begin >= 0 Then
-            b = GetWIndex(str, 0, begin)
-            e = GetWIndex(str, b, len)
+            Dim _str As String = str.Substring(GetWIndex(str, begin))
+            Return _str.Substring(0, GetWIndex(_str, len))
         Else
-            Dim _len As Integer = Math.Min(-begin, len)
-            e = GetWRevIndex(str, si.LengthInTextElements, -(begin + _len))
-            b = GetWRevIndex(str, e, _len)
-        End If
-        If e <= b Or b >= si.LengthInTextElements Then
-            Return Nothing
-        ElseIf e >= si.LengthInTextElements Then
-            Return str.Substring(b)
-        Else
-            Return str.Substring(b, e - b)
+            Dim _str As String = str.Substring(GetWRevIndex(str, -begin))
+            Return _str.Substring(0, GetWIndex(_str, len))
         End If
     End Function
 
-    Public Function GetWIndex(str As String, base As Integer, w As Integer) As Integer
+    Public Function GetWIndex(str As String, w As Integer) As Integer
         Dim si As StringInfo = New StringInfo(str)
+        Dim i As Integer = 0
         Dim _w As Integer = 0
-        For i As Integer = base To si.LengthInTextElements - 1
-            Dim c As Char = si.SubstringByTextElements(i, 1)
-            If SINGLE_CHARS.IndexOf(c) >= 0 Then
+        For j As Integer = 0 To si.LengthInTextElements - 1
+            Dim c As String = si.SubstringByTextElements(j, 1)
+            If c.Length = 1 AndAlso SINGLE_CHARS.IndexOf(c) >= 0 Then
                 _w += 1
             Else
                 _w += 2
@@ -210,23 +193,26 @@ Public Module ReportUtil
             If _w > w Then
                 Return i
             End If
+            i += c.Length
         Next
-        Return si.LengthInTextElements
+        Return str.Length
     End Function
 
-    Public Function GetWRevIndex(str As String, base As Integer, w As Integer) As Integer
+    Public Function GetWRevIndex(str As String, w As Integer) As Integer
         Dim si As StringInfo = New StringInfo(str)
+        Dim i As Integer = str.Length
         Dim _w As Integer = 0
-        For i As Integer = base - 1 To 0 Step -1
-            Dim c As Char = si.SubstringByTextElements(i, 1)
-            If SINGLE_CHARS.IndexOf(c) >= 0 Then
+        For j As Integer = si.LengthInTextElements - 1 To 0 Step -1
+            Dim c As String = si.SubstringByTextElements(j, 1)
+            If c.Length = 1 AndAlso SINGLE_CHARS.IndexOf(c) >= 0 Then
                 _w += 1
             Else
                 _w += 2
             End If
             If _w > w Then
-                Return i + 1
+                Return i
             End If
+            i -= c.Length
         Next
         Return 0
     End Function

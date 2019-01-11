@@ -9,6 +9,6 @@
         If Me._Width = 0 Then
             Return MyBase._GetNextWidth(text)
         End If
-        Return ReportUtil.GetWIndex(text, 0, Me._Width)
+        Return ReportUtil.GetWIndex(text, Me._Width)
     End Function
 End Class

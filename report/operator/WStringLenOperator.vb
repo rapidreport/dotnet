@@ -12,7 +12,7 @@ Namespace [operator]
             If str Is Nothing Then
                 Return Nothing
             End If
-            Return ReportUtil.WStrinLen(str)
+            Return ReportUtil.WStringLen(str)
         End Function
     End Class
 End Namespace
