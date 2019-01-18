@@ -61,8 +61,9 @@ Namespace component
                     _region = Me.Groups.Scan(_scanner, groupRange, paperRegion, _region, contentState, evaluator)
                 End If
             End If
+            scanner.ScanSubContent(Me, parentRegion, contentState, _region, paperRegion, True)
             scanner.AfterContent(Me, groupRange, parentRegion, contentState, _region, _scanner)
-            scanner.ScanSubContent(Me, parentRegion, contentState, _region, paperRegion)
+            scanner.ScanSubContent(Me, parentRegion, contentState, _region, paperRegion, False)
             Return _region
         End Function
 

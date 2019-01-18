@@ -19,10 +19,10 @@ Namespace scanner
             Me.DisplayedGroups = parent.DisplayedGroups
         End Sub
 
-        Public Overrides Function BeforeGroup( _
-          group As component.Group, _
-          contentRange As ContentRange, _
-          parentRegion As Region, _
+        Public Overrides Function BeforeGroup(
+          group As component.Group,
+          contentRange As ContentRange,
+          parentRegion As Region,
           groupState As GroupState) As IScanner
             Me.DataContainer.InitializeData(group)
             With Nothing
@@ -34,20 +34,20 @@ Namespace scanner
             Return Me
         End Function
 
-        Public Overrides Function BeforeContent( _
-          content As Content, _
-          groupRange As GroupRange, _
-          parentRegion As Region, _
+        Public Overrides Function BeforeContent(
+          content As Content,
+          groupRange As GroupRange,
+          parentRegion As Region,
           contentState As ContentState) As IScanner
             Return New RenderingScanner(Me)
         End Function
 
-        Public Overrides Sub AfterContent( _
-          content As Content, _
-          groupRange As GroupRange, _
-          parentRegion As Region, _
-          contentState As ContentState, _
-          region As Region, _
+        Public Overrides Sub AfterContent(
+          content As Content,
+          groupRange As GroupRange,
+          parentRegion As Region,
+          contentState As ContentState,
+          region As Region,
           scanner As IScanner)
             If region IsNot Nothing Then
                 Me.ContentInstances.Add(New ContentInstance(content, region, contentState))
@@ -58,29 +58,32 @@ Namespace scanner
             End If
         End Sub
 
-        Public Overrides Sub ScanSubContent( _
-          content As Content, _
-          parentRegion As Region, _
-          contentState As ContentState, _
-          region As Region, _
-          paperRegion As Region)
+        Public Overrides Sub ScanSubContent(
+          content As Content,
+          parentRegion As Region,
+          contentState As ContentState,
+          region As Region,
+          paperRegion As Region,
+          background As Boolean)
             If region IsNot Nothing AndAlso content.SubContents IsNot Nothing Then
                 Dim _region As New Region(region)
                 _region.MaxBottom = _region.Bottom
                 _region.MaxRight = _region.Right
                 For Each c As Content In content.SubContents
-                    Dim evaluator As New Evaluator(c, contentState)
-                    If Not c.GetReport.InDesigner AndAlso c.Design.VisibilityCond IsNot Nothing Then
-                        If Not ReportUtil.Condition(evaluator.EvalTry(c.Design.VisibilityCond)) Then
-                            Continue For
+                    If c.Design.Background = background Then
+                        Dim evaluator As New Evaluator(c, contentState)
+                        If Not c.GetReport.InDesigner AndAlso c.Design.VisibilityCond IsNot Nothing Then
+                            If Not ReportUtil.Condition(evaluator.EvalTry(c.Design.VisibilityCond)) Then
+                                Continue For
+                            End If
                         End If
+                        Dim gr As GroupRange = Nothing
+                        If c.Groups IsNot Nothing Then
+                            gr = New GroupRange(c.Groups)
+                        End If
+                        c.Scan(Me, gr, paperRegion, parentRegion,
+                               c.Design.Layout.GetRegion(_region), contentState, evaluator)
                     End If
-                    Dim gr As GroupRange = Nothing
-                    If c.Groups IsNot Nothing Then
-                        gr = New GroupRange(c.Groups)
-                    End If
-                    c.Scan(Me, gr, paperRegion, parentRegion, _
-                           c.Design.Layout.GetRegion(_region), contentState, evaluator)
                 Next
             End If
         End Sub

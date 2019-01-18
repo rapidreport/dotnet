@@ -7,6 +7,7 @@
         Public Id As String = Nothing
         Public Size As ContentSizeDesign = Nothing
         Public Layout As SubContentLayoutDesign = Nothing
+        Public Background As Boolean = False
         Public AggregateSrc As Boolean = False
         Public EveryPage As Boolean = False
         Public ExistenceCond As String = Nothing
@@ -52,6 +53,7 @@
             Else
                 Me.Layout = New SubContentLayoutDesign()
             End If
+            Me.Background = Me.Desc("background")
             Me.AggregateSrc = Me.Desc("aggregate_src")
             Me.EveryPage = Me.Desc("every_page")
             Me.ExistenceCond = Me.Desc("existence_cond")
