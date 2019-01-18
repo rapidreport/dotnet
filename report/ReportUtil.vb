@@ -115,44 +115,41 @@ Public Module ReportUtil
         Dim si As StringInfo = New StringInfo(str)
         Dim b As Integer = begin
         If b < 0 Then
-            b = si.LengthInTextElements + b
-            If b < 0 Then
-                b = 0
-            End If
+            b = Math.Max(si.LengthInTextElements + b, 0)
         End If
         If b >= si.LengthInTextElements Then
             Return Nothing
         Else
-            Return str.Substring(b)
+            Return si.SubstringByTextElements(b)
         End If
     End Function
 
     Public Function SubString(str As String, begin As Integer, len As Integer) As String
         Dim si As StringInfo = New StringInfo(str)
         Dim b As Integer = begin
-        Dim l As Integer = len
         If b < 0 Then
-            b = si.LengthInTextElements + b
-            If b < 0 Then
-                l += b
-                b = 0
-            End If
+            b = Math.Max(si.LengthInTextElements + b, 0)
         End If
-        If l <= 0 Or b >= si.LengthInTextElements Then
+        If len <= 0 Or b >= si.LengthInTextElements Then
             Return Nothing
-        ElseIf b + l > si.LengthInTextElements Then
-            Return str.Substring(b)
+        ElseIf b + len > si.LengthInTextElements Then
+            Return si.SubstringByTextElements(b)
         Else
-            Return str.Substring(b, l)
+            Return si.SubstringByTextElements(b, len)
         End If
+    End Function
+
+    Public Function StringLen(str As String) As Integer
+        Dim si As StringInfo = New StringInfo(str)
+        Return si.LengthInTextElements
     End Function
 
     Public Function WStringLen(str As String) As Integer
         Dim si As StringInfo = New StringInfo(str)
         Dim ret As Integer = 0
         For i As Integer = 0 To si.LengthInTextElements - 1
-            Dim c As Char = si.SubstringByTextElements(i, 1)
-            If SINGLE_CHARS.IndexOf(c) >= 0 Then
+            Dim c As String = si.SubstringByTextElements(i, 1)
+            If c.Length = 1 AndAlso SINGLE_CHARS.IndexOf(c) >= 0 Then
                 ret += 1
             Else
                 ret += 2
@@ -162,29 +159,30 @@ Public Module ReportUtil
     End Function
 
     Public Function WSubString(str As String, begin As Integer) As String
+        Dim si As New StringInfo(str)
         If begin >= 0 Then
-            Return str.Substring(GetWIndex(str, begin))
+            Return si.SubstringByTextElements(GetWIndex(si, begin))
         Else
-            Return str.Substring(GetWRevIndex(str, -begin))
+            Return si.SubstringByTextElements(GetWRevIndex(si, -begin))
         End If
     End Function
 
     Public Function WSubString(str As String, begin As Integer, len As Integer) As String
         If begin >= 0 Then
-            Dim _str As String = str.Substring(GetWIndex(str, begin))
-            Return _str.Substring(0, GetWIndex(_str, len))
+            Dim si1 As New StringInfo(str)
+            Dim si2 As New StringInfo(si1.SubstringByTextElements(GetWIndex(si1, begin)))
+            Return si2.SubstringByTextElements(0, GetWIndex(si2, len))
         Else
-            Dim _str As String = str.Substring(GetWRevIndex(str, -begin))
-            Return _str.Substring(0, GetWIndex(_str, len))
+            Dim si1 As New StringInfo(str)
+            Dim si2 As New StringInfo(si1.SubstringByTextElements(GetWRevIndex(si1, -begin)))
+            Return si2.SubstringByTextElements(0, GetWIndex(si2, len))
         End If
     End Function
 
-    Public Function GetWIndex(str As String, w As Integer) As Integer
-        Dim si As StringInfo = New StringInfo(str)
-        Dim i As Integer = 0
+    Public Function GetWIndex(si As StringInfo, w As Integer) As Integer
         Dim _w As Integer = 0
-        For j As Integer = 0 To si.LengthInTextElements - 1
-            Dim c As String = si.SubstringByTextElements(j, 1)
+        For i As Integer = 0 To si.LengthInTextElements - 1
+            Dim c As String = si.SubstringByTextElements(i, 1)
             If c.Length = 1 AndAlso SINGLE_CHARS.IndexOf(c) >= 0 Then
                 _w += 1
             Else
@@ -193,26 +191,22 @@ Public Module ReportUtil
             If _w > w Then
                 Return i
             End If
-            i += c.Length
         Next
-        Return str.Length
+        Return si.LengthInTextElements
     End Function
 
-    Public Function GetWRevIndex(str As String, w As Integer) As Integer
-        Dim si As StringInfo = New StringInfo(str)
-        Dim i As Integer = str.Length
+    Public Function GetWRevIndex(si As StringInfo, w As Integer) As Integer
         Dim _w As Integer = 0
-        For j As Integer = si.LengthInTextElements - 1 To 0 Step -1
-            Dim c As String = si.SubstringByTextElements(j, 1)
+        For i As Integer = si.LengthInTextElements - 1 To 0 Step -1
+            Dim c As String = si.SubstringByTextElements(i, 1)
             If c.Length = 1 AndAlso SINGLE_CHARS.IndexOf(c) >= 0 Then
                 _w += 1
             Else
                 _w += 2
             End If
             If _w > w Then
-                Return i
+                Return i + 1
             End If
-            i -= c.Length
         Next
         Return 0
     End Function

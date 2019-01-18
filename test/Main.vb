@@ -48,6 +48,7 @@
         Tests.Add(New Test_4_37_PocoDataSource)
         Tests.Add(New Test_4_37_HashDataSource)
         Tests.Add(New Test_4_38_Wlines)
+        Tests.Add(New Test_5_0_SurrogatePair)
 
         Application.Run(New FmTest)
     End Sub

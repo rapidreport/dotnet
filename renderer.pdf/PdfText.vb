@@ -617,8 +617,7 @@ Public Class PdfText
             MyBase.New(Not Report.Compatibility._4_34_PdfWrapNoRule)
             Me._PdfText = pdfText
         End Sub
-        Protected Overrides Function _GetNextWidth(text As String) As Integer
-            Dim si As StringInfo = New StringInfo(text)
+        Protected Overrides Function _GetNextWidth(si As StringInfo) As Integer
             Dim cw As Single = Me._PdfText.Region.GetWidth - MARGIN_X * 2
             Dim fontSize As Single = Me._PdfText.TextDesign.Font.Size
             If Me._PdfText._GetTextWidth(fontSize, si.String) > cw + TOLERANCE Then

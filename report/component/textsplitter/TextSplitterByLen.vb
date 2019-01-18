@@ -8,10 +8,9 @@ Public Class TextSplitterByLen
         MyBase.New(False)
         Me._Length = length
     End Sub
-    Protected Overrides Function _GetNextWidth(text As String) As Integer
-        Dim si As StringInfo = New StringInfo(text)
+    Protected Overrides Function _GetNextWidth(si As StringInfo) As Integer
         If _Length = 0 Then
-            Return MyBase._GetNextWidth(text)
+            Return MyBase._GetNextWidth(si)
         End If
         Return Math.Min(Me._Length, si.LengthInTextElements)
     End Function

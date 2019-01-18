@@ -12,7 +12,7 @@ Namespace [operator]
             If str Is Nothing Then
                 Return Nothing
             End If
-            Return str.Length
+            Return ReportUtil.StringLen(str)
         End Function
     End Class
 End Namespace

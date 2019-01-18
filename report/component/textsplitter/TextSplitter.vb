@@ -59,7 +59,7 @@ Public Class TextSplitter
     Private Sub _Split(l As List(Of String), text As String, limit As Integer)
         Dim si As StringInfo = New StringInfo(text)
         Do
-            Dim w As Integer = Me._GetNextWidth(si.String)
+            Dim w As Integer = Me._GetNextWidth(si)
             If Me._BreakRule Then
                 w = _GetNextOnRule(si.String, w)
             End If
@@ -72,15 +72,14 @@ Public Class TextSplitter
                 Exit Do
             End If
             If si.LengthInTextElements > w Then
-                si.String = si.SubstringByTextElements(w)
+                si = New StringInfo(si.SubstringByTextElements(w))
             Else
-                si.String = ""
+                Exit Do
             End If
-        Loop While si.LengthInTextElements > 0
+        Loop
     End Sub
 
-    Protected Overridable Function _GetNextWidth(text As String) As Integer
-        Dim si As StringInfo = New StringInfo(text)
+    Protected Overridable Function _GetNextWidth(si As StringInfo) As Integer
         Return si.LengthInTextElements
     End Function
 
