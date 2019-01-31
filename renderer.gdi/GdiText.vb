@@ -507,4 +507,11 @@ Public Class GdiText
 
     End Class
 
+    Protected Function _IsMonoSpacedFont() As Boolean
+        Using g As Graphics = Graphics.FromImage(New Bitmap(1, 1))
+            Dim font As New Font(Setting.GetFont(TextDesign.Font.Name), 1)
+            Return g.MeasureString("i", font).Width = g.MeasureString("W", font).Width
+        End Using
+    End Function
+
 End Class

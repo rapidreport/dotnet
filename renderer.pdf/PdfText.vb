@@ -737,4 +737,8 @@ Public Class PdfText
 
     End Class
 
+    Protected Function _IsMonoSpacedFont() As Boolean
+        Return Me.Font.GetWidthPoint("i", 1) = Me.Font.GetWidthPoint("W", 1)
+    End Function
+
 End Class
