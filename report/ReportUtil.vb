@@ -1,4 +1,5 @@
 ﻿Imports System.Globalization
+Imports System.Runtime.CompilerServices
 
 Public Module ReportUtil
 
@@ -148,8 +149,7 @@ Public Module ReportUtil
         Dim si As StringInfo = New StringInfo(str)
         Dim ret As Integer = 0
         For i As Integer = 0 To si.LengthInTextElements - 1
-            Dim c As String = si.SubstringByTextElements(i, 1)
-            If c.Length = 1 AndAlso SINGLE_CHARS.IndexOf(c) >= 0 Then
+            If _IsSingleChar(si.SubstringByTextElements(i, 1)) Then
                 ret += 1
             Else
                 ret += 2
@@ -182,8 +182,7 @@ Public Module ReportUtil
     Public Function GetWIndex(si As StringInfo, w As Integer) As Integer
         Dim _w As Integer = 0
         For i As Integer = 0 To si.LengthInTextElements - 1
-            Dim c As String = si.SubstringByTextElements(i, 1)
-            If c.Length = 1 AndAlso SINGLE_CHARS.IndexOf(c) >= 0 Then
+            If _IsSingleChar(si.SubstringByTextElements(i, 1)) Then
                 _w += 1
             Else
                 _w += 2
@@ -198,8 +197,7 @@ Public Module ReportUtil
     Public Function GetWRevIndex(si As StringInfo, w As Integer) As Integer
         Dim _w As Integer = 0
         For i As Integer = si.LengthInTextElements - 1 To 0 Step -1
-            Dim c As String = si.SubstringByTextElements(i, 1)
-            If c.Length = 1 AndAlso SINGLE_CHARS.IndexOf(c) >= 0 Then
+            If _IsSingleChar(si.SubstringByTextElements(i, 1)) Then
                 _w += 1
             Else
                 _w += 2
@@ -222,5 +220,19 @@ Public Module ReportUtil
         End If
         Return Nothing
     End Function
+
+    Private _SingleCharsMap As Dictionary(Of String, Boolean) = Nothing
+
+    <MethodImpl(MethodImplOptions.Synchronized)>
+    Private Function _IsSingleChar(c As String) As Boolean
+        If _SingleCharsMap Is Nothing Then
+            _SingleCharsMap = New Dictionary(Of String, Boolean)
+            For i As Integer = 0 To SINGLE_CHARS.Length - 1
+                _SingleCharsMap.Add(SINGLE_CHARS.Chars(i), True)
+            Next
+        End If
+        Return _SingleCharsMap.ContainsKey(c)
+    End Function
+
 
 End Module
