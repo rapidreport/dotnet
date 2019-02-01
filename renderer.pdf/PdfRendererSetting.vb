@@ -18,6 +18,8 @@ Public Class PdfRendererSetting
     Public UnderlineWidthCoefficient As Single
 
     Public Shared SkipInitialFontCreate As Boolean = False
+    Public Shared UseMsFont As Boolean = True
+
     Private Shared _loaded As Boolean = False
 
     Public Sub New()
@@ -38,9 +40,15 @@ Public Class PdfRendererSetting
         Me.ElementRendererMap.Add("image", New ImageRenderer)
         Me.ElementRendererMap.Add("subpage", New SubPageRenderer)
         If Not SkipInitialFontCreate Then
-            Me.DefaultFont = BaseFont.CreateFont("HeiseiKakuGo-W5", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED)
-            Me.FontMap.Add("gothic", Me.DefaultFont)
-            Me.FontMap.Add("mincho", BaseFont.CreateFont("HeiseiMin-W3", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED))
+            If UseMsFont Then
+                Me.DefaultFont = BaseFont.CreateFont("MS-Gothic", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED)
+                Me.FontMap.Add("gothic", Me.DefaultFont)
+                Me.FontMap.Add("mincho", BaseFont.CreateFont("MS-Mincho", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED))
+            Else
+                Me.DefaultFont = BaseFont.CreateFont("HeiseiKakuGo-W5", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED)
+                Me.FontMap.Add("gothic", Me.DefaultFont)
+                Me.FontMap.Add("mincho", BaseFont.CreateFont("HeiseiMin-W3", "UniJIS-UCS2-H", BaseFont.NOT_EMBEDDED))
+            End If
         Else
             Me.DefaultFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.EMBEDDED)
         End If
