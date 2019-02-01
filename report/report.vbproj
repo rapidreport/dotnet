@@ -79,6 +79,7 @@
     <Compile Include="component\GroupDesign.vb" />
     <Compile Include="component\GroupSplitStringDesign.vb" />
     <Compile Include="component\IndexRange.vb" />
+    <Compile Include="component\MonospacedFontDesign.vb" />
     <Compile Include="component\SubContentLayoutDesign.vb" />
     <Compile Include="component\textsplitter\TextSplitter.vb" />
     <Compile Include="component\textsplitter\TextSplitterByLen.vb" />

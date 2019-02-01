@@ -22,6 +22,7 @@ Public Class ReportDesign
     Public PaperSource As String = Nothing
     Public GroupDesign As GroupDesign = Nothing
     Public Memo As String = Nothing
+    Public MonospacedFontDesign As MonospacedFontDesign = Nothing
 
     Private imageCache As New Dictionary(Of Hashtable, Dictionary(Of String, Image))
 
@@ -71,6 +72,11 @@ Public Class ReportDesign
         Me.PaperName = Desc("paper_name")
         Me.PaperSource = Desc("paper_source")
         Me.Memo = Desc("memo")
+        If Me.Desc.ContainsKey("monospace_font") Then
+            Me.MonospacedFontDesign = New MonospacedFontDesign(Me.Desc("monospaced_font"))
+        Else
+            Me.MonospacedFontDesign = New MonospacedFontDesign()
+        End If
     End Sub
 
     Public Sub LoadSubDesc()

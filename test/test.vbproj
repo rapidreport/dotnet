@@ -173,6 +173,7 @@
     <Compile Include="Test_4_37_HashDataSource.vb" />
     <Compile Include="Test_4_37_PocoDataSource.vb" />
     <Compile Include="Test_4_38_Wlines.vb" />
+    <Compile Include="Test_5_0_Typeset.vb" />
     <Compile Include="Test_5_0_SurrogatePair.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -339,6 +340,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_38_wlines.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_5_0_typeset.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_0_surrogate_pair.rrpt">
