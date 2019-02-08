@@ -49,6 +49,7 @@
         Tests.Add(New Test_4_37_HashDataSource)
         Tests.Add(New Test_4_38_Wlines)
         Tests.Add(New Test_5_0_SurrogatePair)
+        Tests.Add(New Test_5_0_ImageScale)
         Tests.Add(New Test_5_0_Typeset)
 
         Application.Run(New FmTest)
