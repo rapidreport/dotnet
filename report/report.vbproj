@@ -83,6 +83,7 @@
     <Compile Include="component\SubContentLayoutDesign.vb" />
     <Compile Include="component\textsplitter\TextSplitter.vb" />
     <Compile Include="component\textsplitter\TextSplitterByLen.vb" />
+    <Compile Include="component\textsplitter\TextSplitterByDrawingWidth.vb" />
     <Compile Include="component\textsplitter\TextSplitterByWidth.vb" />
     <Compile Include="data\internal\CrosstabDataSource.vb" />
     <Compile Include="data\internal\RecordComparer.vb" />

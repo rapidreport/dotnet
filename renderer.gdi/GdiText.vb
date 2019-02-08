@@ -10,6 +10,7 @@ Public Class GdiText
     Public Setting As GdiRendererSetting
     Public TextDesign As TextDesign
     Public Text As String
+    Public IsMonospaced As Boolean
 
     Protected Const TOLERANCE As Single = 0.1F
 
@@ -24,6 +25,9 @@ Public Class GdiText
         Me.Setting = env.Setting
         Me.TextDesign = New TextDesign(reportDesign, design)
         Me.Text = text
+        Me.IsMonospaced =
+            Me.TextDesign.MonospacedFont IsNot Nothing And
+            env.IsMonospacedFont(Me.TextDesign.Font.Name)
     End Sub
 
     Public Overridable Sub Draw()
@@ -60,7 +64,7 @@ Public Class GdiText
     End Sub
 
     Protected Overridable Sub _Draw_Distribute()
-        Dim font As Font = _GetFont(Me.Setting, Me.TextDesign, True)
+        Dim font As Font = _GetFont()
         Dim texts As List(Of String) = (New TextSplitter()).GetLines(Me.Text)
         Dim color As Color = GdiRenderUtil.GetColor(Me.TextDesign.Color, Drawing.Color.Black)
         Dim sf As StringFormat = _GetStringFormat(
@@ -104,7 +108,7 @@ Public Class GdiText
     End Sub
 
     Protected Overridable Sub _Draw_DistributeVertical()
-        Dim font As Font = _GetFont(Setting, TextDesign, True)
+        Dim font As Font = _GetFont()
         Dim texts As List(Of String) = (New TextSplitter()).GetLines(Me.Text)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
         Dim sf As StringFormat = _GetStringFormat(
@@ -150,14 +154,13 @@ Public Class GdiText
     End Sub
 
     Protected Overridable Sub _Draw_Vertical()
-        Dim font As Font = _GetFont(Setting, TextDesign, True)
         Dim texts As List(Of String) = (New TextSplitter()).GetLines(Me.Text)
-        _Draw_Vertical_Aux(texts, font)
+        _Draw_Vertical_Aux(texts, _GetFont())
     End Sub
 
     Protected Overridable Sub _Draw_VerticalShrink()
-        Dim font As Font = _GetFont(Setting, TextDesign, True)
         Dim texts As List(Of String) = (New TextSplitter()).GetLines(Me.Text)
+        Dim font As Font = _GetFont()
         With Nothing
             Dim m As Integer = 0
             For Each t As String In texts
@@ -177,80 +180,88 @@ Public Class GdiText
     End Sub
 
     Protected Overridable Sub _Draw_VerticalWrap()
-        Dim font As Font = _GetFont(Setting, TextDesign, True)
+        Dim font As Font = _GetFont()
         Dim l As Integer = Fix((Region.GetHeight + TOLERANCE) / font.Size)
         _Draw_Vertical_Aux((New TextSplitterByLen(l)).GetLines(Me.Text), font)
     End Sub
 
     Protected Overridable Sub _Draw_Fixdec()
         Dim fd As New _FixDec(Me)
-        Dim font As Font = _GetFont(Setting, TextDesign, True)
-        fd.DrawText(font)
+        fd.DrawText(_GetFont())
     End Sub
 
     Protected Overridable Sub _Draw_FixdecShrink()
         Dim fd As New _FixDec(Me)
-        Dim font As Font = _GetFont(Setting, TextDesign, True)
-        font = _GetFitFont(Graphics, Region, Setting, fd.GetFullText(), font,
-                           Me._GetStringFormat(StringAlignment.Near, StringAlignment.Near, 0))
-        fd.DrawText(font)
+        fd.DrawText(_GetFitFont(fd.GetFullText()))
     End Sub
 
     Protected Overridable Sub _Draw_Wrap()
-        Dim font As Font = _GetFont(Setting, TextDesign, False)
-        Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
-        Dim r As New RectangleF(Region.Left, Region.Top, Region.GetWidth, Region.GetHeight)
-        Dim sf As StringFormat = _GetStringFormat(
-            _ToStringAlignment(TextDesign.HAlign),
-            _ToStringAlignment(TextDesign.VAlign), 0)
-        Using b As New SolidBrush(color)
-            Graphics.DrawString(Text, font, b, r, sf)
-        End Using
+        If Me.IsMonospaced Then
+            Dim sp As New TextSplitterByDrawingWidth(TextDesign, Region.GetWidth, 0)
+            _Draw_Monospaced(sp.GetLines(Text), _GetFont())
+        Else
+            Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
+                Graphics.DrawString(Text, _GetFont(), b, Region.ToRectangleF, _GetStringFormat(0))
+            End Using
+        End If
     End Sub
 
     Protected Overridable Sub _Draw_Shrink()
-        Dim font As Font = _GetFont(Setting, TextDesign, False)
-        font = _GetFitFont(Graphics, Region, Setting, Text, font,
-                           Me._GetStringFormat(StringAlignment.Near, StringAlignment.Near, 0))
-        Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
-        Dim r As New RectangleF(Region.Left, Region.Top, Region.GetWidth, Region.GetHeight)
-        Dim sf As StringFormat = _GetStringFormat(
-            _ToStringAlignment(TextDesign.HAlign),
-            _ToStringAlignment(TextDesign.VAlign),
-            StringFormatFlags.NoWrap)
-        Using b As New SolidBrush(color)
-            Graphics.DrawString(Text, font, b, r, sf)
-        End Using
+        If Me.IsMonospaced Then
+            Dim texts As List(Of String) = (New TextSplitter(True)).GetLines(Text)
+            _Draw_Monospaced(texts, _GetFont(TextDesign.GetMonospacedFitFontSize(texts, Region.GetWidth, Setting.ShrinkFontSizeMin)))
+        Else
+            Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
+                Graphics.DrawString(Text, _GetFitFont(Text), b, Region.ToRectangleF, _GetStringFormat(StringFormatFlags.NoWrap))
+            End Using
+        End If
     End Sub
 
     Protected Overridable Sub _Draw()
-        Dim font As Font = _GetFont(Setting, TextDesign, False)
-        Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
-        Dim r As New RectangleF(Region.Left, Region.Top, Region.GetWidth, Region.GetHeight)
-        Dim sf As StringFormat = _GetStringFormat(
-            _ToStringAlignment(TextDesign.HAlign),
-            _ToStringAlignment(TextDesign.VAlign),
-            StringFormatFlags.NoWrap)
-        Using b As New SolidBrush(color)
-            Graphics.DrawString(Text, font, b, r, sf)
+        If Me.IsMonospaced Then
+            Dim sp As New TextSplitterByDrawingWidth(TextDesign, 0, Region.GetWidth)
+            _Draw_Monospaced(sp.GetLines(Me.Text), _GetFont())
+        Else
+            Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
+                Graphics.DrawString(Text, _GetFont(), b, Region.ToRectangleF, _GetStringFormat(StringFormatFlags.NoWrap))
+            End Using
+        End If
+    End Sub
+
+    Protected Overridable Sub _Draw_Monospaced(texts As List(Of String), font As Font)
+        Dim sf As StringFormat = _GetStringFormat(_ToStringAlignment(TextDesign.HAlign), StringAlignment.Near, StringFormatFlags.NoWrap)
+        Dim y As Single = 0
+        Select Case TextDesign.VAlign
+            Case Report.EVAlign.TOP
+                y = 0
+            Case Report.EVAlign.CENTER
+                y = (Region.GetHeight -
+                  (0.125 + TextDesign.MonospacedFont.RowHeidht * texts.Count) * font.Size) / 2
+            Case Report.EVAlign.BOTTOM
+                y = Region.GetHeight -
+                  (0.125 + TextDesign.MonospacedFont.RowHeidht * texts.Count) * font.Size
+        End Select
+        Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
+            For Each t As String In texts
+                Graphics.DrawString(t, font, b, Region.ToRectangleF(0, y), sf)
+                y += TextDesign.MonospacedFont.RowHeidht * font.Size
+            Next
         End Using
     End Sub
 
-    Protected Overridable Sub _Draw_Vertical_Aux(
-      texts As List(Of String),
-      font As Font)
+    Protected Overridable Sub _Draw_Vertical_Aux(texts As List(Of String), Font As Font)
         Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
-        Dim mx As Single = font.Size / 6
+        Dim mx As Single = Font.Size / 6
         Dim x As Single = 0
         Select Case TextDesign.HAlign
             Case Report.EHAlign.LEFT
-                x = font.Size * (texts.Count - 1) + font.Size / 2 + mx
-                x = Math.Min(x, Region.GetWidth - font.Size / 2 - mx)
+                x = Font.Size * (texts.Count - 1) + Font.Size / 2 + mx
+                x = Math.Min(x, Region.GetWidth - Font.Size / 2 - mx)
             Case Report.EHAlign.CENTER
-                x = (Region.GetWidth + font.Size * (texts.Count - 1)) / 2
-                x = Math.Min(x, Region.GetWidth - font.Size / 2 - mx)
+                x = (Region.GetWidth + Font.Size * (texts.Count - 1)) / 2
+                x = Math.Min(x, Region.GetWidth - Font.Size / 2 - mx)
             Case Report.EHAlign.RIGHT
-                x = Region.GetWidth - font.Size / 2 - mx
+                x = Region.GetWidth - Font.Size / 2 - mx
         End Select
         Dim sf As StringFormat = _GetStringFormat(
             _ToStringAlignment(Report.EHAlign.LEFT),
@@ -258,8 +269,8 @@ Public Class GdiText
             StringFormatFlags.DirectionVertical)
         Dim cw As Single = Region.GetWidth - mx * 2
         Dim ch As Single = Region.GetHeight
-        Dim xc As Integer = Fix((cw + TOLERANCE) / font.Size)
-        Dim yc As Integer = Fix((ch + TOLERANCE) / font.Size)
+        Dim xc As Integer = Fix((cw + TOLERANCE) / Font.Size)
+        Dim yc As Integer = Fix((ch + TOLERANCE) / Font.Size)
         Using b As New SolidBrush(color)
             For i As Integer = 0 To Math.Min(texts.Count, xc) - 1
                 Dim t As String = texts(i)
@@ -269,10 +280,10 @@ Public Class GdiText
                     Case Report.EVAlign.TOP
                         y = 0
                     Case Report.EVAlign.CENTER
-                        y = (Region.GetHeight - font.Size * si.LengthInTextElements) / 2
+                        y = (Region.GetHeight - Font.Size * si.LengthInTextElements) / 2
                         y = Math.Max(y, 0)
                     Case Report.EVAlign.BOTTOM
-                        y = Region.GetHeight - font.Size * si.LengthInTextElements
+                        y = Region.GetHeight - Font.Size * si.LengthInTextElements
                         y = Math.Max(y, 0)
                 End Select
                 Dim _yc As Integer = Math.Min(si.LengthInTextElements, yc)
@@ -281,21 +292,25 @@ Public Class GdiText
                         p.Width = TextDesign.Font.Size / 13.4F
                         Graphics.DrawLine(
                           p,
-                          Region.Left + x + font.Size / 2,
+                          Region.Left + x + Font.Size / 2,
                           Region.Top + y,
-                          Region.Left + x + font.Size / 2,
-                          Region.Top + y + font.Size * _yc)
+                          Region.Left + x + Font.Size / 2,
+                          Region.Top + y + Font.Size * _yc)
                     End Using
                 End If
                 For j As Integer = 0 To _yc - 1
                     Dim c As String = si.SubstringByTextElements(j, 1)
-                    Graphics.DrawString(c, font, b, Region.Left + x - font.Size / 6, Region.Top + y - font.Size / 10, sf)
-                    y += font.Size
+                    Graphics.DrawString(c, Font, b, Region.Left + x - Font.Size / 6, Region.Top + y - Font.Size / 10, sf)
+                    y += Font.Size
                 Next
-                x -= font.Size
+                x -= Font.Size
             Next
         End Using
     End Sub
+
+    Protected Overridable Function _GetStringFormat(formatFlags As StringFormatFlags)
+        Return _GetStringFormat(_ToStringAlignment(TextDesign.HAlign), _ToStringAlignment(TextDesign.VAlign), formatFlags)
+    End Function
 
     Protected Overridable Function _GetStringFormat(
       alignment As StringAlignment,
@@ -321,26 +336,24 @@ Public Class GdiText
         Return False
     End Function
 
-    Protected Shared Function _GetFont(
-      setting As GdiRendererSetting,
-      textDesign As TextDesign,
-      ignoreUnderline As Boolean) As Font
+    Protected Overridable Function _GetFont() As Font
+        Return _GetFont(TextDesign.Font.Size)
+    End Function
+
+    Protected Overridable Function _GetFont(fontSize As Single) As Font
         Dim style As FontStyle = FontStyle.Regular
-        If textDesign.Font.Bold Then
+        If TextDesign.Font.Bold Then
             style = style Or FontStyle.Bold
         End If
-        If textDesign.Font.Italic Then
+        If TextDesign.Font.Italic Then
             style = style Or FontStyle.Italic
         End If
-        If textDesign.Font.Underline Then
-            If Not ignoreUnderline Then
+        If TextDesign.Font.Underline Then
+            If Not (TextDesign.Distribute Or TextDesign.Vertical Or TextDesign.DecimalPlace > 0) Then
                 style = style Or FontStyle.Underline
             End If
         End If
-        Return New Font(
-          setting.GetFont(textDesign.Font.Name),
-          textDesign.Font.Size,
-          style)
+        Return New Font(Setting.GetFont(TextDesign.Font.Name), fontSize, style)
     End Function
 
     Protected Shared Function _ToStringAlignment(
@@ -367,31 +380,27 @@ Public Class GdiText
         End Select
     End Function
 
-    Protected Shared Function _GetFitFont(
-      g As Graphics,
-      region As Region,
-      setting As GdiRendererSetting,
-      text As String,
-      baseFont As Font,
-      stringFormat As StringFormat) As Font
-        If g.MeasureString(text, baseFont, 100000, stringFormat).Width <= region.GetWidth Then
-            Return baseFont
+    Protected Overridable Function _GetFitFont(text As String) As Font
+        Dim f As Font = _GetFont()
+        Dim sf As StringFormat = _GetStringFormat(StringAlignment.Near, StringAlignment.Near, 0)
+        If Graphics.MeasureString(text, f, 100000, sf).Width <= Region.GetWidth Then
+            Return f
         End If
         Dim _i As Integer = 0
-        Do While setting.ShrinkFontSizeMin + _i * setting.ShrinkFontSizeStep < baseFont.Size
+        Do While Setting.ShrinkFontSizeMin + _i * Setting.ShrinkFontSizeStep < f.Size
             _i += 1
         Loop
         For i As Integer = _i - 1 To 1 Step -1
-            Dim s As Single = setting.ShrinkFontSizeMin + i * setting.ShrinkFontSizeStep
-            Dim font As New Font(baseFont.Name, s, baseFont.Style)
-            If g.MeasureString(text, font, 100000, stringFormat).Width <= region.GetWidth Then
+            Dim s As Single = Setting.ShrinkFontSizeMin + i * Setting.ShrinkFontSizeStep
+            Dim font As New Font(f.Name, s, f.Style)
+            If Graphics.MeasureString(text, font, 100000, sf).Width <= Region.GetWidth Then
                 Return font
             End If
         Next
-        Return New Font(baseFont.Name, setting.ShrinkFontSizeMin, baseFont.Style)
+        Return New Font(f.Name, Setting.ShrinkFontSizeMin, f.Style)
     End Function
 
-    Protected Shared Function _GetDistributeMap(w As Single, c As Integer, font As Font) As List(Of Single)
+    Protected Overridable Function _GetDistributeMap(w As Single, c As Integer, font As Font) As List(Of Single)
         Dim ret As New List(Of Single)
         If c = 1 Then
             ret.Add(w / 2)
@@ -415,6 +424,10 @@ Public Class GdiText
         Public Sub New(gdiText As GdiText)
             Me.GdiText = gdiText
             Dim t As String = Me.GdiText.Text
+            If gdiText.IsMonospaced Then
+                Dim si As New StringInfo(Me.GdiText.Text)
+                t = si.SubstringByTextElements(0, gdiText.TextDesign.GetMonospacedDrawableLen(si, Me.GdiText.Region.GetWidth))
+            End If
             With Regex.Match(t, "([^0-9]*)$")
                 Me.Text3 = .Groups(0).Value
                 t = t.Substring(0, t.Length - Me.Text3.Length)
@@ -454,7 +467,7 @@ Public Class GdiText
                     StringAlignment.Near,
                     StringAlignment.Near,
                     StringFormatFlags.NoWrap)
-                Dim t As String = Me.Text1 & Me.GetFullText2(GdiText.TextDesign.DecimalPlace)
+                Dim t As String = Me.Text1 & Me.GetFullText2()
                 Dim ft As String = t & Me.Text3
                 Dim w As Single = GdiText.Graphics.MeasureString(t, font, ls, sf).Width
                 Dim fw As Single = GdiText.Graphics.MeasureString(ft, font, ls, sf).Width
@@ -469,23 +482,11 @@ Public Class GdiText
                         x = GdiText.Region.GetWidth - fw
                         x = Math.Max(x, 0)
                 End Select
-                With Nothing
-                    Dim r As New RectangleF(
-                      GdiText.Region.Left + x,
-                      GdiText.Region.Top + y,
-                      GdiText.Region.GetWidth - x,
-                      GdiText.Region.GetHeight - y)
-                    GdiText.Graphics.DrawString(Me.Text1 & Me.Text2, font, b, r, sf)
-                End With
+                GdiText.Graphics.DrawString(Me.Text1 & Me.Text2, font, b, GdiText.Region.ToRectangleF(x, y), sf)
                 If Me.Text3.Length > 0 Then
                     Dim _x As Single = x + w - font.Size / 3
                     If _x < GdiText.Region.GetWidth Then
-                        Dim r As New RectangleF(
-                          GdiText.Region.Left + _x,
-                          GdiText.Region.Top + y,
-                          GdiText.Region.GetWidth - _x,
-                          GdiText.Region.GetHeight - y)
-                        GdiText.Graphics.DrawString(Me.Text3, font, b, r, sf)
+                        GdiText.Graphics.DrawString(Me.Text3, font, b, GdiText.Region.ToRectangleF(_x, y), sf)
                     End If
                 End If
                 If GdiText.TextDesign.Font.Underline Then
@@ -506,12 +507,5 @@ Public Class GdiText
         End Sub
 
     End Class
-
-    Protected Function _IsMonoSpacedFont() As Boolean
-        Using g As Graphics = Graphics.FromImage(New Bitmap(1, 1))
-            Dim font As New Font(Setting.GetFont(TextDesign.Font.Name), 1)
-            Return g.MeasureString("i", font).Width = g.MeasureString("W", font).Width
-        End Using
-    End Function
 
 End Class

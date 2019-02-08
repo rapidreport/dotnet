@@ -19,10 +19,10 @@ Public Class Test_5_0_Typeset
 
         Dim pages As ReportPages = report.GetPages()
 
-        Using fs As New FileStream("out\" & name & ".pdf", IO.FileMode.Create)
-            Dim renderer As New PdfRenderer(fs)
-            pages.Render(renderer)
-        End Using
+        'Using fs As New FileStream("out\" & name & ".pdf", IO.FileMode.Create)
+        '    Dim renderer As New PdfRenderer(fs)
+        '    pages.Render(renderer)
+        'End Using
 
         Dim preview As New FmPrintPreview(New Printer(pages))
         preview.ShowDialog()

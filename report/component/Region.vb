@@ -1,4 +1,6 @@
-﻿Namespace component
+﻿Imports System.Drawing
+
+Namespace component
 
     Public Class Region
 
@@ -114,9 +116,18 @@
             Return ret
         End Function
 
+        Public Function ToRectangleF() As RectangleF
+            Return ToRectangleF(0, 0)
+        End Function
+
+        Public Function ToRectangleF(offsetX As Single, offsetY As Single) As RectangleF
+            Return New RectangleF(Me.Left + offsetX, Me.Top + offsetY,
+                                  Me.GetWidth - offsetX, Me.GetHeight - offsetY)
+        End Function
+
         Public Overrides Function ToString() As String
-            Return "(" & Me.Left & ", " & Me.Top & ") - " & _
-                   "(" & Me.Right & ", " & Me.Bottom & ") - " & _
+            Return "(" & Me.Left & ", " & Me.Top & ") - " &
+                   "(" & Me.Right & ", " & Me.Bottom & ") - " &
                    "(" & Me.MaxRight & ", " & Me.MaxBottom & ")"
         End Function
 

@@ -1,6 +1,4 @@
 ﻿Imports jp.co.systembase.report.component
-Imports jp.co.systembase.report.textformatter
-Imports jp.co.systembase.report.renderer
 
 Namespace elementrenderer
 

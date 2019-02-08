@@ -72,7 +72,7 @@ Public Class ReportDesign
         Me.PaperName = Desc("paper_name")
         Me.PaperSource = Desc("paper_source")
         Me.Memo = Desc("memo")
-        If Me.Desc.ContainsKey("monospace_font") Then
+        If Me.Desc.ContainsKey("monospaced_font") Then
             Me.MonospacedFontDesign = New MonospacedFontDesign(Me.Desc("monospaced_font"))
         Else
             Me.MonospacedFontDesign = New MonospacedFontDesign()

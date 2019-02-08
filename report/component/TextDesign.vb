@@ -1,4 +1,5 @@
-﻿Imports jp.co.systembase.report.Report
+﻿Imports System.Globalization
+Imports jp.co.systembase.report.Report
 
 Namespace component
 
@@ -14,6 +15,7 @@ Namespace component
         Public ShrinkToFit As Boolean = False
         Public DecimalPlace As Integer = 0
         Public XlsFormat As String = Nothing
+        Public MonospacedFont As MonospacedFontDesign.DetailDesign = Nothing
 
         Public Sub New(reportDesign As ReportDesign, design As ElementDesign)
             If design.IsNull("font") Then
@@ -50,7 +52,51 @@ Namespace component
             Me.Distribute = design.Get("distribute")
             Me.ShrinkToFit = design.Get("shrink_to_fit")
             Me.XlsFormat = design.Get("xls_format")
+            Me.MonospacedFont = reportDesign.MonospacedFontDesign.Get(Me.Font)
         End Sub
+
+        Public Function GetMonospacedWidth(si As StringInfo) As Single
+            Dim ret As Single = Font.Size / 3
+            For i As Integer = 0 To si.LengthInTextElements - 1
+                If IsSingleChar(si.SubstringByTextElements(i, 1)) Then
+                    ret += MonospacedFont.HalfWidth * Font.Size
+                Else
+                    ret += MonospacedFont.FullWidth * Font.Size
+                End If
+            Next
+            Return ret
+        End Function
+
+        Public Function GetMonospacedFitFontSize(texts As List(Of String), width As Single, minSize As Single) As Single
+            Dim w As Single = 0
+            For Each t As String In texts
+                w = Math.Max(GetMonospacedWidth(New StringInfo(t)), w)
+            Next
+            If w <= width Then
+                Return Font.Size
+            Else
+                Return Math.Max(ReportUtil.RoundDown(Font.Size * width / w, -1), minSize)
+            End If
+        End Function
+
+        Public Function GetMonospacedDrawableLen(si As StringInfo, width As Single) As Integer
+            Return GetMonospacedDrawableLen(si, width, si.LengthInTextElements)
+        End Function
+        Public Function GetMonospacedDrawableLen(si As StringInfo, width As Single, maxLen As Integer) As Integer
+            Dim ret As Integer = 0
+            Dim w As Single = Font.Size / 3.0
+            For i As Integer = 0 To si.LengthInTextElements - 1
+                If ReportUtil.IsSingleChar(si.SubstringByTextElements(i, 1)) Then
+                    w += MonospacedFont.HalfWidth * Font.Size
+                Else
+                    w += MonospacedFont.FullWidth * Font.Size
+                End If
+                If (i > 1 And w >= width) Or (i = maxLen) Then
+                    Return i
+                End If
+            Next
+            Return si.LengthInTextElements
+        End Function
 
     End Class
 

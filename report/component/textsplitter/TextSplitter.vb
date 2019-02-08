@@ -30,6 +30,15 @@ Public Class TextSplitter
         Return _GetLines(text, -1)
     End Function
 
+    Public Function GetLine(text As String, i As Integer) As String
+        Dim l As List(Of String) = Me._GetLines(text, i)
+        If l.Count > i Then
+            Return l(i)
+        Else
+            Return Nothing
+        End If
+    End Function
+
     Private Function _GetLines(text As String, limit As Integer) As List(Of String)
         Dim lf As String = vbLf
         Dim cr As String = vbCr
@@ -47,32 +56,29 @@ Public Class TextSplitter
         Return ret
     End Function
 
-    Public Function GetLine(text As String, i As Integer) As String
-        Dim l As List(Of String) = Me._GetLines(text, i)
-        If l.Count > i Then
-            Return l(i)
-        Else
-            Return Nothing
-        End If
-    End Function
-
     Private Sub _Split(l As List(Of String), text As String, limit As Integer)
-        Dim si As StringInfo = New StringInfo(text)
+        If text.Length = 0 Then
+            l.Add("")
+        End If
+        Dim t As String = text
         Do
+            Dim si As StringInfo = New StringInfo(t)
             Dim w As Integer = Me._GetNextWidth(si)
+            If w = 0 Then
+                Exit Do
+            End If
             If Me._BreakRule Then
                 w = _GetNextOnRule(si.String, w)
             End If
-            If si.LengthInTextElements <> 0 Then
-                l.Add(si.SubstringByTextElements(0, w))
-            Else
-                l.Add("")
-            End If
+            l.Add(_ClipText(si, w))
             If limit >= 0 AndAlso l.Count > limit Then
                 Exit Do
             End If
             If si.LengthInTextElements > w Then
-                si = New StringInfo(si.SubstringByTextElements(w))
+                t = si.SubstringByTextElements(w)
+                If Not Report.Compatibility._4_37_SplittedTextNoTrim Then
+                    t = t.TrimStart
+                End If
             Else
                 Exit Do
             End If
@@ -81,6 +87,10 @@ Public Class TextSplitter
 
     Protected Overridable Function _GetNextWidth(si As StringInfo) As Integer
         Return si.LengthInTextElements
+    End Function
+
+    Protected Overridable Function _ClipText(si As StringInfo, w As Integer) As String
+        Return si.SubstringByTextElements(0, w)
     End Function
 
     Private Function _GetNextOnRule(text As String, w As Integer) As Integer
