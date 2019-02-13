@@ -58,7 +58,7 @@ Namespace component
         Public Function GetMonospacedWidth(si As StringInfo) As Single
             Dim ret As Single = Font.Size / 3
             For i As Integer = 0 To si.LengthInTextElements - 1
-                If IsSingleChar(si.SubstringByTextElements(i, 1)) Then
+                If ReportUtil.IsSingleChar(si.SubstringByTextElements(i, 1)) Then
                     ret += MonospacedFont.HalfWidth * Font.Size
                 Else
                     ret += MonospacedFont.FullWidth * Font.Size
@@ -80,10 +80,9 @@ Namespace component
         End Function
 
         Public Function GetMonospacedDrawableLen(si As StringInfo, width As Single) As Integer
-            Return GetMonospacedDrawableLen(si, width, si.LengthInTextElements)
+            Return GetMonospacedDrawableLen(si, width, -1)
         End Function
         Public Function GetMonospacedDrawableLen(si As StringInfo, width As Single, maxLen As Integer) As Integer
-            Dim ret As Integer = 0
             Dim w As Single = Font.Size / 3.0
             For i As Integer = 0 To si.LengthInTextElements - 1
                 If ReportUtil.IsSingleChar(si.SubstringByTextElements(i, 1)) Then

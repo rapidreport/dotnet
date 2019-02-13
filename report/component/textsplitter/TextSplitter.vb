@@ -59,30 +59,31 @@ Public Class TextSplitter
     Private Sub _Split(l As List(Of String), text As String, limit As Integer)
         If text.Length = 0 Then
             l.Add("")
-        End If
-        Dim t As String = text
-        Do
-            Dim si As StringInfo = New StringInfo(t)
-            Dim w As Integer = Me._GetNextWidth(si)
-            If w = 0 Then
-                Exit Do
-            End If
-            If Me._BreakRule Then
-                w = _GetNextOnRule(si.String, w)
-            End If
-            l.Add(_ClipText(si, w))
-            If limit >= 0 AndAlso l.Count > limit Then
-                Exit Do
-            End If
-            If si.LengthInTextElements > w Then
-                t = si.SubstringByTextElements(w)
-                If Not Report.Compatibility._4_37_SplittedTextNoTrim Then
-                    t = t.TrimStart
+        Else
+            Dim t As String = text
+            Do
+                Dim si As StringInfo = New StringInfo(t)
+                Dim w As Integer = Me._GetNextWidth(si)
+                If w = 0 Then
+                    Exit Do
                 End If
-            Else
-                Exit Do
-            End If
-        Loop
+                If Me._BreakRule Then
+                    w = _GetNextOnRule(si, w)
+                End If
+                l.Add(_ClipText(si, w))
+                If limit >= 0 AndAlso l.Count > limit Then
+                    Exit Do
+                End If
+                If si.LengthInTextElements > w Then
+                    t = si.SubstringByTextElements(w)
+                    If Not Report.Compatibility._4_37_SplittedTextNoTrim Then
+                        t = t.TrimStart
+                    End If
+                Else
+                    Exit Do
+                End If
+            Loop
+        End If
     End Sub
 
     Protected Overridable Function _GetNextWidth(si As StringInfo) As Integer
@@ -93,8 +94,7 @@ Public Class TextSplitter
         Return si.SubstringByTextElements(0, w)
     End Function
 
-    Private Function _GetNextOnRule(text As String, w As Integer) As Integer
-        Dim si As StringInfo = New StringInfo(text)
+    Private Function _GetNextOnRule(si As StringInfo, w As Integer) As Integer
         If w = si.LengthInTextElements Then
             Return w
         End If
