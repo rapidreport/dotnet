@@ -28,7 +28,9 @@
           {type:"text",layout:{x1:335.0,y1:0.0,x2:420.0,y2:55.0},font:{},halign:"right",rect:{},text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ",valign:"bottom"},
           {type:"text",layout:{x1:155.0,y1:60.0,x2:240.0,y2:115.0},font:{},rect:{},shrink_to_fit:true,text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ",wrap:true},
           {type:"text",layout:{x1:245.0,y1:60.0,x2:330.0,y2:115.0},font:{},halign:"center",rect:{},shrink_to_fit:true,text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ",valign:"center",wrap:true},
-          {type:"text",layout:{x1:335.0,y1:60.0,x2:420.0,y2:115.0},font:{},halign:"right",rect:{},shrink_to_fit:true,text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ",valign:"bottom",wrap:true}
+          {type:"text",layout:{x1:335.0,y1:60.0,x2:420.0,y2:115.0},font:{},halign:"right",rect:{},shrink_to_fit:true,text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ",valign:"bottom",wrap:true},
+          {type:"text",layout:{x1:355.0,y1:230.0,x2:495.0,y2:255.0},halign:"left",rect:{},text:"ABCＡＢＣ",valign:"center"},
+          {type:"text",layout:{x1:355.0,y1:255.0,x2:495.0,y2:280.0},halign:"left",rect:{},text:"ＡＢＣ",valign:"center"}
         ]
       }
     ]
