@@ -114,7 +114,11 @@ Namespace component
                         groupRange = contentRange.GetSubRange(content)
                     ElseIf content.Groups IsNot Nothing Then
                         If Report.Compatibility._4_37_EveryPageAllData Then
-                            groupRange = New GroupRange(content.Groups)
+                            If content.Design.EveryPageBlankGroup Then
+                                groupRange = New GroupRange(content.Groups, Nothing, Nothing)
+                            Else
+                                groupRange = New GroupRange(content.Groups)
+                            End If
                         Else
                             groupRange = New GroupRange(content.Groups, Nothing, Nothing)
                         End If
