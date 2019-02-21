@@ -23,6 +23,15 @@ Namespace component
             Me.MaxRight = region.MaxRight
         End Sub
 
+        Public Sub New(region As Region, ml As Single, mt As Single, mr As Single, mb As Single)
+            Me.Top = region.Top + mt
+            Me.Left = region.Left + ml
+            Me.Bottom = region.Bottom - mb
+            Me.Right = region.Right - mr
+            Me.MaxBottom = region.MaxBottom
+            Me.MaxRight = region.MaxRight
+        End Sub
+
         Public Function GetMergedRegion(region As Region) As Region
             Dim ret As New Region
             If Me.Top < region.Top Then

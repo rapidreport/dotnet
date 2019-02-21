@@ -32,11 +32,16 @@ Namespace elementrenderer
             If text Is Nothing Then
                 Return
             End If
+            Dim _region As Region = region
+            If Not design.IsNull("margin") Then
+                Dim m As ElementDesign = design.Child("margin")
+                _region = New Region(region, m.Get("left"), m.Get("top"), m.Get("right"), m.Get("bottom"))
+            End If
             If renderer.Setting.ReplaceBackslashToYen Then
                 text = text.Replace("\", ChrW(&HA5))
             End If
             Dim pdfText As New PdfText()
-            pdfText.Initialize(renderer, reportDesign, region, design, text)
+            pdfText.Initialize(renderer, reportDesign, _region, design, text)
             pdfText.Draw()
         End Sub
     End Class

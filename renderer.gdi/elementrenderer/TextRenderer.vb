@@ -34,8 +34,13 @@ Namespace elementrenderer
             If text Is Nothing Then
                 Return
             End If
+            Dim _region As Region = region
+            If Not design.IsNull("margin") Then
+                Dim m As ElementDesign = design.Child("margin")
+                _region = New Region(region, m.Get("left"), m.Get("top"), m.Get("right"), m.Get("bottom"))
+            End If
             Dim gdiText As GdiText = _GetGdiText()
-            gdiText.Initialize(env, reportDesign, region, design, text)
+            gdiText.Initialize(env, reportDesign, _region, design, text)
             gdiText.Draw()
         End Sub
 
