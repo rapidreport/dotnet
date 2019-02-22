@@ -1,36 +1,66 @@
 {
   version: 0,
+  monospaced_font: [
+    {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}}
+  ],
   paper: {
     margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
     scale_unit: "point",
     type: "a4"
   },
-  monospaced_font: [{bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},{name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},{name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}}],
   group: {
+    alternative_content: true,
     contents: [
       {
         size: {
-          initial: 0.0,
-          rev_initial: true
+          initial: 802.0
         },
         elements: [
-          {type:"text",layout:{x1:0.0,y1:0.0,x2:145.0,y2:100.0},font:{size:7.0},rect:{},text:"The unanimous Declaration of the thirteen united States of America,\r\n\r\nWhen in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature’s God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.",wrap:true},
-          {type:"text",layout:{x1:155.0,y1:0.0,x2:240.0,y2:55.0},font:{},rect:{},text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ"},
-          {type:"text",layout:{x1:0.0,y1:120.0,x2:140.0,y2:385.0},font:{size:7.0},rect:{},text:"日本国民は、正当に選挙された国会における代表者を通じて行動し、われらとわれらの子孫のために、諸国民との協和による成果と、わが国全土にわたつて自由のもたらす恵沢を確保し、政府の行為によつて再び戦争の惨禍が起ることのないやうにすることを決意し、ここに主権が国民に存することを宣言し、この憲法を確定する。そもそも国政は、国民の厳粛な信託によるものであつて、その権威は国民に由来し、その権力は国民の代表者がこれを行使し、その福利は国民がこれを享受する。これは人類普遍の原理であり、この憲法は、かかる原理に基くものである。われらは、これに反する一切の憲法、法令及び詔勅を排除する。\r\n　日本国民は、恒久の平和を念願し、人間相互の関係を支配する崇高な理想を深く自覚するのであつて、平和を愛する諸国民の公正と信義に信頼して、われらの安全と生存を保持しようと決意した。われらは、平和を維持し、専制と隷従、圧迫と偏狭を地上から永遠に除去しようと努めてゐる国際社会において、名誉ある地位を占めたいと思ふ。われらは、全世界の国民が、ひとしく恐怖と欠乏から免かれ、平和のうちに生存する権利を有することを確認する。\r\n\r\nわれらは、いづれの国家も、自国のことのみに専念して他国を無視してはならないのであつて、政治道徳の法則は、普遍的なものであり、この法則に従ふことは、自国の主権を維持し、他国と対等関係に立たうとする各国の責務であると信ずる。\r\n\r\n日本国民は、国家の名誉にかけ、全力をあげてこの崇高な理想と目的を達成することを誓ふ。",wrap:true},
-          {type:"text",layout:{x1:155.0,y1:120.0,x2:175.0,y2:140.0},rect:{},text:"固"},
-          {type:"text",layout:{x1:175.0,y1:120.0,x2:195.0,y2:140.0},font:{size:15.0},rect:{},text:"固"},
-          {type:"text",layout:{x1:195.0,y1:120.0,x2:245.0,y2:170.0},font:{size:20.0},rect:{},text:"固"},
-          {type:"text",layout:{x1:245.0,y1:120.0,x2:295.0,y2:170.0},font:{size:30.0},rect:{},text:"固"},
-          {type:"text",layout:{x1:295.0,y1:120.0,x2:395.0,y2:220.0},font:{size:50.0},rect:{},text:"固"},
-          {type:"text",layout:{x1:395.0,y1:120.0,x2:495.0,y2:220.0},font:{size:70.0},rect:{},text:"固"},
-          {type:"text",layout:{x1:150.0,y1:230.0,x2:350.0,y2:385.0},font:{size:150.0},rect:{},text:"固"},
-          {type:"text",layout:{x1:245.0,y1:0.0,x2:330.0,y2:55.0},font:{},halign:"center",rect:{},text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ",valign:"center"},
-          {type:"text",layout:{x1:335.0,y1:0.0,x2:420.0,y2:55.0},font:{},halign:"right",rect:{},text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ",valign:"bottom"},
-          {type:"text",layout:{x1:155.0,y1:60.0,x2:240.0,y2:115.0},font:{},rect:{},shrink_to_fit:true,text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ",wrap:true},
-          {type:"text",layout:{x1:245.0,y1:60.0,x2:330.0,y2:115.0},font:{},halign:"center",rect:{},shrink_to_fit:true,text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ",valign:"center",wrap:true},
-          {type:"text",layout:{x1:335.0,y1:60.0,x2:420.0,y2:115.0},font:{},halign:"right",rect:{},shrink_to_fit:true,text:"あいうえお\r\nあいうえおあいうえお\r\n\r\nほげほげ",valign:"bottom",wrap:true},
-          {type:"text",layout:{x1:355.0,y1:230.0,x2:495.0,y2:255.0},halign:"left",rect:{},text:"ABCＡＢＣ",valign:"center"},
-          {type:"text",layout:{x1:355.0,y1:255.0,x2:495.0,y2:280.0},halign:"left",rect:{},text:"ＡＢＣ",valign:"center"}
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:200.0,y2:200.0},font:{size:150.0},rect:{},text:"固",valign:"top"},
+          {type:"text",layout:{x1:200.0,y1:0.0,x2:330.0,y2:200.0},font:{size:100.0},rect:{},text:"固",valign:"top"},
+          {type:"text",layout:{x1:330.0,y1:0.0,x2:395.0,y2:200.0},font:{size:50.0},rect:{},text:"固\r\n固",valign:"top"},
+          {type:"text",layout:{x1:395.0,y1:0.0,x2:420.0,y2:200.0},font:{size:20.0},rect:{},text:"固\r\n固\r\n固",valign:"top"},
+          {type:"text",layout:{x1:420.0,y1:0.0,x2:445.0,y2:200.0},font:{size:15.0},rect:{},text:"固\r\n固\r\n固",valign:"top"},
+          {type:"text",layout:{x1:0.0,y1:200.0,x2:200.0,y2:400.0},font:{size:150.0},rect:{},text:"固",valign:"center"},
+          {type:"text",layout:{x1:200.0,y1:200.0,x2:330.0,y2:400.0},font:{size:100.0},rect:{},text:"固",valign:"center"},
+          {type:"text",layout:{x1:330.0,y1:200.0,x2:395.0,y2:400.0},font:{size:50.0},rect:{},text:"固\r\n固",valign:"center"},
+          {type:"text",layout:{x1:395.0,y1:200.0,x2:420.0,y2:400.0},font:{size:20.0},rect:{},text:"固\r\n固\r\n固",valign:"center"},
+          {type:"text",layout:{x1:420.0,y1:200.0,x2:445.0,y2:400.0},font:{size:15.0},rect:{},text:"固\r\n固\r\n固",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:400.0,x2:200.0,y2:600.0},font:{size:150.0},rect:{},text:"固",valign:"bottom"},
+          {type:"text",layout:{x1:200.0,y1:400.0,x2:330.0,y2:600.0},font:{size:100.0},rect:{},text:"固",valign:"bottom"},
+          {type:"text",layout:{x1:330.0,y1:400.0,x2:395.0,y2:600.0},font:{size:50.0},rect:{},text:"固\r\n固",valign:"bottom"},
+          {type:"text",layout:{x1:395.0,y1:400.0,x2:420.0,y2:600.0},font:{size:20.0},rect:{},text:"固\r\n固\r\n固",valign:"bottom"},
+          {type:"text",layout:{x1:420.0,y1:400.0,x2:445.0,y2:600.0},font:{size:15.0},rect:{},text:"固\r\n固\r\n固",valign:"bottom"}
+        ]
+      },
+      {
+        size: {
+          initial: 802.0
+        },
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:200.0,y2:200.0},font:{size:50.0},rect:{},text:"固固\r\n固固",valign:"top"},
+          {type:"text",layout:{x1:200.0,y1:0.0,x2:400.0,y2:200.0},font:{size:20.0},halign:"center",rect:{},text:"固固固\r\n固固固\r\n固固固",valign:"top"},
+          {type:"text",layout:{x1:0.0,y1:200.0,x2:200.0,y2:400.0},font:{size:50.0},halign:"right",rect:{},text:"固固\r\n固固",valign:"center"},
+          {type:"text",layout:{x1:200.0,y1:200.0,x2:400.0,y2:400.0},font:{size:20.0},halign:"left",rect:{},text:"固固固\r\n固固固\r\n固固固",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:400.0,x2:200.0,y2:600.0},font:{size:50.0},halign:"center",rect:{},text:"固固\r\n固固",valign:"bottom"},
+          {type:"text",layout:{x1:200.0,y1:400.0,x2:400.0,y2:600.0},font:{size:20.0},halign:"right",rect:{},text:"固固固\r\n固固固\r\n固固固",valign:"bottom"}
+        ]
+      },
+      {
+        size: {
+          initial: 802.0
+        },
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:555.0,y2:65.0},rect:{},text:"The unanimous Declaration of the thirteen united States of America,\r\n\r\nWhen in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature’s God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:415.0,x2:555.0,y2:480.0},font:{size:6.0},rect:{},text:"日本国民は、正当に選挙された国会における代表者を通じて行動し、われらとわれらの子孫のために、諸国民との協和による成果と、わが国全土にわたつて自由のもたらす恵沢を確保し、政府の行為によつて再び戦争の惨禍が起ることのないやうにすることを決意し、ここに主権が国民に存することを宣言し、この憲法を確定する。そもそも国政は、国民の厳粛な信託によるものであつて、その権威は国民に由来し、その権力は国民の代表者がこれを行使し、その福利は国民がこれを享受する。これは人類普遍の原理であり、この憲法は、かかる原理に基くものである。われらは、これに反する一切の憲法、法令及び詔勅を排除する。\r\n　日本国民は、恒久の平和を念願し、人間相互の関係を支配する崇高な理想を深く自覚するのであつて、平和を愛する諸国民の公正と信義に信頼して、われらの安全と生存を保持しようと決意した。われらは、平和を維持し、専制と隷従、圧迫と偏狭を地上から永遠に除去しようと努めてゐる国際社会において、名誉ある地位を占めたいと思ふ。われらは、全世界の国民が、ひとしく恐怖と欠乏から免かれ、平和のうちに生存する権利を有することを確認する。\r\n\r\nわれらは、いづれの国家も、自国のことのみに専念して他国を無視してはならないのであつて、政治道徳の法則は、普遍的なものであり、この法則に従ふことは、自国の主権を維持し、他国と対等関係に立たうとする各国の責務であると信ずる。",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:65.0,x2:555.0,y2:190.0},font:{size:15.0},rect:{},text:"The unanimous Declaration of the thirteen united States of America,\r\n\r\nWhen in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature’s God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:190.0,x2:555.0,y2:415.0},font:{size:20.0},rect:{},text:"The unanimous Declaration of the thirteen united States of America,\r\n\r\nWhen in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature’s God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:480.0,x2:555.0,y2:580.0},font:{size:8.0},rect:{},text:"日本国民は、正当に選挙された国会における代表者を通じて行動し、われらとわれらの子孫のために、諸国民との協和による成果と、わが国全土にわたつて自由のもたらす恵沢を確保し、政府の行為によつて再び戦争の惨禍が起ることのないやうにすることを決意し、ここに主権が国民に存することを宣言し、この憲法を確定する。そもそも国政は、国民の厳粛な信託によるものであつて、その権威は国民に由来し、その権力は国民の代表者がこれを行使し、その福利は国民がこれを享受する。これは人類普遍の原理であり、この憲法は、かかる原理に基くものである。われらは、これに反する一切の憲法、法令及び詔勅を排除する。\r\n　日本国民は、恒久の平和を念願し、人間相互の関係を支配する崇高な理想を深く自覚するのであつて、平和を愛する諸国民の公正と信義に信頼して、われらの安全と生存を保持しようと決意した。われらは、平和を維持し、専制と隷従、圧迫と偏狭を地上から永遠に除去しようと努めてゐる国際社会において、名誉ある地位を占めたいと思ふ。われらは、全世界の国民が、ひとしく恐怖と欠乏から免かれ、平和のうちに生存する権利を有することを確認する。\r\n\r\nわれらは、いづれの国家も、自国のことのみに専念して他国を無視してはならないのであつて、政治道徳の法則は、普遍的なものであり、この法則に従ふことは、自国の主権を維持し、他国と対等関係に立たうとする各国の責務であると信ずる。",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:580.0,x2:555.0,y2:725.0},font:{size:10.0},rect:{},text:"日本国民は、正当に選挙された国会における代表者を通じて行動し、われらとわれらの子孫のために、諸国民との協和による成果と、わが国全土にわたつて自由のもたらす恵沢を確保し、政府の行為によつて再び戦争の惨禍が起ることのないやうにすることを決意し、ここに主権が国民に存することを宣言し、この憲法を確定する。そもそも国政は、国民の厳粛な信託によるものであつて、その権威は国民に由来し、その権力は国民の代表者がこれを行使し、その福利は国民がこれを享受する。これは人類普遍の原理であり、この憲法は、かかる原理に基くものである。われらは、これに反する一切の憲法、法令及び詔勅を排除する。\r\n　日本国民は、恒久の平和を念願し、人間相互の関係を支配する崇高な理想を深く自覚するのであつて、平和を愛する諸国民の公正と信義に信頼して、われらの安全と生存を保持しようと決意した。われらは、平和を維持し、専制と隷従、圧迫と偏狭を地上から永遠に除去しようと努めてゐる国際社会において、名誉ある地位を占めたいと思ふ。われらは、全世界の国民が、ひとしく恐怖と欠乏から免かれ、平和のうちに生存する権利を有することを確認する。\r\n\r\nわれらは、いづれの国家も、自国のことのみに専念して他国を無視してはならないのであつて、政治道徳の法則は、普遍的なものであり、この法則に従ふことは、自国の主権を維持し、他国と対等関係に立たうとする各国の責務であると信ずる。",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:725.0,x2:555.0,y2:740.0},font:{name:"mincho"},rect:{},text:"12345678901234567890123456789012345678901234567890123456789012345678901234567890",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:740.0,x2:555.0,y2:760.0},font:{name:"mincho",size:15.0},rect:{},shrink_to_fit:true,text:"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"}
         ]
       }
     ]

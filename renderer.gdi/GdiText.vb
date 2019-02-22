@@ -25,9 +25,13 @@ Public Class GdiText
         Me.Setting = env.Setting
         Me.TextDesign = New TextDesign(reportDesign, design)
         Me.Text = text
-        Me.IsMonospaced =
-            Me.TextDesign.MonospacedFont IsNot Nothing And
-            env.IsMonospacedFont(Me.TextDesign.Font.Name)
+        If Not Report.Compatibility._4_37_Typeset Then
+            Me.IsMonospaced =
+                Me.TextDesign.MonospacedFont IsNot Nothing And
+                env.IsMonospacedFont(Me.TextDesign.Font.Name)
+        Else
+            Me.IsMonospaced = False
+        End If
     End Sub
 
     Public Overridable Sub Draw()
@@ -243,8 +247,13 @@ Public Class GdiText
         End Select
         Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
             For Each t As String In texts
-                Graphics.DrawString(t, font, b, Region.ToRectangleF(0, y), sf)
-                y += TextDesign.MonospacedFont.RowHeidht * font.Size
+                Dim r As RectangleF = Region.ToRectangleF(0, y)
+                If r.Height > 0 Then
+                    Graphics.DrawString(t, font, b, r, sf)
+                    y += TextDesign.MonospacedFont.RowHeidht * font.Size
+                Else
+                    Exit For
+                End If
             Next
         End Using
     End Sub
@@ -424,10 +433,6 @@ Public Class GdiText
         Public Sub New(gdiText As GdiText)
             Me.GdiText = gdiText
             Dim t As String = Me.GdiText.Text
-            If gdiText.IsMonospaced Then
-                Dim si As New StringInfo(Me.GdiText.Text)
-                t = si.SubstringByTextElements(0, gdiText.TextDesign.GetMonospacedDrawableLen(si, Me.GdiText.Region.GetWidth))
-            End If
             With Regex.Match(t, "([^0-9]*)$")
                 Me.Text3 = .Groups(0).Value
                 t = t.Substring(0, t.Length - Me.Text3.Length)
@@ -452,7 +457,6 @@ Public Class GdiText
 
         Public Sub DrawText(font As Font)
             Dim color As Color = GdiRenderUtil.GetColor(GdiText.TextDesign.Color, Drawing.Color.Black)
-            Dim ls As New SizeF(10000, 10000)
             Dim y As Single = 0
             Select Case GdiText.TextDesign.VAlign
                 Case Report.EVAlign.TOP
@@ -469,8 +473,8 @@ Public Class GdiText
                     StringFormatFlags.NoWrap)
                 Dim t As String = Me.Text1 & Me.GetFullText2()
                 Dim ft As String = t & Me.Text3
-                Dim w As Single = GdiText.Graphics.MeasureString(t, font, ls, sf).Width
-                Dim fw As Single = GdiText.Graphics.MeasureString(ft, font, ls, sf).Width
+                Dim w As Single = GdiText.Graphics.MeasureString(t, font).Width
+                Dim fw As Single = GdiText.Graphics.MeasureString(ft, font).Width
                 Dim x As Single = 0
                 Select Case GdiText.TextDesign.HAlign
                     Case Report.EHAlign.LEFT

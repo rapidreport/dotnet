@@ -56,15 +56,36 @@ Namespace component
         End Sub
 
         Public Function GetMonospacedWidth(si As StringInfo) As Single
-            Dim ret As Single = Font.Size / 3
+            Return GetMonospacedWidth(si, Font.Size)
+        End Function
+        Public Function GetMonospacedWidth(si As StringInfo, fontSize As Single) As Single
+            Dim ret As Single = fontSize / 3
             For i As Integer = 0 To si.LengthInTextElements - 1
                 If ReportUtil.IsSingleChar(si.SubstringByTextElements(i, 1)) Then
-                    ret += MonospacedFont.HalfWidth * Font.Size
+                    ret += MonospacedFont.HalfWidth * fontSize
                 Else
-                    ret += MonospacedFont.FullWidth * Font.Size
+                    ret += MonospacedFont.FullWidth * fontSize
                 End If
             Next
             Return ret
+        End Function
+
+        Public Function GetPdfCharSpacing(si As StringInfo, fontSize As Single) As Single
+            Dim cs As Single = 0
+            Dim c As Integer = 0
+            For i As Integer = 0 To si.LengthInTextElements - 1
+                If ReportUtil.IsSingleChar(si.SubstringByTextElements(i, 1)) Then
+                    cs += MonospacedFont.HalfWidth - 0.5
+                Else
+                    cs += MonospacedFont.FullWidth - 1.0
+                End If
+                c += 1
+            Next
+            If c > 0 Then
+                Return (cs / c) * fontSize
+            Else
+                Return 0
+            End If
         End Function
 
         Public Function GetMonospacedFitFontSize(texts As List(Of String), width As Single, minSize As Single) As Single
@@ -95,6 +116,10 @@ Namespace component
                 End If
             Next
             Return si.LengthInTextElements
+        End Function
+
+        Public Function ClipMonospacedText(si As StringInfo, width As Single) As String
+            Return si.SubstringByTextElements(0, GetMonospacedDrawableLen(si, width))
         End Function
 
     End Class

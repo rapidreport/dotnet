@@ -14,6 +14,7 @@ Public Class PdfText
     Public Font As BaseFont
     Public GaijiFont As BaseFont
     Public TextMatrix As List(Of Single) = Nothing
+    Public IsMonospaced As Boolean = False
 
     Protected Const TOLERANCE As Single = 0.1F
     Protected Const OFFSET_Y As Single = -0.5F
@@ -37,6 +38,7 @@ Public Class PdfText
         Me.ContentByte = Me.Renderer.Writer.DirectContent
         Me.Font = Me.Renderer.Setting.GetFont(TextDesign.Font.Name)
         Me.GaijiFont = Me.Renderer.Setting.GetGaijiFont(TextDesign.Font.Name)
+        Me.IsMonospaced = Me.TextDesign.MonospacedFont IsNot Nothing And _IsMonoSpacedFont()
     End Sub
 
     Public Overridable Sub Draw()
@@ -120,7 +122,7 @@ Public Class PdfText
             ContentByte.SetFontAndSize(Font, fontSize)
             For j As Integer = 0 To si.LengthInTextElements - 1
                 Dim c As String = si.SubstringByTextElements(j, 1)
-                _DrawText(fontSize, c, m(j) - _GetTextWidth(fontSize, c) / 2 + MARGIN_X, y)
+                _DrawChar(fontSize, c, m(j) - _GetTextWidth(fontSize, c) / 2 + MARGIN_X, y)
             Next
             ContentByte.EndText()
             If TextDesign.Font.Underline Then
@@ -208,17 +210,30 @@ Public Class PdfText
     End Sub
 
     Protected Overridable Sub _Draw_Shrink()
-        Dim texts As List(Of String) = (New TextSplitter).GetLines(Me.Text)
-        Dim fontSize As Single = _GetFitFontSize(texts)
-        _Draw_Aux(fontSize, texts)
+        If IsMonospaced Then
+            Dim texts As List(Of String) = (New TextSplitter).GetLines(Me.Text)
+            _Draw_Monospaced(TextDesign.GetMonospacedFitFontSize(texts, Region.GetWidth, Renderer.Setting.ShrinkFontSizeMin), texts)
+        Else
+            Dim texts As List(Of String) = (New TextSplitter).GetLines(Me.Text)
+            Dim fontSize As Single = _GetFitFontSize(texts)
+            _Draw_Aux(fontSize, texts)
+        End If
     End Sub
 
     Protected Overridable Sub _Draw_Wrap()
-        _Draw_Aux(TextDesign.Font.Size, (New _TextSplitterByPdfWidth(Me)).GetLines(Me.Text))
+        If IsMonospaced Then
+            _Draw_Monospaced(TextDesign.Font.Size, (New TextSplitterByDrawingWidth(TextDesign, Region.GetWidth, 0)).GetLines(Me.Text))
+        Else
+            _Draw_Aux(TextDesign.Font.Size, (New _TextSplitterByPdfWidth(Me)).GetLines(Me.Text))
+        End If
     End Sub
 
     Protected Overridable Sub _Draw()
-        _Draw_Aux(TextDesign.Font.Size, (New TextSplitter).GetLines(Me.Text))
+        If IsMonospaced Then
+            _Draw_Monospaced(TextDesign.Font.Size, (New TextSplitterByDrawingWidth(TextDesign, 0, Region.GetWidth)).GetLines(Me.Text))
+        Else
+            _Draw_Aux(TextDesign.Font.Size, (New TextSplitter).GetLines(Me.Text))
+        End If
     End Sub
 
     Protected Overridable Sub _Draw_Aux(
@@ -229,18 +244,30 @@ Public Class PdfText
             Case Report.EVAlign.TOP
                 y = 0
             Case Report.EVAlign.CENTER
-                y = (Region.GetHeight - fontSize * texts.Count) / 2
+                If Not Report.Compatibility._4_37_Typeset Then
+                    y = (Region.GetHeight - fontSize * texts.Count - fontSize * 0.133) / 2
+                Else
+                    y = (Region.GetHeight - fontSize * texts.Count) / 2
+                End If
                 y = Math.Max(y, 0)
             Case Report.EVAlign.BOTTOM
-                y = Region.GetHeight - fontSize * texts.Count - MARGIN_BOTTOM
+                If Not Report.Compatibility._4_37_Typeset Then
+                    y = Region.GetHeight - fontSize * texts.Count - fontSize * 0.133
+                Else
+                    y = Region.GetHeight - fontSize * texts.Count - MARGIN_BOTTOM
+                End If
                 y = Math.Max(y, 0)
         End Select
-        y += OFFSET_Y
+        If Report.Compatibility._4_37_Typeset Then
+            y += OFFSET_Y
+        End If
         Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / fontSize)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, rows) - 1, 0)
-            Dim si As StringInfo = New StringInfo(texts(i))
-            Dim w As Single = _GetTextWidth(fontSize, si.String)
+            Dim t As String = texts(i)
+            Dim w As Single = _GetTextWidth(fontSize, t)
+
             With Nothing
+                Dim si As StringInfo = New StringInfo(t)
                 Dim rw As Single = Region.GetWidth - MARGIN_X * 2
                 If w > rw Then
                     Dim _t As String = ""
@@ -255,25 +282,94 @@ Public Class PdfText
                             Exit For
                         End If
                     Next
-                    si.String = _t
+                    t = _t
                     w = _w
                 End If
             End With
+
             Dim x As Single = 0
             Select Case TextDesign.HAlign
                 Case Report.EHAlign.LEFT
-                    x = MARGIN_X
+                    If Not Report.Compatibility._4_37_Typeset Then
+                        x = fontSize / 6
+                    Else
+                        x = MARGIN_X
+                    End If
                 Case Report.EHAlign.CENTER
                     x = (Region.GetWidth - w) / 2
-                    x = Math.Max(x, MARGIN_X)
+                    If Not Report.Compatibility._4_37_Typeset Then
+                        x = Math.Max(x, fontSize / 6)
+                    Else
+                        x = Math.Max(x, MARGIN_X)
+                    End If
                 Case Report.EHAlign.RIGHT
-                    x = Region.GetWidth - w - MARGIN_X
-                    x = Math.Max(x, MARGIN_X)
+                    If Not Report.Compatibility._4_37_Typeset Then
+                        x = Region.GetWidth - w - fontSize / 6
+                    Else
+                        x = Region.GetWidth - w - MARGIN_X
+                    End If
+                    x = Math.Max(x, fontSize / 6)
             End Select
             _Draw_Preprocess()
             ContentByte.SetFontAndSize(Font, fontSize)
             ContentByte.BeginText()
-            _DrawText(fontSize, si.String, x, y)
+            _DrawText(fontSize, t, x, y)
+            ContentByte.EndText()
+            If TextDesign.Font.Underline Then
+                Dim lw As Single = (fontSize / 13.4) * Renderer.Setting.UnderlineWidthCoefficient
+                _DrawUnderline(fontSize, x, y, w, lw)
+            End If
+            y += fontSize
+        Next
+    End Sub
+
+    Protected Overridable Sub _Draw_Monospaced(
+      fontSize As Single,
+      texts As List(Of String))
+        Dim y As Single = 0
+        Select Case TextDesign.VAlign
+            Case Report.EVAlign.TOP
+                y = 0
+            Case Report.EVAlign.CENTER
+                y = (Region.GetHeight - fontSize * texts.Count - fontSize * 0.133) / 2
+                y = Math.Max(y, 0)
+            Case Report.EVAlign.BOTTOM
+                y = Region.GetHeight - fontSize * texts.Count - fontSize * 0.133
+                y = Math.Max(y, 0)
+        End Select
+        Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / fontSize)
+        For i As Integer = 0 To Math.Max(Math.Min(texts.Count, rows) - 1, 0)
+            Dim t As String = texts(i)
+            Dim si As New StringInfo(t)
+            Dim w As Single = TextDesign.GetMonospacedWidth(si, fontSize)
+            Dim cs As Single = TextDesign.GetPdfCharSpacing(si, fontSize)
+            Dim x As Single = 0
+            Select Case TextDesign.HAlign
+                Case Report.EHAlign.LEFT
+                    If Not Report.Compatibility._4_37_Typeset Then
+                        x = fontSize / 6
+                    Else
+                        x = MARGIN_X
+                    End If
+                Case Report.EHAlign.CENTER
+                    x = (Region.GetWidth - w) / 2
+                    If Not Report.Compatibility._4_37_Typeset Then
+                        x = Math.Max(x, fontSize / 6)
+                    Else
+                        x = Math.Max(x, MARGIN_X)
+                    End If
+                Case Report.EHAlign.RIGHT
+                    If Not Report.Compatibility._4_37_Typeset Then
+                        x = Region.GetWidth - w - fontSize / 6
+                    Else
+                        x = Region.GetWidth - w - MARGIN_X
+                    End If
+                    x = Math.Max(x, fontSize / 6)
+            End Select
+            _Draw_Preprocess()
+            ContentByte.SetFontAndSize(Font, fontSize)
+            ContentByte.BeginText()
+            _DrawText(fontSize, t, x, y, cs)
             ContentByte.EndText()
             If TextDesign.Font.Underline Then
                 Dim lw As Single = (fontSize / 13.4) * Renderer.Setting.UnderlineWidthCoefficient
@@ -336,7 +432,12 @@ Public Class PdfText
       y As Single)
         Dim trans As PdfRenderer.TransClass = Renderer.Trans
         Dim _x As Single = Region.Left + x
-        Dim _y As Single = (Region.Top + y + fontSize) - (fontSize / 13.4)
+        Dim _y As Single = Region.Top + y + fontSize
+        If Not Report.Compatibility._4_37_Typeset Then
+            _y -= fontSize * 0.133
+        Else
+            _y -= fontSize / 13.4
+        End If
         If TextMatrix IsNot Nothing Then
             ContentByte.SetTextMatrix(TextMatrix(0), TextMatrix(1), TextMatrix(2), TextMatrix(3),
                                       trans.X(_x), trans.Y(_y))
@@ -390,11 +491,23 @@ Public Class PdfText
       text As String,
       x As Single,
       y As Single)
+        _DrawText(fontSize, text, x, y, 0)
+    End Sub
+
+    Protected Overridable Sub _DrawText(
+      fontSize As Single,
+      text As String,
+      x As Single,
+      y As Single,
+      charSpacing As Single)
         Dim _texts As List(Of String) = Nothing
         If Renderer.Setting.GaijiFont IsNot Nothing OrElse GaijiFont IsNot Nothing Then
             _texts = _DetectGaiji(text)
         End If
         If _texts Is Nothing Then
+            If charSpacing > 0 Then
+                ContentByte.SetCharacterSpacing(charSpacing)
+            End If
             _SetTextMatrix(fontSize, x, y)
             ContentByte.ShowText(text)
         Else
@@ -404,9 +517,12 @@ Public Class PdfText
                 Dim si As StringInfo = New StringInfo(t)
                 If si.LengthInTextElements > 0 Then
                     If Not gaiji Then
+                        If charSpacing > 0 Then
+                            ContentByte.SetCharacterSpacing(charSpacing)
+                        End If
                         _SetTextMatrix(fontSize, _x, y)
                         ContentByte.ShowText(si.String)
-                        _x += Font.GetWidthPoint(si.String, fontSize)
+                        _x += Font.GetWidthPoint(si.String, fontSize) + si.LengthInTextElements * charSpacing
                     Else
                         For Each c As Char In si.String
                             Dim f As BaseFont = Renderer.Setting.GaijiFont
@@ -419,13 +535,30 @@ Public Class PdfText
                             ContentByte.SetFontAndSize(f, fontSize)
                             _SetTextMatrix(fontSize, _x, y)
                             ContentByte.ShowText(c)
-                            _x += fontSize
+                            _x += fontSize + charSpacing
                         Next
                         ContentByte.SetFontAndSize(Font, fontSize)
                     End If
                 End If
                 gaiji = Not gaiji
             Next
+        End If
+    End Sub
+
+    Protected Overridable Sub _DrawChar(
+      fontSize As Single,
+      c As String,
+      x As Single,
+      y As Single)
+        Dim gaiji As Boolean = False
+        If Renderer.Setting.GaijiFont IsNot Nothing AndAlso _IsGaiji(c) Then
+            ContentByte.SetFontAndSize(Renderer.Setting.GaijiFont, fontSize)
+            gaiji = True
+        End If
+        _SetTextMatrix(fontSize, x, y)
+        ContentByte.ShowText(c)
+        If gaiji Then
+            ContentByte.SetFontAndSize(Font, fontSize)
         End If
     End Sub
 
