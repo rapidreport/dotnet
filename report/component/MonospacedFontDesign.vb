@@ -47,13 +47,11 @@
             Public HalfWidth As Single
             Public FullWidth As Single
             Public RowHeidht As Single
-            Public PdfCharSpacing As Single
 
             Public Sub New(desc As Hashtable)
                 Me.HalfWidth = desc("half_width")
                 Me.FullWidth = desc("full_width")
                 Me.RowHeidht = desc("row_height")
-                Me.PdfCharSpacing = Me.HalfWidth - 0.5
             End Sub
 
         End Class

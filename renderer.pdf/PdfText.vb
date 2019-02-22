@@ -13,8 +13,8 @@ Public Class PdfText
     Public ContentByte As PdfContentByte
     Public Font As BaseFont
     Public GaijiFont As BaseFont
+    Public IsMonospaced As Boolean
     Public TextMatrix As List(Of Single) = Nothing
-    Public IsMonospaced As Boolean = False
 
     Protected Const TOLERANCE As Single = 0.1F
     Protected Const OFFSET_Y As Single = -0.5F
@@ -38,7 +38,11 @@ Public Class PdfText
         Me.ContentByte = Me.Renderer.Writer.DirectContent
         Me.Font = Me.Renderer.Setting.GetFont(TextDesign.Font.Name)
         Me.GaijiFont = Me.Renderer.Setting.GetGaijiFont(TextDesign.Font.Name)
-        Me.IsMonospaced = Me.TextDesign.MonospacedFont IsNot Nothing And _IsMonoSpacedFont()
+        If Not Report.Compatibility._4_37_Typeset Then
+            Me.IsMonospaced = Me.TextDesign.MonospacedFont IsNot Nothing And _IsMonospacedFont()
+        Else
+            Me.IsMonospaced = False
+        End If
     End Sub
 
     Public Overridable Sub Draw()
@@ -212,7 +216,8 @@ Public Class PdfText
     Protected Overridable Sub _Draw_Shrink()
         If IsMonospaced Then
             Dim texts As List(Of String) = (New TextSplitter).GetLines(Me.Text)
-            _Draw_Monospaced(TextDesign.GetMonospacedFitFontSize(texts, Region.GetWidth, Renderer.Setting.ShrinkFontSizeMin), texts)
+            Dim fontSize As Single = TextDesign.GetMonospacedFitFontSize(texts, Region.GetWidth, Renderer.Setting.ShrinkFontSizeMin)
+            _Draw_Monospaced(fontSize, texts)
         Else
             Dim texts As List(Of String) = (New TextSplitter).GetLines(Me.Text)
             Dim fontSize As Single = _GetFitFontSize(texts)
@@ -296,19 +301,21 @@ Public Class PdfText
                         x = MARGIN_X
                     End If
                 Case Report.EHAlign.CENTER
-                    x = (Region.GetWidth - w) / 2
                     If Not Report.Compatibility._4_37_Typeset Then
+                        x = (Region.GetWidth - w) / 2 + fontSize / 6
                         x = Math.Max(x, fontSize / 6)
                     Else
+                        x = (Region.GetWidth - w) / 2
                         x = Math.Max(x, MARGIN_X)
                     End If
                 Case Report.EHAlign.RIGHT
                     If Not Report.Compatibility._4_37_Typeset Then
-                        x = Region.GetWidth - w - fontSize / 6
+                        x = Region.GetWidth - w + fontSize / 6
+                        x = Math.Max(x, fontSize / 6)
                     Else
                         x = Region.GetWidth - w - MARGIN_X
+                        x = Math.Max(x, MARGIN_X)
                     End If
-                    x = Math.Max(x, fontSize / 6)
             End Select
             _Draw_Preprocess()
             ContentByte.SetFontAndSize(Font, fontSize)
@@ -346,24 +353,12 @@ Public Class PdfText
             Dim x As Single = 0
             Select Case TextDesign.HAlign
                 Case Report.EHAlign.LEFT
-                    If Not Report.Compatibility._4_37_Typeset Then
-                        x = fontSize / 6
-                    Else
-                        x = MARGIN_X
-                    End If
+                    x = fontSize / 6
                 Case Report.EHAlign.CENTER
-                    x = (Region.GetWidth - w) / 2
-                    If Not Report.Compatibility._4_37_Typeset Then
-                        x = Math.Max(x, fontSize / 6)
-                    Else
-                        x = Math.Max(x, MARGIN_X)
-                    End If
+                    x = (Region.GetWidth - w) / 2 + fontSize / 6
+                    x = Math.Max(x, fontSize / 6)
                 Case Report.EHAlign.RIGHT
-                    If Not Report.Compatibility._4_37_Typeset Then
-                        x = Region.GetWidth - w - fontSize / 6
-                    Else
-                        x = Region.GetWidth - w - MARGIN_X
-                    End If
+                    x = Region.GetWidth - w + fontSize / 6
                     x = Math.Max(x, fontSize / 6)
             End Select
             _Draw_Preprocess()
@@ -765,6 +760,10 @@ Public Class PdfText
         End Function
     End Class
 
+    Protected Overridable Function _IsMonospacedFont() As Boolean
+        Return Me.Font.GetWidthPoint("i", 1) = Me.Font.GetWidthPoint("W", 1)
+    End Function
+
     Protected Class _FixDec
 
         Public PdfText As PdfText
@@ -870,8 +869,5 @@ Public Class PdfText
 
     End Class
 
-    Protected Function _IsMonoSpacedFont() As Boolean
-        Return Me.Font.GetWidthPoint("i", 1) = Me.Font.GetWidthPoint("W", 1)
-    End Function
 
 End Class

@@ -27,11 +27,11 @@ Public Class TextSplitter
     End Sub
 
     Public Function GetLines(text As String) As List(Of String)
-        Return _GetLines(text, -1)
+        Return _GetLines_Aux(text, -1)
     End Function
 
     Public Function GetLine(text As String, i As Integer) As String
-        Dim l As List(Of String) = Me._GetLines(text, i)
+        Dim l As List(Of String) = Me._GetLines_Aux(text, i)
         If l.Count > i Then
             Return l(i)
         Else
@@ -39,15 +39,13 @@ Public Class TextSplitter
         End If
     End Function
 
-    Private Function _GetLines(text As String, limit As Integer) As List(Of String)
-        Dim lf As String = vbLf
-        Dim cr As String = vbCr
+    Private Function _GetLines_Aux(text As String, limit As Integer) As List(Of String)
         Dim ret As New List(Of String)
         If text Is Nothing Then
             ret.Add(Nothing)
         Else
-            For Each t As String In text.Split(lf)
-                Me._Split(ret, t.Replace(cr, ""), limit)
+            For Each t As String In text.Split(vbLf)
+                Me._Split(ret, t.Replace(vbCr, ""), limit)
                 If limit >= 0 AndAlso ret.Count > limit Then
                     Exit For
                 End If

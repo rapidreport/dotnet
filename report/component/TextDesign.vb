@@ -118,10 +118,6 @@ Namespace component
             Return si.LengthInTextElements
         End Function
 
-        Public Function ClipMonospacedText(si As StringInfo, width As Single) As String
-            Return si.SubstringByTextElements(0, GetMonospacedDrawableLen(si, width))
-        End Function
-
     End Class
 
 End Namespace
