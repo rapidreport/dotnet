@@ -1,6 +1,6 @@
 ﻿Namespace component
 
-    Public Class MonospacedFontDesign
+    Public Class MonospacedFontsDesign
 
         Public DefaultFont As ItemDesign = Nothing
         Public FontMap As New Dictionary(Of String, ItemDesign)

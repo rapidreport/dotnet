@@ -1,5 +1,10 @@
 {
   version: 0,
+  monospaced_fonts: [
+    {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}}
+  ],
   paper: {
     landscape: true,
     margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},

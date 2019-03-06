@@ -1,6 +1,6 @@
 {
   version: 0,
-  monospaced_font: [
+  monospaced_fonts: [
     {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
     {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
     {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}}

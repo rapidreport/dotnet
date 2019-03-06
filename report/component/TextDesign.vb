@@ -15,7 +15,7 @@ Namespace component
         Public ShrinkToFit As Boolean = False
         Public DecimalPlace As Integer = 0
         Public XlsFormat As String = Nothing
-        Public MonospacedFont As MonospacedFontDesign.DetailDesign = Nothing
+        Public MonospacedFont As MonospacedFontsDesign.DetailDesign = Nothing
 
         Public Sub New(reportDesign As ReportDesign, design As ElementDesign)
             If design.IsNull("font") Then
@@ -52,7 +52,7 @@ Namespace component
             Me.Distribute = design.Get("distribute")
             Me.ShrinkToFit = design.Get("shrink_to_fit")
             Me.XlsFormat = design.Get("xls_format")
-            Me.MonospacedFont = reportDesign.MonospacedFontDesign.Get(Me.Font)
+            Me.MonospacedFont = reportDesign.MonospacedFontsDesign.Get(Me.Font)
         End Sub
 
         Public Function GetMonospacedWidth(si As StringInfo) As Single
