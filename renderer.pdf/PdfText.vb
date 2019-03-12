@@ -302,7 +302,7 @@ Public Class PdfText
                     End If
                 Case Report.EHAlign.CENTER
                     If Not Report.Compatibility._4_37_Typeset Then
-                        x = (Region.GetWidth - w) / 2 + fontSize / 6
+                        x = (Region.GetWidth - w) / 2
                         x = Math.Max(x, fontSize / 6)
                     Else
                         x = (Region.GetWidth - w) / 2
@@ -310,7 +310,7 @@ Public Class PdfText
                     End If
                 Case Report.EHAlign.RIGHT
                     If Not Report.Compatibility._4_37_Typeset Then
-                        x = Region.GetWidth - w + fontSize / 6
+                        x = Region.GetWidth - w - fontSize / 6
                         x = Math.Max(x, fontSize / 6)
                     Else
                         x = Region.GetWidth - w - MARGIN_X
