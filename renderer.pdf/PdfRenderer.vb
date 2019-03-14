@@ -16,6 +16,7 @@ Public Class PdfRenderer
     Public Trans As TransClass
 
     Private imageCache As Dictionary(Of Hashtable, Dictionary(Of String, Image))
+    Friend monospacedFontCache As Dictionary(Of BaseFont, Boolean)
 
     Public Class TransClass
         Public PaperHeight As Single
@@ -46,7 +47,8 @@ Public Class PdfRenderer
     End Sub
 
     Public Sub BeginReport(reportDesign As ReportDesign) Implements IRenderer.BeginReport
-        Me.ImageCache = New Dictionary(Of Hashtable, Dictionary(Of String, Image))
+        Me.imageCache = New Dictionary(Of Hashtable, Dictionary(Of String, Image))
+        Me.monospacedFontCache = New Dictionary(Of BaseFont, Boolean)
         Me.Document.Open()
     End Sub
 

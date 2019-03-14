@@ -761,7 +761,12 @@ Public Class PdfText
     End Class
 
     Protected Overridable Function _IsMonospacedFont() As Boolean
-        Return Me.Font.GetWidthPoint("i", 1) = Me.Font.GetWidthPoint("W", 1)
+        If Not Renderer.monospacedFontCache.ContainsKey(Font) Then
+            Renderer.monospacedFontCache.Add(Font,
+              ReportUtil.RoundDown(Me.Font.GetWidthPoint("i", 1), -3) =
+              ReportUtil.RoundDown(Me.Font.GetWidthPoint("W", 1), -3))
+        End If
+        Return Renderer.monospacedFontCache(Font)
     End Function
 
     Protected Class _FixDec

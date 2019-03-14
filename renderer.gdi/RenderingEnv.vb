@@ -30,7 +30,7 @@ Public Class RenderingEnv
 
     Private Function _IsMonospacedFont(g As Graphics, f As String) As Boolean
         Dim font As New Font(f, 1)
-        Return g.MeasureString("i", font).Width = g.MeasureString("W", font).Width
+        Return ReportUtil.RoundDown(g.MeasureString("i", font).Width, -3) = ReportUtil.RoundDown(g.MeasureString("W", font).Width, -3)
     End Function
 
     Public Function IsMonospacedFont(fontName As String) As Boolean
