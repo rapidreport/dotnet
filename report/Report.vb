@@ -75,7 +75,7 @@ Public Class Report
         Public Shared _4_34_TextSplitByCr As Boolean = False
         Public Shared _4_34_PdfWrapNoRule As Boolean = False
         Public Shared _4_37_EveryPageAllData As Boolean = False
-        Public Shared _4_37_SplittedTextNoTrim As Boolean = False
+        Public Shared _4_37_WrappedTextNoTrim As Boolean = False
         Public Shared _4_37_ImagePixelScale As Boolean = False
         Public Shared _4_37_Typeset As Boolean = False
     End Class

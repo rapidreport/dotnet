@@ -74,7 +74,7 @@ Public Class TextSplitter
                 End If
                 If si.LengthInTextElements > w Then
                     t = si.SubstringByTextElements(w)
-                    If Not Report.Compatibility._4_37_SplittedTextNoTrim Then
+                    If Not Report.Compatibility._4_37_WrappedTextNoTrim Then
                         t = t.TrimStart
                     End If
                 Else
