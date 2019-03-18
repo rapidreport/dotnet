@@ -53,6 +53,31 @@
           initial: 802.0
         },
         elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:130.0,y2:130.0},distribute:true,font:{size:25.0},rect:{},text:"固固固\r\n固固固",valign:"top"},
+          {type:"text",layout:{x1:0.0,y1:130.0,x2:130.0,y2:250.0},font:{size:25.0},rect:{},text:"固固固\r\n固固固",valign:"top",vertical:true},
+          {type:"text",layout:{x1:130.0,y1:0.0,x2:260.0,y2:130.0},distribute:true,font:{size:25.0},halign:"left",rect:{},text:"固固固\r\n固固固",valign:"center"},
+          {type:"text",layout:{x1:130.0,y1:130.0,x2:260.0,y2:250.0},font:{size:25.0},halign:"center",rect:{},text:"固固固\r\n固固固",valign:"center",vertical:true},
+          {type:"text",layout:{x1:260.0,y1:0.0,x2:390.0,y2:130.0},distribute:true,font:{size:25.0},halign:"left",rect:{},text:"固固固\r\n固固固",valign:"bottom"},
+          {type:"text",layout:{x1:260.0,y1:130.0,x2:390.0,y2:250.0},font:{size:25.0},halign:"right",rect:{},text:"固固固\r\n固固固",valign:"bottom",vertical:true},
+          {type:"text",layout:{x1:0.0,y1:250.0,x2:130.0,y2:370.0},distribute:true,font:{size:25.0},rect:{},text:"固固固\r\n固固固",valign:"top",vertical:true},
+          {type:"text",layout:{x1:130.0,y1:250.0,x2:260.0,y2:370.0},distribute:true,font:{size:25.0},halign:"center",rect:{},text:"固固固\r\n固固固",valign:"top",vertical:true},
+          {type:"text",layout:{x1:260.0,y1:250.0,x2:390.0,y2:370.0},distribute:true,font:{size:25.0},halign:"right",rect:{},text:"固固固\r\n固固固",valign:"top",vertical:true},
+          {type:"text",layout:{x1:0.0,y1:380.0,x2:150.0,y2:510.0},distribute:true,font:{size:35.0},rect:{},text:"固固固\r\n固固固",valign:"top"},
+          {type:"text",layout:{x1:0.0,y1:510.0,x2:150.0,y2:660.0},font:{size:35.0},rect:{},text:"固固固\r\n固固固",valign:"top",vertical:true},
+          {type:"text",layout:{x1:150.0,y1:380.0,x2:300.0,y2:510.0},distribute:true,font:{size:35.0},halign:"left",rect:{},text:"固固固\r\n固固固",valign:"center"},
+          {type:"text",layout:{x1:150.0,y1:510.0,x2:300.0,y2:660.0},font:{size:35.0},halign:"center",rect:{},text:"固固固\r\n固固固",valign:"center",vertical:true},
+          {type:"text",layout:{x1:300.0,y1:380.0,x2:450.0,y2:510.0},distribute:true,font:{size:35.0},halign:"left",rect:{},text:"固固固\r\n固固固",valign:"bottom"},
+          {type:"text",layout:{x1:300.0,y1:510.0,x2:450.0,y2:660.0},font:{size:35.0},halign:"right",rect:{},text:"固固固\r\n固固固",valign:"bottom",vertical:true},
+          {type:"text",layout:{x1:0.0,y1:660.0,x2:150.0,y2:800.0},distribute:true,font:{size:35.0},rect:{},text:"固固固\r\n固固固",valign:"top",vertical:true},
+          {type:"text",layout:{x1:150.0,y1:660.0,x2:300.0,y2:800.0},distribute:true,font:{size:35.0},halign:"center",rect:{},text:"固固固\r\n固固固",valign:"top",vertical:true},
+          {type:"text",layout:{x1:300.0,y1:660.0,x2:450.0,y2:800.0},distribute:true,font:{size:35.0},halign:"right",rect:{},text:"固固固\r\n固固固",valign:"top",vertical:true}
+        ]
+      },
+      {
+        size: {
+          initial: 802.0
+        },
+        elements: [
           {type:"text",layout:{x1:0.0,y1:0.0,x2:555.0,y2:65.0},rect:{},text:"The unanimous Declaration of the thirteen united States of America,\r\n\r\nWhen in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature’s God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.",wrap:true},
           {type:"text",layout:{x1:0.0,y1:415.0,x2:555.0,y2:480.0},font:{size:6.0},rect:{},text:"日本国民は、正当に選挙された国会における代表者を通じて行動し、われらとわれらの子孫のために、諸国民との協和による成果と、わが国全土にわたつて自由のもたらす恵沢を確保し、政府の行為によつて再び戦争の惨禍が起ることのないやうにすることを決意し、ここに主権が国民に存することを宣言し、この憲法を確定する。そもそも国政は、国民の厳粛な信託によるものであつて、その権威は国民に由来し、その権力は国民の代表者がこれを行使し、その福利は国民がこれを享受する。これは人類普遍の原理であり、この憲法は、かかる原理に基くものである。われらは、これに反する一切の憲法、法令及び詔勅を排除する。\r\n　日本国民は、恒久の平和を念願し、人間相互の関係を支配する崇高な理想を深く自覚するのであつて、平和を愛する諸国民の公正と信義に信頼して、われらの安全と生存を保持しようと決意した。われらは、平和を維持し、専制と隷従、圧迫と偏狭を地上から永遠に除去しようと努めてゐる国際社会において、名誉ある地位を占めたいと思ふ。われらは、全世界の国民が、ひとしく恐怖と欠乏から免かれ、平和のうちに生存する権利を有することを確認する。\r\n\r\nわれらは、いづれの国家も、自国のことのみに専念して他国を無視してはならないのであつて、政治道徳の法則は、普遍的なものであり、この法則に従ふことは、自国の主権を維持し、他国と対等関係に立たうとする各国の責務であると信ずる。",wrap:true},
           {type:"text",layout:{x1:0.0,y1:65.0,x2:555.0,y2:190.0},font:{size:15.0},rect:{},text:"The unanimous Declaration of the thirteen united States of America,\r\n\r\nWhen in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature’s God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.",wrap:true},

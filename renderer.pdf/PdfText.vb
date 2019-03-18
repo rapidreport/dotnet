@@ -108,30 +108,50 @@ Public Class PdfText
         Dim y As Single = 0
         Select Case TextDesign.VAlign
             Case Report.EVAlign.TOP
-                y = 0
+                If Not Report.Compatibility._4_37_Typeset Then
+                    y = fontSize * 0.125
+                Else
+                    y = 0
+                End If
             Case Report.EVAlign.CENTER
-                y = (Region.GetHeight - (fontSize * texts.Count)) / 2
+                If Not Report.Compatibility._4_37_Typeset Then
+                    y = (Region.GetHeight + fontSize * 0.125 - fontSize * texts.Count) / 2
+                Else
+                    y = (Region.GetHeight - fontSize * texts.Count) / 2
+                End If
                 y = Math.Max(y, 0)
             Case Report.EVAlign.BOTTOM
-                y = Region.GetHeight - (fontSize * texts.Count) - MARGIN_BOTTOM
+                If Not Report.Compatibility._4_37_Typeset Then
+                    y = Region.GetHeight - fontSize * texts.Count
+                Else
+                    y = Region.GetHeight - (fontSize * texts.Count) - MARGIN_BOTTOM
+                End If
                 y = Math.Max(y, 0)
         End Select
-        y += OFFSET_Y
+        If Report.Compatibility._4_37_Typeset Then
+            y += OFFSET_Y
+        End If
         Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / fontSize)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, rows) - 1, 0)
             Dim si As StringInfo = New StringInfo(texts(i))
-            Dim m As List(Of Single) = _GetDistributeMap(Region.GetWidth - MARGIN_X * 2, si.LengthInTextElements, fontSize)
+            Dim mx As Single
+            If Not Report.Compatibility._4_37_Typeset Then
+                mx = fontSize / 3
+            Else
+                mx = MARGIN_X * 2
+            End If
+            Dim m As List(Of Single) = _GetDistributeMap(Region.GetWidth - mx, si.LengthInTextElements, fontSize)
             _Draw_Preprocess()
             ContentByte.BeginText()
             ContentByte.SetFontAndSize(Font, fontSize)
             For j As Integer = 0 To si.LengthInTextElements - 1
                 Dim c As String = si.SubstringByTextElements(j, 1)
-                _DrawChar(fontSize, c, m(j) - _GetTextWidth(fontSize, c) / 2 + MARGIN_X, y)
+                _DrawChar(fontSize, c, m(j) - _GetTextWidth(fontSize, c) / 2 + mx / 2, y)
             Next
             ContentByte.EndText()
             If TextDesign.Font.Underline Then
                 Dim lw As Single = (fontSize / 13.4) * Renderer.Setting.UnderlineWidthCoefficient
-                _DrawUnderline(fontSize, MARGIN_X, y, Region.GetWidth - MARGIN_X * 2, lw)
+                _DrawUnderline(fontSize, mx / 2, y, Region.GetWidth - mx, lw)
             End If
             y += fontSize
         Next
@@ -141,17 +161,23 @@ Public Class PdfText
         Dim fontSize As Single = TextDesign.Font.Size
         Dim texts As List(Of String) = (New TextSplitter).GetLines(Me.Text)
         Dim x As Single = 0
+        Dim mx As Single
+        If Not Report.Compatibility._4_37_Typeset Then
+            mx = fontSize / 6
+        Else
+            mx = MARGIN_X
+        End If
         Select Case TextDesign.HAlign
             Case Report.EHAlign.LEFT
-                x = fontSize * (texts.Count - 1) + fontSize / 2 + MARGIN_X
-                x = Math.Min(x, Region.GetWidth - fontSize / 2 - MARGIN_X)
+                x = fontSize * (texts.Count - 1) + fontSize / 2 + mx
+                x = Math.Min(x, Region.GetWidth - fontSize / 2 - mx)
             Case Report.EHAlign.CENTER
                 x = (Region.GetWidth + (texts.Count - 1) * fontSize) / 2
-                x = Math.Min(x, Region.GetWidth - fontSize / 2 - MARGIN_X)
+                x = Math.Min(x, Region.GetWidth - fontSize / 2 - mx)
             Case Report.EHAlign.RIGHT
-                x = Region.GetWidth - fontSize / 2 - MARGIN_X
+                x = Region.GetWidth - fontSize / 2 - mx
         End Select
-        Dim cols As Integer = Fix(((Region.GetWidth - MARGIN_X * 2) + TOLERANCE) / fontSize)
+        Dim cols As Integer = Fix(((Region.GetWidth - mx * 2) + TOLERANCE) / fontSize)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, cols) - 1, 0)
             Dim si As StringInfo = New StringInfo(texts(i))
             If TextDesign.Font.Underline Then
@@ -159,7 +185,13 @@ Public Class PdfText
                 _DrawVerticalUnderLine(fontSize, x + fontSize / 2, 0, Region.GetHeight, lw)
             End If
             With Nothing
-                Dim m As List(Of Single) = _GetDistributeMap(Region.GetHeight - MARGIN_BOTTOM, si.LengthInTextElements, fontSize)
+                Dim my As Single
+                If Not Report.Compatibility._4_37_Typeset Then
+                    my = 0
+                Else
+                    my = MARGIN_BOTTOM
+                End If
+                Dim m As List(Of Single) = _GetDistributeMap(Region.GetHeight - my, si.LengthInTextElements, fontSize)
                 _Draw_Preprocess()
                 ContentByte.SetFontAndSize(Font, fontSize)
                 ContentByte.BeginText()
@@ -247,17 +279,21 @@ Public Class PdfText
         Dim y As Single = 0
         Select Case TextDesign.VAlign
             Case Report.EVAlign.TOP
-                y = 0
+                If Not Report.Compatibility._4_37_Typeset Then
+                    y = fontSize * 0.125
+                Else
+                    y = 0
+                End If
             Case Report.EVAlign.CENTER
                 If Not Report.Compatibility._4_37_Typeset Then
-                    y = (Region.GetHeight - fontSize * texts.Count - fontSize * 0.133) / 2
+                    y = (Region.GetHeight + fontSize * 0.125 - fontSize * texts.Count) / 2
                 Else
                     y = (Region.GetHeight - fontSize * texts.Count) / 2
                 End If
                 y = Math.Max(y, 0)
             Case Report.EVAlign.BOTTOM
                 If Not Report.Compatibility._4_37_Typeset Then
-                    y = Region.GetHeight - fontSize * texts.Count - fontSize * 0.133
+                    y = Region.GetHeight - fontSize * texts.Count
                 Else
                     y = Region.GetHeight - fontSize * texts.Count - MARGIN_BOTTOM
                 End If
@@ -273,7 +309,12 @@ Public Class PdfText
 
             With Nothing
                 Dim si As StringInfo = New StringInfo(t)
-                Dim rw As Single = Region.GetWidth - MARGIN_X * 2
+                Dim rw As Single
+                If Not Report.Compatibility._4_37_Typeset Then
+                    rw = Region.GetWidth - fontSize / 3
+                Else
+                    rw = Region.GetWidth - MARGIN_X * 2
+                End If
                 If w > rw Then
                     Dim _t As String = ""
                     Dim _w As Single = 0
@@ -334,17 +375,18 @@ Public Class PdfText
       fontSize As Single,
       texts As List(Of String))
         Dim y As Single = 0
+        Dim h As Single = TextDesign.MonospacedFont.RowHeidht * fontSize
         Select Case TextDesign.VAlign
             Case Report.EVAlign.TOP
-                y = 0
+                y = fontSize * 0.125
             Case Report.EVAlign.CENTER
-                y = (Region.GetHeight - fontSize * texts.Count - fontSize * 0.133) / 2
+                y = (Region.GetHeight + fontSize * 0.125 - h * texts.Count) / 2
                 y = Math.Max(y, 0)
             Case Report.EVAlign.BOTTOM
-                y = Region.GetHeight - fontSize * texts.Count - fontSize * 0.133
+                y = Region.GetHeight - h * texts.Count
                 y = Math.Max(y, 0)
         End Select
-        Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / fontSize)
+        Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / h)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, rows) - 1, 0)
             Dim t As String = texts(i)
             Dim si As New StringInfo(t)
@@ -370,7 +412,7 @@ Public Class PdfText
                 Dim lw As Single = (fontSize / 13.4) * Renderer.Setting.UnderlineWidthCoefficient
                 _DrawUnderline(fontSize, x, y, w, lw)
             End If
-            y += fontSize
+            y += h
         Next
     End Sub
 
@@ -378,17 +420,23 @@ Public Class PdfText
       fontSize As Single,
       texts As List(Of String))
         Dim x As Single = 0
+        Dim mx As Single
+        If Not Report.Compatibility._4_37_Typeset Then
+            mx = fontSize / 6
+        Else
+            mx = MARGIN_X
+        End If
         Select Case TextDesign.HAlign
             Case Report.EHAlign.LEFT
-                x = fontSize * (texts.Count - 1) + fontSize / 2 + MARGIN_X
-                x = Math.Min(x, Region.GetWidth - fontSize / 2 - MARGIN_X)
+                x = fontSize * (texts.Count - 1) + fontSize / 2 + mx
+                x = Math.Min(x, Region.GetWidth - fontSize / 2 - mx)
             Case Report.EHAlign.CENTER
                 x = (Region.GetWidth + (texts.Count - 1) * fontSize) / 2
-                x = Math.Min(x, Region.GetWidth - fontSize / 2 - MARGIN_X)
+                x = Math.Min(x, Region.GetWidth - fontSize / 2 - mx)
             Case Report.EHAlign.RIGHT
-                x = Region.GetWidth - fontSize / 2 - MARGIN_X
+                x = Region.GetWidth - fontSize / 2 - mx
         End Select
-        Dim cols As Integer = Fix(((Region.GetWidth - MARGIN_X * 2) + TOLERANCE) / fontSize)
+        Dim cols As Integer = Fix(((Region.GetWidth - mx * 2) + TOLERANCE) / fontSize)
         Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / fontSize)
         For i As Integer = 0 To Math.Max(Math.Min(texts.Count, cols) - 1, 0)
             Dim si As StringInfo = New StringInfo(texts(i))
@@ -400,7 +448,11 @@ Public Class PdfText
                     y = (Region.GetHeight - fontSize * si.LengthInTextElements) / 2
                     y = Math.Max(y, 0)
                 Case Report.EVAlign.BOTTOM
-                    y = Region.GetHeight - fontSize * si.LengthInTextElements - MARGIN_BOTTOM
+                    If Not Report.Compatibility._4_37_Typeset Then
+                        y = Region.GetHeight - fontSize * si.LengthInTextElements
+                    Else
+                        y = Region.GetHeight - fontSize * si.LengthInTextElements - MARGIN_BOTTOM
+                    End If
                     y = Math.Max(y, 0)
             End Select
             y += OFFSET_Y

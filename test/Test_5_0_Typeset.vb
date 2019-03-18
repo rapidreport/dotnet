@@ -15,6 +15,8 @@ Public Class Test_5_0_Typeset
     Public Sub Run()
         Dim name As String = "test_5_0_typeset"
 
+        'jp.co.systembase.report.Report.Compatibility._4_37_Typeset = True
+
         Dim report As New Report(Json.Read("rrpt\" & name & ".rrpt"))
         report.Fill(DummyDataSource.GetInstance())
 
