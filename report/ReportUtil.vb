@@ -11,6 +11,14 @@ Public Module ReportUtil
       "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｯｬｭｮ" &
       "ﾞﾟｰ｢｣･､｡ !@#$%^&*()_+|~-=\`{}[]:"";'<>?,./" & vbCrLf & vbTab
 
+    Private _SingleCharsMap As Dictionary(Of String, Boolean)
+    Sub New()
+        _SingleCharsMap = New Dictionary(Of String, Boolean)
+        For i As Integer = 0 To SINGLE_CHARS.Length - 1
+            _SingleCharsMap.Add(SINGLE_CHARS.Chars(i), True)
+        Next
+    End Sub
+
     Public Function RoundDown(v As Decimal, digit As Integer) As Decimal
         Dim d As Decimal = (10 ^ (-digit))
         Dim tmp As Decimal = Decimal.Truncate(Math.Abs(v) * d)
@@ -222,16 +230,10 @@ Public Module ReportUtil
         Return Nothing
     End Function
 
-    Private _SingleCharsMap As Dictionary(Of String, Boolean) = Nothing
+
 
     <MethodImpl(MethodImplOptions.Synchronized)>
     Public Function IsSingleChar(c As String) As Boolean
-        If _SingleCharsMap Is Nothing Then
-            _SingleCharsMap = New Dictionary(Of String, Boolean)
-            For i As Integer = 0 To SINGLE_CHARS.Length - 1
-                _SingleCharsMap.Add(SINGLE_CHARS.Chars(i), True)
-            Next
-        End If
         Return _SingleCharsMap.ContainsKey(c)
     End Function
 
