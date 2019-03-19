@@ -21,9 +21,28 @@ Public Class PdfText
     Protected Const MARGIN_X As Single = 2.0F
     Protected Const MARGIN_BOTTOM As Single = 2.0F
 
-    Protected Const VERTICAL_ROTATE_CHARS As String = "…‥｜ーｰ(){}[]<>（）｛｝「」＜＞←→↓⇒⇔↑＝≒"
-    Protected Const VERTICAL_ROTATE2_CHARS As String = "～"
-    Protected Const VERTICAL_SHIFT_CHARS As String = "。、，"
+    Private Const VERTICAL_ROTATE_CHARS As String = "…‥｜ーｰ(){}[]<>（）｛｝「」＜＞←→↓⇒⇔↑＝≒"
+    Private Const VERTICAL_ROTATE2_CHARS As String = "～"
+    Private Const VERTICAL_SHIFT_CHARS As String = "。、，"
+
+    Private Shared _VerticalRotateCharsMap As Dictionary(Of String, Boolean)
+    Private Shared _VerticalRotate2CharsMap As Dictionary(Of String, Boolean)
+    Private Shared _VerticalShiftCharsMap As Dictionary(Of String, Boolean)
+
+    Shared Sub New()
+        _VerticalRotateCharsMap = New Dictionary(Of String, Boolean)
+        _VerticalRotate2CharsMap = New Dictionary(Of String, Boolean)
+        _VerticalShiftCharsMap = New Dictionary(Of String, Boolean)
+        For i As Integer = 0 To VERTICAL_ROTATE_CHARS.Length - 1
+            _VerticalRotateCharsMap.Add(VERTICAL_ROTATE_CHARS.Chars(i), True)
+        Next
+        For i As Integer = 0 To VERTICAL_ROTATE2_CHARS.Length - 1
+            _VerticalRotate2CharsMap.Add(VERTICAL_ROTATE2_CHARS.Chars(i), True)
+        Next
+        For i As Integer = 0 To VERTICAL_SHIFT_CHARS.Length - 1
+            _VerticalShiftCharsMap.Add(VERTICAL_SHIFT_CHARS.Chars(i), True)
+        Next
+    End Sub
 
     Public Overridable Sub Initialize(
       renderer As PdfRenderer,
@@ -619,13 +638,13 @@ Public Class PdfText
             ContentByte.SetFontAndSize(Renderer.Setting.GaijiFont, fontSize)
             gaiji = True
         End If
-        If VERTICAL_ROTATE_CHARS.IndexOf(c) >= 0 Then
+        If _VerticalRotateCharsMap.ContainsKey(c) Then
             _SetRotateTextMatrix(
               fontSize, x - fontSize / 3, y - _GetTextWidth(fontSize, c))
-        ElseIf VERTICAL_ROTATE2_CHARS.IndexOf(c) >= 0 Then
+        ElseIf _VerticalRotate2CharsMap.ContainsKey(c) Then
             _SetRotate2TextMatrix(
               fontSize, x + fontSize / 3, y - _GetTextWidth(fontSize, c))
-        ElseIf VERTICAL_SHIFT_CHARS.IndexOf(c) >= 0 Then
+        ElseIf _VERTICALSHIFTCHARSmap.ContainsKey(c) Then
             Dim d As Single = -_GetTextWidth(fontSize, c) / 2
             If TextDesign.Font.Italic Then
                 d += fontSize / 4
