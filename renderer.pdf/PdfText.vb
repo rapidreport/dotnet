@@ -253,15 +253,26 @@ Public Class PdfText
 
     Protected Overridable Sub _Draw_Fixdec()
         Dim fd As New _FixDec(Me)
-        fd.DrawText(TextDesign.Font.Size)
+        If IsMonospaced Then
+            Dim texts As List(Of String) =
+                (New TextSplitterByDrawingWidth(TextDesign, 0, Region.GetWidth)).GetLines(fd.GetFullText(True))
+            _Draw_Monospaced(TextDesign.Font.Size, texts)
+        Else
+            fd.DrawText(TextDesign.Font.Size)
+        End If
     End Sub
 
     Protected Overridable Sub _Draw_FixdecShrink()
         Dim fd As New _FixDec(Me)
-        Dim texts As New List(Of String)
-        texts.Add(fd.GetFullText())
-        Dim fontSize As Single = _GetFitFontSize(texts)
-        fd.DrawText(fontSize)
+        If IsMonospaced Then
+            Dim texts As List(Of String) = (New TextSplitter(True)).GetLines(fd.GetFullText(True))
+            Dim fontSize As Single = _GetFitFontSize(texts)
+            _Draw_Monospaced(fontSize, texts)
+        Else
+            Dim texts As List(Of String) = (New TextSplitter(True)).GetLines(fd.GetFullText(False))
+            Dim fontSize As Single = _GetFitFontSize(texts)
+            fd.DrawText(fontSize)
+        End If
     End Sub
 
     Protected Overridable Sub _Draw_Shrink()
@@ -286,7 +297,9 @@ Public Class PdfText
 
     Protected Overridable Sub _Draw()
         If IsMonospaced Then
-            _Draw_Monospaced(TextDesign.Font.Size, (New TextSplitterByDrawingWidth(TextDesign, 0, Region.GetWidth)).GetLines(Me.Text))
+            Dim texts As List(Of String) =
+                (New TextSplitterByDrawingWidth(TextDesign, 0, Region.GetWidth)).GetLines(Me.Text)
+            _Draw_Monospaced(TextDesign.Font.Size, texts)
         Else
             _Draw_Aux(TextDesign.Font.Size, (New TextSplitter).GetLines(Me.Text))
         End If
@@ -860,16 +873,16 @@ Public Class PdfText
             End With
         End Sub
 
-        Public Function GetFullText2() As String
+        Public Function GetFullText2(space As Boolean) As String
             Dim ret As String = Me.Text2
             If ret.Length = 0 Then
                 ret = "."
             End If
-            Return ret.PadRight(Me.PdfText.TextDesign.DecimalPlace + 1, "0")
+            Return ret.PadRight(Me.PdfText.TextDesign.DecimalPlace + 1, IIf(space, " ", "0"))
         End Function
 
-        Public Function GetFullText() As String
-            Return Me.Text1 & Me.GetFullText2() & Me.Text3
+        Public Function GetFullText(space As Boolean) As String
+            Return Me.Text1 & Me.GetFullText2(space) & Me.Text3
         End Function
 
         Public Sub DrawText(fontSize As Single)
@@ -884,7 +897,7 @@ Public Class PdfText
             End Select
             y += OFFSET_Y
             With Nothing
-                Dim t As String = Me.Text1 & Me.GetFullText2()
+                Dim t As String = Me.Text1 & Me.GetFullText2(False)
                 Dim ft As String = t & Me.Text3
                 Dim w As Single = PdfText._GetTextWidth(fontSize, t)
                 Dim fw As Single = PdfText._GetTextWidth(fontSize, ft)

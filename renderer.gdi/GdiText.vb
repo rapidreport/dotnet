@@ -191,12 +191,22 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_Fixdec()
         Dim fd As New _FixDec(Me)
-        fd.DrawText(_GetFont())
+        If IsMonospaced Then
+            Dim sp As New TextSplitterByDrawingWidth(TextDesign, 0, Region.GetWidth)
+            _Draw_Monospaced(sp.GetLines(fd.GetFullText(True)), _GetFont())
+        Else
+            fd.DrawText(_GetFont())
+        End If
     End Sub
 
     Protected Overridable Sub _Draw_FixdecShrink()
         Dim fd As New _FixDec(Me)
-        fd.DrawText(_GetFitFont(fd.GetFullText()))
+        If IsMonospaced Then
+            Dim texts As List(Of String) = (New TextSplitter(True)).GetLines(fd.GetFullText(True))
+            _Draw_Monospaced(texts, _GetFont(TextDesign.GetMonospacedFitFontSize(texts, Region.GetWidth, Setting.ShrinkFontSizeMin)))
+        Else
+            fd.DrawText(_GetFitFont(fd.GetFullText(False)))
+        End If
     End Sub
 
     Protected Overridable Sub _Draw_Wrap()
@@ -443,16 +453,16 @@ Public Class GdiText
             End With
         End Sub
 
-        Public Function GetFullText2() As String
+        Public Function GetFullText2(space As Boolean) As String
             Dim ret As String = Me.Text2
             If ret.Length = 0 Then
                 ret = "."
             End If
-            Return ret.PadRight(Me.GdiText.TextDesign.DecimalPlace + 1, "0")
+            Return ret.PadRight(Me.GdiText.TextDesign.DecimalPlace + 1, IIf(space, " ", "0"))
         End Function
 
-        Public Function GetFullText() As String
-            Return Me.Text1 & Me.GetFullText2() & Me.Text3
+        Public Function GetFullText(space As Boolean) As String
+            Return Me.Text1 & Me.GetFullText2(space) & Me.Text3
         End Function
 
         Public Sub DrawText(font As Font)
@@ -471,7 +481,7 @@ Public Class GdiText
                     StringAlignment.Near,
                     StringAlignment.Near,
                     StringFormatFlags.NoWrap)
-                Dim t As String = Me.Text1 & Me.GetFullText2()
+                Dim t As String = Me.Text1 & Me.GetFullText2(False)
                 Dim ft As String = t & Me.Text3
                 Dim w As Single = GdiText.Graphics.MeasureString(t, font).Width
                 Dim fw As Single = GdiText.Graphics.MeasureString(ft, font).Width
