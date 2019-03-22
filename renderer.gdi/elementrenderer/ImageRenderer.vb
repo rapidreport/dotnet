@@ -36,8 +36,10 @@ Namespace elementrenderer
             Dim h As Single = img.Height
             Dim r As Single = 1.0F
             If Not Report.Compatibility._4_37_ImagePixelScale Then
-                w *= 72.0F / img.HorizontalResolution
-                h *= 72.0F / img.VerticalResolution
+                Dim dpix As Single = img.HorizontalResolution
+                Dim dpiy As Single = img.HorizontalResolution
+                w *= 72.0F / IIf(dpix > 0, dpix, 96)
+                h *= 72.0F / IIf(dpiy > 0, dpiy, 96)
             End If
             If w > _region.GetWidth Or h > _region.GetHeight Then
                 r = Math.Min(_region.GetWidth / w, _region.GetHeight / h)
