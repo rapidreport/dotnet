@@ -311,21 +311,17 @@ Public Class PdfText
         Dim y As Single = 0
         Select Case TextDesign.VAlign
             Case Report.EVAlign.TOP
-                If Not Report.Compatibility._4_37_Typeset Then
-                    y = fontSize * 0.125
-                Else
-                    y = 0
-                End If
+                y = 0
             Case Report.EVAlign.CENTER
                 If Not Report.Compatibility._4_37_Typeset Then
-                    y = (Region.GetHeight + fontSize * 0.125 - fontSize * texts.Count) / 2
+                    y = (Region.GetHeight - fontSize * texts.Count - fontSize * 0.125) / 2
                 Else
                     y = (Region.GetHeight - fontSize * texts.Count) / 2
                 End If
                 y = Math.Max(y, 0)
             Case Report.EVAlign.BOTTOM
                 If Not Report.Compatibility._4_37_Typeset Then
-                    y = Region.GetHeight - fontSize * texts.Count
+                    y = Region.GetHeight - fontSize * texts.Count - fontSize * 0.125
                 Else
                     y = Region.GetHeight - fontSize * texts.Count - MARGIN_BOTTOM
                 End If
@@ -410,12 +406,12 @@ Public Class PdfText
         Dim h As Single = TextDesign.MonospacedFont.RowHeidht * fontSize
         Select Case TextDesign.VAlign
             Case Report.EVAlign.TOP
-                y = fontSize * 0.125
+                y = 0
             Case Report.EVAlign.CENTER
-                y = (Region.GetHeight + fontSize * 0.125 - h * texts.Count) / 2
+                y = (Region.GetHeight - h * texts.Count - fontSize * 0.125) / 2
                 y = Math.Max(y, 0)
             Case Report.EVAlign.BOTTOM
-                y = Region.GetHeight - h * texts.Count
+                y = Region.GetHeight - h * texts.Count - fontSize * 0.125
                 y = Math.Max(y, 0)
         End Select
         Dim rows As Integer = Fix((Region.GetHeight + TOLERANCE) / h)
