@@ -111,7 +111,7 @@ Namespace component
                 Else
                     w += MonospacedFont.FullWidth * Font.Size
                 End If
-                If (i > 1 And w >= width) Or (i = maxLen) Then
+                If (i > 0 And w >= width) Or (i = maxLen) Then
                     Return i
                 End If
             Next
