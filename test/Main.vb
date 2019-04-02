@@ -52,6 +52,7 @@
         Tests.Add(New Test_5_0_ImageScale)
         Tests.Add(New Test_5_0_Margin)
         Tests.Add(New Test_5_0_Typeset)
+        Tests.Add(New Test_5_0_Bugs)
 
         Application.Run(New FmTest)
     End Sub

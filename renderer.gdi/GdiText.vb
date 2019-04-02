@@ -456,7 +456,7 @@ Public Class GdiText
         Public Function GetFullText2(space As Boolean) As String
             Dim ret As String = Me.Text2
             If ret.Length = 0 Then
-                ret = "."
+                ret = IIf(space, " ", ".")
             End If
             Return ret.PadRight(Me.GdiText.TextDesign.DecimalPlace + 1, IIf(space, " ", "0"))
         End Function

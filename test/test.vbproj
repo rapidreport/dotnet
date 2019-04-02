@@ -173,6 +173,7 @@
     <Compile Include="Test_4_37_HashDataSource.vb" />
     <Compile Include="Test_4_37_PocoDataSource.vb" />
     <Compile Include="Test_4_38_Wlines.vb" />
+    <Compile Include="Test_5_0_Bugs.vb" />
     <Compile Include="Test_5_0_ImageScale.vb" />
     <Compile Include="Test_5_0_Margin.vb" />
     <Compile Include="Test_5_0_Typeset.vb" />
@@ -342,6 +343,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_38_wlines.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_5_0_bugs.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_0_image_scale.rrpt">
