@@ -54,6 +54,7 @@
         Tests.Add(New Test_5_0_Typeset)
         Tests.Add(New Test_5_0_Bugs)
         Tests.Add(New Test_5_2_Sort)
+        Tests.Add(New Test_5_2_SubData)
 
         Application.Run(New FmTest)
     End Sub

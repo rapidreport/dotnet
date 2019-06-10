@@ -492,7 +492,11 @@ Namespace data
         End Function
 
         Public Function GetWrapperDataSource(groupDesign As GroupDesign) As WrapperDataSource
-            Return Me.Context.WrapperDataSourceMap(groupDesign)
+            If Me.Context.WrapperDataSourceMap.ContainsKey(groupDesign) Then
+                Return Me.Context.WrapperDataSourceMap(groupDesign)
+            Else
+                Return Nothing
+            End If
         End Function
 
     End Class
