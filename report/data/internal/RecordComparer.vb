@@ -38,7 +38,7 @@
                     Return 1
                 End If
             Next
-            Return 0
+            Return Math.Sign(x - y)
         End Function
 
     End Class
