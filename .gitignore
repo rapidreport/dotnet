@@ -39,3 +39,4 @@
 /report/bin
 /report/obj
 /report/*.user
+/_*.bat
