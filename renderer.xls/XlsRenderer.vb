@@ -5,6 +5,7 @@ Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
 Imports jp.co.systembase.report.renderer.xls.component
 Imports jp.co.systembase.report.renderer.xls.imageloader
+Imports jp.co.systembase.report.scanner
 
 Public Class XlsRenderer
     Implements IRenderer
@@ -20,6 +21,8 @@ Public Class XlsRenderer
     Public CellStylePool As CellStylePool
     Public FontPool As FontPool
     Public ColorPool As ColorPool
+
+    Private _SheetMode As Boolean = False
 
     Public Sub New(workbook As HSSFWorkbook)
         Me.New(workbook, New XlsRendererSetting)
@@ -98,7 +101,9 @@ Public Class XlsRenderer
                     shape.Renderer.Render(page, shape)
                 Next
                 topRow += rowHeights.Count
-                Me.Sheet.SetRowBreak(topRow - 1)
+                If Not _SheetMode Then
+                    Me.Sheet.SetRowBreak(topRow - 1)
+                End If
             Next
             Me.Sheet.Workbook.SetPrintArea(Me.Sheet.Workbook.GetSheetIndex(Me.Sheet), 0, colWidths.Count - 1, 0, topRow - 1)
             Me.Sheet.FitToPage = False
@@ -134,5 +139,20 @@ Public Class XlsRenderer
         End If
         Return Me.ImagePool(image)
     End Function
+
+    Public Sub RenderSheet(report As Report)
+        Dim scanner As New PagingScanner()
+        Dim range As New GroupRange(report.Groups)
+        report.Groups.Scan(scanner, range, report.Design.PaperDesign.GetRegion)
+        Dim page As New ReportPage(report, range, scanner)
+        Dim pages As New ReportPages(report)
+        pages.Add(page)
+        Try
+            _SheetMode = True
+            pages.Render(Me)
+        Finally
+            _SheetMode = False
+        End Try
+    End Sub
 
 End Class

@@ -5,6 +5,7 @@ Imports jp.co.systembase.report.component
 Imports jp.co.systembase.report.renderer
 Imports jp.co.systembase.report.renderer.xlsx.component
 Imports jp.co.systembase.report.renderer.xlsx.imageloader
+Imports jp.co.systembase.report.scanner
 
 Public Class XlsxRenderer
     Implements IRenderer
@@ -19,6 +20,8 @@ Public Class XlsxRenderer
     Public ImagePool As Dictionary(Of Image, Integer)
     Public CellStylePool As CellStylePool
     Public FontPool As FontPool
+
+    Private _SheetMode As Boolean = False
 
     Public Sub New(workbook As XSSFWorkbook)
         Me.New(workbook, New XlsxRendererSetting)
@@ -96,7 +99,9 @@ Public Class XlsxRenderer
                     shape.Renderer.Render(page, shape)
                 Next
                 topRow += rowHeights.Count
-                Me.Sheet.SetRowBreak(topRow - 1)
+                If Not _SheetMode Then
+                    Me.Sheet.SetRowBreak(topRow - 1)
+                End If
             Next
             Me.Sheet.Workbook.SetPrintArea(Me.Sheet.Workbook.GetSheetIndex(Me.Sheet), 0, colWidths.Count - 1, 0, topRow - 1)
             Me.Sheet.FitToPage = False
@@ -104,7 +109,11 @@ Public Class XlsxRenderer
     End Sub
 
     Public Sub BeginPage(reportDesign As ReportDesign, pageIndex As Integer, paperRegion As Region) Implements IRenderer.BeginPage
-        Me.CurrentPage = New Page(Me, reportDesign, paperRegion)
+        If Not _SheetMode Then
+            Me.CurrentPage = New Page(Me, reportDesign, paperRegion)
+        Else
+            Me.CurrentPage = New Page(Me, reportDesign, Nothing)
+        End If
         Me.Pages.Add(Me.CurrentPage)
     End Sub
 
@@ -125,12 +134,27 @@ Public Class XlsxRenderer
             Return -1
         End If
         If Not Me.ImagePool.ContainsKey(image) Then
-            Dim index As Integer = Me.Workbook.AddPicture( _
-                  (New ImageConverter).ConvertTo(image, GetType(Byte())), _
+            Dim index As Integer = Me.Workbook.AddPicture(
+                  (New ImageConverter).ConvertTo(image, GetType(Byte())),
                   NPOI.SS.UserModel.PictureType.PNG)
             Me.ImagePool.Add(image, index)
         End If
         Return Me.ImagePool(image)
     End Function
+
+    Public Sub RenderSheet(report As Report)
+        Dim scanner As New PagingScanner()
+        Dim range As New GroupRange(report.Groups)
+        report.Groups.Scan(scanner, range, report.Design.PaperDesign.GetRegion)
+        Dim page As New ReportPage(report, range, scanner)
+        Dim pages As New ReportPages(report)
+        pages.Add(page)
+        Try
+            _SheetMode = True
+            pages.Render(Me)
+        Finally
+            _SheetMode = False
+        End Try
+    End Sub
 
 End Class

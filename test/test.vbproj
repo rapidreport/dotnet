@@ -182,6 +182,7 @@
     <Compile Include="Test_5_0_SurrogatePair.vb" />
     <Compile Include="Test_5_2_Sort.vb" />
     <Compile Include="Test_5_2_SubData.vb" />
+    <Compile Include="Test_5_4_RenderSheet.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -369,6 +370,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_2_subdata.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_5_4_rendersheet.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,0 +1,59 @@
+{
+  version: 0,
+  monospaced_fonts: [
+    {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}}
+  ],
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 50.0
+        },
+        every_page: true,
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:510.0,y2:50.0},font:{size:40.0},halign:"center",text:"タイトル",valign:"center"},
+          {type:"line",layout:{x1:0.0,y1:50.0,x2:510.0,y2:50.0}}
+        ]
+      },
+      {
+        aggregate_src: true,
+        group: {
+          detail: true,
+          contents: [
+            {
+              size: {
+                initial: 20.0
+              },
+              aggregate_src: true,
+              elements: [
+                {type:"line",layout:{x1:0.0,y1:20.0,x2:510.0,y2:20.0},line_style:"dot"},
+                {type:"field",layout:{x1:0.0,y1:0.0,x2:150.0,y2:20.0},exp:".col1",halign:"left",valign:"center"},
+                {type:"field",layout:{x1:150.0,y1:0.0,x2:270.0,y2:20.0},exp:".col2",formatter:{format:"ggNN年MM月dd日",type:"default"},halign:"left",valign:"center"},
+                {type:"field",layout:{x1:270.0,y1:0.0,x2:390.0,y2:20.0},exp:".col3",formatter:{format:"#,##0",type:"default"},halign:"right",valign:"center",xls_format:"#,##0"},
+                {type:"field",layout:{x1:390.0,y1:0.0,x2:510.0,y2:20.0},exp:".col4",formatter:{format:"#,##0.00",type:"default"},halign:"right",valign:"center",xls_format:"#,##0.00"}
+              ]
+            }
+          ]
+        }
+      },
+      {
+        size: {
+          initial: 30.0
+        },
+        every_page: true,
+        elements: [
+          {type:"field",layout:{x1:270.0,y1:0.0,x2:390.0,y2:30.0},exp:"sum.col3",formatter:{format:"#,##0",type:"default"},halign:"right",valign:"center",xls_format:"#,##0"},
+          {type:"field",layout:{x1:390.0,y1:0.0,x2:510.0,y2:30.0},exp:"sum.col4",formatter:{format:"#,##0.00",type:"default"},halign:"right",valign:"center",xls_format:"#,##0.00"},
+          {type:"line",layout:{x1:0.0,y1:0.0,x2:510.0,y2:0.0}}
+        ]
+      }
+    ]
+  }
+}
