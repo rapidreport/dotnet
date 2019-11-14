@@ -77,14 +77,22 @@ Namespace elementrenderer
                                     If Design.Get("generate_checksum") Then
                                         barcode.GenerateCheckSum = True
                                     End If
-                                    Dim ss As String = "A"
+                                    Dim startCode As String = "A"
+                                    Dim stopCode As String = "A"
                                     If Not Design.IsNull("codabar_startstop_code") Then
-                                        ss = Design.Get("codabar_startstop_code")
+                                        Dim ss As String = Design.Get("codabar_startstop_code")
+                                        If ss.Length = 1 Then
+                                            startCode = ss
+                                            stopCode = ss
+                                        ElseIf ss.Length > 1 Then
+                                            startCode = ss(0)
+                                            stopCode = ss(1)
+                                        End If
                                     End If
                                     If Design.Get("codabar_startstop_show") Then
                                         barcode.WithStartStopText = True
                                     End If
-                                    barcode.Render(g, 0, 0, image.Width, image.Height, ss & Me.Code & ss)
+                                    barcode.Render(g, 0, 0, image.Width, image.Height, startCode & Me.Code & stopCode)
                                 Case "itf"
                                     Dim barcode As New Itf
                                     If Design.Get("without_text") Then

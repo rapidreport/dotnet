@@ -56,14 +56,22 @@ Namespace elementrenderer
                         If design.Get("generate_checksum") Then
                             bc.GenerateChecksum = True
                         End If
-                        Dim ss As String = "A"
+                        Dim startCode As String = "A"
+                        Dim stopCode As String = "A"
                         If Not design.IsNull("codabar_startstop_code") Then
-                            ss = design.Get("codabar_startstop_code")
+                            Dim ss As String = design.Get("codabar_startstop_code")
+                            If ss.Length = 1 Then
+                                startCode = ss
+                                stopCode = ss
+                            ElseIf ss.Length > 1 Then
+                                startCode = ss(0)
+                                stopCode = ss(1)
+                            End If
                         End If
                         If design.Get("codabar_startstop_show") Then
                             bc.StartStopText = True
                         End If
-                        bc.Code = ss & code & ss
+                        bc.Code = startCode & code & stopCode
                         image = bc.CreateImageWithBarcode(cb, Nothing, Nothing)
                     Case "itf"
                         Dim bc As New BarcodeInter25
