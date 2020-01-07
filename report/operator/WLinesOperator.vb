@@ -7,7 +7,7 @@ Namespace [operator]
         Public Function Exec(
           evaluator As Evaluator,
           params As List(Of IExpression)) As Object Implements IOperator.Exec
-            evaluator.ValidateParamCount(params, 1)
+            evaluator.ValidateParamCount(params, 2)
             Dim str As String = ReportUtil.ObjectToString(evaluator.Eval(params(0)))
             If str Is Nothing Then
                 Return Nothing
