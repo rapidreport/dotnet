@@ -56,6 +56,7 @@
         Tests.Add(New Test_5_2_Sort)
         Tests.Add(New Test_5_2_SubData)
         Tests.Add(New Test_5_4_RenderSheet)
+        Tests.Add(New Test_5_5_Wsub)
 
         Application.Run(New FmTest)
     End Sub
