@@ -28,7 +28,17 @@
           {type:"field",layout:{x1:0.0,y1:210.0,x2:200.0,y2:230.0},exp:"(& '[' (wsub '' -10 10) ']')",halign:"left",valign:"center"},
           {type:"field",layout:{x1:0.0,y1:230.0,x2:200.0,y2:250.0},exp:"(& '[' (wsub '12345' -10 10) ']')",halign:"left",valign:"center"},
           {type:"field",layout:{x1:0.0,y1:250.0,x2:200.0,y2:270.0},exp:"(& '[' (wsub '1234567890' -10 10) ']')",halign:"left",valign:"center"},
-          {type:"field",layout:{x1:0.0,y1:270.0,x2:200.0,y2:290.0},exp:"(& '[' (wsub '1234567890ABCDE' -10 10) ']')",halign:"left",valign:"center"}
+          {type:"field",layout:{x1:0.0,y1:270.0,x2:200.0,y2:290.0},exp:"(& '[' (wsub '1234567890ABCDE' -10 10) ']')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:245.0,y1:0.0,x2:445.0,y2:20.0},exp:"(& '[' (wsub '' 0) ']')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:245.0,y1:20.0,x2:445.0,y2:40.0},exp:"(& '[' (wsub '12345' 0) ']')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:245.0,y1:105.0,x2:445.0,y2:125.0},exp:"(& '[' (wsub '' 10) ']')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:245.0,y1:125.0,x2:445.0,y2:145.0},exp:"(& '[' (wsub '12345' 10) ']')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:245.0,y1:145.0,x2:445.0,y2:165.0},exp:"(& '[' (wsub '1234567890' 10) ']')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:245.0,y1:165.0,x2:445.0,y2:185.0},exp:"(& '[' (wsub '1234567890ABCDE' 10) ']')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:245.0,y1:210.0,x2:445.0,y2:230.0},exp:"(& '[' (wsub '' -10) ']')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:245.0,y1:230.0,x2:445.0,y2:250.0},exp:"(& '[' (wsub '12345' -10) ']')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:245.0,y1:250.0,x2:445.0,y2:270.0},exp:"(& '[' (wsub '1234567890' -10) ']')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:245.0,y1:270.0,x2:445.0,y2:290.0},exp:"(& '[' (wsub '1234567890ABCDE' -10) ']')",halign:"left",valign:"center"}
         ]
       }
     ]

@@ -169,11 +169,16 @@ Public Module ReportUtil
 
     Public Function WSubString(str As String, begin As Integer) As String
         Dim si As New StringInfo(str)
+        Dim i As Integer
         If begin >= 0 Then
-            Return si.SubstringByTextElements(GetWIndex(si, begin))
+            i = GetWIndex(si, begin)
         Else
-            Return si.SubstringByTextElements(GetWRevIndex(si, -begin))
+            i = GetWRevIndex(si, -begin)
         End If
+        If i >= si.LengthInTextElements Then
+            Return ""
+        End If
+        Return si.SubstringByTextElements(i)
     End Function
 
     Public Function WSubString(str As String, begin As Integer, len As Integer) As String
