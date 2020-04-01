@@ -254,9 +254,7 @@ Public Class PdfText
     Protected Overridable Sub _Draw_Fixdec()
         Dim fd As New _FixDec(Me)
         If IsMonospaced Then
-            Dim texts As List(Of String) =
-                (New TextSplitterByDrawingWidth(TextDesign, 0, Region.GetWidth)).GetLines(fd.GetFullText(True))
-            _Draw_Monospaced(TextDesign.Font.Size, texts)
+            _Draw_Monospaced(TextDesign.Font.Size, _GetTextSplitter(0, Region.GetWidth).GetLines(fd.GetFullText(True)))
         Else
             fd.DrawText(TextDesign.Font.Size)
         End If
@@ -289,7 +287,7 @@ Public Class PdfText
 
     Protected Overridable Sub _Draw_Wrap()
         If IsMonospaced Then
-            _Draw_Monospaced(TextDesign.Font.Size, (New TextSplitterByDrawingWidth(TextDesign, Region.GetWidth, 0)).GetLines(Me.Text))
+            _Draw_Monospaced(TextDesign.Font.Size, _GetTextSplitter(Region.GetWidth, 0).GetLines(Me.Text))
         Else
             _Draw_Aux(TextDesign.Font.Size, (New _TextSplitterByPdfWidth(Me)).GetLines(Me.Text))
         End If
@@ -297,9 +295,7 @@ Public Class PdfText
 
     Protected Overridable Sub _Draw()
         If IsMonospaced Then
-            Dim texts As List(Of String) =
-                (New TextSplitterByDrawingWidth(TextDesign, 0, Region.GetWidth)).GetLines(Me.Text)
-            _Draw_Monospaced(TextDesign.Font.Size, texts)
+            _Draw_Monospaced(TextDesign.Font.Size, _GetTextSplitter(0, Region.GetWidth).GetLines(Me.Text))
         Else
             _Draw_Aux(TextDesign.Font.Size, (New TextSplitter).GetLines(Me.Text))
         End If
@@ -704,6 +700,10 @@ Public Class PdfText
         ContentByte.LineTo(trans.X(_x), trans.Y(_y + h))
         ContentByte.Stroke()
     End Sub
+
+    Protected Overridable Function _GetTextSplitter(wrapWidth As Single, clipWidth As Single) As TextSplitter
+        Return New TextSplitterByDrawingWidth(TextDesign, wrapWidth, clipWidth)
+    End Function
 
     Protected Overridable Function _IsEmpty() As Boolean
         If String.IsNullOrEmpty(Me.Text) Then

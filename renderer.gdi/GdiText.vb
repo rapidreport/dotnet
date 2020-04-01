@@ -192,8 +192,7 @@ Public Class GdiText
     Protected Overridable Sub _Draw_Fixdec()
         Dim fd As New _FixDec(Me)
         If IsMonospaced Then
-            Dim sp As New TextSplitterByDrawingWidth(TextDesign, 0, Region.GetWidth)
-            _Draw_Monospaced(sp.GetLines(fd.GetFullText(True)), _GetFont())
+            _Draw_Monospaced(_GetTextSplitter(0, Region.GetWidth).GetLines(fd.GetFullText(True)), _GetFont())
         Else
             fd.DrawText(_GetFont())
         End If
@@ -211,8 +210,7 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw_Wrap()
         If Me.IsMonospaced Then
-            Dim sp As New TextSplitterByDrawingWidth(TextDesign, Region.GetWidth, 0)
-            _Draw_Monospaced(sp.GetLines(Text), _GetFont())
+            _Draw_Monospaced(_GetTextSplitter(Region.GetWidth, 0).GetLines(Text), _GetFont())
         Else
             Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
                 Graphics.DrawString(Text, _GetFont(), b, Region.ToRectangleF, _GetStringFormat(0))
@@ -233,8 +231,7 @@ Public Class GdiText
 
     Protected Overridable Sub _Draw()
         If Me.IsMonospaced Then
-            Dim sp As New TextSplitterByDrawingWidth(TextDesign, 0, Region.GetWidth)
-            _Draw_Monospaced(sp.GetLines(Me.Text), _GetFont())
+            _Draw_Monospaced(_GetTextSplitter(0, Region.GetWidth).GetLines(Me.Text), _GetFont())
         Else
             Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
                 Graphics.DrawString(Text, _GetFont(), b, Region.ToRectangleF, _GetStringFormat(StringFormatFlags.NoWrap))
@@ -343,6 +340,10 @@ Public Class GdiText
             ret.FormatFlags = ret.FormatFlags Or StringFormatFlags.MeasureTrailingSpaces
         End If
         Return ret
+    End Function
+
+    Protected Overridable Function _GetTextSplitter(wrapWidth As Single, clipWidth As Single) As TextSplitter
+        Return New TextSplitterByDrawingWidth(TextDesign, wrapWidth, clipWidth)
     End Function
 
     Protected Overridable Function _IsEmpty() As Boolean
