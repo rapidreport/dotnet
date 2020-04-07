@@ -89,13 +89,22 @@ Public Module ReportUtil
         Return False
     End Function
 
+    Public Function IsNumber(v As Object) As Boolean
+        Return TypeOf v Is Integer OrElse
+            TypeOf v Is UInt16 OrElse
+            TypeOf v Is UInt32 OrElse
+            TypeOf v Is UInt64 OrElse
+            TypeOf v Is Long OrElse
+            TypeOf v Is ULong OrElse
+            TypeOf v Is Single OrElse
+            TypeOf v Is Double OrElse
+            TypeOf v Is Decimal OrElse
+            TypeOf v Is Byte OrElse
+            TypeOf v Is SByte
+    End Function
+
     Public Function Regularize(v As Object) As Object
-        If TypeOf v Is Integer OrElse
-           TypeOf v Is Long OrElse
-           TypeOf v Is Short OrElse
-           TypeOf v Is Single OrElse
-           TypeOf v Is Double OrElse
-           TypeOf v Is Byte Then
+        If IsNumber(v) Then
             Return CType(v, Decimal)
         End If
         Return v
