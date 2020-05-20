@@ -13,6 +13,7 @@ Public Class ReportDesign
     Public PaperDesign As PaperDesign = Nothing
     Public DefaultFontDesign As FontDesign = Nothing
     Public DefaultLineWidth As Single = 0
+    Public DefaultCharSpacing As Single = 0
     Public PageCapacity As Integer = 0
     Public ResetPageCount As Boolean = False
     Public CustomFields As Dictionary(Of String, String) = Nothing
@@ -51,6 +52,7 @@ Public Class ReportDesign
         Else
             Me.DefaultLineWidth = 1.0F
         End If
+        Me.DefaultCharSpacing = Me.Desc("char_spacing")
         Me.PageCapacity = Me.Desc("page_capacity")
         Me.ResetPageCount = Me.Desc("reset_page_count")
         If Me.Desc.ContainsKey("custom_fields") Then

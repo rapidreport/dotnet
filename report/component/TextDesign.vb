@@ -14,6 +14,7 @@ Namespace component
         Public Distribute As Boolean = False
         Public ShrinkToFit As Boolean = False
         Public DecimalPlace As Integer = 0
+        Public CharSpacing As Single = 0
         Public XlsFormat As String = Nothing
         Public MonospacedFont As MonospacedFontsDesign.DetailDesign = Nothing
 
@@ -52,6 +53,11 @@ Namespace component
             Me.Distribute = design.Get("distribute")
             Me.ShrinkToFit = design.Get("shrink_to_fit")
             Me.XlsFormat = design.Get("xls_format")
+            If Not design.IsNull("char_spacing") Then
+                Me.CharSpacing = design.Get("char_spacing")
+            Else
+                Me.CharSpacing = reportDesign.DefaultCharSpacing
+            End If
             Me.MonospacedFont = reportDesign.MonospacedFontsDesign.Get(Me.Font)
         End Sub
 
@@ -61,11 +67,7 @@ Namespace component
         Public Function GetMonospacedWidth(si As StringInfo, fontSize As Single) As Single
             Dim ret As Single = fontSize / 3
             For i As Integer = 0 To si.LengthInTextElements - 1
-                If ReportUtil.IsSingleChar(si.SubstringByTextElements(i, 1)) Then
-                    ret += MonospacedFont.HalfWidth * fontSize
-                Else
-                    ret += MonospacedFont.FullWidth * fontSize
-                End If
+                ret += MonoWidth(si.SubstringByTextElements(i, 1), fontSize)
             Next
             Return ret
         End Function
@@ -75,9 +77,9 @@ Namespace component
             Dim c As Integer = 0
             For i As Integer = 0 To si.LengthInTextElements - 1
                 If ReportUtil.IsSingleChar(si.SubstringByTextElements(i, 1)) Then
-                    cs += MonospacedFont.HalfWidth - 0.5
+                    cs += _MonoHalfWidth() - 0.5
                 Else
-                    cs += MonospacedFont.FullWidth - 1.0
+                    cs += _MonoFullWidth() - 1.0
                 End If
                 c += 1
             Next
@@ -106,16 +108,28 @@ Namespace component
         Public Function GetMonospacedDrawableLen(si As StringInfo, width As Single, maxLen As Integer) As Integer
             Dim w As Single = Font.Size / 3.0
             For i As Integer = 0 To si.LengthInTextElements - 1
-                If ReportUtil.IsSingleChar(si.SubstringByTextElements(i, 1)) Then
-                    w += MonospacedFont.HalfWidth * Font.Size
-                Else
-                    w += MonospacedFont.FullWidth * Font.Size
-                End If
+                w += MonoWidth(si.SubstringByTextElements(i, 1), Font.Size)
                 If (i > 0 And w >= width) Or (i = maxLen) Then
                     Return i
                 End If
             Next
             Return si.LengthInTextElements
+        End Function
+
+        Private Function _MonoHalfWidth() As Single
+            Return MonospacedFont.HalfWidth * (1 + CharSpacing)
+        End Function
+
+        Private Function _MonoFullWidth() As Single
+            Return MonospacedFont.FullWidth * (1 + CharSpacing)
+        End Function
+
+        Public Function MonoWidth(c As String, fontSize As Single)
+            If ReportUtil.IsSingleChar(c) Then
+                Return _MonoHalfWidth() * fontSize
+            Else
+                Return _MonoFullWidth() * fontSize
+            End If
         End Function
 
     End Class

@@ -78,6 +78,7 @@ Public Class Report
         Public Shared _4_37_WrappedTextNoTrim As Boolean = False
         Public Shared _4_37_ImagePixelScale As Boolean = False
         Public Shared _4_37_Typeset As Boolean = False
+        Public Shared _5_5_VAlign As Boolean = False
     End Class
 
     Public Class ContextClass

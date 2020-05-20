@@ -240,29 +240,53 @@ Public Class GdiText
     End Sub
 
     Protected Overridable Sub _Draw_Monospaced(texts As List(Of String), font As Font)
-        Dim sf As StringFormat = _GetStringFormat(_ToStringAlignment(TextDesign.HAlign), StringAlignment.Near, StringFormatFlags.NoWrap)
+        Dim sf As StringFormat = _GetStringFormat(StringAlignment.Near, StringAlignment.Near, StringFormatFlags.NoWrap)
         Dim y As Single = 0
         Select Case TextDesign.VAlign
             Case Report.EVAlign.TOP
                 y = 0
             Case Report.EVAlign.CENTER
-                y = (Region.GetHeight -
-                  (0.125 + TextDesign.MonospacedFont.RowHeidht * texts.Count) * font.Size) / 2
+                y = (Region.GetHeight - (0.125 + TextDesign.MonospacedFont.RowHeidht * texts.Count) * font.Size) / 2
             Case Report.EVAlign.BOTTOM
-                y = Region.GetHeight -
-                  (0.125 + TextDesign.MonospacedFont.RowHeidht * texts.Count) * font.Size
+                y = Region.GetHeight - (0.125 + TextDesign.MonospacedFont.RowHeidht * texts.Count) * font.Size
         End Select
+        If Not Report.Compatibility._5_5_VAlign Then
+            y = Math.Max(y, 0)
+        End If
         Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
             For Each t As String In texts
-                Dim r As RectangleF = Region.ToRectangleF(0, y)
+                Dim x As Single = 0
+                Select Case TextDesign.HAlign
+                    Case Report.EHAlign.LEFT
+                        x = 0
+                    Case Report.EHAlign.CENTER
+                        x = (Region.GetWidth - TextDesign.GetMonospacedWidth(New StringInfo(t), font.Size)) / 2
+                    Case Report.EHAlign.RIGHT
+                        x = Region.GetWidth - TextDesign.GetMonospacedWidth(New StringInfo(t), font.Size)
+                End Select
+                Dim r As RectangleF = Region.ToRectangleF(x, y)
                 If r.Height > 0 Then
-                    Graphics.DrawString(t, font, b, r, sf)
+                    If TextDesign.CharSpacing > 0 Then
+                        _Draw_Monospaced_Spacing(t, font, b, r, sf)
+                    Else
+                        Graphics.DrawString(t, font, b, r, sf)
+                    End If
                     y += TextDesign.MonospacedFont.RowHeidht * font.Size
                 Else
                     Exit For
                 End If
             Next
         End Using
+    End Sub
+
+    Protected Overridable Sub _Draw_Monospaced_Spacing(text As String, font As Font, blush As Brush, rect As RectangleF, sf As StringFormat)
+        Dim si As New StringInfo(text)
+        Dim r = rect
+        For i As Integer = 0 To si.LengthInTextElements - 1
+            Dim c = si.SubstringByTextElements(i, 1)
+            Graphics.DrawString(c, font, blush, r, sf)
+            r.X += TextDesign.MonoWidth(c, font.Size)
+        Next
     End Sub
 
     Protected Overridable Sub _Draw_Vertical_Aux(texts As List(Of String), Font As Font)

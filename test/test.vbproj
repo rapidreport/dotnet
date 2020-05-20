@@ -184,6 +184,7 @@
     <Compile Include="Test_5_2_SubData.vb" />
     <Compile Include="Test_5_4_RenderSheet.vb" />
     <Compile Include="Test_5_5_Wsub.vb" />
+    <Compile Include="Test_5_6_CharSpacing.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FmTest.resx">
@@ -377,6 +378,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_5_wsub.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_5_6_charspacing.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

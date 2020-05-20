@@ -1,0 +1,57 @@
+{
+  version: 0,
+  monospaced_fonts: [
+    {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"vl",bold:{full_width:1.04,half_width:0.536,row_height:1.27},regular:{full_width:1.03,half_width:0.515,row_height:1.27}}
+  ],
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    detail: true,
+    contents: [
+      {
+        size: {
+          initial: 802.0
+        },
+        aggregate_src: true,
+        elements: [
+          {type:"field",layout:{x1:0.0,y1:200.0,x2:150.0,y2:300.0},char_spacing:0.2,exp:"'!!##𠀋𡈽𠀋𡈽$$%%\\n\\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）'",rect:{},wrap:true},
+          {type:"field",layout:{x1:150.0,y1:200.0,x2:300.0,y2:300.0},char_spacing:0.2,exp:"'!!##𠀋𡈽𠀋𡈽$$%%\\n\\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）'",halign:"center",rect:{},valign:"center",wrap:true},
+          {type:"field",layout:{x1:300.0,y1:200.0,x2:450.0,y2:300.0},char_spacing:0.2,exp:"'!!##𠀋𡈽𠀋𡈽$$%%\\n\\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）'",halign:"right",rect:{},valign:"bottom",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:300.0,x2:150.0,y2:360.0},char_spacing:0.2,halign:"left",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"top"},
+          {type:"text",layout:{x1:150.0,y1:300.0,x2:300.0,y2:360.0},char_spacing:0.2,halign:"center",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:300.0,x2:450.0,y2:360.0},char_spacing:0.2,halign:"right",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"bottom"},
+          {type:"text",layout:{x1:0.0,y1:360.0,x2:150.0,y2:460.0},char_spacing:0.2,halign:"left",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"top",wrap:true},
+          {type:"text",layout:{x1:150.0,y1:360.0,x2:300.0,y2:460.0},char_spacing:0.2,halign:"center",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"center",wrap:true},
+          {type:"text",layout:{x1:300.0,y1:360.0,x2:450.0,y2:460.0},char_spacing:0.2,halign:"right",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"bottom",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:460.0,x2:150.0,y2:560.0},char_spacing:0.5,font:{},halign:"left",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"top",wrap:true},
+          {type:"text",layout:{x1:150.0,y1:460.0,x2:300.0,y2:560.0},char_spacing:0.5,font:{},halign:"center",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"center",wrap:true},
+          {type:"text",layout:{x1:300.0,y1:460.0,x2:450.0,y2:560.0},char_spacing:0.5,font:{},halign:"right",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"bottom",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:560.0,x2:180.0,y2:640.0},char_spacing:0.2,font:{size:15.0},halign:"left",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\n(Ora Orade Shitori egumo）",valign:"top",wrap:true},
+          {type:"text",layout:{x1:180.0,y1:560.0,x2:360.0,y2:640.0},char_spacing:0.2,font:{size:15.0},halign:"center",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\n(Ora Orade Shitori egumo）",valign:"center",wrap:true},
+          {type:"text",layout:{x1:360.0,y1:560.0,x2:540.0,y2:640.0},char_spacing:0.2,font:{size:15.0},halign:"right",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\n(Ora Orade Shitori egumo）",valign:"bottom",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:640.0,x2:180.0,y2:720.0},char_spacing:0.5,font:{size:15.0},halign:"left",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\n(Ora Orade Shitori egumo）",valign:"top",wrap:true},
+          {type:"text",layout:{x1:180.0,y1:640.0,x2:360.0,y2:720.0},char_spacing:0.5,font:{size:15.0},halign:"center",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\n(Ora Orade Shitori egumo）",valign:"center",wrap:true},
+          {type:"text",layout:{x1:360.0,y1:640.0,x2:540.0,y2:720.0},char_spacing:0.5,font:{size:15.0},halign:"right",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\n(Ora Orade Shitori egumo）",valign:"bottom",wrap:true},
+          {type:"field",layout:{x1:0.0,y1:0.0,x2:150.0,y2:100.0},exp:"'!!##𠀋𡈽𠀋𡈽$$%%\\n\\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）'",rect:{},wrap:true},
+          {type:"field",layout:{x1:150.0,y1:0.0,x2:300.0,y2:100.0},exp:"'!!##𠀋𡈽𠀋𡈽$$%%\\n\\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）'",halign:"center",rect:{},valign:"center",wrap:true},
+          {type:"field",layout:{x1:300.0,y1:0.0,x2:450.0,y2:100.0},exp:"'!!##𠀋𡈽𠀋𡈽$$%%\\n\\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）'",halign:"right",rect:{},valign:"bottom",wrap:true},
+          {type:"text",layout:{x1:0.0,y1:100.0,x2:150.0,y2:140.0},halign:"left",rect:{},text:"（Ora Orade Shitori egumo）\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%",valign:"top"},
+          {type:"text",layout:{x1:150.0,y1:100.0,x2:300.0,y2:140.0},halign:"center",rect:{},text:"（Ora Orade Shitori egumo）\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:100.0,x2:450.0,y2:140.0},halign:"right",rect:{},text:"（Ora Orade Shitori egumo）\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%\r\n!!##𠀋𡈽𠀋𡈽$$%%",valign:"bottom"},
+          {type:"text",layout:{x1:0.0,y1:140.0,x2:150.0,y2:180.0},halign:"left",rect:{},text:"（Ora Orade Shitori egumo）\r\n!!##𠀋𡈽𠀋𡈽$$%%",valign:"top"},
+          {type:"text",layout:{x1:150.0,y1:140.0,x2:300.0,y2:180.0},halign:"center",rect:{},text:"（Ora Orade Shitori egumo）\r\n!!##𠀋𡈽𠀋𡈽$$%%",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:140.0,x2:450.0,y2:180.0},halign:"right",rect:{},text:"（Ora Orade Shitori egumo）\r\n!!##𠀋𡈽𠀋𡈽$$%%",valign:"bottom"},
+          {type:"text",layout:{x1:0.0,y1:720.0,x2:180.0,y2:800.0},char_spacing:0.5,font:{size:15.0},halign:"left",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"top",wrap:true},
+          {type:"text",layout:{x1:180.0,y1:720.0,x2:360.0,y2:800.0},char_spacing:0.5,font:{size:15.0},halign:"center",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"center",wrap:true},
+          {type:"text",layout:{x1:360.0,y1:720.0,x2:540.0,y2:800.0},char_spacing:0.5,font:{size:15.0},halign:"right",rect:{},text:"!!##𠀋𡈽𠀋𡈽$$%%\r\n\r\nわたしたちが　いっしょに　そだってきた　あひだみなれた　ちやわんの　この　藍のもやうにももう　けふ　おまへは　わかれてしまふ（Ora Orade Shitori egumo）",valign:"bottom",wrap:true}
+        ]
+      }
+    ]
+  }
+}
