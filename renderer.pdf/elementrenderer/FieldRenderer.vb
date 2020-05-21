@@ -8,18 +8,18 @@ Namespace elementrenderer
     Public Class FieldRenderer
         Implements IElementRenderer
 
-        Public Sub Render( _
-          renderer As PdfRenderer, _
-          reportDesign As ReportDesign, _
-          region As Region, _
-          design As ElementDesign, _
+        Public Sub Render(
+          renderer As PdfRenderer,
+          reportDesign As ReportDesign,
+          region As Region,
+          design As ElementDesign,
           data As Object) Implements IElementRenderer.Render
             If Not design.IsNull("rect") Then
-                renderer.Setting.GetElementRenderer("rect").Render( _
-                  renderer, _
-                  reportDesign, _
-                  region, _
-                  design.Child("rect"), _
+                renderer.Setting.GetElementRenderer("rect").Render(
+                  renderer,
+                  reportDesign,
+                  region,
+                  design.Child("rect"),
                   Nothing)
             End If
             Dim fd As ElementDesign = design.Child("formatter")
@@ -35,10 +35,15 @@ Namespace elementrenderer
             If renderer.Setting.ReplaceBackslashToYen Then
                 text = text.Replace("\", ChrW(&HA5))
             End If
-            Dim pdfText As New PdfText()
+            Dim pdfText = _GetPdfText(renderer, reportDesign, _region, design, text)
             pdfText.Initialize(renderer, reportDesign, _region, design, text)
             pdfText.Draw()
         End Sub
+
+        Protected Overridable Function _GetPdfText(renderer As PdfRenderer, reportDesign As ReportDesign, region As Region, design As ElementDesign, text As String) As PdfText
+            Return New PdfText()
+        End Function
+
     End Class
 
 End Namespace

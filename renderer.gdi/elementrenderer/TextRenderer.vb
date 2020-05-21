@@ -39,10 +39,14 @@ Namespace elementrenderer
                 Dim m As ElementDesign = design.Child("margin")
                 _region = New Region(region, m.Get("left"), m.Get("top"), m.Get("right"), m.Get("bottom"))
             End If
-            Dim gdiText As GdiText = _GetGdiText()
+            Dim gdiText As GdiText = _GetGdiText(env, reportDesign, _region, design, text)
             gdiText.Initialize(env, reportDesign, _region, design, text)
             gdiText.Draw()
         End Sub
+
+        Protected Overridable Function _GetGdiText(env As RenderingEnv, reportDesign As ReportDesign, region As Region, design As ElementDesign, text As String) As GdiText
+            Return _GetGdiText()
+        End Function
 
         Protected Overridable Function _GetGdiText() As GdiText
             Return New GdiText()
