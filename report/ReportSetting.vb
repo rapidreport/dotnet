@@ -91,6 +91,7 @@ Public Class ReportSetting
         Me.OperatorMap.Add("wsplit", New WSplitOperator)
         Me.OperatorMap.Add("wlines", New WLinesOperator)
         Me.OperatorMap.Add("trim", New TrimOperator)
+        Me.OperatorMap.Add("ybcode", New YbCodeOperator)
         Me.DefaultElementPreprocessor = New DefaultPreprocessor
         Me.ElementPreprocessorMap.Add("subpage", New SubPagePreprocessor)
         Me.DefaultSeachObject = New DefaultSearchObject

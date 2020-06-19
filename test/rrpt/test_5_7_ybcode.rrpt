@@ -1,0 +1,31 @@
+{
+  version: 0,
+  monospaced_fonts: [
+    {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"vl",bold:{full_width:1.04,half_width:0.536,row_height:1.27},regular:{full_width:1.03,half_width:0.515,row_height:1.27}}
+  ],
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 150.0
+        },
+        elements: [
+          {type:"field",layout:{x1:0.0,y1:0.0,x2:555.0,y2:20.0},exp:"(ybcode '024-0004' '岩手県北上市村崎野１９地割１１６−４')"},
+          {type:"barcode",layout:{x1:0.0,y1:20.0,x2:200.0,y2:40.0},barcode_type:"yubin",exp:"(ybcode '024-0004' '岩手県北上市村崎野１９地割１１６−４')"},
+          {type:"field",layout:{x1:0.0,y1:55.0,x2:555.0,y2:75.0},exp:"(ybcode '１００‐００１３' '東京都千代田区霞が関1丁目3番2号　郵便プラザ503室')"},
+          {type:"barcode",layout:{x1:0.0,y1:75.0,x2:200.0,y2:95.0},barcode_type:"yubin",exp:"(ybcode '１００‐００１３' '東京都千代田区霞が関1丁目3番2号　郵便プラザ503室')"},
+          {type:"field",layout:{x1:0.0,y1:110.0,x2:555.0,y2:130.0},exp:"(ybcode '〒338-0837')"},
+          {type:"barcode",layout:{x1:0.0,y1:130.0,x2:200.0,y2:150.0},barcode_type:"yubin",exp:"(ybcode '〒338-0837')"}
+        ]
+      }
+    ]
+  }
+}

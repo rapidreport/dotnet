@@ -4,8 +4,8 @@ Imports jp.co.systembase.report.expression
 Namespace [operator]
     Public Class AbsOperator
         Implements IOperator
-        Public Function Exec( _
-          evaluator As Evaluator, _
+        Public Function Exec(
+          evaluator As Evaluator,
           params As List(Of IExpression)) As Object Implements IOperator.Exec
             evaluator.ValidateParamCount(params, 1)
             Dim v As Object = evaluator.Eval(params(0))
