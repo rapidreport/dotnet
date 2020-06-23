@@ -16,8 +16,8 @@ Public Class PrintPreview
     Public Event UpdateReportPage() Implements IPrintPreviewPage.UpdateReport
     Public Event UpdateReportZoom() Implements IPrintPreviewZoom.UpdateReport
     Public Event UpdateReportMultiPage() Implements IPrintPreviewMultiPage.UpdateReport
-    Public Event Rendering(sender As Object, g As Graphics, ByRef cancel As Boolean)
-    Public Event Rendered(sender As Object, g As Graphics)
+    Public Event Rendering(sender As Object, g As Graphics, viewIndex As Integer, ByRef cancel As Boolean)
+    Public Event Rendered(sender As Object, g As Graphics, viewIndex As Integer)
     Public PageBuffers As List(Of Bitmap) = Nothing
     Public WithEvents VScrollBar As New VScrollBar
     Public WithEvents HScrollBar As New HScrollBar
@@ -418,11 +418,11 @@ Public Class PrintPreview
                     g.TranslateTransform(Me._ReportMargin.Width, Me._ReportMargin.Height)
                 End With
                 Dim cancel As Boolean = False
-                RaiseEvent Rendering(Me, g, cancel)
+                RaiseEvent Rendering(Me, g, i, cancel)
                 If Not cancel Then
                     Dim r As New GdiRenderer(New RenderingEnv(g, Me.Printer))
                     page.Render(r, Me.Printer.Pages)
-                    RaiseEvent Rendered(Me, g)
+                    RaiseEvent Rendered(Me, g, i)
                 End If
             End Using
             Me.PageBuffers.Add(buf)
@@ -543,7 +543,7 @@ Public Class PrintPreview
                 g.DrawRectangle(p, 0, 0, Me.Width - 1, Me.Height - 1)
             End Using
             If Me._FocusPageIndex >= 0 AndAlso Me.PageCount + i - 1 = Me._FocusPageIndex Then
-                Dim r As Rectangle = _ToRect(i, Me._FocusRegion)
+                Dim r As Rectangle = RegionToRect(i, Me._FocusRegion)
                 Using p As New Pen(Color.FromArgb(128, Color.OrangeRed), (1 + Me.Zoom) * 2)
                     g.DrawRectangle(p, r.Left - Me.HScrollBar.Value, r.Top - Me.VScrollBar.Value, r.Width, r.Height)
                 End Using
@@ -594,8 +594,8 @@ Public Class PrintPreview
         Return New Point(x, y)
     End Function
 
-    Private Function _ToRect(i As Integer, region As component.Region) As Rectangle
-        Dim base As Point = Me._BaseLocation(i)
+    Public Function RegionToRect(viewIndex As Integer, region As component.Region) As Rectangle
+        Dim base As Point = Me._BaseLocation(viewIndex)
         Return New Rectangle(
           ToPixelX(Me._ReportMargin.Width + region.Left) * Me.Zoom + base.X,
           ToPixelY(Me._ReportMargin.Height + region.Top) * Me.Zoom + base.Y,
@@ -681,7 +681,7 @@ Public Class PrintPreview
     End Sub
 
     Public Sub ScrollTo(i As Integer, region As component.Region)
-        Me.ScrollTo(_ToRect(i, region))
+        Me.ScrollTo(RegionToRect(i, region))
     End Sub
 
     Public Sub ScrollTo(rect As Rectangle)
