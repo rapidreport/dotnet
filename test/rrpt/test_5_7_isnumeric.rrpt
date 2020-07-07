@@ -1,0 +1,75 @@
+{
+  version: 0,
+  monospaced_fonts: [
+    {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}}
+  ],
+  paper: {
+    landscape: true,
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 20.0
+        },
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:50.0,y2:20.0},rect:{},text:"vInteger"},
+          {type:"text",layout:{x1:50.0,y1:0.0,x2:100.0,y2:20.0},rect:{},text:"vUInteger"},
+          {type:"text",layout:{x1:105.0,y1:0.0,x2:155.0,y2:20.0},rect:{},text:"vLong"},
+          {type:"text",layout:{x1:155.0,y1:0.0,x2:205.0,y2:20.0},rect:{},text:"vULong"},
+          {type:"text",layout:{x1:210.0,y1:0.0,x2:260.0,y2:20.0},rect:{},text:"vSingle"},
+          {type:"text",layout:{x1:260.0,y1:0.0,x2:310.0,y2:20.0},rect:{},text:"vDouble"},
+          {type:"text",layout:{x1:315.0,y1:0.0,x2:365.0,y2:20.0},rect:{},text:"vDecimal"},
+          {type:"text",layout:{x1:370.0,y1:0.0,x2:420.0,y2:20.0},rect:{},text:"vSByte"},
+          {type:"text",layout:{x1:420.0,y1:0.0,x2:470.0,y2:20.0},rect:{},text:"vByte"},
+          {type:"text",layout:{x1:475.0,y1:0.0,x2:525.0,y2:20.0},rect:{},text:"vShort"},
+          {type:"text",layout:{x1:525.0,y1:0.0,x2:575.0,y2:20.0},rect:{},text:"vUShort"}
+        ]
+      },
+      {
+        aggregate_src: true,
+        group: {
+          detail: true,
+          contents: [
+            {
+              size: {
+                initial: 50.0
+              },
+              aggregate_src: true,
+              elements: [
+                {type:"field",layout:{x1:0.0,y1:0.0,x2:50.0,y2:25.0},exp:".vInteger"},
+                {type:"field",layout:{x1:50.0,y1:0.0,x2:100.0,y2:25.0},exp:".vUInteger"},
+                {type:"field",layout:{x1:105.0,y1:0.0,x2:155.0,y2:25.0},exp:".vLong"},
+                {type:"field",layout:{x1:155.0,y1:0.0,x2:205.0,y2:25.0},exp:".vULong"},
+                {type:"field",layout:{x1:210.0,y1:0.0,x2:260.0,y2:25.0},exp:".vSingle"},
+                {type:"field",layout:{x1:260.0,y1:0.0,x2:310.0,y2:25.0},exp:".vDouble"},
+                {type:"field",layout:{x1:315.0,y1:0.0,x2:365.0,y2:25.0},exp:".vDecimal"},
+                {type:"field",layout:{x1:370.0,y1:0.0,x2:420.0,y2:25.0},exp:".vSByte"},
+                {type:"field",layout:{x1:420.0,y1:0.0,x2:470.0,y2:25.0},exp:".vByte"},
+                {type:"field",layout:{x1:475.0,y1:0.0,x2:525.0,y2:25.0},exp:".vShort"},
+                {type:"field",layout:{x1:525.0,y1:0.0,x2:575.0,y2:25.0},exp:".vUShort"},
+                {type:"field",layout:{x1:0.0,y1:25.0,x2:50.0,y2:50.0},exp:"(= .vInteger 9)"},
+                {type:"field",layout:{x1:50.0,y1:25.0,x2:100.0,y2:50.0},exp:"(= .vUInteger 9)"},
+                {type:"field",layout:{x1:105.0,y1:25.0,x2:155.0,y2:50.0},exp:"(= .vLong 9)"},
+                {type:"field",layout:{x1:155.0,y1:25.0,x2:205.0,y2:50.0},exp:"(= .vULong 9)"},
+                {type:"field",layout:{x1:210.0,y1:25.0,x2:260.0,y2:50.0},exp:"(= .vSingle 9)"},
+                {type:"field",layout:{x1:260.0,y1:25.0,x2:310.0,y2:50.0},exp:"(= .vDouble 9)"},
+                {type:"field",layout:{x1:315.0,y1:25.0,x2:365.0,y2:50.0},exp:"(= .vDecimal 9)"},
+                {type:"field",layout:{x1:370.0,y1:25.0,x2:420.0,y2:50.0},exp:"(= .vSByte 9)"},
+                {type:"field",layout:{x1:420.0,y1:25.0,x2:470.0,y2:50.0},exp:"(= .vByte 9)"},
+                {type:"field",layout:{x1:475.0,y1:25.0,x2:525.0,y2:50.0},exp:"(= .vShort 9)"},
+                {type:"field",layout:{x1:525.0,y1:25.0,x2:575.0,y2:50.0},exp:"(= .vUShort 9)"},
+                {type:"line",layout:{x1:760.0,y1:50.0,x2:0.0,y2:50.0}}
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
