@@ -185,6 +185,7 @@
     <Compile Include="Test_5_4_RenderSheet.vb" />
     <Compile Include="Test_5_5_Wsub.vb" />
     <Compile Include="Test_5_6_CharSpacing.vb" />
+    <Compile Include="Test_5_7_CharSpacing_Ng.vb" />
     <Compile Include="Test_5_7_IsNumeric.vb" />
     <Compile Include="Test_5_7_YbCode.vb" />
   </ItemGroup>
@@ -383,6 +384,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_6_charspacing.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_5_7_charspacing_ng.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_7_isnumeric.rrpt">

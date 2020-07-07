@@ -60,6 +60,7 @@
         Tests.Add(New Test_5_6_CharSpacing)
         Tests.Add(New Test_5_7_YbCode)
         Tests.Add(New Test_5_7_IsNumeric)
+        Tests.Add(New Test_5_7_CharSpacing_Ng)
 
         Application.Run(New FmTest)
     End Sub
