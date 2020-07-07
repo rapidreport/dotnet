@@ -96,6 +96,7 @@ Public Module ReportUtil
             TypeOf v Is UInt64 OrElse
             TypeOf v Is Long OrElse
             TypeOf v Is ULong OrElse
+            TypeOf v Is Short OrElse
             TypeOf v Is Single OrElse
             TypeOf v Is Double OrElse
             TypeOf v Is Decimal OrElse

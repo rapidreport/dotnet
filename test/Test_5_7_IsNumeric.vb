@@ -46,7 +46,7 @@ Public Class Test_5_7_IsNumeric
         ret.Columns.Add("vUShort", GetType(UShort))
 
         ret.Rows.Add(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-        ret.Rows.Add(9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9)
+        ret.Rows.Add(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
 
         Return ret
     End Function
