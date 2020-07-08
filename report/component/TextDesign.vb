@@ -54,9 +54,9 @@ Namespace component
             Me.ShrinkToFit = design.Get("shrink_to_fit")
             Me.XlsFormat = design.Get("xls_format")
             If Not design.IsNull("char_spacing") Then
-                Me.CharSpacing = design.Get("char_spacing")
+                Me.CharSpacing = Math.Max(design.Get("char_spacing"), 0)
             Else
-                Me.CharSpacing = reportDesign.DefaultCharSpacing
+                Me.CharSpacing = Math.Max(reportDesign.DefaultCharSpacing, 0)
             End If
             Me.MonospacedFont = reportDesign.MonospacedFontsDesign.Get(Me.Font)
         End Sub
