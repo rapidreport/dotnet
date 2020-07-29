@@ -55,6 +55,12 @@
     <DocumentationFile>systembase.report.renderer.gdi.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>renderer.gdi.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -214,6 +220,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="renderer.gdi.snk" />
     <None Include="Resources\hand.ico" />
     <None Include="Resources\hand_grip.ico" />
     <Content Include="Resources\MockImage.png" />
