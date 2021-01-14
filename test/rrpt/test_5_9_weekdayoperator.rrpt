@@ -1,0 +1,30 @@
+{
+  version: 0,
+  monospaced_fonts: [
+    {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}}
+  ],
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    detail: true,
+    contents: [
+      {
+        size: {
+          initial: 25.0
+        },
+        aggregate_src: true,
+        elements: [
+          {type:"field",layout:{x1:45.0,y1:0.0,x2:115.0,y2:25.0},exp:".v"},
+          {type:"field",layout:{x1:205.0,y1:0.0,x2:275.0,y2:25.0},exp:"(weekday .v)"},
+          {type:"field",layout:{x1:120.0,y1:0.0,x2:190.0,y2:25.0},exp:".answer"},
+          {type:"field",layout:{x1:325.0,y1:0.0,x2:420.0,y2:25.0},exp:"(nvl  \r\n (if (= (weekday .v) 0) '日曜日')\r\n (if (= (weekday .v) 1) '月曜日')\r\n (if (= (weekday .v) 2) '火曜日')\r\n (if (= (weekday .v) 3) '水曜日')\r\n (if (= (weekday .v) 4) '木曜日')\r\n (if (= (weekday .v) 5) '金曜日')\r\n (if (= (weekday .v) 6) '土曜日')\r\n)"}
+        ]
+      }
+    ]
+  }
+}
