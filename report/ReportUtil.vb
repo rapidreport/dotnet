@@ -9,7 +9,7 @@ Public Module ReportUtil
       "abcdefghijklmnopqrstuvwxyz" &
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ" &
       "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｯｬｭｮ" &
-      "ﾞﾟｰ｢｣･､｡ !@#$%^&*()_+|~-=\`{}[]:"";'<>?,./" & vbCrLf & vbTab
+      "ﾞﾟｰ｢｣･､｡ !@#$%^&*()_+|~-=\`{}[]:"";'<>?,./" & vbCrLf & vbTab & ChrW(&HA5)
 
     Private _SingleCharsMap As Dictionary(Of String, Boolean)
     Sub New()

@@ -1,0 +1,41 @@
+{
+  version: 0,
+  monospaced_fonts: [
+    {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}}
+  ],
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    detail: true,
+    contents: [
+      {
+        size: {
+          initial: 20.0
+        },
+        aggregate_src: true,
+        elements: [
+          {type:"field",layout:{x1:0.0,y1:0.0,x2:110.0,y2:20.0},exp:".v",mock:"s20",rect:{}}
+        ],
+        group: {
+          max_count: 100000000.0,
+          split_string: {key:"row",exp:".v",width:20.0},
+          contents: [
+            {
+              size: {
+                initial: 20.0
+              },
+              elements: [
+                {type:"field",layout:{x1:310.0,y1:0.0,x2:420.0,y2:20.0},exp:".row",mock:"s20",rect:{}}
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
