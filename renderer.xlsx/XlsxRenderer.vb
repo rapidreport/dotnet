@@ -73,7 +73,12 @@ Public Class XlsxRenderer
 
     Public Sub EndReport(reportDesign As ReportDesign) Implements IRenderer.EndReport
         Dim cols As List(Of Single) = RowColUtil.CreateCols(reportDesign, Me)
-        Dim colWidths As List(Of Integer) = RowColUtil.CreateColWidths(cols, 1.25F * Me.Setting.ColWidthCoefficent)
+        Dim colWidths As List(Of Integer)
+        If Not Report.Compatibility._5_9_XlsxRowColSize Then
+            colWidths = RowColUtil.CreateColWidths(cols, 1.1F * Me.Setting.ColWidthCoefficent)
+        Else
+            colWidths = RowColUtil.CreateColWidths(cols, 1.25F * Me.Setting.ColWidthCoefficent)
+        End If
         For i As Integer = 0 To colWidths.Count - 1
             Me.Sheet.SetColumnWidth(i, colWidths(i))
         Next
@@ -82,7 +87,12 @@ Public Class XlsxRenderer
             For Each page As Page In Me.Pages
                 page.TopRow = topRow
                 Dim rows As List(Of Single) = RowColUtil.CreateRows(reportDesign, page)
-                Dim rowHeights As List(Of Integer) = RowColUtil.CreateRowHeights(rows, 1.46F * Me.Setting.RowHeightCoefficent)
+                Dim rowHeights As List(Of Integer)
+                If Not Report.Compatibility._5_9_XlsxRowColSize Then
+                    rowHeights = RowColUtil.CreateRowHeights(rows, 1.3F * Me.Setting.RowHeightCoefficent)
+                Else
+                    rowHeights = RowColUtil.CreateRowHeights(rows, 1.46F * Me.Setting.RowHeightCoefficent)
+                End If
                 For i As Integer = 0 To rowHeights.Count - 1
                     Me.Sheet.CreateRow(topRow + i).Height = rowHeights(i)
                 Next
