@@ -111,6 +111,7 @@
     <Compile Include="method\CurrentTimeMethod.vb" />
     <Compile Include="method\PageGroupCountMethod.vb" />
     <Compile Include="operator\DateAddOperator.vb" />
+    <Compile Include="operator\NumOperator.vb" />
     <Compile Include="operator\WeekdayOperator.vb" />
     <Compile Include="operator\WLinesOperator.vb" />
     <Compile Include="operator\TrimOperator.vb" />

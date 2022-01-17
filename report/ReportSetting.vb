@@ -55,6 +55,7 @@ Public Class ReportSetting
         Me.OperatorMap.Add("!=", New NotEqOperator)
         Me.OperatorMap.Add("neq", New NotEqOperator)
         Me.OperatorMap.Add("nin", New NotEqOperator)
+        Me.OperatorMap.Add("num", New NumOperator)
         Me.OperatorMap.Add(">", New GreaterOperator)
         Me.OperatorMap.Add(">=", New GreaterEqOperator)
         Me.OperatorMap.Add("<", New LessOperator)
