@@ -24,6 +24,11 @@ Namespace elementrenderer
             Dim text As String
             If env.InDesigner Then
                 text = design.Get("text")
+                Dim textProcessor As New EmbeddedTextProcessor
+                Dim mocks As List(Of String) = textProcessor.ExtractMocks(text)
+                If mocks IsNot Nothing Then
+                    text = textProcessor.EmbedMock(text, GdiRenderUtil.GetMockDataList(mocks))
+                End If
             Else
                 text = design.Get("text")
                 If data IsNot Nothing Then

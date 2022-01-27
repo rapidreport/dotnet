@@ -64,6 +64,7 @@
         Tests.Add(New Test_5_9_WeekdayOperator)
         Tests.Add(New Test_5_10_BackSlash)
         Tests.Add(New Test_5_12_Num)
+        Tests.Add(New Test_5_12_TextMock)
 
         Application.Run(New FmTest)
     End Sub

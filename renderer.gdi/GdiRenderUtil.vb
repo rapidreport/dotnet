@@ -647,6 +647,14 @@ Public Module GdiRenderUtil
         Return desc
     End Function
 
+    Public Function GetMockDataList(mocks As List(Of String)) As ArrayList
+        Dim ret As New ArrayList
+        For Each m In mocks
+            ret.Add(GetMockData(m))
+        Next
+        Return ret
+    End Function
+
     Public Sub SetUpPrinterSetting(pageSettings As PageSettings, reportDesign As ReportDesign)
         If reportDesign.PrinterName IsNot Nothing Then
             pageSettings.PrinterSettings.PrinterName = reportDesign.PrinterName
