@@ -180,6 +180,7 @@
     <Compile Include="Test_5_0_Margin.vb" />
     <Compile Include="Test_5_0_Typeset.vb" />
     <Compile Include="Test_5_0_SurrogatePair.vb" />
+    <Compile Include="Test_5_12_SortKeys.vb" />
     <Compile Include="Test_5_12_Num.vb" />
     <Compile Include="Test_5_12_TextMock.vb" />
     <Compile Include="Test_5_2_Sort.vb" />
@@ -376,6 +377,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_12_num.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_5_12_sortkeys.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_12_textmock.rrpt">

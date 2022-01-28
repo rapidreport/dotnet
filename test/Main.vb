@@ -65,6 +65,7 @@
         Tests.Add(New Test_5_10_BackSlash)
         Tests.Add(New Test_5_12_Num)
         Tests.Add(New Test_5_12_TextMock)
+        Tests.Add(New Test_5_12_SortKeys)
 
         Application.Run(New FmTest)
     End Sub

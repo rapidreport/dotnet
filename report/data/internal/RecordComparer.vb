@@ -16,9 +16,15 @@
             For Each k As String In Me._Keys
                 Dim _x As Object = Nothing
                 Dim _y As Object = Nothing
+                Dim _k As String = k
+                Dim order As Integer = 1
+                If _k.StartsWith("^") Then
+                    _k = _k.Substring(1)
+                    order = -1
+                End If
                 Try
-                    _x = Me._DataSource.Get(x, k)
-                    _y = Me._DataSource.Get(y, k)
+                    _x = Me._DataSource.Get(x, _k)
+                    _y = Me._DataSource.Get(y, _k)
                 Catch ex As UnknownFieldException
                     Me._Logger.UnknownFieldError(ex)
                 End Try
@@ -26,16 +32,16 @@
                     Continue For
                 End If
                 If _x Is Nothing Then
-                    Return -1
+                    Return -1 * order
                 End If
                 If _y Is Nothing Then
-                    Return 1
+                    Return 1 * order
                 End If
                 If _x < _y Then
-                    Return -1
+                    Return -1 * order
                 End If
                 If _x > _y Then
-                    Return 1
+                    Return 1 * order
                 End If
             Next
             Return Math.Sign(x - y)
