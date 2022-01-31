@@ -592,9 +592,9 @@ Public Module GdiRenderUtil
         Return defaultColor
     End Function
 
-    Public Function GetMockData(desc As String) As Object
+    Public Function GetMockData(mock As String) As Object
         Try
-            Dim m As Match = Regex.Match(desc.ToUpper, "([SWDT])(-?[0-9]+)?(\.([0-9]+))?")
+            Dim m As Match = Regex.Match(mock.ToUpper, "^([SWDT])(-?[0-9]+)?(\.([0-9]+))?$")
             If m.Success Then
                 Dim l As Integer = 0
                 Dim f As Integer = 0
@@ -644,15 +644,7 @@ Public Module GdiRenderUtil
             End If
         Catch ex As Exception
         End Try
-        Return desc
-    End Function
-
-    Public Function GetMockDataList(mocks As List(Of String)) As ArrayList
-        Dim ret As New ArrayList
-        For Each m In mocks
-            ret.Add(GetMockData(m))
-        Next
-        Return ret
+        Return mock
     End Function
 
     Public Sub SetUpPrinterSetting(pageSettings As PageSettings, reportDesign As ReportDesign)
