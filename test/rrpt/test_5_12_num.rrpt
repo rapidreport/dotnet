@@ -20,7 +20,7 @@
           initial: 20.0
         },
         elements: [
-          {type:"field",layout:{x1:0.0,y1:0.0,x2:160.0,y2:20.0},exp:"(+ (num '1') (num '02'))"},
+          {type:"field",layout:{x1:0.0,y1:0.0,x2:160.0,y2:20.0},exp:"(+ (num '1') (num '02') (num 3))"},
           {type:"field",layout:{x1:160.0,y1:0.0,x2:320.0,y2:20.0},exp:"sum.nv"}
         ]
       }

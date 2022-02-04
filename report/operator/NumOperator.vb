@@ -9,7 +9,9 @@ Namespace [operator]
           params As List(Of IExpression)) As Object Implements IOperator.Exec
             evaluator.ValidateParamCount(params, 1)
             Dim v As Object = evaluator.Eval(params(0))
-            If TypeOf v Is String Then
+            If IsNumber(v) Then
+                Return v
+            ElseIf TypeOf v Is String Then
                 Return CType(v, Decimal)
             Else
                 Return Nothing
