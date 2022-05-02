@@ -69,7 +69,7 @@ Namespace component
         Public Sub AddGroup(data As ReportData, crosstabState As Crosstab.State)
             Dim g As New Group(Me, Me.Groups.Count, crosstabState)
             Me.Groups.Add(g)
-            g.Fill(data)
+            g.Fill(data, True)
         End Sub
 
         Public Function Scan(
@@ -199,7 +199,7 @@ Namespace component
             If Me.ParentContent IsNot Nothing Then
                 g = Me.ParentContent.ParentGroup
             End If
-            ret.Fill(New ReportData(DummyDataSource.GetInstance, Me.Report, g))
+            ret.Fill(New ReportData(DummyDataSource.GetInstance, Me.Report, g), False)
             Return ret
         End Function
 

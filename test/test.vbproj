@@ -183,6 +183,7 @@
     <Compile Include="Test_5_12_SortKeys.vb" />
     <Compile Include="Test_5_12_Num.vb" />
     <Compile Include="Test_5_12_TextMock.vb" />
+    <Compile Include="Test_5_13_Unit.vb" />
     <Compile Include="Test_5_2_Sort.vb" />
     <Compile Include="Test_5_2_SubData.vb" />
     <Compile Include="Test_5_4_RenderSheet.vb" />
@@ -383,6 +384,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_12_textmock.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_5_13_unit.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_2_sort.rrpt">

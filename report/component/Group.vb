@@ -27,9 +27,12 @@ Namespace component
             End If
         End Sub
 
-        Public Sub Fill(data As ReportData)
+        Public Sub Fill(data As ReportData, updateContext As Boolean)
             Me.Data = data
-            Me.Data.SetGroup(Me)
+            Me.Data.Group = Me
+            If updateContext Then
+                Me.Data.UpdateContext()
+            End If
             Me.Contents = New List(Of Content)
             For Each cd As ContentDesign In Me.GetDesign.ContentDesigns
                 If Not Me.GetReport.InDesigner AndAlso cd.ExistenceCond IsNot Nothing Then

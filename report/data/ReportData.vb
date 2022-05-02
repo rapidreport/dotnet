@@ -73,9 +73,8 @@ Namespace data
             End If
         End Sub
 
-        Public Sub SetGroup(group As Group)
-            Me.Group = group
-            Dim groupDesign As GroupDesign = group.GetDesign
+        Public Sub UpdateContext()
+            Dim groupDesign As GroupDesign = Me.Group.GetDesign
             If Not Me.Context.WrapperDataSourceMap.ContainsKey(groupDesign) Then
                 Me.Context.WrapperDataSourceMap.Add(groupDesign, New WrapperDataSource)
             End If
