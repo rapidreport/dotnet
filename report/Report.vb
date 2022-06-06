@@ -80,6 +80,7 @@ Public Class Report
         Public Shared _4_37_Typeset As Boolean = False
         Public Shared _5_5_VAlign As Boolean = False
         Public Shared _5_9_XlsxRowColSize As Boolean = False
+        Public Shared _5_13_PdfBarcode As Boolean = False
     End Class
 
     Public Class ContextClass

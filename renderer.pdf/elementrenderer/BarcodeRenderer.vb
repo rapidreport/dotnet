@@ -122,8 +122,13 @@ Namespace elementrenderer
             Catch ex As Exception
             End Try
             If image IsNot Nothing Then
-                image.ScaleAbsolute(_region.GetWidth - 2, _region.GetHeight - 2)
-                image.SetAbsolutePosition(renderer.Trans.X(_region.Left + 1), renderer.Trans.Y(_region.Bottom + 1))
+                If Not Report.Compatibility._5_13_PdfBarcode Then
+                    image.ScaleAbsolute(_region.GetWidth - 4, _region.GetHeight - 4)
+                    image.SetAbsolutePosition(renderer.Trans.X(_region.Left + 2), renderer.Trans.Y(_region.Bottom - 2))
+                Else
+                    image.ScaleAbsolute(_region.GetWidth - 2, _region.GetHeight - 2)
+                    image.SetAbsolutePosition(renderer.Trans.X(_region.Left + 1), renderer.Trans.Y(_region.Bottom + 1))
+                End If
                 cb.AddImage(image)
             End If
         End Sub
