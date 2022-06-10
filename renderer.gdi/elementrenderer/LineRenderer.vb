@@ -16,7 +16,7 @@ Namespace elementrenderer
             Dim c As Color = Color.Black
             Dim lw As Single = reportDesign.DefaultLineWidth
             If Not design.IsNull("color") Then
-                c = GdiRenderUtil.GetColor(design.Get("color"), c)
+                c = RenderUtil.GetColor(design.Get("color"), c)
             End If
             If Not design.IsNull("line_width") Then
                 lw = design.Get("line_width")

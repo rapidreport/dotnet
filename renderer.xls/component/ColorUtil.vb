@@ -4,30 +4,8 @@ Imports NPOI.HSSF.Util
 Namespace component
     Module ColorUtil
 
-        Public Function GetColor(v As String) As Color
-            If Not String.IsNullOrEmpty(v) Then
-                If v.StartsWith("#") AndAlso v.Length = 7 Then
-                    Dim _v As String = v.Substring(1).ToLower
-                    For i As Integer = 0 To 5
-                        If "0123456789abcdef".IndexOf(_v(i)) < 0 Then
-                            Return Color.Empty
-                        End If
-                    Next
-                    Return Color.FromArgb( _
-                      Convert.ToInt32(_v.Substring(0, 2), 16), _
-                      Convert.ToInt32(_v.Substring(2, 2), 16), _
-                      Convert.ToInt32(_v.Substring(4, 2), 16))
-                Else
-                    If Array.IndexOf(RenderUtil.COLOR_NAMES, v.ToLower) >= 0 Then
-                        Return Color.FromName(v)
-                    End If
-                End If
-            End If
-            Return Color.Empty
-        End Function
-
         Public Function GetIndex(v As String) As Short
-            Return GetIndex(GetColor(v))
+            Return GetIndex(RenderUtil.GetColor(v))
         End Function
 
         Public Function GetIndex(color As Color) As Short

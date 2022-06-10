@@ -542,11 +542,11 @@ Public Module GdiRenderUtil
         End Select
     End Function
 
-    Private Function getFitFont( _
-      g As Graphics, _
-      region As Region, _
-      setting As GdiRendererSetting, _
-      text As String, _
+    Private Function getFitFont(
+      g As Graphics,
+      region As Region,
+      setting As GdiRendererSetting,
+      text As String,
       baseFont As Font) As Font
         Dim ls As New SizeF(10000, 10000)
         If g.MeasureString(text, baseFont, ls).Width <= region.GetWidth Then
@@ -564,32 +564,6 @@ Public Module GdiRenderUtil
             End If
         Next
         Return New Font(baseFont.Name, setting.ShrinkFontSizeMin, baseFont.Style)
-    End Function
-
-    Public Function GetColor(v As String) As Color
-        Return GetColor(v, Color.Empty)
-    End Function
-
-    Public Function GetColor(v As String, defaultColor As Color) As Color
-        If Not String.IsNullOrEmpty(v) Then
-            If v.StartsWith("#") AndAlso v.Length = 7 Then
-                Dim _v As String = v.Substring(1).ToLower
-                For i As Integer = 0 To 5
-                    If "0123456789abcdef".IndexOf(_v(i)) < 0 Then
-                        Return defaultColor
-                    End If
-                Next
-                Return Color.FromArgb( _
-                  Convert.ToInt32(_v.Substring(0, 2), 16), _
-                  Convert.ToInt32(_v.Substring(2, 2), 16), _
-                  Convert.ToInt32(_v.Substring(4, 2), 16))
-            Else
-                If Array.IndexOf(renderer.RenderUtil.COLOR_NAMES, v.ToLower) >= 0 Then
-                    Return Color.FromName(v)
-                End If
-            End If
-        End If
-        Return defaultColor
     End Function
 
     Public Function GetMockData(mock As String) As Object

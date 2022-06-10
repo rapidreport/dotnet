@@ -76,7 +76,7 @@ Namespace elementrenderer
                 Dim sp As HSSFSimpleShape = p.CreateSimpleShape(Shape.GetHSSFClientAnchor(Page.TopRow))
                 sp.ShapeType = HSSFSimpleShape.OBJECT_TYPE_LINE
                 If Not Me.Design.IsNull("color") Then
-                    Dim c As System.Drawing.Color = ColorUtil.GetColor(Me.Design.Get("color"))
+                    Dim c As System.Drawing.Color = RenderUtil.GetColor(Me.Design.Get("color"))
                     If Not c.Equals(Color.Empty) Then
                         sp.SetLineStyleColor(c.R, c.G, c.B)
                     End If

@@ -14,7 +14,7 @@ Namespace elementrenderer
             Dim _region As Region = region.ToPointScale(reportDesign)
             Dim g As Graphics = env.Graphics
             If Not design.IsNull("fill_color") Then
-                Dim color As Color = GdiRenderUtil.GetColor(design.Get("fill_color"))
+                Dim color As Color = RenderUtil.GetColor(design.Get("fill_color"))
                 If Not color.Equals(System.Drawing.Color.Empty) Then
                     Using b As New SolidBrush(color)
                         g.FillEllipse(b, _region.Left, _region.Top, _region.GetWidth, _region.GetHeight)
@@ -25,7 +25,7 @@ Namespace elementrenderer
                 Dim color As Color = color.Black
                 Dim lineWidth As Single = reportDesign.DefaultLineWidth
                 If Not design.IsNull("color") Then
-                    color = GdiRenderUtil.GetColor(design.Get("color"), color)
+                    color = RenderUtil.GetColor(design.Get("color"), color)
                 End If
                 If Not design.IsNull("line_width") Then
                     lineWidth = design.Get("line_width")

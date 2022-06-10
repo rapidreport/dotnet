@@ -82,9 +82,9 @@ Namespace elementrenderer
                 sp.SetLineStyleColor(0, 0, 0)
                 sp.LineWidth = lineWidth
                 If Not Me.Design.IsNull("color") Then
-                    Dim t As Byte() = ColorUtil.GetTriplet(Me.Design.Get("color"))
-                    If t IsNot Nothing Then
-                        sp.SetLineStyleColor(t(0), t(1), t(2))
+                    Dim c = RenderUtil.GetColor(Me.Design.Get("color"))
+                    If Not c.IsEmpty Then
+                        sp.SetLineStyleColor(c.R, c.G, c.B)
                     End If
                 End If
                 If Not Me.Design.IsNull("line_style") Then

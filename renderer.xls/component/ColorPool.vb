@@ -17,7 +17,7 @@ Namespace component
         End Sub
 
         Public Function GetIndex(v As String) As Short
-            Dim c As Color = ColorUtil.GetColor(v)
+            Dim c As Color = RenderUtil.GetColor(v)
             If Not c.Equals(Color.Empty) Then
                 Return Me.GetIndex(c)
             End If

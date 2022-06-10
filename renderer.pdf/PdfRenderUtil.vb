@@ -829,21 +829,9 @@ Public Module PdfRenderUtil
 
     Public Function GetColor(v As String) As Color
         If Not String.IsNullOrEmpty(v) Then
-            If v.StartsWith("#") AndAlso v.Length = 7 Then
-                Dim _v As String = v.Substring(1).ToLower
-                For i As Integer = 0 To 5
-                    If "0123456789abcdef".IndexOf(_v(i)) < 0 Then
-                        Return Nothing
-                    End If
-                Next
-                Return New Color(Convert.ToInt32(_v.Substring(0, 2), 16),
-                                 Convert.ToInt32(_v.Substring(2, 2), 16),
-                                 Convert.ToInt32(_v.Substring(4, 2), 16))
-            Else
-                If Array.IndexOf(RenderUtil.COLOR_NAMES, v.ToLower) >= 0 Then
-                    Dim c As System.Drawing.Color = System.Drawing.Color.FromName(v)
-                    Return New Color(c.R, c.G, c.B)
-                End If
+            Dim c = RenderUtil.GetColor(v)
+            If Not c.IsEmpty Then
+                Return New Color(c.R, c.G, c.B)
             End If
         End If
         Return Nothing

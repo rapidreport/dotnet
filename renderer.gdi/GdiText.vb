@@ -70,7 +70,7 @@ Public Class GdiText
     Protected Overridable Sub _Draw_Distribute()
         Dim font As Font = _GetFont()
         Dim texts As List(Of String) = (New TextSplitter()).GetLines(Me.Text)
-        Dim color As Color = GdiRenderUtil.GetColor(Me.TextDesign.Color, Drawing.Color.Black)
+        Dim color As Color = RenderUtil.GetColor(Me.TextDesign.Color, Drawing.Color.Black)
         Dim sf As StringFormat = _GetStringFormat(
             _ToStringAlignment(Report.EHAlign.CENTER),
             _ToStringAlignment(Report.EVAlign.TOP), 0)
@@ -114,7 +114,7 @@ Public Class GdiText
     Protected Overridable Sub _Draw_DistributeVertical()
         Dim font As Font = _GetFont()
         Dim texts As List(Of String) = (New TextSplitter()).GetLines(Me.Text)
-        Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
+        Dim color As Color = RenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
         Dim sf As StringFormat = _GetStringFormat(
             _ToStringAlignment(Report.EHAlign.CENTER),
             _ToStringAlignment(Report.EVAlign.CENTER),
@@ -212,7 +212,7 @@ Public Class GdiText
         If Me.IsMonospaced Then
             _Draw_Monospaced(_GetTextSplitter(Region.GetWidth, 0).GetLines(Text), _GetFont())
         Else
-            Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
+            Using b As New SolidBrush(RenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
                 Graphics.DrawString(Text, _GetFont(), b, Region.ToRectangleF, _GetStringFormat(0))
             End Using
         End If
@@ -223,7 +223,7 @@ Public Class GdiText
             Dim texts As List(Of String) = (New TextSplitter(True)).GetLines(Text)
             _Draw_Monospaced(texts, _GetFont(TextDesign.GetMonospacedFitFontSize(texts, Region.GetWidth, Setting.ShrinkFontSizeMin)))
         Else
-            Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
+            Using b As New SolidBrush(RenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
                 Graphics.DrawString(Text, _GetFitFont(Text), b, Region.ToRectangleF, _GetStringFormat(StringFormatFlags.NoWrap))
             End Using
         End If
@@ -233,7 +233,7 @@ Public Class GdiText
         If Me.IsMonospaced Then
             _Draw_Monospaced(_GetTextSplitter(0, Region.GetWidth).GetLines(Me.Text), _GetFont())
         Else
-            Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
+            Using b As New SolidBrush(RenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
                 Graphics.DrawString(Text, _GetFont(), b, Region.ToRectangleF, _GetStringFormat(StringFormatFlags.NoWrap))
             End Using
         End If
@@ -253,7 +253,7 @@ Public Class GdiText
         If Not Report.Compatibility._5_5_VAlign Then
             y = Math.Max(y, 0)
         End If
-        Using b As New SolidBrush(GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
+        Using b As New SolidBrush(RenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black))
             For Each t As String In texts
                 Dim x As Single = 0
                 Select Case TextDesign.HAlign
@@ -290,7 +290,7 @@ Public Class GdiText
     End Sub
 
     Protected Overridable Sub _Draw_Vertical_Aux(texts As List(Of String), Font As Font)
-        Dim color As Color = GdiRenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
+        Dim color As Color = RenderUtil.GetColor(TextDesign.Color, Drawing.Color.Black)
         Dim mx As Single = Font.Size / 6
         Dim x As Single = 0
         Select Case TextDesign.HAlign
@@ -491,7 +491,7 @@ Public Class GdiText
         End Function
 
         Public Sub DrawText(font As Font)
-            Dim color As Color = GdiRenderUtil.GetColor(GdiText.TextDesign.Color, Drawing.Color.Black)
+            Dim color As Color = RenderUtil.GetColor(GdiText.TextDesign.Color, Drawing.Color.Black)
             Dim y As Single = 0
             Select Case GdiText.TextDesign.VAlign
                 Case Report.EVAlign.TOP

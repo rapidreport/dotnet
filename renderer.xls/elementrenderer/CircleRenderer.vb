@@ -42,13 +42,13 @@ Namespace elementrenderer
                 Dim sp As HSSFSimpleShape = p.CreateSimpleShape(Shape.GetHSSFClientAnchor(Page.TopRow))
                 sp.ShapeType = HSSFSimpleShape.OBJECT_TYPE_OVAL
                 If Not Me.Design.IsNull("color") Then
-                    Dim c As Color = ColorUtil.GetColor(Me.Design.Get("color"))
+                    Dim c As Color = RenderUtil.GetColor(Me.Design.Get("color"))
                     If Not c.Equals(Color.Empty) Then
                         sp.SetLineStyleColor(c.R, c.G, c.B)
                     End If
                 End If
                 If Not Me.Design.IsNull("fill_color") Then
-                    Dim c As Color = ColorUtil.GetColor(Me.Design.Get("fill_color"))
+                    Dim c As Color = RenderUtil.GetColor(Me.Design.Get("fill_color"))
                     If Not c.Equals(Color.Empty) Then
                         sp.SetFillColor(c.R, c.G, c.B)
                     End If

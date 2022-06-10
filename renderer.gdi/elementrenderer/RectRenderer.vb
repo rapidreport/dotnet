@@ -37,7 +37,7 @@ Namespace elementrenderer
                 r = False
             End If
             If Not design.IsNull("fill_color") Then
-                Dim color As Color = GdiRenderUtil.GetColor(design.Get("fill_color"))
+                Dim color As Color = RenderUtil.GetColor(design.Get("fill_color"))
                 If Not color.Equals(System.Drawing.Color.Empty) Then
                     Using br As New SolidBrush(color)
                         g.FillRectangle(br, _region.Left + rd, _region.Top + rd, _region.GetWidth - rd * 2, _region.GetHeight - rd * 2)
@@ -82,7 +82,7 @@ Namespace elementrenderer
                 Dim color As Color = color.Black
                 Dim lineWidth As Single = reportDesign.DefaultLineWidth
                 If Not design.IsNull("color") Then
-                    color = GdiRenderUtil.GetColor(design.Get("color"), color)
+                    color = RenderUtil.GetColor(design.Get("color"), color)
                 End If
                 If Not design.IsNull("line_width") Then
                     lineWidth = design.Get("line_width")

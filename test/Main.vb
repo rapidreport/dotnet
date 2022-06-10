@@ -68,6 +68,7 @@
         Tests.Add(New Test_5_12_SortKeys)
         Tests.Add(New Test_5_13_Unit)
         Tests.Add(New Test_5_14_PdfBarcode)
+        Tests.Add(New Test_5_14_Color)
 
         Application.Run(New FmTest)
     End Sub
