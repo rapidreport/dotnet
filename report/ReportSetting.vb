@@ -83,7 +83,9 @@ Public Class ReportSetting
         Me.OperatorMap.Add("hour", New HourOperator)
         Me.OperatorMap.Add("minute", New MinuteOperator)
         Me.OperatorMap.Add("second", New SecondOperator)
+        Me.OperatorMap.Add("weekday", New WeekdayOperator)
         Me.OperatorMap.Add("dateadd", New DateAddOperator)
+        Me.OperatorMap.Add("date", New DateOperator)
         Me.OperatorMap.Add("sub", New SubStringOperator)
         Me.OperatorMap.Add("wsub", New WSubStringOperator)
         Me.OperatorMap.Add("len", New StringLenOperator)
@@ -93,7 +95,6 @@ Public Class ReportSetting
         Me.OperatorMap.Add("wlines", New WLinesOperator)
         Me.OperatorMap.Add("trim", New TrimOperator)
         Me.OperatorMap.Add("ybcode", New YbCodeOperator)
-        Me.OperatorMap.Add("weekday", New WeekdayOperator)
         Me.DefaultElementPreprocessor = New DefaultPreprocessor
         Me.ElementPreprocessorMap.Add("subpage", New SubPagePreprocessor)
         Me.DefaultSeachObject = New DefaultSearchObject
