@@ -24,7 +24,7 @@ Public Class Test_5_0_Typeset
 
         Using fs As New FileStream("out\" & name & ".pdf", IO.FileMode.Create)
             Dim renderer As New PdfRenderer(fs)
-            renderer.Setting.GaijiFont = BaseFont.CreateFont("rrpt\font\eudc.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
+            renderer.Setting.GaijiFont = BaseFont.CreateFont("font\eudc.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
             pages.Render(renderer)
         End Using
 

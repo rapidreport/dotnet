@@ -19,13 +19,15 @@ Public Class Test_4_36_SurrogatePair
     Public Sub Run()
         Dim name As String = "test_4_36_surrogate_pair"
 
+        Dim fontPath As String = System.Environment.GetFolderPath(Environment.SpecialFolder.Fonts)
+
         Dim report As New Report(Json.Read("rrpt\" & name & ".rrpt"))
         report.Fill(DummyDataSource.GetInstance)
         Dim pages As ReportPages = report.GetPages()
 
         Using fs As New FileStream("out\" & name & ".pdf", IO.FileMode.Create)
             Dim setting As PdfRendererSetting = New PdfRendererSetting()
-            setting.FontMap("ipamjm") = BaseFont.CreateFont("rrpt\font\ipamjm.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
+            setting.FontMap("ipamjm") = BaseFont.CreateFont(fontPath & "\ipamjm.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
             Dim renderer As PdfRenderer = New PdfRenderer(fs, setting)
             pages.Render(renderer)
         End Using

@@ -20,8 +20,8 @@ Public Class Test_4_29_Gaiji
         Dim pages As ReportPages = report.GetPages()
         Using fs As New FileStream("out\" & name & ".pdf", IO.FileMode.Create)
             Dim renderer As New PdfRenderer(fs)
-            renderer.Setting.GaijiFont = BaseFont.CreateFont("rrpt\font\eudc.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
-            renderer.Setting.GaijiFontMap.Add("gothic", BaseFont.CreateFont("rrpt\font\msgothic.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED))
+            renderer.Setting.GaijiFont = BaseFont.CreateFont("font\eudc.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
+            renderer.Setting.GaijiFontMap.Add("gothic", BaseFont.CreateFont("font\msgothic.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED))
             pages.Render(renderer)
         End Using
 

@@ -15,6 +15,8 @@ Public Class Test_5_6_CharSpacing
     Public Sub Run()
         Dim name As String = "test_5_6_charspacing"
 
+        Dim fontPath As String = System.Environment.GetFolderPath(Environment.SpecialFolder.Fonts)
+
         Dim report As New Report(Json.Read("rrpt\" & name & ".rrpt"))
         report.Fill(DummyDataSource.GetInstance())
 
@@ -22,7 +24,7 @@ Public Class Test_5_6_CharSpacing
 
         Using fs As New FileStream("out\" & name & ".pdf", IO.FileMode.Create)
             Dim renderer As New PdfRenderer(fs)
-            renderer.Setting.FontMap("gothic") = BaseFont.CreateFont("C:\Windows\Fonts\msgothic.ttc,0", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
+            renderer.Setting.FontMap("gothic") = BaseFont.CreateFont(fontPath & "\msgothic.ttc,0", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
             pages.Render(renderer)
         End Using
 
