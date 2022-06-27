@@ -1,4 +1,4 @@
-﻿Imports NPOI.XSSF.UserModel
+﻿Imports jp.co.systembase.NPOI.XSSF.UserModel
 
 Namespace component
     Public Class CellStylePool

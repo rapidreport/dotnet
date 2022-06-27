@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
-Imports NPOI.HSSF.UserModel
-Imports NPOI.HSSF.Util
+Imports jp.co.systembase.NPOI.HSSF.UserModel
+Imports jp.co.systembase.NPOI.HSSF.Util
 
 Namespace component
     Public Class ColorPool

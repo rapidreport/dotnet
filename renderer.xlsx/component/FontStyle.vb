@@ -1,5 +1,5 @@
-﻿Imports NPOI.XSSF.UserModel
-Imports NPOI.SS.UserModel
+﻿Imports jp.co.systembase.NPOI.XSSF.UserModel
+Imports jp.co.systembase.NPOI.SS.UserModel
 
 Imports jp.co.systembase.report.component
 

@@ -1,8 +1,8 @@
 ﻿Imports System.IO
 Imports System.Drawing
 
-Imports NPOI.HSSF.UserModel
-Imports NPOI.XSSF.UserModel
+Imports jp.co.systembase.NPOI.HSSF.UserModel
+Imports jp.co.systembase.NPOI.XSSF.UserModel
 
 Imports jp.co.systembase.json
 Imports jp.co.systembase.report

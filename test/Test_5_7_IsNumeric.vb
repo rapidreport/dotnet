@@ -5,8 +5,8 @@ Imports jp.co.systembase.report.data
 Imports jp.co.systembase.report.renderer.gdi
 Imports jp.co.systembase.report.renderer.xls
 Imports jp.co.systembase.report.renderer.xlsx
-Imports NPOI.HSSF.UserModel
-Imports NPOI.XSSF.UserModel
+Imports jp.co.systembase.NPOI.HSSF.UserModel
+Imports jp.co.systembase.NPOI.XSSF.UserModel
 
 Public Class Test_5_7_IsNumeric
 

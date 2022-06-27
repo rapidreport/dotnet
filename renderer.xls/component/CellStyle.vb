@@ -1,4 +1,4 @@
-﻿Imports NPOI.HSSF.UserModel
+﻿Imports jp.co.systembase.NPOI.HSSF.UserModel
 
 Namespace component
     Public Class CellStyle

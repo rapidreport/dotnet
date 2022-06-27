@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
-Imports NPOI.XSSF.Util
-Imports NPOI.XSSF.UserModel
+Imports jp.co.systembase.NPOI.XSSF.Util
+Imports jp.co.systembase.NPOI.XSSF.UserModel
 
 Namespace component
     Module ColorUtil

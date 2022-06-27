@@ -1,5 +1,5 @@
-﻿Imports NPOI.HSSF.UserModel
-Imports NPOI.SS.Util
+﻿Imports jp.co.systembase.NPOI.HSSF.UserModel
+Imports jp.co.systembase.NPOI.SS.Util
 
 Namespace component
     Public Class Cell

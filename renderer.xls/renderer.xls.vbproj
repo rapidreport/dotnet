@@ -62,10 +62,6 @@
     <AssemblyOriginatorKeyFile>renderer.xls.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NPOI, Version=1.2.4.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\NPOI.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -73,6 +69,10 @@
     <Reference Include="systembase.barcode, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\systembase.barcode.dll</HintPath>
+    </Reference>
+    <Reference Include="systembase.NPOI, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\systembase.NPOI.dll</HintPath>
     </Reference>
     <Reference Include="zxing, Version=1.0.4294.26991, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

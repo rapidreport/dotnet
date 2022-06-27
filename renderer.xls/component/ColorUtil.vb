@@ -1,5 +1,5 @@
 ﻿Imports System.Drawing
-Imports NPOI.HSSF.Util
+Imports jp.co.systembase.NPOI.HSSF.Util
 
 Namespace component
     Module ColorUtil

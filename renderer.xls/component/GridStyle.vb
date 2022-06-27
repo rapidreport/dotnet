@@ -1,5 +1,5 @@
-﻿Imports NPOI.SS.UserModel
-Imports NPOI.HSSF.UserModel
+﻿Imports jp.co.systembase.NPOI.SS.UserModel
+Imports jp.co.systembase.NPOI.HSSF.UserModel
 
 Namespace component
     Public Class GridStyle

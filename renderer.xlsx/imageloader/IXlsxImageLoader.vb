@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
 
-Imports NPOI.XSSF.UserModel
+Imports jp.co.systembase.NPOI.XSSF.UserModel
 
 Namespace imageloader
     Public Interface IXlsxImageLoader

@@ -1,4 +1,4 @@
-﻿Imports NPOI.HSSF.UserModel
+﻿Imports jp.co.systembase.NPOI.HSSF.UserModel
 
 Imports ZXing
 Imports ZXing.Common
