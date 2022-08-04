@@ -584,6 +584,7 @@ Public Class PdfText
         Else
             Dim gaiji As Boolean = False
             Dim _x As Single = x
+            Dim _y As Single = y
             For Each t As String In _texts
                 Dim si As StringInfo = New StringInfo(t)
                 If si.LengthInTextElements > 0 Then
@@ -591,9 +592,15 @@ Public Class PdfText
                         If charSpacing > 0 Then
                             ContentByte.SetCharacterSpacing(charSpacing)
                         End If
-                        _SetTextMatrix(fontSize, _x, y)
+                        _SetTextMatrix(fontSize, _x, _y)
                         ContentByte.ShowText(si.String)
-                        _x += Font.GetWidthPoint(si.String, fontSize) + si.LengthInTextElements * charSpacing
+                        Dim w = Font.GetWidthPoint(si.String, fontSize) + si.LengthInTextElements * charSpacing
+                        If TextMatrix Is Nothing Then
+                            _x += w
+                        Else
+                            _x += w * TextMatrix(0)
+                            _y += w * TextMatrix(2)
+                        End If
                     Else
                         For Each c As Char In si.String
                             Dim f As BaseFont = Renderer.Setting.GaijiFont
@@ -604,9 +611,15 @@ Public Class PdfText
                                 f = Font
                             End If
                             ContentByte.SetFontAndSize(f, fontSize)
-                            _SetTextMatrix(fontSize, _x, y)
+                            _SetTextMatrix(fontSize, _x, _y)
                             ContentByte.ShowText(c)
-                            _x += fontSize + charSpacing
+                            Dim w = fontSize + charSpacing
+                            If TextMatrix Is Nothing Then
+                                _x += w
+                            Else
+                                _x += w * TextMatrix(0)
+                                _y += w * TextMatrix(2)
+                            End If
                         Next
                         ContentByte.SetFontAndSize(Font, fontSize)
                     End If
