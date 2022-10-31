@@ -40,3 +40,4 @@
 /report/obj
 /report/*.user
 /_*.bat
+/test/font/eudc_meiryo.ttf
