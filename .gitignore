@@ -1,6 +1,8 @@
 # /
 /.vs
 /*.suo
+/packages
+/_*.bat
 
 # /bin/
 /bin/*
@@ -9,6 +11,7 @@
 /test/bin
 /test/obj
 /test/*.user
+/test/font/eudc_meiryo.ttf
 
 # /json/
 /json/bin
@@ -39,5 +42,3 @@
 /report/bin
 /report/obj
 /report/*.user
-/_*.bat
-/test/font/eudc_meiryo.ttf

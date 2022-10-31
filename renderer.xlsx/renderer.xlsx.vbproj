@@ -90,9 +90,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\systembase.NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
-    <Reference Include="zxing, Version=1.0.4294.26991, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\zxing.dll</HintPath>
+    <Reference Include="zxing, Version=0.16.8.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.8\lib\net35\zxing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +169,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
     <None Include="renderer.xlsx.snk" />
   </ItemGroup>
   <ItemGroup>

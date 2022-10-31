@@ -92,9 +92,6 @@
     <Reference Include="systembase.NPOI.OpenXmlFormats">
       <HintPath>..\dll\systembase.NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
-    <Reference Include="zxing">
-      <HintPath>..\dll\zxing.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
