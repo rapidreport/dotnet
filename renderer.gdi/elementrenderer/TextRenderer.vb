@@ -7,12 +7,24 @@ Namespace elementrenderer
     Public Class TextRenderer
         Implements IElementRenderer
 
-        Public Sub Render(
+        Public Overridable Sub Render(
           env As RenderingEnv,
           reportDesign As ReportDesign,
           region As Region,
           design As ElementDesign,
           data As Object) Implements IElementRenderer.Render
+            _RenderRect(env, reportDesign, region, design)
+            Dim text = _GetText(env, reportDesign, design, data)
+            If text Is Nothing Then
+                Return
+            End If
+            Dim _region = _GetRegion(reportDesign, region, design)
+            Dim gdiText As GdiText = _GetGdiText(env, reportDesign, _region, design, text)
+            gdiText.Initialize(env, reportDesign, _region, design, text)
+            gdiText.Draw()
+        End Sub
+
+        Protected Overridable Sub _RenderRect(env As RenderingEnv, reportDesign As ReportDesign, region As Region, design As ElementDesign)
             If Not design.IsNull("rect") Then
                 env.Setting.GetElementRenderer("rect").Render(
                     env,
@@ -21,27 +33,6 @@ Namespace elementrenderer
                     design.Child("rect"),
                     Nothing)
             End If
-            Dim text As String
-            If env.InDesigner Then
-                text = _EmbedMock(design.Get("text"), reportDesign, design.Child("formatter"))
-            Else
-                text = design.Get("text")
-                If data IsNot Nothing Then
-                    Dim textProcessor As New EmbeddedTextProcessor
-                    text = textProcessor.EmbedData(reportDesign, design.Child("formatter"), text, data)
-                End If
-            End If
-            If text Is Nothing Then
-                Return
-            End If
-            Dim _region As Region = region
-            If Not design.IsNull("margin") Then
-                Dim m As ElementDesign = design.Child("margin")
-                _region = New Region(region, m.Get("left"), m.Get("top"), m.Get("right"), m.Get("bottom"))
-            End If
-            Dim gdiText As GdiText = _GetGdiText(env, reportDesign, _region, design, text)
-            gdiText.Initialize(env, reportDesign, _region, design, text)
-            gdiText.Draw()
         End Sub
 
         Protected Overridable Function _EmbedMock(text As String, reportDesign As ReportDesign, formatterDesign As ElementDesign) As String
@@ -62,6 +53,28 @@ Namespace elementrenderer
             Catch ex As Exception
             End Try
             Return text
+        End Function
+
+        Protected Overridable Function _GetText(env As RenderingEnv, reportDesign As ReportDesign, design As ElementDesign, data As Object) As String
+            If env.InDesigner Then
+                Return _EmbedMock(design.Get("text"), reportDesign, design.Child("formatter"))
+            Else
+                Dim ret As String = design.Get("text")
+                If data IsNot Nothing Then
+                    Dim textProcessor As New EmbeddedTextProcessor
+                    ret = textProcessor.EmbedData(reportDesign, design.Child("formatter"), ret, data)
+                End If
+                Return ret
+            End If
+        End Function
+
+        Protected Overridable Function _GetRegion(reportDesign As ReportDesign, region As Region, design As ElementDesign) As Region
+            Dim ret = region
+            If Not design.IsNull("margin") Then
+                Dim m = design.Child("margin")
+                ret = New Region(region, m.Get("left"), m.Get("top"), m.Get("right"), m.Get("bottom"))
+            End If
+            Return ret
         End Function
 
         Protected Overridable Function _GetGdiText(env As RenderingEnv, reportDesign As ReportDesign, region As Region, design As ElementDesign, text As String) As GdiText

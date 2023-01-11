@@ -8,35 +8,43 @@ Namespace elementrenderer
     Public Class TextRenderer
         Implements IElementRenderer
 
-        Public Sub Collect( _
-          renderer As XlsRenderer, _
-          reportDesign As ReportDesign, _
-          region As Region, _
-          design As ElementDesign, _
+        Public Overridable Sub Collect(
+          renderer As XlsRenderer,
+          reportDesign As ReportDesign,
+          region As Region,
+          design As ElementDesign,
           data As Object) Implements IElementRenderer.Collect
-            If Not design.IsNull("rect") Then
-                renderer.Setting.GetElementRenderer("rect").Collect( _
-                  renderer, _
-                  reportDesign, _
-                  region, _
-                  design.Child("rect"), _
-                  Nothing)
-            End If
+            _RenderRect(renderer, reportDesign, region, design)
             Dim _region As Region = region.ToPointScale(reportDesign)
             If _region.GetWidth <= 0 Or _region.GetHeight <= 0 Then
                 Exit Sub
             End If
-            Dim text As String = design.Get("text")
-            If data IsNot Nothing Then
-                Dim textProcessor As New EmbeddedTextProcessor
-                text = textProcessor.EmbedData(reportDesign, design.Child("formatter"), text, data)
-            End If
             Dim field As New Field
             field.Region = _region
             field.Style = New FieldStyle(New TextDesign(reportDesign, design))
-            field.Data = text
+            field.Data = _GetText(reportDesign, design, data)
             renderer.CurrentPage.Fields.Add(field)
         End Sub
+
+        Protected Overridable Sub _RenderRect(renderer As XlsRenderer, reportDesign As ReportDesign, region As Region, design As ElementDesign)
+            If Not design.IsNull("rect") Then
+                renderer.Setting.GetElementRenderer("rect").Collect(
+                  renderer,
+                  reportDesign,
+                  region,
+                  design.Child("rect"),
+                  Nothing)
+            End If
+        End Sub
+
+        Protected Overridable Function _GetText(reportDesign As ReportDesign, design As ElementDesign, data As Object) As String
+            Dim ret As String = design.Get("text")
+            If data IsNot Nothing Then
+                Dim textProcessor As New EmbeddedTextProcessor
+                ret = textProcessor.EmbedData(reportDesign, design.Child("formatter"), ret, data)
+            End If
+            Return ret
+        End Function
 
     End Class
 End Namespace

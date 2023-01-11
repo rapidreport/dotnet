@@ -5,20 +5,13 @@ Namespace elementrenderer
     Public Class FieldRenderer
         Implements IElementRenderer
 
-        Public Sub Collect( _
-          renderer As XlsRenderer, _
-          reportDesign As ReportDesign, _
-          region As Region, _
-          design As ElementDesign, _
+        Public Overridable Sub Collect(
+          renderer As XlsRenderer,
+          reportDesign As ReportDesign,
+          region As Region,
+          design As ElementDesign,
           data As Object) Implements IElementRenderer.Collect
-            If Not design.IsNull("rect") Then
-                renderer.Setting.GetElementRenderer("rect").Collect( _
-                  renderer, _
-                  reportDesign, _
-                  region, _
-                  design.Child("rect"), _
-                  Nothing)
-            End If
+            _RenderRect(renderer, reportDesign, region, design)
             Dim _region As Region = region.ToPointScale(reportDesign)
             If _region.GetWidth <= 0 Or _region.GetHeight <= 0 Then
                 Exit Sub
@@ -30,11 +23,26 @@ Namespace elementrenderer
                 If field.Style.TextDesign.XlsFormat IsNot Nothing Then
                     field.Data = data
                 Else
-                    field.Data = RenderUtil.Format(reportDesign, design.Child("formatter"), data)
+                    field.Data = _GetText(reportDesign, design, data)
                 End If
             End If
             renderer.CurrentPage.Fields.Add(field)
         End Sub
+
+        Protected Overridable Sub _RenderRect(renderer As XlsRenderer, reportDesign As ReportDesign, region As Region, design As ElementDesign)
+            If Not design.IsNull("rect") Then
+                renderer.Setting.GetElementRenderer("rect").Collect(
+                  renderer,
+                  reportDesign,
+                  region,
+                  design.Child("rect"),
+                  Nothing)
+            End If
+        End Sub
+
+        Protected Overridable Function _GetText(reportDesign As ReportDesign, design As ElementDesign, data As Object) As String
+            Return RenderUtil.Format(reportDesign, design.Child("formatter"), data)
+        End Function
 
     End Class
 End Namespace
