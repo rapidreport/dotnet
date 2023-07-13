@@ -19,10 +19,11 @@
         Me.SetStyle(ControlStyles.Selectable, False)
     End Sub
 
-    Private Sub USlider_HandleDestroyed(sender As Object, e As System.EventArgs) Handles Me.HandleDestroyed
-        Me.timer.Enabled = False
-        Me.timer.Dispose()
-        Me.timer = Nothing
+    Private Sub Slider_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Try
+            Me.timer.Enabled = False
+        Catch ex As Exception
+        End Try
     End Sub
 
     Public Property MaxValue() As Integer
@@ -93,10 +94,10 @@
         With Nothing
             Dim rect As New Rectangle(x, Me.Height / 2 - 5, 8, 10)
             Dim c As Color = IIf(Me._mouseDown, Color.SkyBlue, Color.LightGray)
-            Dim b As New Drawing2D.LinearGradientBrush( _
-              rect, _
-              Color.White, _
-              c, _
+            Dim b As New Drawing2D.LinearGradientBrush(
+              rect,
+              Color.White,
+              c,
               Drawing2D.LinearGradientMode.Vertical)
             g.FillRectangle(b, rect)
             g.DrawLine(Pens.Gray, rect.Left, rect.Top + 1, rect.Left, rect.Bottom - 1)
