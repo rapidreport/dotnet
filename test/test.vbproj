@@ -55,12 +55,6 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\dll\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="iTextAsian">
-      <HintPath>..\dll\iTextAsian.dll</HintPath>
-    </Reference>
-    <Reference Include="itextsharp">
-      <HintPath>..\dll\itextsharp.dll</HintPath>
-    </Reference>
     <Reference Include="log4net">
       <HintPath>..\dll\log4net.dll</HintPath>
     </Reference>
@@ -78,6 +72,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="systembase.barcode">
       <HintPath>..\dll\systembase.barcode.dll</HintPath>
+    </Reference>
+    <Reference Include="systembase.itextsharp">
+      <HintPath>..\dll\systembase.itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="systembase.NPOI">
       <HintPath>..\dll\systembase.NPOI.dll</HintPath>

@@ -51,14 +51,16 @@ Public Class Test_0_4
             pages.Render(renderer)
         End Using
 
-        Using fs As New FileStream("out\" & name & ".xls", IO.FileMode.Create)
-            Dim workbook As New HSSFWorkbook
-            Dim renderer As New XlsRenderer(workbook)
-            renderer.NewSheet(name)
-            renderer.ImageLoaderMap.Add("image", New XlsImageLoader(imageMap))
-            pages.Render(renderer)
-            workbook.Write(fs)
-        End Using
+        If Not SkipFIPSViolation Then
+            Using fs As New FileStream("out\" & name & ".xls", IO.FileMode.Create)
+                Dim workbook As New HSSFWorkbook
+                Dim renderer As New XlsRenderer(workbook)
+                renderer.NewSheet(name)
+                renderer.ImageLoaderMap.Add("image", New XlsImageLoader(imageMap))
+                pages.Render(renderer)
+                workbook.Write(fs)
+            End Using
+        End If
 
         Using fs As New FileStream("out\" & name & ".xlsx", IO.FileMode.Create)
             Dim workbook As New XSSFWorkbook

@@ -6,6 +6,10 @@
     End Sub
 
     Private Sub BtnRun_Click(sender As System.Object, e As System.EventArgs) Handles BtnRun.Click
+
+        SkipFIPSViolation = ChkSkipFIPSViolation.Checked
+        iTextSharp.text.pdf.PdfWriter.SkipIdGenerate = SkipFIPSViolation
+
         Dim i As Object = Me.CmbTest.SelectedItem
         If i IsNot Nothing Then
             i.Run()

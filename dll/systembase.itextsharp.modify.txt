@@ -1,0 +1,8 @@
+同梱されている itextsharp.dll は、
+
+itextsharp (https://github.com/itext/itextsharp)
+
+に、株式会社システムベース (http://www.systembase.co.jp/) が独自の変更を加えたものです。
+
+リポジトリ：
+https://github.com/rapidreport/iTextSharp.LGPL.dotnet

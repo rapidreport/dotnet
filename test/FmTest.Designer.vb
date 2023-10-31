@@ -25,6 +25,7 @@ Partial Class FmTest
         Me.CmbTest = New System.Windows.Forms.ComboBox()
         Me.BtnRun = New System.Windows.Forms.Button()
         Me.BtnOpenOut = New System.Windows.Forms.Button()
+        Me.ChkSkipFIPSViolation = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'CmbTest
@@ -40,7 +41,7 @@ Partial Class FmTest
         Me.BtnRun.Location = New System.Drawing.Point(152, 38)
         Me.BtnRun.Name = "BtnRun"
         Me.BtnRun.Size = New System.Drawing.Size(120, 23)
-        Me.BtnRun.TabIndex = 1
+        Me.BtnRun.TabIndex = 2
         Me.BtnRun.Text = "実行"
         Me.BtnRun.UseVisualStyleBackColor = True
         '
@@ -49,15 +50,26 @@ Partial Class FmTest
         Me.BtnOpenOut.Location = New System.Drawing.Point(152, 67)
         Me.BtnOpenOut.Name = "BtnOpenOut"
         Me.BtnOpenOut.Size = New System.Drawing.Size(120, 23)
-        Me.BtnOpenOut.TabIndex = 2
+        Me.BtnOpenOut.TabIndex = 3
         Me.BtnOpenOut.Text = "出力フォルダを開く"
         Me.BtnOpenOut.UseVisualStyleBackColor = True
+        '
+        'ChkSkipFIPSViolation
+        '
+        Me.ChkSkipFIPSViolation.AutoSize = True
+        Me.ChkSkipFIPSViolation.Location = New System.Drawing.Point(12, 38)
+        Me.ChkSkipFIPSViolation.Name = "ChkSkipFIPSViolation"
+        Me.ChkSkipFIPSViolation.Size = New System.Drawing.Size(99, 16)
+        Me.ChkSkipFIPSViolation.TabIndex = 1
+        Me.ChkSkipFIPSViolation.Text = "FIPS違反を除く"
+        Me.ChkSkipFIPSViolation.UseVisualStyleBackColor = True
         '
         'FmTest
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(284, 97)
+        Me.Controls.Add(Me.ChkSkipFIPSViolation)
         Me.Controls.Add(Me.BtnOpenOut)
         Me.Controls.Add(Me.BtnRun)
         Me.Controls.Add(Me.CmbTest)
@@ -65,10 +77,11 @@ Partial Class FmTest
         Me.Name = "FmTest"
         Me.Text = "test"
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents CmbTest As System.Windows.Forms.ComboBox
     Friend WithEvents BtnRun As System.Windows.Forms.Button
     Friend WithEvents BtnOpenOut As System.Windows.Forms.Button
-
+    Friend WithEvents ChkSkipFIPSViolation As CheckBox
 End Class

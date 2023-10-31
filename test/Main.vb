@@ -1,6 +1,7 @@
 ﻿Module Main
 
     Public Tests As New List(Of Object)
+    Public SkipFIPSViolation As Boolean = false
 
     Public Sub Main()
         System.Windows.Forms.Application.EnableVisualStyles()
