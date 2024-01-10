@@ -621,6 +621,32 @@ Public Module GdiRenderUtil
         Return mock
     End Function
 
+    Public Function GetBarcodeMock(design As ElementDesign) As String
+        Select Case design.Get("barcode_type")
+            Case "ean8"
+                Return "99999999"
+            Case "code39"
+                Return "99999999"
+            Case "code128"
+                Return "99999999"
+            Case "codabar"
+                Return "99999999"
+            Case "qrcode"
+                Return "QRCODEQRCODEQRCODEQRCODEQRCODE"
+            Case "yubin"
+                Return "99999999999999999999"
+            Case "itf"
+                Return "99999999999999"
+            Case "gs1_128"
+                Return "(99)99999999"
+                If design.Get("gs1_conveni") Then
+                    Return "(91)999999999999999999999999999999999999999999"
+                End If
+            Case Else
+                Return "9999999999999"
+        End Select
+    End Function
+
     Public Sub SetUpPrinterSetting(pageSettings As PageSettings, reportDesign As ReportDesign)
         If reportDesign.PrinterName IsNot Nothing Then
             pageSettings.PrinterSettings.PrinterName = reportDesign.PrinterName

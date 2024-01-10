@@ -30,33 +30,10 @@ Namespace elementrenderer
 
         Protected Overridable Function _GetCode(env As RenderingEnv, reportDesign As ReportDesign, design As ElementDesign, data As Object) As String
             If env.InDesigner Then
-                Select Case design.Get("barcode_type")
-                    Case "ean8"
-                        Return "99999999"
-                    Case "code39"
-                        Return "99999999"
-                    Case "code128"
-                        Return "99999999"
-                    Case "codabar"
-                        Return "99999999"
-                    Case "qrcode"
-                        Return "QRCODEQRCODEQRCODEQRCODEQRCODE"
-                    Case "yubin"
-                        Return "99999999999999999999"
-                    Case "itf"
-                        Return "99999999999999"
-                    Case "gs1_128"
-                        Return "(99)99999999"
-                        If design.Get("gs1_conveni") Then
-                            Return "(91)999999999999999999999999999999999999999999"
-                        End If
-                    Case Else
-                        Return "9999999999999"
-                End Select
+                Return GdiRenderUtil.GetBarcodeMock(design)
             Else
                 Return RenderUtil.Format(reportDesign, design.Child("formatter"), data)
             End If
-            Return Nothing
         End Function
 
         Protected Overridable Sub _RenderBarcode(g As Graphics, region As Region, design As ElementDesign, code As String)
