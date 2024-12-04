@@ -111,7 +111,11 @@ Public Class XlsRenderer
     End Sub
 
     Public Sub BeginPage(reportDesign As ReportDesign, pageIndex As Integer, paperRegion As Region) Implements IRenderer.BeginPage
-        Me.CurrentPage = New Page(Me, reportDesign, paperRegion)
+        If Not _SheetMode Then
+            Me.CurrentPage = New Page(Me, reportDesign, paperRegion)
+        Else
+            Me.CurrentPage = New Page(Me, reportDesign, Nothing)
+        End If
         Me.Pages.Add(Me.CurrentPage)
     End Sub
 
