@@ -8,37 +8,44 @@
 /bin/*
 
 # /test/
+/test/.vs
 /test/bin
 /test/obj
 /test/*.user
 /test/font/eudc_meiryo.ttf
 
 # /json/
+/json/.vs
 /json/bin
 /json/obj
 /json/*.user
 
 # /renderer.gdi/
+/renderer.gdi/.vs
 /renderer.gdi/bin
 /renderer.gdi/obj
 /renderer.gdi/*.user
 
 # /renderer.pdf/
+/renderer.pdf/.vs
 /renderer.pdf/bin
 /renderer.pdf/obj
 /renderer.pdf/*.user
 
 # /renderer.xls/
+/renderer.xls/.vs
 /renderer.xls/bin
 /renderer.xls/obj
 /renderer.xls/*.user
 
 # /renderer.xlsx/
+/renderer.xlsx/.vs
 /renderer.xlsx/bin
 /renderer.xlsx/obj
 /renderer.xlsx/*.user
 
 # /report/
+/report/.vs
 /report/bin
 /report/obj
 /report/*.user
