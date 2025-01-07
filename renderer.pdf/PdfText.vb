@@ -21,7 +21,7 @@ Public Class PdfText
     Protected Const MARGIN_X As Single = 2.0F
     Protected Const MARGIN_BOTTOM As Single = 2.0F
 
-    Private Const VERTICAL_ROTATE_CHARS As String = "…‥｜ーｰ(){}[]<>（）｛｝「」＜＞←→↓⇒⇔↑＝≒"
+    Private Const VERTICAL_ROTATE_CHARS As String = "…‥｜ーｰ(){}[]<>（）｛｝「」＜＞〈〉《》『』〔〕←→↓⇒⇔↑＝≒"
     Private Const VERTICAL_ROTATE2_CHARS As String = "～"
     Private Const VERTICAL_SHIFT_CHARS As String = "。、，"
 

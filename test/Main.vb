@@ -71,6 +71,7 @@
         Tests.Add(New Test_5_14_PdfBarcode)
         Tests.Add(New Test_5_14_Color)
         Tests.Add(New Test_5_14_Date)
+        Tests.Add(New Test_5_18_Vertical)
 
         Application.Run(New FmTest)
     End Sub

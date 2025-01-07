@@ -102,6 +102,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Test_5_18_Vertical.vb" />
     <Compile Include="Test_4_29_Background.vb" />
     <Compile Include="Test_4_29_Gaiji.vb" />
     <Compile Include="Test_4_24_Exp.vb" />
@@ -354,6 +355,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_4_38_wlines.rrpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="rrpt\test_5_18_vertical.rrpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="rrpt\test_5_0_bugs.rrpt">
