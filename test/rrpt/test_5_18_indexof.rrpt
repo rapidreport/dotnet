@@ -1,0 +1,40 @@
+{
+  version: 0,
+  monospaced_fonts: [
+    {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}}
+  ],
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 802.0
+        },
+        elements: [
+          {type:"field",layout:{x1:50.0,y1:0.0,x2:555.0,y2:20.0},exp:"(indexof 'abc1234' 'abc')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:50.0,y1:20.0,x2:555.0,y2:40.0},exp:"(indexof '12abc34' 'abc')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:50.0,y1:40.0,x2:555.0,y2:60.0},exp:"(indexof '1234abc' 'abc')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:50.0,y1:60.0,x2:555.0,y2:80.0},exp:"(indexof 'abc1234' 'abcd')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:50.0,y1:80.0,x2:555.0,y2:100.0},exp:"(indexof 'ほげほげ1234' 'ほげ')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:50.0,y1:100.0,x2:555.0,y2:120.0},exp:"(indexof '12ほげほげ34' 'ほげ')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:50.0,y1:120.0,x2:555.0,y2:140.0},exp:"(indexof '1234ほげほげ' 'ほげ')",halign:"left",valign:"center"},
+          {type:"field",layout:{x1:50.0,y1:140.0,x2:555.0,y2:160.0},exp:"(indexof 'ほげほげ1234' 'ふが')",halign:"left",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:50.0,y2:20.0},halign:"left",text:"0",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:20.0,x2:50.0,y2:40.0},halign:"left",text:"2",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:40.0,x2:50.0,y2:60.0},halign:"left",text:"4",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:60.0,x2:50.0,y2:80.0},halign:"left",text:"-1",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:80.0,x2:50.0,y2:100.0},halign:"left",text:"0",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:100.0,x2:50.0,y2:120.0},halign:"left",text:"2",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:120.0,x2:50.0,y2:140.0},halign:"left",text:"4",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:140.0,x2:50.0,y2:160.0},halign:"left",text:"-1",valign:"center"}
+        ]
+      }
+    ]
+  }
+}

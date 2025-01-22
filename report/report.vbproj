@@ -112,6 +112,7 @@
     <Compile Include="method\PageGroupCountMethod.vb" />
     <Compile Include="operator\DateAddOperator.vb" />
     <Compile Include="operator\DateOperator.vb" />
+    <Compile Include="operator\IndexOfOperator.vb" />
     <Compile Include="operator\NumOperator.vb" />
     <Compile Include="operator\WeekdayOperator.vb" />
     <Compile Include="operator\WLinesOperator.vb" />

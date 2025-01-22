@@ -72,6 +72,7 @@
         Tests.Add(New Test_5_14_Color)
         Tests.Add(New Test_5_14_Date)
         Tests.Add(New Test_5_18_Vertical)
+        Tests.Add(New Test_5_18_Indexof)
 
         Application.Run(New FmTest)
     End Sub
