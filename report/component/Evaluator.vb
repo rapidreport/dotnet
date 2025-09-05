@@ -88,7 +88,7 @@ Namespace component
             Me.PageContext.DataContainer = dataContainer
             With ContentContext.Content.Design
                 If .Variables IsNot Nothing Then
-                    For Each k As String In .Variables.Keys
+                    For Each k As String In .VariablesKeyList
                         Me.PageContext.Variables.Add(k, Me.EvalTry(.Variables(k)))
                     Next
                 End If
