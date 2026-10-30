@@ -1,0 +1,56 @@
+{
+  version: 0,
+  monospaced_fonts: [
+    {bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"gothic",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}},
+    {name:"mincho",bold:{full_width:1.033,half_width:0.536,row_height:1.0},regular:{full_width:1.03,half_width:0.516,row_height:1.0}}
+  ],
+  paper: {
+    margin: {bottom:20.0,left:20.0,right:20.0,top:20.0},
+    scale_unit: "point",
+    type: "a4"
+  },
+  group: {
+    contents: [
+      {
+        size: {
+          initial: 802.0
+        },
+        aggregate_src: true,
+        variables: [{key:"var5",exp:"0"},{key:"var4",exp:"(+ var.var5 1)"},{key:"var3",exp:"(+ var.var4 1)"},{key:"var2",exp:"(+ var.var3 1)"},{key:"var1",exp:"(+ var.var2 1)"},{key:"var0",exp:"(+ var.var1 1)"}],
+        elements: [
+          {type:"text",layout:{x1:0.0,y1:0.0,x2:200.0,y2:20.0},halign:"left",text:"#{(sub '01234' 1)} #{(= (sub '01234' 1) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:20.0,x2:200.0,y2:40.0},halign:"left",text:"#{(sub '01234' 2)} #{(= (sub '01234' 2) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:40.0,x2:200.0,y2:60.0},halign:"left",text:"#{(sub '01234' 3)} #{(= (sub '01234' 3) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:60.0,x2:200.0,y2:80.0},halign:"left",text:"#{(sub '01234' 4)} #{(= (sub '01234' 4) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:80.0,x2:200.0,y2:100.0},halign:"left",text:"#{(sub '01234' 5)} #{(= (sub '01234' 5) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:100.0,x2:200.0,y2:120.0},halign:"left",text:"#{(sub '01234' 6)} #{(= (sub '01234' 6) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:0.0,x2:500.0,y2:20.0},halign:"left",text:"#{(sub '01234' 1 1)} #{(= (sub '01234' 1 1) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:20.0,x2:500.0,y2:40.0},halign:"left",text:"#{(sub '01234' 2 1)} #{(= (sub '01234' 2 1) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:40.0,x2:500.0,y2:60.0},halign:"left",text:"#{(sub '01234' 3 1)} #{(= (sub '01234' 3 1) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:60.0,x2:500.0,y2:80.0},halign:"left",text:"#{(sub '01234' 4 1)} #{(= (sub '01234' 4 1) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:80.0,x2:500.0,y2:100.0},halign:"left",text:"#{(sub '01234' 5 1)} #{(= (sub '01234' 5 1) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:100.0,x2:500.0,y2:120.0},halign:"left",text:"#{(sub '01234' 6 1)} #{(= (sub '01234' 6 1) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:150.0,x2:200.0,y2:170.0},halign:"left",text:"#{(wsub 'あいうえお' 2)} #{(= (wsub 'あいうえお' 2) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:170.0,x2:200.0,y2:190.0},halign:"left",text:"#{(wsub 'あいうえお' 4)} #{(= (wsub 'あいうえお' 4) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:190.0,x2:200.0,y2:210.0},halign:"left",text:"#{(wsub 'あいうえお' 6)} #{(= (wsub 'あいうえお' 6) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:210.0,x2:200.0,y2:230.0},halign:"left",text:"#{(wsub 'あいうえお' 8)} #{(= (wsub 'あいうえお' 8) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:230.0,x2:200.0,y2:250.0},halign:"left",text:"#{(wsub 'あいうえお' 10)} #{(= (wsub 'あいうえお' 10) null)}",valign:"center"},
+          {type:"text",layout:{x1:0.0,y1:250.0,x2:200.0,y2:270.0},halign:"left",text:"#{(wsub 'あいうえお' 12)} #{(= (wsub 'あいうえお' 12) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:150.0,x2:500.0,y2:170.0},halign:"left",text:"#{(wsub 'あいうえお' 2 2)} #{(= (wsub 'あいうえお' 2 2) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:170.0,x2:500.0,y2:190.0},halign:"left",text:"#{(wsub 'あいうえお' 4 2)} #{(= (wsub 'あいうえお' 4 2) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:190.0,x2:500.0,y2:210.0},halign:"left",text:"#{(wsub 'あいうえお' 6 2)} #{(= (wsub 'あいうえお' 6 2) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:210.0,x2:500.0,y2:230.0},halign:"left",text:"#{(wsub 'あいうえお' 8 2)} #{(= (wsub 'あいうえお' 8 2) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:230.0,x2:500.0,y2:250.0},halign:"left",text:"#{(wsub 'あいうえお' 10 2)} #{(= (wsub 'あいうえお' 10 2) null)}",valign:"center"},
+          {type:"text",layout:{x1:300.0,y1:250.0,x2:500.0,y2:270.0},halign:"left",text:"#{(wsub 'あいうえお' 12 2)} #{(= (wsub 'あいうえお' 12 2) null)}",valign:"center"},
+          {type:"field",layout:{x1:35.0,y1:315.0,x2:70.0,y2:345.0},exp:"var.var5",halign:"right",valign:"center"},
+          {type:"field",layout:{x1:35.0,y1:345.0,x2:70.0,y2:375.0},exp:"var.var4",halign:"right",valign:"center"},
+          {type:"field",layout:{x1:35.0,y1:375.0,x2:70.0,y2:405.0},exp:"var.var3",halign:"right",valign:"center"},
+          {type:"field",layout:{x1:35.0,y1:405.0,x2:70.0,y2:435.0},exp:"var.var2",halign:"right",valign:"center"},
+          {type:"field",layout:{x1:35.0,y1:435.0,x2:70.0,y2:465.0},exp:"var.var1",halign:"right",valign:"center"},
+          {type:"field",layout:{x1:35.0,y1:465.0,x2:70.0,y2:495.0},exp:"var.var0",halign:"right",valign:"center"}
+        ]
+      }
+    ]
+  }
+}

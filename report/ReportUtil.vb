@@ -186,7 +186,11 @@ Public Module ReportUtil
             i = GetWRevIndex(si, -begin)
         End If
         If i >= si.LengthInTextElements Then
-            Return ""
+            If Report.Compatibility._5_18_Sub Then
+                Return ""
+            Else
+                Return Nothing
+            End If
         End If
         Return si.SubstringByTextElements(i)
     End Function
@@ -200,7 +204,11 @@ Public Module ReportUtil
             i = GetWRevIndex(si1, -begin)
         End If
         If i >= si1.LengthInTextElements Then
-            Return ""
+            If Report.Compatibility._5_18_Sub Then
+                Return ""
+            Else
+                Return Nothing
+            End If
         End If
         Dim si2 As New StringInfo(si1.SubstringByTextElements(i))
         Return si2.SubstringByTextElements(0, GetWIndex(si2, len))
